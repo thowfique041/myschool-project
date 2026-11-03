@@ -21,6 +21,13 @@ const unsplash = (
 });
 
 export const images = {
+  /** Supplied by the site owner. */
+  heroCampus: {
+    src: "/images/hero-campus.jpg",
+    alt: "A tall cream and green academic building behind a row of palm trees",
+    width: 571,
+    height: 350,
+  },
   campus: unsplash(
     "photo-1726390414421-37a9efdf13ee",
     "A large white college building behind a green lawn and trees in Sylhet",
