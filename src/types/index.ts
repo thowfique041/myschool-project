@@ -72,6 +72,10 @@ export type Teacher = {
   qualification: string;
   joined: number;
   section: "Primary" | "Secondary" | "Higher Secondary" | "All";
+  /** Placeholder demo number */
+  phone: string;
+  /** Placeholder demo address on the reserved .example domain */
+  email: string;
 };
 
 export type GalleryCategory = "campus" | "classroom" | "sports" | "cultural" | "events";

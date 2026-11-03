@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, CalendarDays, MapPin, Paperclip } from "lucide-react";
+import { ArrowRight, CalendarDays, Mail, MapPin, Paperclip, Phone } from "lucide-react";
 import { Badge } from "@/components/ui/primitives";
 import { Picture } from "@/components/ui/Picture";
 import { noticeCategories } from "@/data/notices";
@@ -146,6 +146,18 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
           <dd className="text-ink">{teacher.section === "All" ? "All sections" : teacher.section}</dd>
         </div>
       </dl>
+      <div className="mt-3 w-full space-y-1.5 border-t border-line pt-3 text-left text-sm">
+        <a href={`tel:${teacher.phone.replace(/[\s-]/g, "")}`} className="flex items-center gap-2 text-navy-800 hover:text-leaf-700">
+          <Phone aria-hidden className="size-4 shrink-0 text-leaf-600" />
+          <span className="sr-only">Phone: </span>
+          {teacher.phone}
+        </a>
+        <a href={`mailto:${teacher.email}`} className="flex min-w-0 items-center gap-2 text-navy-800 hover:text-leaf-700">
+          <Mail aria-hidden className="size-4 shrink-0 text-leaf-600" />
+          <span className="sr-only">Email: </span>
+          <span className="truncate">{teacher.email}</span>
+        </a>
+      </div>
     </article>
   );
 }

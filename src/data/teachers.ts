@@ -1,7 +1,9 @@
 import type { Department, Teacher } from "@/types";
 
+type TeacherInput = Omit<Teacher, "phone" | "email">;
+
 /** Sample faculty list — names are fictional. */
-export const teachers: Teacher[] = [
+const faculty: TeacherInput[] = [
   { id: "t01", name: "Dr. Nasrin Akhter", nameBn: "ড. নাসরিন আক্তার", designation: "Principal", department: "Administration", subjects: ["Educational Leadership"], qualification: "Ph.D. in Education", joined: 2009, section: "All" },
   { id: "t02", name: "Md. Abdul Kader", nameBn: "মো. আব্দুল কাদের", designation: "Vice Principal", department: "Administration", subjects: ["Physics"], qualification: "M.Sc. in Physics, B.Ed.", joined: 2001, section: "All" },
   { id: "t03", name: "Shahana Begum", nameBn: "শাহানা বেগম", designation: "Assistant Head Teacher (Day Shift)", department: "Administration", subjects: ["Bangla"], qualification: "M.A. in Bangla, B.Ed.", joined: 2004, section: "Secondary" },
@@ -25,6 +27,24 @@ export const teachers: Teacher[] = [
   { id: "t21", name: "Ishrat Jahan Mim", nameBn: "ইশরাত জাহান মিম", designation: "Assistant Teacher", department: "English", subjects: ["English", "Spoken English Club"], qualification: "M.A. in English Language Teaching", joined: 2021, section: "Primary" },
   { id: "t22", name: "Debashis Roy", nameBn: "দেবাশীষ রায়", designation: "Lecturer", department: "Science", subjects: ["Physics"], qualification: "M.Sc. in Physics", joined: 2015, section: "Higher Secondary" },
 ];
+
+/**
+ * Placeholder contact details: numbers use the 01700-000xxx demo range and
+ * emails use the reserved .example domain, so nothing reaches a real person.
+ */
+function contact(t: TeacherInput, i: number): Pick<Teacher, "phone" | "email"> {
+  const slug = t.name
+    .replace(/^(Dr\.|Md\.|Maulana)\s+/i, "")
+    .toLowerCase()
+    .replace(/[^a-z\s]/g, "")
+    .trim()
+    .split(/\s+/)
+    .join(".");
+  const n = String(101 + i).padStart(3, "0");
+  return { phone: `+880 1700-000${n}`, email: `${slug}@webnion.example` };
+}
+
+export const teachers: Teacher[] = faculty.map((t, i) => ({ ...t, ...contact(t, i) }));
 
 export const departments: Department[] = Array.from(new Set(teachers.map((t) => t.department)));
 
