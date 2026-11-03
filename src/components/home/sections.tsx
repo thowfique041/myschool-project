@@ -324,8 +324,8 @@ export function ResultsSection() {
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           {[
             { title: "Science fair", text: "42 projects at the 2026 inter-class science fair.", image: images.scienceFair },
-            { title: "Debate", text: "HSC team reached a district-level final (sample).", image: images.debate },
-            { title: "Prize-giving", text: "Annual awards for merit, attendance and conduct.", image: images.prizeGiving },
+            { title: "Debate", text: "HSC team reached a district-level final (sample).", image: images.speaker },
+            { title: "Prize-giving", text: "Annual awards for merit, attendance and conduct.", image: images.studentAnswering },
           ].map((a) => (
             <Reveal key={a.title} className="flex items-center gap-4 rounded-xl border border-line bg-white p-3">
               <Picture image={a.image} ratio="aspect-square" className="w-20 shrink-0 rounded-lg" sizes="80px" />
@@ -396,7 +396,7 @@ export function NewsSection() {
 /* ------------------------------------------------- Gallery */
 
 export function GalleryPreview() {
-  const picks = gallery.filter((g) => ["g02", "g04", "g06", "g07", "g09", "g11", "g12", "g05"].includes(g.id));
+  const picks = gallery.filter((g) => ["g03", "g04", "g06", "g07", "g09", "g02", "g05", "g14"].includes(g.id));
   return (
     <section aria-labelledby="gallery-title" className="py-16 sm:py-20">
       <div className="container-page">

@@ -24,7 +24,7 @@ export default function TermsPage() {
         {
           heading: "Images and documents",
           body: [
-            "The illustrations on this website were created for the project and do not depict a real campus.",
+            "Photographs are free images from Unsplash used under the Unsplash License. They are representative and do not show Webnion School & College. Photographers are listed on the Photo Credits page.",
             "Downloadable PDFs are short placeholder documents marked as samples.",
           ],
         },

@@ -15,6 +15,8 @@ export type ImageAsset = {
   alt: string;
   width: number;
   height: number;
+  /** Source page and photographer for licensed photos. */
+  credit?: { page: string; author?: string; location?: string };
 };
 
 export type NoticeCategory = "admission" | "exam" | "academic" | "holiday" | "event" | "general";

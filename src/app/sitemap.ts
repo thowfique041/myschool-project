@@ -21,6 +21,7 @@ const staticRoutes = [
   "/students-guardians",
   "/privacy",
   "/terms",
+  "/credits",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

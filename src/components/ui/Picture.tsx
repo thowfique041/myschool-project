@@ -13,7 +13,7 @@ type PictureProps = {
 };
 
 /**
- * Wrapper around next/image. Vector illustrations are served as-is (the image
+ * Wrapper around next/image. Vector files are served as-is (the image
  * optimiser is only useful for raster photos), raster files get optimised.
  */
 export function Picture({ image, className, imgClassName, sizes = "100vw", priority = false, ratio = "aspect-[16/10]" }: PictureProps) {

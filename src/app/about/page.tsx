@@ -1,3 +1,4 @@
+import { PhotoCredit } from "@/components/ui/PhotoCredit";
 import type { Metadata } from "next";
 import { Compass, Eye, HeartHandshake } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -41,12 +42,12 @@ const committee = [
 ];
 
 const facilities = [
-  { title: "Academic building", text: "Four storeys, 36 classrooms with fans and natural light, and covered verandas.", image: images.campus },
+  { title: "Classrooms", text: "36 classrooms with fans and natural light along covered verandas.", image: images.classroom },
   { title: "Science laboratories", text: "Physics, chemistry and biology labs equipped for SSC and HSC practical syllabi.", image: images.scienceLab },
   { title: "ICT lab", text: "30 workstations, a projector and supervised practical periods.", image: images.computerLab },
   { title: "Library", text: "Around 8,000 books in Bangla and English, newspapers and a reading hall.", image: images.library },
   { title: "Playground", text: "Open field for cricket, football, athletics and the annual sports day.", image: images.football },
-  { title: "Auditorium & stage", text: "Used for assemblies in the rain, cultural programmes and debates.", image: images.cultural },
+  { title: "Auditorium & stage", text: "Used for assemblies in the rain, cultural programmes and debates.", image: images.speaker },
 ];
 
 export default function AboutPage() {
@@ -91,8 +92,8 @@ export default function AboutPage() {
             </dl>
           </Reveal>
           <Reveal delay={0.06}>
-            <Picture image={images.assembly} className="rounded-2xl" sizes="(min-width: 1024px) 50vw, 100vw" />
-            <p className="mt-2 text-xs text-muted">Illustration — morning assembly.</p>
+            <Picture image={images.students} className="rounded-2xl" sizes="(min-width: 1024px) 50vw, 100vw" />
+            <PhotoCredit image={images.students} className="mt-2" />
           </Reveal>
         </div>
       </section>

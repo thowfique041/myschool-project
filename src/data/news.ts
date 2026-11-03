@@ -59,7 +59,7 @@ export const news: NewsArticle[] = [
       "The team spoke for the motion that local communities should lead climate adaptation planning. Their coach, a teacher from the Bangla department, said the team prepared for six weeks through weekly practice sessions in the library.",
       "This is sample news content for the demonstration website and does not describe a real competition result.",
     ],
-    image: images.debate,
+    image: images.speaker,
   },
   {
     slug: "new-computer-lab-desks",
@@ -89,7 +89,7 @@ export const news: NewsArticle[] = [
       "The art club decorated the entrance with alpana, and students from Class 8 to 10 ran stalls of handmade crafts and traditional snacks.",
       "The day ended with a short cultural programme in which primary students performed a group dance.",
     ],
-    image: images.cultural,
+    image: images.students,
   },
   {
     slug: "library-reading-week",
@@ -119,7 +119,7 @@ export const news: NewsArticle[] = [
       "Class 8 students went on a one-day study tour to Sreemangal on 10 March, accompanied by six teachers.",
       "Students observed tea cultivation and processing and recorded notes for their science and geography projects. The tour was organised with written consent from guardians.",
     ],
-    image: images.studyTour,
+    image: images.teaGarden,
   },
 ];
 

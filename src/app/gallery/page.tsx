@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { DemoNote } from "@/components/ui/primitives";
@@ -17,8 +18,8 @@ export default function GalleryPage() {
         <div className="container-page">
           <GalleryGrid items={gallery} />
           <DemoNote className="mt-8">
-            These are original illustrations made for this demonstration, not photographs of a real campus. Licensed photographs
-            can replace them by updating one image registry file.
+            These are representative photographs from Unsplash (free Unsplash License), taken at schools and places in Bangladesh
+            and India. They do not show Webnion School &amp; College, which is fictional. See <Link href="/credits" className="font-semibold underline underline-offset-2">photo credits</Link>.
           </DemoNote>
         </div>
       </section>

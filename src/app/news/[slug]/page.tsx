@@ -1,3 +1,4 @@
+import { PhotoCredit } from "@/components/ui/PhotoCredit";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -62,7 +63,7 @@ export default async function NewsDetailPage({ params }: PageProps<"/news/[slug]
         </div>
         <div className="container-page mt-8 max-w-4xl">
           <Picture image={article.image} priority className="rounded-2xl" sizes="(min-width: 1024px) 56rem, 100vw" />
-          <p className="mt-2 text-xs text-muted">Illustration</p>
+          <PhotoCredit image={article.image} prefix="Representative photo:" className="mt-2" />
         </div>
         <div className="container-page mt-8 max-w-3xl space-y-5 text-[1.05rem] leading-relaxed text-ink">
           {article.body.map((p, i) => (

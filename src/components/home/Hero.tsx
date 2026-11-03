@@ -1,3 +1,4 @@
+import { PhotoCredit } from "@/components/ui/PhotoCredit";
 import Link from "next/link";
 import { ArrowRight, BellRing, BookOpenCheck, CalendarDays, Download, FileSearch, GraduationCap, Phone } from "lucide-react";
 import { ButtonLink } from "@/components/ui/primitives";
@@ -72,7 +73,7 @@ export function Hero() {
         <HeroIntro delay={0.1} className="relative">
           <div className="relative rounded-2xl bg-white p-2 shadow-[var(--shadow-lift)] ring-1 ring-line sm:p-3">
             <Picture image={images.campus} priority sizes="(min-width: 1024px) 50vw, 100vw" className="rounded-xl" />
-            <p className="px-1 pt-2 text-[0.7rem] text-muted">Illustration of the campus — not a photograph.</p>
+            <PhotoCredit image={images.campus} prefix="Representative photo:" className="px-1 pt-2" />
           </div>
           <div className="absolute -bottom-5 right-6 hidden rounded-xl bg-navy-900 px-5 py-4 text-white shadow-[var(--shadow-lift)] sm:block">
             <p className="text-xs text-navy-200">Admission office</p>
