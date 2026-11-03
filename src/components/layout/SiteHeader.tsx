@@ -229,7 +229,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link href="/admission#apply" className={cn(buttonClasses("secondary", "sm"), "hidden xl:inline-flex")}>
+          <Link href="/admission#apply" className={cn(buttonClasses("secondary", "sm"), "max-xl:hidden")}>
             Apply Now
           </Link>
           <button

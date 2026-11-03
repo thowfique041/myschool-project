@@ -15,7 +15,7 @@ import { Badge, ButtonLink, Card, DemoNote, SampleTag, SectionHeading } from "@/
 import { Picture } from "@/components/ui/Picture";
 import { Reveal } from "@/components/ui/Reveal";
 import { Accordion } from "@/components/ui/Accordion";
-import { ArrowLink, NewsCard, NoticeRow, TeacherCard } from "@/components/shared/cards";
+import { ArrowLink, NoticeRow, TeacherCard } from "@/components/shared/cards";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { StatCounter } from "./motion-bits";
 import { academicLevels } from "@/data/academics";

@@ -55,12 +55,12 @@ type LogoProps = {
 export function Logo({ className, tone = "light", compact = false }: LogoProps) {
   const isLight = tone === "light";
   return (
-    <span className={cn("inline-flex items-center gap-3", className)}>
-      <LogoMark tone={tone} className="h-12 w-auto sm:h-14" />
+    <span className={cn("inline-flex items-center gap-2.5 sm:gap-3", className)}>
+      <LogoMark tone={tone} className="h-11 w-auto sm:h-14" />
       <span className="flex flex-col leading-none">
         <span
           className={cn(
-            "font-serif text-[1.15rem] font-semibold tracking-tight sm:text-[1.35rem]",
+            "font-serif text-[1.02rem] font-semibold tracking-tight whitespace-nowrap min-[400px]:text-[1.12rem] sm:text-[1.35rem]",
             isLight ? "text-navy-900" : "text-white",
           )}
         >
@@ -70,7 +70,7 @@ export function Logo({ className, tone = "light", compact = false }: LogoProps) 
           <span
             lang="bn"
             className={cn(
-              "mt-1 text-[0.8rem] font-medium sm:text-sm",
+              "mt-1 text-[0.74rem] font-medium whitespace-nowrap sm:text-sm",
               isLight ? "text-leaf-700" : "text-leaf-200",
             )}
             style={{ lineHeight: 1.3 }}
