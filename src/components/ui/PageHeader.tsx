@@ -10,10 +10,13 @@ type PageHeaderProps = {
   description?: ReactNode;
   crumbs?: Crumb[];
   children?: ReactNode;
+  /** Use "p" when the page renders its own <h1> (e.g. article pages). */
+  headingAs?: "h1" | "p";
 };
 
 /** Title band used at the top of every inner page. */
-export function PageHeader({ title, titleBn, description, crumbs = [], children }: PageHeaderProps) {
+export function PageHeader({ title, titleBn, description, crumbs = [], children, headingAs = "h1" }: PageHeaderProps) {
+  const Heading = headingAs;
   const trail: Crumb[] = [{ label: "Home", href: "/" }, ...crumbs, { label: title }];
   return (
     <section className="relative overflow-hidden bg-navy-900 text-white">
@@ -62,9 +65,9 @@ export function PageHeader({ title, titleBn, description, crumbs = [], children 
             {titleBn}
           </p>
         )}
-        <h1 className="mt-1 font-serif text-3xl font-semibold tracking-tight sm:text-[2.6rem] sm:leading-tight">
+        <Heading className="mt-1 font-serif text-3xl font-semibold tracking-tight sm:text-[2.6rem] sm:leading-tight">
           {title}
-        </h1>
+        </Heading>
         {description && <p className="mt-3 max-w-2xl text-[0.98rem] leading-relaxed text-navy-100">{description}</p>}
         {children}
       </div>

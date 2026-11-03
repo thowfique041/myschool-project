@@ -52,18 +52,18 @@ export function Hero() {
             </ButtonLink>
           </HeroIntro>
           <HeroIntro delay={0.24}>
-            <dl className="mt-9 grid max-w-lg grid-cols-3 divide-x divide-line border-y border-line py-4">
+            <dl className="mt-9 grid max-w-lg grid-cols-[auto_1fr_auto] divide-x divide-line border-y border-line py-4">
               <div className="pr-4">
                 <dt className="text-xs text-muted">Classes</dt>
-                <dd className="font-serif text-lg font-semibold text-navy-900">Play – 12</dd>
+                <dd className="font-serif text-base font-semibold text-navy-900 sm:text-lg">Play – 12</dd>
               </div>
               <div className="px-4">
                 <dt className="text-xs text-muted">Shifts</dt>
-                <dd className="font-serif text-lg font-semibold text-navy-900">Morning · Day</dd>
+                <dd className="font-serif text-base font-semibold text-navy-900 sm:text-lg">Morning · Day</dd>
               </div>
               <div className="pl-4">
                 <dt className="text-xs text-muted">Since</dt>
-                <dd className="font-serif text-lg font-semibold text-navy-900">{site.established}</dd>
+                <dd className="font-serif text-base font-semibold text-navy-900 sm:text-lg">{site.established}</dd>
               </div>
             </dl>
           </HeroIntro>
