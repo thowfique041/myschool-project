@@ -1,0 +1,165 @@
+import Link from "next/link";
+import { ArrowRight, CalendarDays, MapPin, Paperclip } from "lucide-react";
+import { Badge } from "@/components/ui/primitives";
+import { Picture } from "@/components/ui/Picture";
+import { noticeCategories } from "@/data/notices";
+import { newsCategories } from "@/data/news";
+import { initials } from "@/data/teachers";
+import type { NewsArticle, Notice, Teacher } from "@/types";
+import { cn, dateParts, formatDateBn, formatDateEn } from "@/lib/utils";
+
+/* ------------------------------------------------------------ Notice row */
+
+export function DateBlock({ iso, className }: { iso: string; className?: string }) {
+  const { day, month, year } = dateParts(iso);
+  return (
+    <time
+      dateTime={iso}
+      className={cn(
+        "flex w-14 shrink-0 flex-col items-center overflow-hidden rounded-md border border-line bg-white text-center",
+        className,
+      )}
+    >
+      <span className="w-full bg-navy-800 py-0.5 text-[0.65rem] font-semibold tracking-wider text-white uppercase">{month}</span>
+      <span className="pt-1 font-serif text-xl leading-none font-semibold text-navy-900">{day}</span>
+      <span className="pb-1 text-[0.65rem] text-muted">{year}</span>
+    </time>
+  );
+}
+
+export function NoticeRow({ notice, compact = false }: { notice: Notice; compact?: boolean }) {
+  const cat = noticeCategories[notice.category];
+  return (
+    <article className="group relative flex gap-4 py-4">
+      <DateBlock iso={notice.date} />
+      <div className="min-w-0 flex-1">
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge tone={notice.category === "admission" ? "leaf" : notice.category === "exam" ? "navy" : "neutral"}>
+            {cat.label}
+          </Badge>
+          {notice.important && <Badge tone="signal">Important</Badge>}
+          {notice.attachment && (
+            <span className="inline-flex items-center gap-1 text-xs text-muted">
+              <Paperclip aria-hidden className="size-3" /> Attachment
+            </span>
+          )}
+        </div>
+        <h3 lang="bn" className="mt-1.5 font-semibold text-navy-900 group-hover:text-leaf-700" style={{ lineHeight: 1.55 }}>
+          <Link href={`/notices/${notice.slug}`} className="after:absolute after:inset-0">
+            {notice.title}
+          </Link>
+        </h3>
+        {!compact && (
+          <p lang="bn" className="mt-1 line-clamp-2 text-sm text-muted">
+            {notice.summary}
+          </p>
+        )}
+        <p className="mt-1 text-xs text-muted">
+          <span lang="bn">{formatDateBn(notice.date)}</span>
+        </p>
+      </div>
+    </article>
+  );
+}
+
+/* --------------------------------------------------------------- News card */
+
+export function NewsCard({ article, headingLevel = "h3" }: { article: NewsArticle; headingLevel?: "h2" | "h3" }) {
+  const H = headingLevel;
+  return (
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)] transition-shadow hover:shadow-[var(--shadow-lift)]">
+      <Picture image={article.image} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" imgClassName="transition-transform duration-500 group-hover:scale-[1.03]" />
+      <div className="flex flex-1 flex-col p-5">
+        <div className="flex items-center gap-3 text-xs text-muted">
+          <Badge tone="leaf">{newsCategories[article.category]}</Badge>
+          <time dateTime={article.date}>{formatDateEn(article.date)}</time>
+        </div>
+        <H className="mt-3 text-lg leading-snug font-semibold text-navy-900 group-hover:text-leaf-700">
+          <Link href={`/news/${article.slug}`} className="after:absolute after:inset-0">
+            {article.title}
+          </Link>
+        </H>
+        <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted">{article.excerpt}</p>
+        {(article.eventDate || article.venue) && (
+          <div className="mt-auto flex flex-wrap gap-x-4 gap-y-1 pt-4 text-xs text-muted">
+            {article.eventDate && (
+              <span className="inline-flex items-center gap-1">
+                <CalendarDays aria-hidden className="size-3.5" />
+                {formatDateEn(article.eventDate)}
+              </span>
+            )}
+            {article.venue && (
+              <span className="inline-flex items-center gap-1">
+                <MapPin aria-hidden className="size-3.5" />
+                {article.venue}
+              </span>
+            )}
+          </div>
+        )}
+      </div>
+    </article>
+  );
+}
+
+/* ------------------------------------------------------------ Teacher card */
+
+const avatarTones = [
+  "bg-navy-100 text-navy-800",
+  "bg-leaf-100 text-leaf-800",
+  "bg-[#f3e6c8] text-[#6e5214]",
+  "bg-[#ecdfe6] text-[#6b2f4f]",
+];
+
+export function TeacherAvatar({ teacher, size = "md" }: { teacher: Teacher; size?: "md" | "lg" }) {
+  const tone = avatarTones[Number(teacher.id.slice(1)) % avatarTones.length];
+  return (
+    <div
+      aria-hidden
+      className={cn(
+        "flex shrink-0 items-center justify-center rounded-full font-serif font-semibold ring-4 ring-white",
+        size === "lg" ? "size-24 text-2xl" : "size-16 text-lg",
+        tone,
+      )}
+    >
+      {initials(teacher.name)}
+    </div>
+  );
+}
+
+export function TeacherCard({ teacher }: { teacher: Teacher }) {
+  return (
+    <article className="flex h-full flex-col items-center rounded-[var(--radius-card)] border border-line bg-white p-6 text-center shadow-[var(--shadow-card)]">
+      <TeacherAvatar teacher={teacher} size="lg" />
+      <h3 className="mt-4 font-semibold text-navy-900">{teacher.name}</h3>
+      <p lang="bn" className="text-sm text-muted" style={{ lineHeight: 1.5 }}>
+        {teacher.nameBn}
+      </p>
+      <p className="mt-2 text-sm font-medium text-leaf-700">{teacher.designation}</p>
+      <p className="mt-1 text-sm text-muted">{teacher.subjects.join(", ")}</p>
+      <dl className="mt-auto w-full border-t border-line pt-3 text-xs text-muted">
+        <div className="flex justify-between gap-2 pt-1">
+          <dt>Qualification</dt>
+          <dd className="text-right text-ink">{teacher.qualification}</dd>
+        </div>
+        <div className="flex justify-between gap-2 pt-1">
+          <dt>Section</dt>
+          <dd className="text-ink">{teacher.section === "All" ? "All sections" : teacher.section}</dd>
+        </div>
+      </dl>
+    </article>
+  );
+}
+
+/* ------------------------------------------------------------ Arrow link */
+
+export function ArrowLink({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) {
+  return (
+    <Link
+      href={href}
+      className={cn("group inline-flex items-center gap-1.5 text-sm font-semibold text-navy-800 hover:text-leaf-700", className)}
+    >
+      {children}
+      <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-0.5" />
+    </Link>
+  );
+}

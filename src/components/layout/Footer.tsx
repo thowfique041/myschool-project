@@ -1,0 +1,101 @@
+import Link from "next/link";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Logo } from "@/components/brand/Logo";
+import { footerLinks, site } from "@/data/site";
+
+function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
+  return (
+    <div>
+      <h2 className="text-sm font-semibold tracking-wide text-white uppercase">{title}</h2>
+      <ul className="mt-4 space-y-2.5">
+        {links.map((l) => (
+          <li key={l.href}>
+            <Link href={l.href} className="text-[0.92rem] text-navy-200 hover:text-white hover:underline underline-offset-4">
+              {l.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function SocialIcon({ label }: { label: string }) {
+  if (label === "Facebook") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden className="size-4" fill="currentColor">
+        <path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4a21 21 0 0 0-2.3-.1c-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21Z" />
+      </svg>
+    );
+  }
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className="size-4" fill="currentColor">
+      <path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8ZM10 15V9l5.2 3Z" />
+    </svg>
+  );
+}
+
+export function Footer() {
+  return (
+    <footer className="bg-navy-950 text-navy-100">
+      <div className="container-page grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div>
+          <Logo tone="dark" />
+          <p className="mt-5 max-w-sm text-[0.92rem] leading-relaxed text-navy-200">
+            A school and college in Sylhet offering Play to Class 12 under the national curriculum, with morning and day shifts.
+          </p>
+          <ul className="mt-6 space-y-3 text-[0.92rem]">
+            <li className="flex gap-3">
+              <MapPin aria-hidden className="mt-0.5 size-4 shrink-0 text-leaf-200" />
+              <span>{site.address}</span>
+            </li>
+            <li className="flex gap-3">
+              <Phone aria-hidden className="mt-0.5 size-4 shrink-0 text-leaf-200" />
+              <a href={site.phoneHref} className="hover:text-white">
+                {site.phone}
+              </a>
+            </li>
+            <li className="flex gap-3">
+              <Mail aria-hidden className="mt-0.5 size-4 shrink-0 text-leaf-200" />
+              <a href={`mailto:${site.email}`} className="hover:text-white">
+                {site.email}
+              </a>
+            </li>
+            <li className="flex gap-3">
+              <Clock aria-hidden className="mt-0.5 size-4 shrink-0 text-leaf-200" />
+              <span>{site.officeHours}</span>
+            </li>
+          </ul>
+          <ul className="mt-6 flex gap-2" aria-label="Social media">
+            {site.social.map((s) => (
+              <li key={s.label}>
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${s.label} (opens in a new tab)`}
+                  className="inline-flex size-10 items-center justify-center rounded-lg border border-white/15 text-navy-100 hover:border-white/40 hover:text-white"
+                >
+                  <SocialIcon label={s.label} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <FooterColumn title="Quick links" links={footerLinks.quick} />
+        <FooterColumn title="Institution" links={footerLinks.institution} />
+        <FooterColumn title="Help" links={footerLinks.help} />
+      </div>
+      <div className="border-t border-white/10">
+        <div className="container-page flex flex-col gap-2 py-5 text-xs text-navy-300 md:flex-row md:items-center md:justify-between">
+          <p>
+            © {site.established}–2026 {site.name}. Demonstration website — the institution and its details are fictional.
+          </p>
+          <p lang="bn" style={{ lineHeight: 1.5 }}>
+            {site.taglineBn}
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}

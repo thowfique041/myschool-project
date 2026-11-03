@@ -1,0 +1,74 @@
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
+import type { ReactNode } from "react";
+
+type Crumb = { label: string; href?: string };
+
+type PageHeaderProps = {
+  title: string;
+  titleBn?: string;
+  description?: ReactNode;
+  crumbs?: Crumb[];
+  children?: ReactNode;
+};
+
+/** Title band used at the top of every inner page. */
+export function PageHeader({ title, titleBn, description, crumbs = [], children }: PageHeaderProps) {
+  const trail: Crumb[] = [{ label: "Home", href: "/" }, ...crumbs, { label: title }];
+  return (
+    <section className="relative overflow-hidden bg-navy-900 text-white">
+      <svg
+        aria-hidden
+        className="absolute inset-y-0 right-0 h-full w-[38rem] max-w-full text-white/[0.06]"
+        viewBox="0 0 400 200"
+        preserveAspectRatio="xMaxYMid slice"
+      >
+        <defs>
+          <pattern id="ph-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M20 4 36 20 20 36 4 20Z" fill="none" stroke="currentColor" strokeWidth="1.2" />
+            <circle cx="20" cy="20" r="3" fill="currentColor" />
+          </pattern>
+          <linearGradient id="ph-fade" x1="0" x2="1">
+            <stop offset="0" stopColor="#fff" stopOpacity="0" />
+            <stop offset="1" stopColor="#fff" stopOpacity="1" />
+          </linearGradient>
+          <mask id="ph-mask">
+            <rect width="400" height="200" fill="url(#ph-fade)" />
+          </mask>
+        </defs>
+        <rect width="400" height="200" fill="url(#ph-pattern)" mask="url(#ph-mask)" />
+      </svg>
+      <div className="container-page relative py-10 sm:py-14">
+        <nav aria-label="Breadcrumb">
+          <ol className="flex flex-wrap items-center gap-1 text-sm text-navy-200">
+            {trail.map((c, i) => (
+              <li key={`${c.label}-${i}`} className="flex items-center gap-1">
+                {i > 0 && <ChevronRight aria-hidden className="size-3.5 opacity-70" />}
+                {c.href ? (
+                  <Link href={c.href} className="hover:text-white hover:underline underline-offset-4">
+                    {c.label}
+                  </Link>
+                ) : (
+                  <span aria-current="page" className="text-white">
+                    {c.label}
+                  </span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </nav>
+        {titleBn && (
+          <p lang="bn" className="mt-5 text-sm font-medium text-leaf-200" style={{ lineHeight: 1.4 }}>
+            {titleBn}
+          </p>
+        )}
+        <h1 className="mt-1 font-serif text-3xl font-semibold tracking-tight sm:text-[2.6rem] sm:leading-tight">
+          {title}
+        </h1>
+        {description && <p className="mt-3 max-w-2xl text-[0.98rem] leading-relaxed text-navy-100">{description}</p>}
+        {children}
+      </div>
+      <div aria-hidden className="h-1 bg-gradient-to-r from-leaf-600 via-leaf-500 to-navy-700" />
+    </section>
+  );
+}
