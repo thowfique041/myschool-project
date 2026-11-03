@@ -24,9 +24,9 @@ export const images = {
   /** Supplied by the site owner. */
   heroCampus: {
     src: "/images/hero-campus.jpg",
-    alt: "A tall cream and green academic building behind a row of palm trees",
-    width: 571,
-    height: 350,
+    alt: "A tall brick-and-cream academic building behind a row of coconut palms under a clear blue sky",
+    width: 1703,
+    height: 887,
   },
   campus: unsplash(
     "photo-1726390414421-37a9efdf13ee",

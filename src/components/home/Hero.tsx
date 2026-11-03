@@ -61,7 +61,7 @@ export function Hero() {
 
         <HeroIntro delay={0.1} className="relative">
           <div className="relative rounded-2xl bg-white p-2 shadow-[var(--shadow-lift)] ring-1 ring-line sm:p-3">
-            <Picture image={images.heroCampus} priority ratio="aspect-[571/350]" sizes="(min-width: 1024px) 50vw, 100vw" className="rounded-xl" />
+            <Picture image={images.heroCampus} priority ratio="aspect-[16/9]" sizes="(min-width: 1024px) 50vw, 100vw" className="rounded-xl" />
             <p className="px-1 pt-2 text-[0.72rem] leading-snug text-muted">Representative photo — not Webnion&apos;s campus.</p>
           </div>
         </HeroIntro>
