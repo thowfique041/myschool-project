@@ -14,7 +14,7 @@ const quickLinks = [
   { label: "Result Search", labelBn: "ফলাফল", href: "/results", icon: FileSearch },
   { label: "Class Routine", labelBn: "রুটিন", href: "/academic#routine", icon: BookOpenCheck },
   { label: "Calendar", labelBn: "ক্যালেন্ডার", href: "/calendar", icon: CalendarDays },
-  { label: "Downloads", labelBn: "ডাউনলোড", href: "/downloads", icon: Download },
+  { label: "Downloads", labelBn: "ডাউনলোড", href: "/notices#downloads", icon: Download },
 ];
 
 export function Hero() {

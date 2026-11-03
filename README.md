@@ -10,13 +10,13 @@ A complete, frontend-only website for **Webnion School & College**, a fictional 
 - **About** — overview, mission/vision/values, history timeline, principal's message, campus facilities, managing committee, staff overview.
 - **Academic** — levels and groups, subjects by level, upcoming calendar dates, sample class routine, examination system, grading scale, syllabus downloads, policies.
 - **Admission** — circular (Bangla + English), important dates, eligibility table, procedure, required documents, sample fees, admission FAQ and a validated application form with a confirmation state.
-- **Notice Board** — search (Bangla or English), category filters, sorting, empty state and detail pages with PDF attachments and print.
+- **Notice Board** — search (Bangla or English), category filters, sorting, empty state, detail pages with PDF attachments and print, plus a "Forms & downloads" section with sample PDFs.
 - **Results & Examinations** — mock result lookup (loading, found, not-found states), exam schedule, exam notices, board summary — all labelled as sample data.
 - **Teachers & Staff** — directory filtered by department, section, name or subject (initials instead of invented photos).
 - **Gallery** — category filters and an accessible lightbox (keyboard arrows, Esc, focus trap, focus return).
 - **News & Events** — featured story, upcoming events, search/filter and detail pages.
 - **Contact** — contact cards, validated form with success state, sketch map placeholder, social links.
-- **Extras** — Students & Guardians, Downloads (sample PDFs), Academic Calendar, School Policies, FAQ, Privacy, Terms, custom 404 and error pages, sitemap and robots.
+- **Extras** — Students & Guardians, Academic Calendar, School Policies, FAQ, Privacy, Terms, custom 404 and error pages, sitemap and robots.
 
 ## Tech stack
 

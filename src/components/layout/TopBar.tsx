@@ -42,11 +42,6 @@ export function TopBar() {
               Results
             </Link>
           </li>
-          <li>
-            <Link href="/downloads" className="hover:text-white">
-              Downloads
-            </Link>
-          </li>
         </ul>
       </div>
     </div>

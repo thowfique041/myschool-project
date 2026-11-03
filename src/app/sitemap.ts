@@ -14,7 +14,6 @@ const staticRoutes = [
   "/gallery",
   "/news",
   "/contact",
-  "/downloads",
   "/calendar",
   "/policies",
   "/faq",

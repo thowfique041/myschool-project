@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const links = [
   { title: "Class routine", text: "Period timings and the sample weekly routine.", href: "/academic#routine", icon: CalendarDays },
   { title: "Exam schedule", text: "Annual examination dates and subjects.", href: "/results#schedule", icon: ClipboardCheck },
-  { title: "Forms & downloads", text: "Leave application, TC request and more.", href: "/downloads", icon: FileDown },
+  { title: "Forms & downloads", text: "Leave application, TC request and more.", href: "/notices#downloads", icon: FileDown },
   { title: "School policies", text: "Attendance, uniform, conduct and safety.", href: "/policies", icon: BookOpen },
 ];
 

@@ -265,7 +265,7 @@ export default function AcademicPage() {
               </li>
             ))}
           </ul>
-          <ArrowLink href="/downloads" className="mt-5">
+          <ArrowLink href="/notices#downloads" className="mt-5">
             All downloads
           </ArrowLink>
         </div>
