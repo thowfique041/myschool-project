@@ -66,7 +66,6 @@ src/
   lib/                 # fonts, small utilities (Bangla digits/dates, cn)
   types/               # shared TypeScript types
 public/
-  images/              # original SVG illustrations
   downloads/           # sample PDFs (marked “for website demonstration only”)
 ```
 
@@ -74,17 +73,17 @@ All content lives in `src/data`, so sample data is defined once and reused acros
 
 ## Images
 
-The illustrations in `public/images` are original flat SVG artwork made for this project (campus building with Shaheed Minar, classroom, labs, library, assembly, cultural programme, sports and more). They do not depict a real campus and are captioned as illustrations.
+Photographs are free images from [Unsplash](https://unsplash.com) used under the [Unsplash License](https://unsplash.com/license). They are representative photos from schools and places in Bangladesh and India, are served from `images.unsplash.com` through `next/image`, and are credited on the `/credits` page. None of them shows Webnion School & College.
 
-To switch to licensed photographs (e.g. from Unsplash or Pexels), add the files to `public/images` and update the entries in `src/data/images.ts`. Every component reads images from that registry, and raster images are automatically optimised by `next/image`. Remember to follow each source's licence and attribution requirements.
+All images are defined once in `src/data/images.ts`. To use the institution's own photos, put them in `public/images` and point the entries there.
 
 ## Accessibility & performance
 
 - Semantic landmarks, one `<h1>` per page, skip link, visible focus styles, labelled form controls with inline errors.
 - Keyboard-accessible dropdowns, mobile menu, accordion and lightbox.
 - Pausable notice ticker; all motion reduced or disabled for `prefers-reduced-motion`.
-- Static generation for every page, self-hosted fonts, lightweight SVG artwork and no heavy UI libraries.
+- Static generation for every page, self-hosted fonts, responsive, lazily loaded images and no heavy UI libraries.
 
 ## Licence
 
-Project code: all rights reserved by the repository owner unless a licence is added. Illustrations and sample PDFs were created for this project.
+Project code: all rights reserved by the repository owner unless a licence is added. Sample PDFs were created for this project; photographs belong to their Unsplash photographers.

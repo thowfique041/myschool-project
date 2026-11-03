@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     type: "website",
     siteName: site.name,
     locale: "en_BD",
-    images: [{ url: "/images/campus.svg", width: 1600, height: 1000, alt: "Webnion School & College illustration" }],
+    images: [{ url: "/icon.svg", alt: "Webnion School & College crest" }],
   },
   robots: { index: true, follow: true },
 };

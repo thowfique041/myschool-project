@@ -108,5 +108,6 @@ export const footerLinks = {
     { label: "FAQ", href: "/faq" },
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Use", href: "/terms" },
+    { label: "Photo Credits", href: "/credits" },
   ],
 };
