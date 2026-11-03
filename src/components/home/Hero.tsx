@@ -1,9 +1,8 @@
-import { PhotoCredit } from "@/components/ui/PhotoCredit";
 import Link from "next/link";
 import { ArrowRight, BellRing, BookOpenCheck, CalendarDays, Download, FileSearch, GraduationCap } from "lucide-react";
 import { ButtonLink } from "@/components/ui/primitives";
-import { Picture } from "@/components/ui/Picture";
 import { HeroIntro, NoticeTicker } from "./motion-bits";
+import { HeroSlideshow } from "./HeroSlideshow";
 import { images } from "@/data/images";
 import { sortedNotices } from "@/data/notices";
 import { site } from "@/data/site";
@@ -72,8 +71,16 @@ export function Hero() {
 
         <HeroIntro delay={0.1} className="relative">
           <div className="relative rounded-2xl bg-white p-2 shadow-[var(--shadow-lift)] ring-1 ring-line sm:p-3">
-            <Picture image={images.campus} priority sizes="(min-width: 1024px) 50vw, 100vw" className="rounded-xl" />
-            <PhotoCredit image={images.campus} prefix="Representative photo:" className="px-1 pt-2" />
+            <HeroSlideshow
+              slides={[
+                { image: images.classroom, caption: "Lessons in a full classroom" },
+                { image: images.studentAnswering, caption: "Every student gets a voice in class" },
+                { image: images.computerLab, caption: "Practical classes in the ICT lab" },
+                { image: images.primaryClass, caption: "Young learners in the primary section" },
+                { image: images.sports, caption: "Cricket on the school field" },
+                { image: images.students, caption: "Friends for life" },
+              ]}
+            />
           </div>
         </HeroIntro>
       </div>
