@@ -1,20 +1,10 @@
-import Link from "next/link";
-import { ArrowRight, BellRing, BookOpenCheck, CalendarDays, Download, FileSearch, GraduationCap } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ButtonLink } from "@/components/ui/primitives";
 import { HeroIntro, NoticeTicker } from "./motion-bits";
 import { Picture } from "@/components/ui/Picture";
 import { images } from "@/data/images";
 import { sortedNotices } from "@/data/notices";
 import { site } from "@/data/site";
-
-const quickLinks = [
-  { label: "Admission 2027", labelBn: "ভর্তি", href: "/admission", icon: GraduationCap },
-  { label: "Notice Board", labelBn: "নোটিশ", href: "/notices", icon: BellRing },
-  { label: "Result Search", labelBn: "ফলাফল", href: "/results", icon: FileSearch },
-  { label: "Class Routine", labelBn: "রুটিন", href: "/academic#routine", icon: BookOpenCheck },
-  { label: "Calendar", labelBn: "ক্যালেন্ডার", href: "/calendar", icon: CalendarDays },
-  { label: "Downloads", labelBn: "ডাউনলোড", href: "/notices#downloads", icon: Download },
-];
 
 export function Hero() {
   return (
@@ -79,24 +69,6 @@ export function Hero() {
 
       <div className="container-page relative pb-8">
         <NoticeTicker notices={sortedNotices} />
-        <nav aria-label="Quick access" className="mt-5">
-          <ul className="grid grid-cols-3 gap-2 sm:grid-cols-6 sm:gap-3">
-            {quickLinks.map(({ label, labelBn, href, icon: Icon }) => (
-              <li key={href}>
-                <Link
-                  href={href}
-                  className="group flex h-full flex-col items-center gap-1.5 rounded-lg border border-line bg-white px-2 py-3.5 text-center transition-colors hover:border-leaf-200 hover:bg-leaf-50"
-                >
-                  <Icon aria-hidden className="size-5 text-leaf-600" />
-                  <span className="text-[0.8rem] leading-tight font-semibold text-navy-900 sm:text-sm">{label}</span>
-                  <span lang="bn" className="hidden text-xs text-muted sm:block" style={{ lineHeight: 1.3 }}>
-                    {labelBn}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
       </div>
     </section>
   );
