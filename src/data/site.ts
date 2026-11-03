@@ -93,7 +93,7 @@ export const footerLinks = {
     { label: "Notice Board", href: "/notices" },
     { label: "Result Search", href: "/results" },
     { label: "Academic Calendar", href: "/calendar" },
-    { label: "Downloads", href: "/downloads" },
+    { label: "Forms & Downloads", href: "/notices#downloads" },
   ],
   institution: [
     { label: "About Us", href: "/about" },

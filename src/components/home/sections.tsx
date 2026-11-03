@@ -203,7 +203,7 @@ export function NoticesAdmissionSection() {
               <ButtonLink href="/admission#apply" variant="secondary">
                 Apply / Inquire
               </ButtonLink>
-              <ButtonLink href="/downloads" variant="outline">
+              <ButtonLink href="/notices#downloads" variant="outline">
                 Download form
               </ButtonLink>
             </div>
