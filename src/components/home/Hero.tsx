@@ -1,6 +1,6 @@
 import { PhotoCredit } from "@/components/ui/PhotoCredit";
 import Link from "next/link";
-import { ArrowRight, BellRing, BookOpenCheck, CalendarDays, Download, FileSearch, GraduationCap, Phone } from "lucide-react";
+import { ArrowRight, BellRing, BookOpenCheck, CalendarDays, Download, FileSearch, GraduationCap } from "lucide-react";
 import { ButtonLink } from "@/components/ui/primitives";
 import { Picture } from "@/components/ui/Picture";
 import { HeroIntro, NoticeTicker } from "./motion-bits";
@@ -74,12 +74,6 @@ export function Hero() {
           <div className="relative rounded-2xl bg-white p-2 shadow-[var(--shadow-lift)] ring-1 ring-line sm:p-3">
             <Picture image={images.campus} priority sizes="(min-width: 1024px) 50vw, 100vw" className="rounded-xl" />
             <PhotoCredit image={images.campus} prefix="Representative photo:" className="px-1 pt-2" />
-          </div>
-          <div className="absolute -bottom-5 right-6 hidden rounded-xl bg-navy-900 px-5 py-4 text-white shadow-[var(--shadow-lift)] sm:block">
-            <p className="text-xs text-navy-200">Admission office</p>
-            <a href={site.phoneHref} className="mt-0.5 inline-flex items-center gap-2 font-semibold hover:underline">
-              <Phone aria-hidden className="size-4 text-leaf-200" /> {site.phone}
-            </a>
           </div>
         </HeroIntro>
       </div>
