@@ -3,6 +3,7 @@ import Image from "next/image";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { DemoNote } from "@/components/ui/primitives";
 import { images } from "@/data/images";
+import type { ImageAsset } from "@/types";
 
 export const metadata: Metadata = {
   title: "Photo Credits",
@@ -10,10 +11,10 @@ export const metadata: Metadata = {
 };
 
 export default function CreditsPage() {
-  const list = Object.values(images);
+  const list: ImageAsset[] = Object.values(images).filter((img: ImageAsset) => Boolean(img.credit));
   return (
     <>
-      <PageHeader title="Photo Credits" titleBn="ছবির কৃতজ্ঞতা" description="Every photograph on this website is a free image from Unsplash, used under the Unsplash License." />
+      <PageHeader title="Photo Credits" titleBn="ছবির কৃতজ্ঞতা" description="Photographs from Unsplash are used under the Unsplash License. The home page photo was supplied by the site owner." />
       <section className="py-12 sm:py-16">
         <div className="container-page max-w-4xl">
           <DemoNote>
