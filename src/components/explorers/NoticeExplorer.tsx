@@ -3,7 +3,6 @@
 import { useDeferredValue, useMemo, useState } from "react";
 import { Search, X } from "lucide-react";
 import { NoticeRow } from "@/components/shared/cards";
-import { noticeCategories } from "@/data/notices";
 import type { Notice, NoticeCategory } from "@/types";
 import { cn, normalize } from "@/lib/utils";
 
@@ -84,8 +83,8 @@ export function NoticeExplorer({ notices }: { notices: Notice[] }) {
 
   const options: { value: Filter; label: string; count: number }[] = [
     { value: "all", label: "All", count: notices.length },
-    ...(Object.keys(noticeCategories) as NoticeCategory[])
-      .map((c) => ({ value: c as Filter, label: noticeCategories[c].label, count: notices.filter((n) => n.category === c).length }))
+    ...([...new Set(notices.map((n) => n.category))] as NoticeCategory[])
+      .map((c) => ({ value: c as Filter, label: notices.find((n) => n.category === c)?.categoryLabel ?? c, count: notices.filter((n) => n.category === c).length }))
       .filter((o) => o.count > 0),
   ];
 

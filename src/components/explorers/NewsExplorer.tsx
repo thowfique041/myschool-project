@@ -3,7 +3,6 @@
 import { useDeferredValue, useMemo, useState } from "react";
 import { NewsCard } from "@/components/shared/cards";
 import { FilterChips, SearchBox } from "./NoticeExplorer";
-import { newsCategories } from "@/data/news";
 import type { NewsArticle, NewsCategory } from "@/types";
 import { normalize } from "@/lib/utils";
 
@@ -29,7 +28,7 @@ export function NewsExplorer({ articles }: { articles: NewsArticle[] }) {
           label="Filter by category"
           value={category}
           onChange={setCategory}
-          options={[{ value: "all" as const, label: "All" }, ...used.map((c) => ({ value: c, label: newsCategories[c] }))]}
+          options={[{ value: "all" as const, label: "All" }, ...used.map((c) => ({ value: c, label: articles.find((a) => a.category === c)?.categoryLabel ?? c }))]}
         />
       </div>
       <p className="mt-5 text-sm text-muted" aria-live="polite">

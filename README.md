@@ -18,6 +18,20 @@ A complete, frontend-only website for **Webnion School & College**, a fictional 
 - **Contact** — contact cards, validated form with success state, sketch map placeholder, social links.
 - **Extras** — Students & Guardians, Academic Calendar, School Policies, FAQ, Privacy, Terms, custom 404 and error pages, sitemap and robots.
 
+## Admin panel (frontend demo)
+
+Open `/admin` and pick a role (Super Admin, Admin or Editor) to explore the content management panel:
+dashboard, homepage/website pages, notices, admissions, students, teachers, examinations and results
+(with CSV import/export), news & events, gallery, downloads, media library, contact messages,
+users, roles & permissions, activity log and site settings.
+
+**This is frontend-only.** All admin data lives in the browser's `localStorage`
+(`src/components/admin/demo-store.ts`); nothing is sent to a server, changes do not alter the
+public website, and the roles are simulated — they are not security. A real deployment would need
+a backend (database, server-side authentication with secure cookies, server-side permission checks
+and file storage). The field definitions in `src/cms/` are shared by the public site's content
+module (`src/content/`) and the admin forms, so they can be reused when a backend is added.
+
 ## Tech stack
 
 | Area | Choice |

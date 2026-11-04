@@ -1,7 +1,19 @@
 import Link from "next/link";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
-import { footerLinks, site } from "@/data/site";
+import type { SiteInfo } from "@/content/site-content";
+
+type LinkItem = { label: string; href: string };
+export type FooterContent = {
+  about: string;
+  quickTitle: string;
+  quick: LinkItem[];
+  institutionTitle: string;
+  institution: LinkItem[];
+  helpTitle: string;
+  help: LinkItem[];
+  copyright: string;
+};
 
 function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
   return (
@@ -9,7 +21,7 @@ function FooterColumn({ title, links }: { title: string; links: { label: string;
       <h2 className="text-sm font-semibold tracking-wide text-white uppercase">{title}</h2>
       <ul className="mt-4 space-y-2.5">
         {links.map((l) => (
-          <li key={l.href}>
+          <li key={l.href + l.label}>
             <Link href={l.href} className="text-[0.92rem] text-navy-200 hover:text-white hover:underline underline-offset-4">
               {l.label}
             </Link>
@@ -35,14 +47,14 @@ function SocialIcon({ label }: { label: string }) {
   );
 }
 
-export function Footer() {
+export function Footer({ site, footer, year }: { site: SiteInfo; footer: FooterContent; year: number }) {
   return (
     <footer className="bg-navy-950 text-navy-100">
       <div className="container-page grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
-          <Logo tone="dark" />
+          <Logo tone="dark" name={site.name} nameBn={site.nameBn} src={site.logo} />
           <p className="mt-5 max-w-sm text-[0.92rem] leading-relaxed text-navy-200">
-            A school and college in Sylhet offering Play to Class 12 under the national curriculum, with morning and day shifts.
+            {footer.about}
           </p>
           <ul className="mt-6 space-y-3 text-[0.92rem]">
             <li className="flex gap-3">
@@ -82,14 +94,14 @@ export function Footer() {
             ))}
           </ul>
         </div>
-        <FooterColumn title="Quick links" links={footerLinks.quick} />
-        <FooterColumn title="Institution" links={footerLinks.institution} />
-        <FooterColumn title="Help" links={footerLinks.help} />
+        <FooterColumn title={footer.quickTitle} links={footer.quick} />
+        <FooterColumn title={footer.institutionTitle} links={footer.institution} />
+        <FooterColumn title={footer.helpTitle} links={footer.help} />
       </div>
       <div className="border-t border-white/10">
         <div className="container-page flex flex-col gap-2 py-5 text-xs text-navy-300 md:flex-row md:items-center md:justify-between">
           <p>
-            © {site.established}–2026 {site.name}. Demonstration website — the institution and its details are fictional.
+            © {site.established}–{year} {site.name}. {footer.copyright}
           </p>
           <p lang="bn" style={{ lineHeight: 1.5 }}>
             {site.taglineBn}

@@ -1,7 +1,5 @@
 import type { MetadataRoute } from "next";
-import { news } from "@/data/news";
-import { notices } from "@/data/notices";
-import { site } from "@/data/site";
+import { getNews, getNotices, getSiteUrl } from "@/content/site-content";
 
 const staticRoutes = [
   "",
@@ -23,10 +21,11 @@ const staticRoutes = [
   "/credits",
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [url, notices, news] = await Promise.all([getSiteUrl(), getNotices(), getNews()]);
   return [
-    ...staticRoutes.map((path) => ({ url: `${site.url}${path}`, lastModified: "2026-11-03" })),
-    ...notices.map((n) => ({ url: `${site.url}/notices/${n.slug}`, lastModified: n.date })),
-    ...news.map((n) => ({ url: `${site.url}/news/${n.slug}`, lastModified: n.date })),
+    ...staticRoutes.map((path) => ({ url: `${url}${path}` })),
+    ...notices.map((n) => ({ url: `${url}/notices/${n.slug}`, lastModified: n.date })),
+    ...news.map((n) => ({ url: `${url}/news/${n.slug}`, lastModified: n.date })),
   ];
 }

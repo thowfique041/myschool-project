@@ -1,22 +1,20 @@
 import { Download, FileText } from "lucide-react";
 import { Badge } from "@/components/ui/primitives";
-import { downloads } from "@/data/downloads";
 import type { DownloadResource } from "@/types";
 import { formatDateEn } from "@/lib/utils";
 
-const order: DownloadResource["category"][] = ["Admission", "Academic", "Forms", "Policy"];
-
-/** Grouped list of downloadable forms and documents. */
-export function DownloadList() {
+/** Grouped list of downloadable forms and documents, in category order. */
+export function DownloadList({ downloads }: { downloads: DownloadResource[] }) {
+  const order = [...new Set(downloads.map((d) => d.category))];
+  if (!downloads.length) return <p className="text-muted">No files are available for download right now.</p>;
   return (
     <div className="space-y-8">
       {order.map((cat) => {
         const list = downloads.filter((d) => d.category === cat);
-        if (!list.length) return null;
         return (
           <section key={cat} aria-labelledby={`dl-${cat}`}>
             <h3 id={`dl-${cat}`} className="text-sm font-semibold tracking-wide text-muted uppercase">
-              {cat}
+              {list[0]?.categoryLabel ?? cat}
             </h3>
             <ul className="mt-3 divide-y divide-line rounded-xl border border-line bg-white">
               {list.map((d) => (
@@ -33,12 +31,14 @@ export function DownloadList() {
                     </p>
                     <p className="text-sm text-muted">{d.description}</p>
                     <p className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted">
-                      <Badge tone="neutral">{d.size}</Badge> Updated {formatDateEn(d.updated)}
+                      <Badge tone="neutral">{d.size}</Badge> {d.updated && <>Updated {formatDateEn(d.updated)}</>}
                     </p>
                   </div>
                   <a
                     href={d.href}
                     download
+                    target="_blank"
+                    rel="noopener"
                     className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-lg border border-line px-4 text-sm font-semibold text-navy-800 hover:border-leaf-200 hover:bg-leaf-50"
                   >
                     <Download aria-hidden className="size-4" /> Download

@@ -7,7 +7,6 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { buttonClasses } from "@/components/ui/primitives";
-import { navigation } from "@/data/site";
 import type { NavItem } from "@/types";
 import { cn } from "@/lib/utils";
 
@@ -100,7 +99,7 @@ function DesktopDropdown({ item, active }: { item: NavItem; active: boolean }) {
   );
 }
 
-function MobileMenu({ onClose, pathname }: { onClose: () => void; pathname: string }) {
+function MobileMenu({ onClose, pathname, items, ctaLabel, ctaHref }: { onClose: () => void; pathname: string; items: NavItem[]; ctaLabel: string; ctaHref: string }) {
   const [expanded, setExpanded] = useState<string | null>(null);
   const reduce = useReducedMotion();
   return (
@@ -114,7 +113,7 @@ function MobileMenu({ onClose, pathname }: { onClose: () => void; pathname: stri
     >
       <nav aria-label="Mobile" className="container-page max-h-[calc(100dvh-5rem)] overflow-y-auto py-3">
         <ul className="divide-y divide-line">
-          {navigation.map((item) => {
+          {items.map((item) => {
             const active = isActive(pathname, item);
             if (!item.children) {
               return (
@@ -165,15 +164,22 @@ function MobileMenu({ onClose, pathname }: { onClose: () => void; pathname: stri
             );
           })}
         </ul>
-        <Link href="/admission#apply" onClick={onClose} className={cn(buttonClasses("secondary"), "mt-4 mb-2 w-full")}>
-          Apply for Admission 2027
+        <Link href={ctaHref} onClick={onClose} className={cn(buttonClasses("secondary"), "mt-4 mb-2 w-full")}>
+          {ctaLabel}
         </Link>
       </nav>
     </motion.div>
   );
 }
 
-export function SiteHeader() {
+export type HeaderProps = {
+  items: NavItem[];
+  ctaLabel: string;
+  ctaHref: string;
+  brand: { name: string; nameBn: string; logo?: string };
+};
+
+export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -200,13 +206,13 @@ export function SiteHeader() {
       )}
     >
       <div className="container-page flex h-[4.5rem] items-center justify-between gap-4 sm:h-20">
-        <Link href="/" aria-label="Webnion School & College — home" className="rounded-md">
-          <Logo />
+        <Link href="/" aria-label={`${brand.name} — home`} className="rounded-md">
+          <Logo name={brand.name} nameBn={brand.nameBn} src={brand.logo} />
         </Link>
 
         <nav aria-label="Main" className="hidden lg:block">
           <ul className="flex items-center">
-            {navigation.map((item) => {
+            {items.map((item) => {
               const active = isActive(pathname, item);
               return item.children ? (
                 <DesktopDropdown key={item.label} item={item} active={active} />
@@ -229,7 +235,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link href="/admission#apply" className={cn(buttonClasses("secondary", "sm"), "max-xl:hidden")}>
+          <Link href={ctaHref} className={cn(buttonClasses("secondary", "sm"), "max-xl:hidden")}>
             Apply Now
           </Link>
           <button
@@ -245,7 +251,7 @@ export function SiteHeader() {
         </div>
       </div>
       <AnimatePresence>
-        {mobileOpen && <MobileMenu pathname={pathname} onClose={() => setMobileOpen(false)} />}
+        {mobileOpen && <MobileMenu pathname={pathname} items={items} ctaLabel={ctaLabel} ctaHref={ctaHref} onClose={() => setMobileOpen(false)} />}
       </AnimatePresence>
     </header>
   );

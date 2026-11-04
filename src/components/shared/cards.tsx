@@ -2,9 +2,6 @@ import Link from "next/link";
 import { ArrowRight, CalendarDays, Mail, MapPin, Paperclip, Phone } from "lucide-react";
 import { Badge } from "@/components/ui/primitives";
 import { Picture } from "@/components/ui/Picture";
-import { noticeCategories } from "@/data/notices";
-import { newsCategories } from "@/data/news";
-import { initials } from "@/data/teachers";
 import type { NewsArticle, Notice, Teacher } from "@/types";
 import { cn, dateParts, formatDateBn, formatDateEn } from "@/lib/utils";
 
@@ -28,14 +25,13 @@ export function DateBlock({ iso, className }: { iso: string; className?: string 
 }
 
 export function NoticeRow({ notice, compact = false }: { notice: Notice; compact?: boolean }) {
-  const cat = noticeCategories[notice.category];
   return (
     <article className="group relative flex gap-4 py-4">
       <DateBlock iso={notice.date} />
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">
           <Badge tone={notice.category === "admission" ? "leaf" : notice.category === "exam" ? "navy" : "neutral"}>
-            {cat.label}
+            {notice.categoryLabel ?? notice.category}
           </Badge>
           {notice.important && <Badge tone="signal">Important</Badge>}
           {notice.attachment && (
@@ -71,7 +67,7 @@ export function NewsCard({ article, headingLevel = "h3" }: { article: NewsArticl
       <Picture image={article.image} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" imgClassName="transition-transform duration-500 group-hover:scale-[1.03]" />
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-center gap-3 text-xs text-muted">
-          <Badge tone="leaf">{newsCategories[article.category]}</Badge>
+          <Badge tone="leaf">{article.categoryLabel ?? article.category}</Badge>
           <time dateTime={article.date}>{formatDateEn(article.date)}</time>
         </div>
         <H className="mt-3 text-lg leading-snug font-semibold text-navy-900 group-hover:text-leaf-700">
@@ -110,8 +106,34 @@ const avatarTones = [
   "bg-[#ecdfe6] text-[#6b2f4f]",
 ];
 
+function initials(name: string): string {
+  return name
+    .replace(/^(Dr\.|Md\.|Maulana)\s+/i, "")
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((p) => p[0])
+    .join("")
+    .toUpperCase();
+}
+
+function hash(s: string): number {
+  let h = 0;
+  for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return h;
+}
+
 export function TeacherAvatar({ teacher, size = "md" }: { teacher: Teacher; size?: "md" | "lg" }) {
-  const tone = avatarTones[Number(teacher.id.slice(1)) % avatarTones.length];
+  const tone = avatarTones[hash(teacher.name) % avatarTones.length];
+  if (teacher.photo) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={teacher.photo}
+        alt=""
+        className={cn("shrink-0 rounded-full object-cover ring-4 ring-white", size === "lg" ? "size-24" : "size-16")}
+      />
+    );
+  }
   return (
     <div
       aria-hidden

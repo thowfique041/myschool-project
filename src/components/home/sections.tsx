@@ -1,14 +1,10 @@
 import Link from "next/link";
 import {
-  BookMarked,
   CheckCircle2,
   ClipboardList,
-  FlaskConical,
-  Laptop,
   Music4,
   Quote,
   ShieldCheck,
-  Trophy,
   Users,
 } from "lucide-react";
 import { Badge, ButtonLink, Card, DemoNote, SampleTag, SectionHeading } from "@/components/ui/primitives";
@@ -18,49 +14,39 @@ import { Accordion } from "@/components/ui/Accordion";
 import { ArrowLink, NoticeRow, TeacherCard } from "@/components/shared/cards";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { StatCounter } from "./motion-bits";
-import { academicLevels } from "@/data/academics";
-import { admissionDates, admissionSteps } from "@/data/admission";
-import { faqs, testimonials } from "@/data/faqs";
-import { gallery } from "@/data/gallery";
-import { images } from "@/data/images";
-import { sortedNews } from "@/data/news";
-import { sortedNotices } from "@/data/notices";
-import { boardSummary } from "@/data/results";
-import { site } from "@/data/site";
-import { teachers } from "@/data/teachers";
+import type { HomeData, HomeContent, SectionCopy } from "./types";
 import { cn, formatDateEn } from "@/lib/utils";
+
+const initials = (name: string) =>
+  name
+    .replace(/^(Dr|Md|Mr|Mrs|Ms|Alhaj)\.?\s+/gi, "")
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
 
 /* ------------------------------------------------- About + principal */
 
-export function WelcomeSection() {
+export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: SectionCopy; data: HomeData }) {
+  const p = data.principal;
   return (
     <section aria-labelledby="welcome-title" className="py-16 sm:py-20">
       <div className="container-page grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
         <Reveal>
           <SectionHeading
             id="welcome-title"
-            kicker="আমাদের সম্পর্কে"
-            title="Rooted in Sylhet, focused on the whole child"
+            kicker={copy.kicker}
+            title={copy.title || home.welcomeTitle}
           />
           <div className="mt-5 space-y-4 text-[0.98rem] leading-relaxed text-muted">
-            <p>
-              Webnion School &amp; College began in {site.established} as a small primary school in Upashahar with four classrooms and
-              a single shift. Today it teaches from Play to Class 12 in two shifts, with separate primary, secondary and higher
-              secondary sections.
-            </p>
-            <p>
-              We follow the national curriculum and NCTB textbooks, and we add what families tell us matters most: steady
-              discipline, regular contact with guardians, real practical work in the labs, and time for sport, debate and
-              culture.
-            </p>
+            {home.welcomeText.map((t) => (
+              <p key={t}>{t}</p>
+            ))}
           </div>
           <ul className="mt-7 grid gap-3 sm:grid-cols-2">
-            {[
-              "Class teacher follow-up for every section",
-              "Separate study hall for SSC & HSC candidates",
-              "Guardian meetings every term",
-              "Science, ICT and library periods in the routine",
-            ].map((t) => (
+            {home.welcomePoints.map((t) => (
               <li key={t} className="flex gap-2.5 text-[0.95rem] text-ink">
                 <CheckCircle2 aria-hidden className="mt-0.5 size-5 shrink-0 text-leaf-600" />
                 {t}
@@ -77,17 +63,20 @@ export function WelcomeSection() {
             <Quote aria-hidden className="size-9 text-leaf-200/60" />
             <p lang="bn" className="mt-2 text-sm font-medium text-leaf-200">অধ্যক্ষের বাণী</p>
             <blockquote className="mt-3 font-serif text-[1.2rem] leading-relaxed sm:text-[1.3rem]">
-              “Good results matter, but they are not the only thing we measure. I want every student to leave this school
-              honest, curious and confident to speak in front of others — and every guardian to feel they can walk into our
-              office and be heard.”
+              “{p.quote}”
             </blockquote>
             <figcaption className="mt-7 flex items-center gap-4 border-t border-white/15 pt-5">
-              <span aria-hidden className="flex size-14 items-center justify-center rounded-full bg-white/10 font-serif text-lg font-semibold">
-                NA
-              </span>
+              {p.photo ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={p.photo} alt="" className="size-14 rounded-full object-cover" />
+              ) : (
+                <span aria-hidden className="flex size-14 items-center justify-center rounded-full bg-white/10 font-serif text-lg font-semibold">
+                  {initials(p.name)}
+                </span>
+              )}
               <span>
-                <span className="block font-semibold">Dr. Nasrin Akhter</span>
-                <span className="block text-sm text-navy-200">Principal (sample profile)</span>
+                <span className="block font-semibold">{p.name}</span>
+                <span className="block text-sm text-navy-200">{p.title}</span>
               </span>
             </figcaption>
             <Link href="/about#principal" className="mt-5 inline-block text-sm font-semibold text-leaf-200 hover:text-white hover:underline underline-offset-4">
@@ -102,24 +91,24 @@ export function WelcomeSection() {
 
 /* --------------------------------------------------------- Levels */
 
-export function LevelsSection() {
+export function LevelsSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
   return (
     <section aria-labelledby="levels-title" className="border-y border-line bg-white py-16 sm:py-20">
       <div className="container-page">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <SectionHeading
             id="levels-title"
-            kicker="শিক্ষা স্তর"
-            title="Three sections, one continuous journey"
-            description="Students can study with us from their first day of school until the HSC examination."
+            kicker={copy.kicker}
+            title={copy.title}
+            description={copy.description || undefined}
           />
           <ArrowLink href="/academic">Curriculum & subjects</ArrowLink>
         </div>
-        <ol className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-3">
-          {academicLevels.map((level, i) => (
+        <ol className={cn("mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line", data.levels.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2")}>
+          {data.levels.map((level, i) => (
             <Reveal as="li" key={level.id} delay={i * 0.06} className="flex flex-col bg-white p-7">
               <div className="flex items-baseline justify-between">
-                <span className="font-serif text-4xl font-semibold text-navy-100">0{i + 1}</span>
+                <span className="font-serif text-4xl font-semibold text-navy-100">{String(i + 1).padStart(2, "0")}</span>
                 <span className="text-xs font-medium text-muted">{level.ages}</span>
               </div>
               <h3 className="mt-3 font-serif text-xl font-semibold text-navy-900">
@@ -138,7 +127,7 @@ export function LevelsSection() {
                   </li>
                 ))}
               </ul>
-              {level.groups && (
+              {level.groups && level.groups.length > 0 && (
                 <div className="mt-auto flex flex-wrap gap-1.5 pt-5">
                   {level.groups.map((g) => (
                     <Badge key={g} tone="navy">
@@ -157,17 +146,18 @@ export function LevelsSection() {
 
 /* ------------------------------------------- Notices + admission */
 
-export function NoticesAdmissionSection() {
+export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
+  const adm = data.admission;
   return (
     <section aria-label="Notices and admission" className="py-16 sm:py-20">
       <div className="container-page grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
         <Reveal>
           <div className="flex items-end justify-between gap-4">
-            <SectionHeading kicker="নোটিশ বোর্ড" title="Recent notices" />
+            <SectionHeading kicker={copy.kicker} title={copy.title} description={copy.description || undefined} />
             <ArrowLink href="/notices">All notices</ArrowLink>
           </div>
           <Card className="mt-6 divide-y divide-line px-5">
-            {sortedNotices.slice(0, 5).map((n) => (
+            {data.notices.slice(0, 5).map((n) => (
               <NoticeRow key={n.slug} notice={n} compact />
             ))}
           </Card>
@@ -175,11 +165,15 @@ export function NoticesAdmissionSection() {
 
         <Reveal delay={0.08}>
           <div id="admission" className="h-full rounded-2xl border border-leaf-200 bg-leaf-50 p-6 sm:p-8">
-            <Badge tone="leaf">Admission open</Badge>
-            <h2 className="mt-3 font-serif text-2xl font-semibold text-navy-900">Admission 2027</h2>
-            <p lang="bn" className="text-sm text-leaf-700">২০২৭ শিক্ষাবর্ষে ভর্তি চলছে</p>
+            <Badge tone={adm.open ? "leaf" : "neutral"}>{adm.open ? "Admission open" : "Admission closed"}</Badge>
+            <h2 className="mt-3 font-serif text-2xl font-semibold text-navy-900">Admission {adm.year}</h2>
+            {adm.noticeTitleBn && (
+              <p lang="bn" className="text-sm text-leaf-700">
+                {adm.noticeTitleBn}
+              </p>
+            )}
             <ol className="mt-6 space-y-4">
-              {admissionSteps.slice(0, 4).map((step, i) => (
+              {adm.steps.slice(0, 4).map((step, i) => (
                 <li key={step.title} className="flex gap-3">
                   <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-leaf-600 text-sm font-semibold text-white">
                     {i + 1}
@@ -192,7 +186,7 @@ export function NoticesAdmissionSection() {
               ))}
             </ol>
             <dl className="mt-6 space-y-2 border-t border-leaf-200 pt-5 text-sm">
-              {admissionDates.slice(0, 4).map((d) => (
+              {adm.dates.slice(0, 4).map((d) => (
                 <div key={d.label} className="flex justify-between gap-4">
                   <dt className="text-muted">{d.label}</dt>
                   <dd className="shrink-0 font-semibold text-navy-900">{formatDateEn(d.date)}</dd>
@@ -223,14 +217,8 @@ const reasons = [
   { icon: Music4, title: "Life beyond the textbook", text: "Debate, scouting, art, cultural programmes and sports are part of the routine, not extras." },
 ];
 
-const facilities = [
-  { title: "Science laboratories", text: "Separate physics, chemistry and biology labs for SSC and HSC practicals.", image: images.scienceLab, icon: FlaskConical },
-  { title: "ICT lab", text: "Thirty student workstations with timetabled practical classes.", image: images.computerLab, icon: Laptop },
-  { title: "Central library", text: "Bangla and English collections, reference books and a quiet reading hall.", image: images.library, icon: BookMarked },
-  { title: "Playground & sports", text: "Open field for cricket, football and the annual sports day.", image: images.sports, icon: Trophy },
-];
 
-export function WhyFacilitiesSection() {
+export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
   return (
     <section aria-labelledby="why-title" className="bg-navy-950 py-16 text-white sm:py-20">
       <div className="container-page">
@@ -239,9 +227,9 @@ export function WhyFacilitiesSection() {
             <SectionHeading
               id="why-title"
               tone="dark"
-              kicker="কেন ওয়েবনিয়ন"
-              title="Why families choose Webnion"
-              description="What guardians tell us during admission interviews — and what we work hardest to keep true."
+              kicker={copy.kicker}
+              title={copy.title}
+              description={copy.description || undefined}
             />
             <ul className="mt-8 space-y-6">
               {reasons.map(({ icon: Icon, title, text }) => (
@@ -262,12 +250,13 @@ export function WhyFacilitiesSection() {
               <h3 className="flex items-center gap-2 text-sm font-semibold tracking-wide text-leaf-200 uppercase">Facilities</h3>
             </Reveal>
             <ul className="mt-4 grid gap-4 sm:grid-cols-2">
-              {facilities.map(({ title, text, image, icon: Icon }, i) => (
+              {data.facilities.map(({ title, text, image, imageAlt }, i) => (
                 <Reveal as="li" key={title} delay={i * 0.05} className="overflow-hidden rounded-xl bg-white/[0.04] ring-1 ring-white/10">
-                  <Picture image={image} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" ratio="aspect-[16/9]" />
+                  {image && (
+                    <Picture image={{ src: image, alt: imageAlt, width: 1600, height: 900 }} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" ratio="aspect-[16/9]" />
+                  )}
                   <div className="p-4">
-                    <h4 className="flex items-center gap-2 font-semibold">
-                      <Icon aria-hidden className="size-4 text-leaf-200" />
+                    <h4 className="font-semibold">
                       {title}
                     </h4>
                     <p className="mt-1 text-sm text-navy-200">{text}</p>
@@ -287,31 +276,31 @@ export function WhyFacilitiesSection() {
 
 /* --------------------------------------------------- Results */
 
-export function ResultsSection() {
-  const ssc = boardSummary[0];
-  const hsc = boardSummary[2];
-  const stats = [
-    { label: `SSC ${ssc.year} pass rate`, value: (ssc.passed / ssc.examinees) * 100, suffix: "%", decimals: 1 },
-    { label: `SSC ${ssc.year} GPA 5.00`, value: ssc.aPlus, suffix: "", decimals: 0 },
-    { label: `HSC ${hsc.year} pass rate`, value: (hsc.passed / hsc.examinees) * 100, suffix: "%", decimals: 1 },
-    { label: `HSC ${hsc.year} GPA 5.00`, value: hsc.aPlus, suffix: "", decimals: 0 },
-  ];
+export function ResultsSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
+  const rows = data.board.rows;
+  const latest = (exam: string) => rows.filter((r) => r.exam === exam).sort((a, b) => b.year.localeCompare(a.year))[0];
+  const stats = [latest("SSC"), latest("HSC")]
+    .filter((r): r is NonNullable<typeof r> => Boolean(r && r.examinees))
+    .flatMap((r) => [
+      { label: `${r.exam} ${r.year} pass rate`, value: (r.passed / r.examinees) * 100, suffix: "%", decimals: 1 },
+      { label: `${r.exam} ${r.year} GPA 5.00`, value: r.aPlus, suffix: "", decimals: 0 },
+    ]);
   return (
     <section aria-labelledby="results-title" className="py-16 sm:py-20">
       <div className="container-page">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <SectionHeading
             id="results-title"
-            kicker="ফলাফল"
-            title="Public examination results"
-            description="A summary of recent SSC and HSC results. Figures shown here are illustrative sample data for this demonstration site."
+            kicker={copy.kicker}
+            title={copy.title}
+            description={copy.description || undefined}
           />
           <div className="flex items-center gap-3">
-            <SampleTag />
+            {data.board.isSample && <SampleTag />}
             <ArrowLink href="/results">Result search</ArrowLink>
           </div>
         </div>
-        <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-4">
+        <dl className={cn("mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line", stats.length >= 4 && "lg:grid-cols-4")}>
           {stats.map((s) => (
             <div key={s.label} className="bg-white p-6">
               <dt className="text-sm text-muted">{s.label}</dt>
@@ -321,21 +310,6 @@ export function ResultsSection() {
             </div>
           ))}
         </dl>
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
-          {[
-            { title: "Science fair", text: "42 projects at the 2026 inter-class science fair.", image: images.scienceFair },
-            { title: "Debate", text: "HSC team reached a district-level final (sample).", image: images.speaker },
-            { title: "Prize-giving", text: "Annual awards for merit, attendance and conduct.", image: images.studentAnswering },
-          ].map((a) => (
-            <Reveal key={a.title} className="flex items-center gap-4 rounded-xl border border-line bg-white p-3">
-              <Picture image={a.image} ratio="aspect-square" className="w-20 shrink-0 rounded-lg" sizes="80px" />
-              <div>
-                <p className="font-semibold text-navy-900">{a.title}</p>
-                <p className="text-sm text-muted">{a.text}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
       </div>
     </section>
   );
@@ -343,13 +317,15 @@ export function ResultsSection() {
 
 /* ----------------------------------------------------- News */
 
-export function NewsSection() {
-  const [featured, ...rest] = sortedNews;
+export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
+  const featured = data.news.find((n) => n.featured) ?? data.news[0];
+  const rest = data.news.filter((n) => n !== featured);
+  if (!featured) return null;
   return (
     <section aria-labelledby="news-title" className="border-y border-line bg-white py-16 sm:py-20">
       <div className="container-page">
         <div className="flex items-end justify-between gap-6">
-          <SectionHeading id="news-title" kicker="খবর ও অনুষ্ঠান" title="News & events" />
+          <SectionHeading id="news-title" kicker={copy.kicker} title={copy.title} description={copy.description || undefined} />
           <ArrowLink href="/news">All news</ArrowLink>
         </div>
         <div className="mt-10 grid gap-6 lg:grid-cols-[1.25fr_1fr]">
@@ -395,13 +371,13 @@ export function NewsSection() {
 
 /* ------------------------------------------------- Gallery */
 
-export function GalleryPreview() {
-  const picks = gallery.filter((g) => ["g03", "g04", "g06", "g07", "g09", "g02", "g05", "g14"].includes(g.id));
+export function GalleryPreview({ copy, data }: { copy: SectionCopy; data: HomeData }) {
+  const picks = data.gallery.slice(0, 8);
   return (
     <section aria-labelledby="gallery-title" className="py-16 sm:py-20">
       <div className="container-page">
         <div className="flex items-end justify-between gap-6">
-          <SectionHeading id="gallery-title" kicker="ফটো গ্যালারি" title="Campus life" />
+          <SectionHeading id="gallery-title" kicker={copy.kicker} title={copy.title} description={copy.description || undefined} />
           <ArrowLink href="/gallery">Open gallery</ArrowLink>
         </div>
         <ul className="mt-10 grid auto-rows-[9rem] grid-cols-2 gap-3 sm:auto-rows-[11rem] md:grid-cols-4">
@@ -428,17 +404,17 @@ export function GalleryPreview() {
 
 /* --------------------------------------- Teachers + testimonials */
 
-export function PeopleSection() {
-  const picks = teachers.filter((t) => ["t02", "t04", "t05", "t07"].includes(t.id));
+export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
+  const picks = data.people.filter((t) => t.kind !== "staff").slice(0, 4);
   return (
     <section aria-labelledby="faculty-title" className="border-y border-line bg-white py-16 sm:py-20">
       <div className="container-page">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <SectionHeading
             id="faculty-title"
-            kicker="শিক্ষকমণ্ডলী"
-            title="Teachers who know their subjects — and their students"
-            description="Faculty profiles are sample entries. Portraits use initials rather than invented photographs."
+            kicker={copy.kicker}
+            title={copy.title}
+            description={copy.description || undefined}
           />
           <ArrowLink href="/teachers">Meet all teachers</ArrowLink>
         </div>
@@ -450,13 +426,13 @@ export function PeopleSection() {
           ))}
         </ul>
 
-        <div className="mt-16">
+        {data.testimonials.length > 0 && <div className="mt-16">
           <div className="flex flex-wrap items-center gap-3">
             <h3 className="font-serif text-xl font-semibold text-navy-900">Guardians &amp; students say</h3>
             <SampleTag />
           </div>
           <ul className="mt-6 grid gap-5 md:grid-cols-3">
-            {testimonials.map((t, i) => (
+            {data.testimonials.map((t, i) => (
               <Reveal as="li" key={i} delay={i * 0.05}>
                 <figure className="flex h-full flex-col rounded-xl border border-line bg-paper p-6">
                   <Quote aria-hidden className="size-6 text-leaf-500" />
@@ -471,7 +447,7 @@ export function PeopleSection() {
               </Reveal>
             ))}
           </ul>
-        </div>
+        </div>}
       </div>
     </section>
   );
@@ -479,13 +455,14 @@ export function PeopleSection() {
 
 /* ------------------------------------------------- FAQ + contact */
 
-export function FaqContactSection() {
+export function FaqContactSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
+  const site = data.site;
   return (
     <section aria-label="Frequently asked questions and contact" className="py-16 sm:py-20">
       <div className="container-page grid gap-12 lg:grid-cols-2">
         <Reveal>
-          <SectionHeading kicker="সাধারণ জিজ্ঞাসা" title="Frequently asked questions" />
-          <Accordion className="mt-6" items={faqs.slice(0, 6)} />
+          <SectionHeading kicker={copy.kicker} title={copy.title} description={copy.description || undefined} />
+          <Accordion className="mt-6" items={data.faqs.slice(0, 6)} />
           <ArrowLink href="/faq" className="mt-5">
             More questions
           </ArrowLink>
@@ -495,7 +472,7 @@ export function FaqContactSection() {
           <Card className="mt-6 p-5 sm:p-7">
             <ContactForm />
           </Card>
-          <DemoNote className="mt-4">{site.demoNote}</DemoNote>
+          {site.demoNote && <DemoNote className="mt-4">{site.demoNote}</DemoNote>}
         </Reveal>
       </div>
     </section>

@@ -5,7 +5,6 @@ import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
 import { FilterChips } from "./NoticeExplorer";
-import { galleryCategories } from "@/data/gallery";
 import type { GalleryCategory, GalleryItem } from "@/types";
 
 function Lightbox({
@@ -77,7 +76,7 @@ function Lightbox({
       >
         <div className="mb-3 flex items-center justify-between gap-4 text-white">
           <p className="text-sm text-navy-200">
-            {index + 1} / {items.length} · {galleryCategories[item.category]}
+            {index + 1} / {items.length} · {item.categoryLabel ?? item.category}
           </p>
           <button
             ref={closeRef}
@@ -143,9 +142,9 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
 
   const options = [
     { value: "all" as const, label: "All", count: items.length },
-    ...(Object.keys(galleryCategories) as GalleryCategory[]).map((c) => ({
+    ...([...new Set(items.map((i) => i.category))] as GalleryCategory[]).map((c) => ({
       value: c,
-      label: galleryCategories[c],
+      label: items.find((i) => i.category === c)?.categoryLabel ?? c,
       count: items.filter((i) => i.category === c).length,
     })),
   ];
