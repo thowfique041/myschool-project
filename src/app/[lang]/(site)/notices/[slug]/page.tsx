@@ -37,7 +37,7 @@ export default async function NoticeDetailPage({ params }: PageProps<"/[lang]/no
       <PageHeader title={t.notices.notice} headingAs="p" crumbs={[{ label: lang === "bn" ? "নোটিশ বোর্ড" : "Notice Board", href: "/notices" }]} />
       <section className="py-12 sm:py-16">
         <div className="container-page grid gap-10 lg:grid-cols-[1fr_20rem]">
-          <article className="rounded-2xl border border-line bg-surface p-6 shadow-[var(--shadow-card)] sm:p-10">
+          <article className="rounded-md border border-line bg-surface p-6 shadow-[var(--shadow-card)] sm:p-10">
             <div className="flex flex-wrap items-center gap-2">
               <Badge tone="navy">{cat.label}</Badge>
               {notice.important && <Badge tone="signal">{t.common.important}</Badge>}
@@ -70,7 +70,7 @@ export default async function NoticeDetailPage({ params }: PageProps<"/[lang]/no
                 href={notice.attachment.href}
                 target="_blank"
                 rel="noopener"
-                className="mt-8 flex items-center gap-4 rounded-xl border border-line bg-paper p-4 transition-colors hover:border-leaf-200"
+                className="mt-8 flex items-center gap-4 rounded-md border border-line bg-paper p-4 transition-colors hover:border-leaf-200"
               >
                 <FileText aria-hidden className="size-8 shrink-0 text-danger" />
                 <span className="min-w-0 flex-1">
@@ -92,7 +92,7 @@ export default async function NoticeDetailPage({ params }: PageProps<"/[lang]/no
           </article>
 
           <aside aria-labelledby="related-notices" className="space-y-6">
-            <div className="rounded-xl border border-line bg-surface px-5">
+            <div className="rounded-md border border-line bg-surface px-5">
               <h2 id="related-notices" className="pt-5 font-semibold text-heading">
                 {related.length ? t.notices.more(cat.label) : t.notices.recent}
               </h2>

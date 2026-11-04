@@ -36,7 +36,7 @@ export default async function PoliciesPage() {
           </nav>
           <div className="space-y-6">
             {all.map((p, i) => (
-              <section key={p.id} id={p.id} aria-labelledby={`${p.id}-h`} className="scroll-mt-28 rounded-xl border border-line bg-surface p-6">
+              <section key={p.id} id={p.id} aria-labelledby={`${p.id}-h`} className="scroll-mt-28 rounded-md border border-line bg-surface p-6">
                 <h2 id={`${p.id}-h`} className="font-serif text-xl font-semibold text-heading">
                   {lang === "bn" ? toBnDigits(i + 1) : i + 1}. {p.title}
                 </h2>

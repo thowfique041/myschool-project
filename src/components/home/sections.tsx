@@ -1,7 +1,7 @@
 import { DefaultAvatar } from "@/components/ui/DefaultAvatar";
 import Link from "@/components/i18n/Link";
 import {
-  CheckCircle2,
+
   ClipboardList,
   Music4,
   Quote,
@@ -33,30 +33,21 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
             title={copy.title || home.welcomeTitle}
           />
           <div className="mt-5 space-y-4 text-[0.98rem] leading-relaxed text-muted">
-            {home.welcomeText.map((t) => (
+            {home.welcomeText.slice(0, 1).map((t) => (
               <p key={t}>{t}</p>
             ))}
           </div>
-          <ul className="mt-7 grid gap-3 sm:grid-cols-2">
-            {home.welcomePoints.map((t) => (
-              <li key={t} className="flex gap-2.5 text-[0.95rem] text-ink">
-                <CheckCircle2 aria-hidden className="mt-0.5 size-5 shrink-0 text-accent" />
-                {t}
-              </li>
-            ))}
-          </ul>
-          <ArrowLink href="/about" className="mt-7">
+          <ArrowLink href="/about" className="mt-6">
             {data.t.home.readHistory}
           </ArrowLink>
         </Reveal>
 
         <Reveal delay={0.08}>
-          <figure id="principal" className="relative h-full rounded-2xl bg-navy-900 p-7 text-white sm:p-9">
-            <Quote aria-hidden className="size-9 text-leaf-200/60" />
-            <p className="mt-2 text-sm font-medium text-leaf-200">
+          <figure id="principal" className="relative h-full rounded-md bg-navy-900 p-7 text-white sm:p-9">
+            <p className="text-sm font-medium text-leaf-200">
               {data.t.home.principalMessage}
             </p>
-            <blockquote className="mt-3 font-serif text-[1.2rem] leading-relaxed sm:text-[1.3rem]">
+            <blockquote className="mt-3 text-[1.08rem] leading-relaxed sm:text-[1.15rem]">
               “{p.quote}”
             </blockquote>
             <figcaption className="mt-7 flex items-center gap-4 border-t border-white/15 pt-5">
@@ -96,26 +87,14 @@ export function LevelsSection({ copy, data }: { copy: SectionCopy; data: HomeDat
           />
           <ArrowLink href="/academic">{data.t.home.curriculum}</ArrowLink>
         </div>
-        <ol className={cn("mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line", data.levels.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2")}>
+        <ol className={cn("mt-10 grid gap-px overflow-hidden rounded-md border border-line bg-line", data.levels.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2")}>
           {data.levels.map((level, i) => (
             <Reveal as="li" key={level.id} delay={i * 0.06} className="flex flex-col bg-surface p-7">
-              <div className="flex items-baseline justify-between">
-                <span className="font-serif text-4xl font-semibold text-navy-100 dark:text-navy-700">{num(String(i + 1).padStart(2, "0"), data.lang)}</span>
-                <span className="text-xs font-medium text-muted">{level.ages}</span>
-              </div>
-              <h3 className="mt-3 font-serif text-xl font-semibold text-heading">
+              <h3 className="font-serif text-xl font-bold text-heading">
                 {level.name}
               </h3>
-              <p className="text-sm font-semibold text-accent">{level.classes}</p>
+              <p className="text-sm font-semibold text-accent">{level.classes} · {level.ages}</p>
               <p className="mt-3 text-[0.95rem] leading-relaxed text-muted">{level.summary}</p>
-              <ul className="mt-4 space-y-1.5 text-sm text-ink">
-                {level.highlights.map((h) => (
-                  <li key={h} className="flex gap-2">
-                    <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-leaf-500" />
-                    {h}
-                  </li>
-                ))}
-              </ul>
               {level.groups && level.groups.length > 0 && (
                 <div className="mt-auto flex flex-wrap gap-1.5 pt-5">
                   {level.groups.map((g) => (
@@ -153,7 +132,7 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
         </Reveal>
 
         <Reveal delay={0.08}>
-          <div id="admission" className="h-full rounded-2xl border border-leaf-200 bg-leaf-50 p-6 sm:p-8">
+          <div id="admission" className="h-full rounded-md border border-leaf-200 bg-leaf-50 p-6 sm:p-8">
             <Badge tone={adm.open ? "leaf" : "neutral"}>{adm.open ? data.t.home.admissionOpen : data.t.home.admissionClosed}</Badge>
             <h2 className="mt-3 font-serif text-2xl font-semibold text-heading">
               {data.t.home.admission} {num(adm.year, data.lang)}
@@ -163,19 +142,6 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
                 {data.lang === "bn" ? adm.noticeTitleBn : adm.noticeTitle}
               </p>
             )}
-            <ol className="mt-6 space-y-4">
-              {adm.steps.slice(0, 4).map((step, i) => (
-                <li key={step.title} className="flex gap-3">
-                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-leaf-600 text-sm font-semibold text-white">
-                    {num(i + 1, data.lang)}
-                  </span>
-                  <div>
-                    <p className="font-semibold text-heading">{step.title}</p>
-                    <p className="text-sm text-muted">{step.text}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
             <dl className="mt-6 space-y-2 border-t border-leaf-200 pt-5 text-sm">
               {adm.dates.slice(0, 4).map((d) => (
                 <div key={d.label} className="flex justify-between gap-4">
@@ -240,7 +206,7 @@ export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: 
             </Reveal>
             <ul className="mt-4 grid gap-4 sm:grid-cols-2">
               {data.facilities.map(({ title, text, image, imageAlt }, i) => (
-                <Reveal as="li" key={title} delay={i * 0.05} className="overflow-hidden rounded-xl bg-white/[0.04] ring-1 ring-white/10">
+                <Reveal as="li" key={title} delay={i * 0.05} className="overflow-hidden rounded-md bg-white/[0.04] ring-1 ring-white/10">
                   {image && (
                     <Picture image={{ src: image, alt: imageAlt, width: 1600, height: 900 }} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" ratio="aspect-[16/9]" />
                   )}
@@ -289,7 +255,7 @@ export function ResultsSection({ copy, data }: { copy: SectionCopy; data: HomeDa
             <ArrowLink href="/results">{data.t.home.resultSearch}</ArrowLink>
           </div>
         </div>
-        <dl className={cn("mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line", stats.length >= 4 && "lg:grid-cols-4")}>
+        <dl className={cn("mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-md border border-line bg-line", stats.length >= 4 && "lg:grid-cols-4")}>
           {stats.map((s) => (
             <div key={s.label} className="bg-surface p-6">
               <dt className="text-sm text-muted">{s.label}</dt>
@@ -319,7 +285,7 @@ export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData 
         </div>
         <div className="mt-10 grid gap-6 lg:grid-cols-[1.25fr_1fr]">
           <Reveal>
-            <article className="group relative h-full overflow-hidden rounded-2xl border border-line bg-paper">
+            <article className="group relative h-full overflow-hidden rounded-md border border-line bg-paper">
               <Picture image={featured.image} sizes="(min-width: 1024px) 55vw, 100vw" imgClassName="transition-transform duration-500 group-hover:scale-[1.02]" />
               <div className="p-6">
                 <div className="flex items-center gap-3 text-xs text-muted">
@@ -375,7 +341,7 @@ export function GalleryPreview({ copy, data }: { copy: SectionCopy; data: HomeDa
               as="li"
               key={g.id}
               delay={i * 0.04}
-              className={cn("group relative overflow-hidden rounded-xl", i === 0 && "col-span-2 row-span-2", i === 3 && "md:col-span-2")}
+              className={cn("group relative overflow-hidden rounded-md", i === 0 && "col-span-2 row-span-2", i === 3 && "md:col-span-2")}
             >
               <Link href="/gallery" className="block h-full" aria-label={data.t.home.galleryOpen(g.caption)}>
                 <Picture image={g.image} ratio="h-full" sizes="(min-width: 768px) 50vw, 100vw" imgClassName="transition-transform duration-500 group-hover:scale-[1.04]" />
@@ -423,7 +389,7 @@ export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeDat
           <ul className="mt-6 grid gap-5 md:grid-cols-3">
             {data.testimonials.map((t, i) => (
               <Reveal as="li" key={i} delay={i * 0.05}>
-                <figure className="flex h-full flex-col rounded-xl border border-line bg-paper p-6">
+                <figure className="flex h-full flex-col rounded-md border border-line bg-paper p-6">
                   <Quote aria-hidden className="size-6 text-leaf-500" />
                   <blockquote className="mt-3 flex-1 text-[0.97rem] leading-relaxed text-ink">
                     {t.quote}

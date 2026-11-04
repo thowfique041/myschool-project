@@ -19,8 +19,8 @@ function shade(hex: string, defaultHex: string): Record<string, string> | null {
 
 /** Brand colour overrides from Settings → Branding, as CSS custom properties. */
 function brandingCss(primary: string, accent: string): string {
-  const p = shade(primary, "#172c4a");
-  const a = shade(accent, "#0c7351");
+  const p = shade(primary, "#2c2522");
+  const a = shade(accent, "#8a2330");
   const rules: string[] = [];
   if (p) rules.push(`--color-navy-700:${p.light};--color-navy-800:${p.base};--color-navy-900:${p.dark};--color-navy-950:${p.darker};`);
   if (a) rules.push(`--color-leaf-500:${a.light};--color-leaf-600:${a.base};--color-leaf-700:${a.dark};--color-leaf-800:${a.darker};`);

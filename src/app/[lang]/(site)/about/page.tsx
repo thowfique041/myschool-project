@@ -1,6 +1,5 @@
 import { DefaultAvatar } from "@/components/ui/DefaultAvatar";
 import type { Metadata } from "next";
-import { Compass, Eye, HeartHandshake } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ButtonLink, Card, DemoNote, SectionHeading } from "@/components/ui/primitives";
 import { Picture } from "@/components/ui/Picture";
@@ -108,7 +107,6 @@ export default async function AboutPage() {
   const n = (v: string | number) => (lang === "bn" ? toBnDigits(v) : String(v));
   const { milestones, committee } = about;
   const values = mission.values;
-  const staff = teachers.length;
   return (
     <>
       <PageHeader
@@ -127,24 +125,10 @@ export default async function AboutPage() {
                 <p key={p}>{p}</p>
               ))}
             </div>
-            <dl className="mt-8 grid grid-cols-3 gap-4 border-t border-line pt-6">
-              <div>
-                <dt className="text-xs text-muted">{c.established}</dt>
-                <dd className="font-serif text-2xl font-semibold text-heading">{n(site.established)}</dd>
-              </div>
-              <div>
-                <dt className="text-xs text-muted">{c.classes}</dt>
-                <dd className="font-serif text-2xl font-semibold text-heading">{c.classesVal}</dd>
-              </div>
-              <div>
-                <dt className="text-xs text-muted">{c.faculty}</dt>
-                <dd className="font-serif text-2xl font-semibold text-heading">{n(staff)}</dd>
-              </div>
-            </dl>
           </Reveal>
           <Reveal delay={0.06}>
             {about.overviewImage && (
-              <Picture image={{ src: about.overviewImage, alt: c.photoAlt(lang === "bn" ? site.nameBn : site.name), width: 1600, height: 1000 }} className="rounded-2xl" sizes="(min-width: 1024px) 50vw, 100vw" />
+              <Picture image={{ src: about.overviewImage, alt: c.photoAlt(lang === "bn" ? site.nameBn : site.name), width: 1600, height: 1000 }} className="rounded-md" sizes="(min-width: 1024px) 50vw, 100vw" />
             )}
           </Reveal>
         </div>
@@ -153,32 +137,22 @@ export default async function AboutPage() {
       {/* Mission & vision */}
       <section aria-labelledby="mission" className="border-y border-line bg-surface py-16 sm:py-20">
         <div className="container-page">
-          <SectionHeading id="mission" kicker={c.missionK} title={c.missionTitle} align="center" />
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            <Reveal>
-              <Card className="h-full p-7">
-                <Compass aria-hidden className="size-7 text-accent" />
-                <h3 className="mt-4 font-serif text-xl font-semibold text-heading">{c.mission}</h3>
-                <p className="mt-2 leading-relaxed text-muted">{mission.mission}</p>
-              </Card>
-            </Reveal>
-            <Reveal delay={0.06}>
-              <Card className="h-full p-7">
-                <Eye aria-hidden className="size-7 text-accent" />
-                <h3 className="mt-4 font-serif text-xl font-semibold text-heading">{c.vision}</h3>
-                <p className="mt-2 leading-relaxed text-muted">{mission.vision}</p>
-              </Card>
-            </Reveal>
+          <div className="grid gap-10 lg:grid-cols-2">
+            <div>
+              <h2 id="mission" className="text-2xl font-bold text-heading">{c.mission}</h2>
+              <p className="mt-2 leading-relaxed text-ink">{mission.mission}</p>
+              <h2 className="mt-8 text-2xl font-bold text-heading">{c.vision}</h2>
+              <p className="mt-2 leading-relaxed text-ink">{mission.vision}</p>
+            </div>
+            <dl className="divide-y divide-line border-y border-line">
+              {values.map((v) => (
+                <div key={v.title} className="py-3">
+                  <dt className="font-semibold text-heading">{v.title}</dt>
+                  <dd className="text-[0.95rem] text-muted">{v.text}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
-          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((v, i) => (
-              <Reveal as="li" key={v.title} delay={i * 0.04} className="rounded-xl border border-line bg-paper p-5">
-                <HeartHandshake aria-hidden className="size-5 text-accent" />
-                <h3 className="mt-3 font-semibold text-heading">{v.title}</h3>
-                <p className="mt-1 text-sm text-muted">{v.text}</p>
-              </Reveal>
-            ))}
-          </ul>
         </div>
       </section>
 
@@ -257,7 +231,7 @@ export default async function AboutPage() {
         <div className="container-page grid gap-12 lg:grid-cols-2">
           <div className="min-w-0">
             <SectionHeading id="committee-title" kicker={c.committeeK} title={c.committee} description={site.demoNote ? c.committeeSample : undefined} />
-            <div className="mt-6 overflow-x-auto rounded-xl border border-line">
+            <div className="mt-6 overflow-x-auto rounded-md border border-line">
               <table className="w-full min-w-[28rem] text-left text-sm">
                 <thead className="bg-paper text-xs text-muted uppercase">
                   <tr>

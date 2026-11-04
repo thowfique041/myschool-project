@@ -57,7 +57,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
       { label: "Shifts", value: "Morning & Day" },
       { label: "Curriculum", value: "National (NCTB)" },
     ],
-    welcomeTitle: "Rooted in Sylhet, focused on the whole child",
+    welcomeTitle: "About the school",
     welcomeText: [
       "Webnion School & College began in 1998 as a small primary school in Upashahar with four classrooms and a single shift. Today it teaches from Play to Class 12 in two shifts, with separate primary, secondary and higher secondary sections.",
       "We follow the national curriculum and NCTB textbooks, and we add what families tell us matters most: steady discipline, regular contact with guardians, real practical work in the labs, and time for sport, debate and culture.",
@@ -70,14 +70,14 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
     ],
     sections: [
       { key: "welcome", enabled: true, kicker: "About us", title: "", description: "" },
-      { key: "levels", enabled: true, kicker: "Academic levels", title: "Three sections, one continuous journey", description: "Students can study with us from their first day of school until the HSC examination." },
+      { key: "levels", enabled: true, kicker: "Academic levels", title: "Academic sections", description: "" },
       { key: "notices", enabled: true, kicker: "Notice board", title: "Recent notices", description: "" },
-      { key: "facilities", enabled: true, kicker: "Why Webnion", title: "Why families choose Webnion", description: "What guardians tell us during admission interviews, and what we work hardest to keep true." },
-      { key: "results", enabled: true, kicker: "Results", title: "Public examination results", description: "A summary of recent SSC and HSC results." },
+      { key: "facilities", enabled: false, kicker: "Why Webnion", title: "Why families choose Webnion", description: "What guardians tell us during admission interviews, and what we work hardest to keep true." },
+      { key: "results", enabled: true, kicker: "Results", title: "SSC and HSC results", description: "" },
       { key: "news", enabled: true, kicker: "News & events", title: "News & events", description: "" },
       { key: "gallery", enabled: true, kicker: "Photo gallery", title: "Campus life", description: "" },
-      { key: "people", enabled: true, kicker: "Our teachers", title: "Teachers who know their subjects, and their students", description: "" },
-      { key: "faq", enabled: true, kicker: "FAQ", title: "Frequently asked questions", description: "" },
+      { key: "people", enabled: false, kicker: "Our teachers", title: "Teachers who know their subjects, and their students", description: "" },
+      { key: "faq", enabled: false, kicker: "FAQ", title: "Frequently asked questions", description: "" },
     ],
   },
   site: {
@@ -101,7 +101,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
     demoNote: staticSite.demoNote,
   },
   social: { links: staticSite.social.map((s) => ({ ...s })) },
-  branding: { logo: "", favicon: "", primary: "#172c4a", accent: "#0c7351" },
+  branding: { logo: "", favicon: "", primary: "#2c2522", accent: "#8a2330" },
   seo: {
     title: `${staticSite.name} | Sylhet`,
     description:
