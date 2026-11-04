@@ -25,9 +25,11 @@ import {
   getTestimonials,
 } from "@/content/site-content";
 import type { AdmissionContent, PrincipalContent } from "./types";
+import { getI18n } from "@/i18n/server";
 
 export async function loadHomeData(): Promise<HomeData> {
-  const [site, notices, news, gallery, people, academic, faqs, testimonials, facilities, admission, principal, board] = await Promise.all([
+  const [{ t, lang }, site, notices, news, gallery, people, academic, faqs, testimonials, facilities, admission, principal, board] = await Promise.all([
+    getI18n(),
     getSite(),
     getNotices(),
     getNews(),
@@ -41,7 +43,7 @@ export async function loadHomeData(): Promise<HomeData> {
     getSetting<PrincipalContent>("principal"),
     getBoardResults(),
   ]);
-  return { site, notices, news, gallery: gallery.items, people, levels: academic.levels, faqs, testimonials, facilities, admission, principal, board };
+  return { t, lang, site, notices, news, gallery: gallery.items, people, levels: academic.levels, faqs, testimonials, facilities, admission, principal, board };
 }
 
 /** Renders the homepage from its CMS content: enabled sections, in the saved order. */

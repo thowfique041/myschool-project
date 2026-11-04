@@ -1,5 +1,7 @@
 import type { AcademicLevel, FaqItem, GalleryItem, NewsArticle, Notice, Teacher, Testimonial } from "@/types";
 import type { SiteInfo } from "@/content/site-content";
+import type { Dictionary } from "@/i18n/dict";
+import type { Locale } from "@/i18n/config";
 
 export type SectionCopy = { key: string; enabled: boolean; kicker: string; title: string; description: string };
 
@@ -44,6 +46,8 @@ export type AdmissionContent = {
 export type PrincipalContent = { name: string; title: string; photo: string; quote: string; message: string[]; messageBn: string };
 
 export type HomeData = {
+  t: Dictionary;
+  lang: Locale;
   site: SiteInfo;
   notices: Notice[];
   news: NewsArticle[];

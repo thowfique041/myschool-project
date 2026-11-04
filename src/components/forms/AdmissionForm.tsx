@@ -1,5 +1,9 @@
 "use client";
 
+import { useI18n } from "@/i18n/client";
+import type { Dictionary } from "@/i18n/dict";
+import { term } from "@/content/bn";
+
 import { useState, type FormEvent } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { CheckCircle2, Loader2, Printer, RotateCcw } from "lucide-react";
@@ -43,29 +47,33 @@ const empty: Values = {
 
 const needsPreviousSchool = (cls: string) => !["", "Play", "Nursery", "Class 1"].includes(cls);
 
-function validate(v: Values): Errors {
+function validate(v: Values, t: Dictionary): Errors {
+  const m = t.admissionForm.errors;
   const e: Errors = {};
-  if (v.studentName.trim().length < 3) e.studentName = "Enter the student's full name.";
-  if (!v.dob) e.dob = "Enter the date of birth.";
+  if (v.studentName.trim().length < 3) e.studentName = m.studentName;
+  if (!v.dob) e.dob = m.dob;
   else {
     const year = Number(v.dob.slice(0, 4));
-    if (year < 2004 || year > 2023) e.dob = "Please check the year of birth.";
+    if (year < 2004 || year > 2023) e.dob = m.dobYear;
   }
-  if (!v.gender) e.gender = "Select one.";
-  if (!v.classApplied) e.classApplied = "Select the class you are applying for.";
-  if (!v.shift) e.shift = "Select a preferred shift.";
+  if (!v.gender) e.gender = m.gender;
+  if (!v.classApplied) e.classApplied = m.classApplied;
+  if (!v.shift) e.shift = m.shift;
   if (needsPreviousSchool(v.classApplied) && v.previousSchool.trim().length < 3)
-    e.previousSchool = "Previous school is required for Class 2 and above.";
-  if (v.guardianName.trim().length < 3) e.guardianName = "Enter the guardian's name.";
-  if (!v.relation) e.relation = "Select the relationship.";
-  if (!isBdPhone(v.phone)) e.phone = "Enter a valid Bangladeshi mobile number, e.g. 01712345678.";
-  if (v.email && !isEmail(v.email)) e.email = "Enter a valid email or leave it empty.";
-  if (v.address.trim().length < 8) e.address = "Enter the present address.";
-  if (!v.consent) e.consent = "Please confirm before submitting.";
+    e.previousSchool = m.previousSchool;
+  if (v.guardianName.trim().length < 3) e.guardianName = m.guardianName;
+  if (!v.relation) e.relation = m.relation;
+  if (!isBdPhone(v.phone)) e.phone = t.form.phoneInvalid;
+  if (v.email && !isEmail(v.email)) e.email = m.email;
+  if (v.address.trim().length < 8) e.address = m.address;
+  if (!v.consent) e.consent = m.consent;
   return e;
 }
 
 export function AdmissionForm({ classOptions, open = true }: { classOptions: string[]; open?: boolean }) {
+  const { t, lang } = useI18n();
+  const a = t.admissionForm;
+  const T = (v: string) => (lang === "bn" ? term(v) : v);
   const [values, setValues] = useState<Values>(empty);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "done">("idle");
@@ -83,7 +91,7 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const found = validate(values);
+    const found = validate(values, t);
     setErrors(found);
     const first = Object.keys(found)[0];
     if (first) {
@@ -107,37 +115,36 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
         className="rounded-2xl border border-leaf-200 bg-surface p-6 sm:p-8"
       >
         <CheckCircle2 aria-hidden className="size-10 text-accent" />
-        <h3 className="mt-4 font-serif text-2xl font-semibold text-heading">Application recorded (demo)</h3>
+        <h3 className="mt-4 font-serif text-2xl font-semibold text-heading">{a.doneTitle}</h3>
         <p className="mt-2 text-muted">
-          This is a frontend demonstration. Nothing has been sent to the school, and no data has been stored.
+          {a.doneText}
         </p>
         <dl className="mt-6 grid gap-x-8 gap-y-3 rounded-xl bg-paper p-5 text-sm sm:grid-cols-2">
           <div>
-            <dt className="text-muted">Demo reference</dt>
+            <dt className="text-muted">{a.reference}</dt>
             <dd className="font-mono font-semibold text-heading">{reference}</dd>
           </div>
           <div>
-            <dt className="text-muted">Student</dt>
+            <dt className="text-muted">{a.studentLabel}</dt>
             <dd className="font-semibold text-heading">{values.studentName}</dd>
           </div>
           <div>
-            <dt className="text-muted">Class applied</dt>
+            <dt className="text-muted">{a.classLabel}</dt>
             <dd className="font-semibold text-heading">
-              {values.classApplied} · {values.shift}
+              {T(values.classApplied)} · {a.shifts[["Morning", "Day", "No preference"].indexOf(values.shift)] ?? values.shift}
             </dd>
           </div>
           <div>
-            <dt className="text-muted">Guardian contact</dt>
+            <dt className="text-muted">{a.guardianContact}</dt>
             <dd className="font-semibold text-heading">{values.phone}</dd>
           </div>
         </dl>
         <p className="mt-5 text-sm text-muted">
-          On a live website, the next step would be to submit the printed form with the required documents at the school office
-          before the deadline.
+          {a.nextStep}
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <button type="button" onClick={() => window.print()} className={buttonClasses("outline")}>
-            <Printer aria-hidden className="size-4" /> Print summary
+            <Printer aria-hidden className="size-4" /> {a.printSummary}
           </button>
           <button
             type="button"
@@ -147,7 +154,7 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
             }}
             className={buttonClasses("ghost")}
           >
-            <RotateCcw aria-hidden className="size-4" /> Start a new application
+            <RotateCcw aria-hidden className="size-4" /> {a.newApplication}
           </button>
         </div>
       </motion.div>
@@ -159,64 +166,66 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
   return (
     !open ? (
       <div className="rounded-2xl border border-line bg-surface p-6 text-muted">
-        Online applications are closed at the moment. Please check the notice board for the next admission circular.
+        {a.closed}
       </div>
     ) : <form noValidate onSubmit={onSubmit} className="space-y-8">
       {errorCount > 0 && (
         <p role="alert" className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-danger">
-          {errorCount === 1 ? "1 field needs" : `${errorCount} fields need`} your attention.
+          {t.form.fixFields}
         </p>
       )}
 
       <fieldset>
-        <legend className="mb-4 font-serif text-lg font-semibold text-heading">Student information</legend>
+        <legend className="mb-4 font-serif text-lg font-semibold text-heading">{a.student}</legend>
         <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Student's full name" name="studentName" required error={errors.studentName} className="sm:col-span-2">
+          <Field label={a.studentName} name="studentName" required error={errors.studentName} className="sm:col-span-2">
             {({ id, describedBy, invalid }) => (
               <TextInput id={id} value={values.studentName} onChange={set("studentName")} aria-describedby={describedBy} invalid={invalid} />
             )}
           </Field>
-          <Field label="Date of birth" name="dob" required error={errors.dob} hint="As written on the birth registration certificate.">
+          <Field label={a.dob} name="dob" required error={errors.dob} hint={a.dobHint}>
             {({ id, describedBy, invalid }) => (
               <TextInput id={id} type="date" value={values.dob} onChange={set("dob")} aria-describedby={describedBy} invalid={invalid} />
             )}
           </Field>
-          <Field label="Gender" name="gender" required error={errors.gender}>
+          <Field label={a.gender} name="gender" required error={errors.gender}>
             {({ id, describedBy, invalid }) => (
               <SelectInput id={id} value={values.gender} onChange={set("gender")} aria-describedby={describedBy} invalid={invalid}>
-                <option value="">Select</option>
-                <option>Male</option>
-                <option>Female</option>
+                <option value="">{t.form.select}</option>
+                <option value="Male">{a.genders[0]}</option>
+                <option value="Female">{a.genders[1]}</option>
               </SelectInput>
             )}
           </Field>
-          <Field label="Class applying for" name="classApplied" required error={errors.classApplied}>
+          <Field label={a.classApplied} name="classApplied" required error={errors.classApplied}>
             {({ id, describedBy, invalid }) => (
               <SelectInput id={id} value={values.classApplied} onChange={set("classApplied")} aria-describedby={describedBy} invalid={invalid}>
-                <option value="">Select class</option>
+                <option value="">{a.selectClass}</option>
                 {classOptions.map((c) => (
-                  <option key={c}>{c}</option>
+                  <option key={c} value={c}>
+                    {T(c)}
+                  </option>
                 ))}
               </SelectInput>
             )}
           </Field>
-          <Field label="Preferred shift" name="shift" required error={errors.shift}>
+          <Field label={a.shift} name="shift" required error={errors.shift}>
             {({ id, describedBy, invalid }) => (
               <SelectInput id={id} value={values.shift} onChange={set("shift")} aria-describedby={describedBy} invalid={invalid}>
-                <option value="">Select shift</option>
-                <option>Morning</option>
-                <option>Day</option>
-                <option>No preference</option>
+                <option value="">{a.selectShift}</option>
+                <option value="Morning">{a.shifts[0]}</option>
+                <option value="Day">{a.shifts[1]}</option>
+                <option value="No preference">{a.shifts[2]}</option>
               </SelectInput>
             )}
           </Field>
           <Field
-            label="Previous school"
+            label={a.previousSchool}
             name="previousSchool"
             required={needsPreviousSchool(values.classApplied)}
             error={errors.previousSchool}
             className="sm:col-span-2"
-            hint="Required for Class 2 and above."
+            hint={a.previousSchoolHint}
           >
             {({ id, describedBy, invalid }) => (
               <TextInput id={id} value={values.previousSchool} onChange={set("previousSchool")} aria-describedby={describedBy} invalid={invalid} />
@@ -226,39 +235,39 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
       </fieldset>
 
       <fieldset>
-        <legend className="mb-4 font-serif text-lg font-semibold text-heading">Guardian information</legend>
+        <legend className="mb-4 font-serif text-lg font-semibold text-heading">{a.guardian}</legend>
         <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Guardian's name" name="guardianName" required error={errors.guardianName}>
+          <Field label={a.guardianName} name="guardianName" required error={errors.guardianName}>
             {({ id, describedBy, invalid }) => (
               <TextInput id={id} autoComplete="name" value={values.guardianName} onChange={set("guardianName")} aria-describedby={describedBy} invalid={invalid} />
             )}
           </Field>
-          <Field label="Relationship" name="relation" required error={errors.relation}>
+          <Field label={a.relation} name="relation" required error={errors.relation}>
             {({ id, describedBy, invalid }) => (
               <SelectInput id={id} value={values.relation} onChange={set("relation")} aria-describedby={describedBy} invalid={invalid}>
-                <option value="">Select</option>
-                <option>Father</option>
-                <option>Mother</option>
-                <option>Legal guardian</option>
+                <option value="">{t.form.select}</option>
+                <option value="Father">{a.relations[0]}</option>
+                <option value="Mother">{a.relations[1]}</option>
+                <option value="Legal guardian">{a.relations[2]}</option>
               </SelectInput>
             )}
           </Field>
-          <Field label="Mobile number" name="phone" required error={errors.phone}>
+          <Field label={a.phone} name="phone" required error={errors.phone}>
             {({ id, describedBy, invalid }) => (
               <TextInput id={id} type="tel" inputMode="tel" autoComplete="tel" placeholder="01XXXXXXXXX" value={values.phone} onChange={set("phone")} aria-describedby={describedBy} invalid={invalid} />
             )}
           </Field>
-          <Field label="Email (optional)" name="email" error={errors.email}>
+          <Field label={a.email} name="email" error={errors.email}>
             {({ id, describedBy, invalid }) => (
               <TextInput id={id} type="email" autoComplete="email" value={values.email} onChange={set("email")} aria-describedby={describedBy} invalid={invalid} />
             )}
           </Field>
-          <Field label="Present address" name="address" required error={errors.address} className="sm:col-span-2">
+          <Field label={a.address} name="address" required error={errors.address} className="sm:col-span-2">
             {({ id, describedBy, invalid }) => (
               <TextInput id={id} autoComplete="street-address" value={values.address} onChange={set("address")} aria-describedby={describedBy} invalid={invalid} />
             )}
           </Field>
-          <Field label="Anything we should know? (optional)" name="notes" className="sm:col-span-2">
+          <Field label={a.notes} name="notes" className="sm:col-span-2">
             {({ id, describedBy }) => <TextArea id={id} rows={3} value={values.notes} onChange={set("notes")} aria-describedby={describedBy} />}
           </Field>
         </div>
@@ -275,7 +284,7 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
             aria-describedby={errors.consent ? "f-consent-error" : undefined}
             className="mt-0.5 size-5 shrink-0 accent-leaf-600"
           />
-          I confirm the information is correct and understand this is a demonstration form that does not submit to the school.
+          {a.consent}
         </label>
         {errors.consent && (
           <p id="f-consent-error" className="mt-1 pl-8 text-xs font-medium text-danger">
@@ -290,10 +299,10 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
         </p>
       )}
       <div className="flex flex-col-reverse gap-3 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs text-muted">Fields marked * are required.</p>
+        <p className="text-xs text-muted">{a.requiredNote}</p>
         <button type="submit" disabled={status === "submitting"} className={buttonClasses("secondary")}>
           {status === "submitting" && <Loader2 aria-hidden className="size-4 animate-spin" />}
-          {status === "submitting" ? "Submitting…" : "Submit application"}
+          {status === "submitting" ? t.form.submitting : a.submit}
         </button>
       </div>
     </form>

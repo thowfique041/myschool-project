@@ -1,7 +1,10 @@
 "use client";
 
+import { useI18n } from "@/i18n/client";
+import { toBnDigits } from "@/lib/utils";
+
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import { animate, motion, useInView, useReducedMotion } from "motion/react";
 import { Megaphone, Pause, Play } from "lucide-react";
 import type { Notice } from "@/types";
@@ -22,7 +25,7 @@ export function HeroIntro({ children, delay = 0, className }: { children: ReactN
 }
 
 /** Counts up to a value once visible. */
-export function StatCounter({ value, suffix = "", decimals = 0 }: { value: number; suffix?: string; decimals?: number }) {
+export function StatCounter({ value, suffix = "", decimals = 0, bn = false }: { value: number; suffix?: string; decimals?: number; bn?: boolean }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   const reduce = useReducedMotion();
@@ -40,7 +43,7 @@ export function StatCounter({ value, suffix = "", decimals = 0 }: { value: numbe
 
   return (
     <span ref={ref} className="tabular-nums">
-      {(reduce ? value : display).toFixed(decimals)}
+      {bn ? toBnDigits((reduce ? value : display).toFixed(decimals)) : (reduce ? value : display).toFixed(decimals)}
       {suffix}
     </span>
   );
@@ -56,6 +59,7 @@ export function NoticeTicker({ notices }: { notices: Notice[] }) {
   const paused = hovered || userPaused;
   const reduce = useReducedMotion();
   const items = notices.slice(0, 5);
+  const { t } = useI18n();
 
   const list = (hidden = false) => (
     <ul className="flex shrink-0 items-center gap-10 pr-10" aria-hidden={hidden || undefined}>
@@ -75,7 +79,7 @@ export function NoticeTicker({ notices }: { notices: Notice[] }) {
       <div className="flex shrink-0 items-center gap-2 bg-signal-600 px-3 text-sm font-semibold text-white sm:px-4">
         <Megaphone aria-hidden className="size-4" />
         <span lang="bn" className="hidden sm:inline">সর্বশেষ নোটিশ</span>
-        <span className="sm:hidden">Latest</span>
+        <span className="sm:hidden">{t.ticker.latest}</span>
       </div>
       <div
         className="group relative flex min-w-0 flex-1 items-center overflow-hidden py-2.5"
@@ -103,7 +107,7 @@ export function NoticeTicker({ notices }: { notices: Notice[] }) {
         <button
           type="button"
           onClick={() => setUserPaused((p) => !p)}
-          aria-label={userPaused ? "Resume scrolling notices" : "Pause scrolling notices"}
+          aria-label={userPaused ? t.ticker.resume : t.ticker.pause}
           className="flex w-11 shrink-0 items-center justify-center border-l border-line text-subheading hover:bg-paper"
         >
           {userPaused ? <Play aria-hidden className="size-4" /> : <Pause aria-hidden className="size-4" />}

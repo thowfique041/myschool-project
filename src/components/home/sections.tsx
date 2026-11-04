@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import {
   CheckCircle2,
   ClipboardList,
@@ -7,7 +7,8 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
-import { Badge, ButtonLink, Card, DemoNote, SampleTag, SectionHeading } from "@/components/ui/primitives";
+import { Badge, ButtonLink, Card, DemoNote, SectionHeading } from "@/components/ui/primitives";
+import { SampleTag } from "@/components/ui/SampleTag";
 import { Picture } from "@/components/ui/Picture";
 import { Reveal } from "@/components/ui/Reveal";
 import { Accordion } from "@/components/ui/Accordion";
@@ -15,7 +16,7 @@ import { ArrowLink, NoticeRow, TeacherCard } from "@/components/shared/cards";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { StatCounter } from "./motion-bits";
 import type { HomeData, HomeContent, SectionCopy } from "./types";
-import { cn, formatDateEn } from "@/lib/utils";
+import { cn, formatDate, num } from "@/lib/utils";
 
 const initials = (name: string) =>
   name
@@ -54,14 +55,16 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
             ))}
           </ul>
           <ArrowLink href="/about" className="mt-7">
-            Read our history and values
+            {data.t.home.readHistory}
           </ArrowLink>
         </Reveal>
 
         <Reveal delay={0.08}>
           <figure id="principal" className="relative h-full rounded-2xl bg-navy-900 p-7 text-white sm:p-9">
             <Quote aria-hidden className="size-9 text-leaf-200/60" />
-            <p lang="bn" className="mt-2 text-sm font-medium text-leaf-200">অধ্যক্ষের বাণী</p>
+            <p lang={data.lang === "bn" ? "en" : "bn"} className="mt-2 text-sm font-medium text-leaf-200">
+              {data.t.home.principalMessage}
+            </p>
             <blockquote className="mt-3 font-serif text-[1.2rem] leading-relaxed sm:text-[1.3rem]">
               “{p.quote}”
             </blockquote>
@@ -80,7 +83,7 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
               </span>
             </figcaption>
             <Link href="/about#principal" className="mt-5 inline-block text-sm font-semibold text-leaf-200 hover:text-white hover:underline underline-offset-4">
-              Read the full message
+              {data.t.home.readFull}
             </Link>
           </figure>
         </Reveal>
@@ -102,18 +105,18 @@ export function LevelsSection({ copy, data }: { copy: SectionCopy; data: HomeDat
             title={copy.title}
             description={copy.description || undefined}
           />
-          <ArrowLink href="/academic">Curriculum & subjects</ArrowLink>
+          <ArrowLink href="/academic">{data.t.home.curriculum}</ArrowLink>
         </div>
         <ol className={cn("mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line", data.levels.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2")}>
           {data.levels.map((level, i) => (
             <Reveal as="li" key={level.id} delay={i * 0.06} className="flex flex-col bg-surface p-7">
               <div className="flex items-baseline justify-between">
-                <span className="font-serif text-4xl font-semibold text-navy-100">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-serif text-4xl font-semibold text-navy-100 dark:text-navy-700">{num(String(i + 1).padStart(2, "0"), data.lang)}</span>
                 <span className="text-xs font-medium text-muted">{level.ages}</span>
               </div>
               <h3 className="mt-3 font-serif text-xl font-semibold text-heading">
                 {level.name}{" "}
-                <span lang="bn" className="font-sans text-base font-medium text-accent">
+                <span lang={data.lang === "bn" ? "en" : "bn"} className="font-sans text-base font-medium text-accent">
                   · {level.nameBn}
                 </span>
               </h3>
@@ -149,12 +152,12 @@ export function LevelsSection({ copy, data }: { copy: SectionCopy; data: HomeDat
 export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
   const adm = data.admission;
   return (
-    <section aria-label="Notices and admission" className="py-16 sm:py-20">
+    <section aria-label={data.t.home.noticesAdmission} className="py-16 sm:py-20">
       <div className="container-page grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
         <Reveal>
           <div className="flex items-end justify-between gap-4">
             <SectionHeading kicker={copy.kicker} title={copy.title} description={copy.description || undefined} />
-            <ArrowLink href="/notices">All notices</ArrowLink>
+            <ArrowLink href="/notices">{data.t.home.allNotices}</ArrowLink>
           </div>
           <Card className="mt-6 divide-y divide-line px-5">
             {data.notices.slice(0, 5).map((n) => (
@@ -165,10 +168,12 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
 
         <Reveal delay={0.08}>
           <div id="admission" className="h-full rounded-2xl border border-leaf-200 bg-leaf-50 p-6 sm:p-8">
-            <Badge tone={adm.open ? "leaf" : "neutral"}>{adm.open ? "Admission open" : "Admission closed"}</Badge>
-            <h2 className="mt-3 font-serif text-2xl font-semibold text-heading">Admission {adm.year}</h2>
+            <Badge tone={adm.open ? "leaf" : "neutral"}>{adm.open ? data.t.home.admissionOpen : data.t.home.admissionClosed}</Badge>
+            <h2 className="mt-3 font-serif text-2xl font-semibold text-heading">
+              {data.t.home.admission} {num(adm.year, data.lang)}
+            </h2>
             {adm.noticeTitleBn && (
-              <p lang="bn" className="text-sm text-accent">
+              <p lang={data.lang === "bn" ? "en" : "bn"} className="text-sm text-accent">
                 {adm.noticeTitleBn}
               </p>
             )}
@@ -176,7 +181,7 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
               {adm.steps.slice(0, 4).map((step, i) => (
                 <li key={step.title} className="flex gap-3">
                   <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-leaf-600 text-sm font-semibold text-white">
-                    {i + 1}
+                    {num(i + 1, data.lang)}
                   </span>
                   <div>
                     <p className="font-semibold text-heading">{step.title}</p>
@@ -189,16 +194,16 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
               {adm.dates.slice(0, 4).map((d) => (
                 <div key={d.label} className="flex justify-between gap-4">
                   <dt className="text-muted">{d.label}</dt>
-                  <dd className="shrink-0 font-semibold text-heading">{formatDateEn(d.date)}</dd>
+                  <dd className="shrink-0 font-semibold text-heading">{formatDate(d.date, data.lang)}</dd>
                 </div>
               ))}
             </dl>
             <div className="mt-6 flex flex-wrap gap-3">
               <ButtonLink href="/admission#apply" variant="secondary">
-                Apply / Inquire
+                {data.t.home.applyInquire}
               </ButtonLink>
               <ButtonLink href="/notices#downloads" variant="outline">
-                Download form
+                {data.t.home.downloadForm}
               </ButtonLink>
             </div>
           </div>
@@ -210,12 +215,7 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
 
 /* -------------------------------------------- Why us + facilities */
 
-const reasons = [
-  { icon: Users, title: "Small sections, known faces", text: "Primary sections are capped at 35 students so class teachers can follow each child's progress." },
-  { icon: ShieldCheck, title: "Discipline with care", text: "Clear rules on attendance, uniform and conduct — applied consistently and explained to guardians." },
-  { icon: ClipboardList, title: "Regular assessment", text: "Weekly class tests and termly progress reports mean no family is surprised at the end of the year." },
-  { icon: Music4, title: "Life beyond the textbook", text: "Debate, scouting, art, cultural programmes and sports are part of the routine, not extras." },
-];
+const reasonIcons = [Users, ShieldCheck, ClipboardList, Music4];
 
 
 export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
@@ -232,7 +232,9 @@ export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: 
               description={copy.description || undefined}
             />
             <ul className="mt-8 space-y-6">
-              {reasons.map(({ icon: Icon, title, text }) => (
+              {data.t.home.reasons.map(({ title, text }, i) => {
+                const Icon = reasonIcons[i % reasonIcons.length];
+                return (
                 <li key={title} className="flex gap-4">
                   <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white/10">
                     <Icon aria-hidden className="size-5 text-leaf-200" />
@@ -242,12 +244,13 @@ export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: 
                     <p className="mt-1 text-[0.95rem] leading-relaxed text-navy-200">{text}</p>
                   </div>
                 </li>
-              ))}
+                );
+              })}
             </ul>
           </Reveal>
           <div>
             <Reveal>
-              <h3 className="flex items-center gap-2 text-sm font-semibold tracking-wide text-leaf-200 uppercase">Facilities</h3>
+              <h3 className="flex items-center gap-2 text-sm font-semibold tracking-wide text-leaf-200 uppercase">{data.t.home.facilities}</h3>
             </Reveal>
             <ul className="mt-4 grid gap-4 sm:grid-cols-2">
               {data.facilities.map(({ title, text, image, imageAlt }, i) => (
@@ -265,7 +268,7 @@ export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: 
               ))}
             </ul>
             <p className="mt-4 text-sm text-navy-200">
-              Also: prayer room, first-aid room, girls&apos; common room, scout den and a covered assembly area.
+              {data.t.home.alsoFacilities}
             </p>
           </div>
         </div>
@@ -282,8 +285,8 @@ export function ResultsSection({ copy, data }: { copy: SectionCopy; data: HomeDa
   const stats = [latest("SSC"), latest("HSC")]
     .filter((r): r is NonNullable<typeof r> => Boolean(r && r.examinees))
     .flatMap((r) => [
-      { label: `${r.exam} ${r.year} pass rate`, value: (r.passed / r.examinees) * 100, suffix: "%", decimals: 1 },
-      { label: `${r.exam} ${r.year} GPA 5.00`, value: r.aPlus, suffix: "", decimals: 0 },
+      { label: data.t.home.passRate(r.exam, r.year), value: (r.passed / r.examinees) * 100, suffix: "%", decimals: 1 },
+      { label: data.t.home.gpa5(r.exam, r.year), value: r.aPlus, suffix: "", decimals: 0 },
     ]);
   return (
     <section aria-labelledby="results-title" className="py-16 sm:py-20">
@@ -297,7 +300,7 @@ export function ResultsSection({ copy, data }: { copy: SectionCopy; data: HomeDa
           />
           <div className="flex items-center gap-3">
             {data.board.isSample && <SampleTag />}
-            <ArrowLink href="/results">Result search</ArrowLink>
+            <ArrowLink href="/results">{data.t.home.resultSearch}</ArrowLink>
           </div>
         </div>
         <dl className={cn("mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line", stats.length >= 4 && "lg:grid-cols-4")}>
@@ -305,7 +308,7 @@ export function ResultsSection({ copy, data }: { copy: SectionCopy; data: HomeDa
             <div key={s.label} className="bg-surface p-6">
               <dt className="text-sm text-muted">{s.label}</dt>
               <dd className="mt-1 font-serif text-4xl font-semibold text-heading">
-                <StatCounter value={s.value} suffix={s.suffix} decimals={s.decimals} />
+                <StatCounter value={s.value} suffix={s.suffix} decimals={s.decimals} bn={data.lang === "bn"} />
               </dd>
             </div>
           ))}
@@ -326,7 +329,7 @@ export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData 
       <div className="container-page">
         <div className="flex items-end justify-between gap-6">
           <SectionHeading id="news-title" kicker={copy.kicker} title={copy.title} description={copy.description || undefined} />
-          <ArrowLink href="/news">All news</ArrowLink>
+          <ArrowLink href="/news">{data.t.home.allNews}</ArrowLink>
         </div>
         <div className="mt-10 grid gap-6 lg:grid-cols-[1.25fr_1fr]">
           <Reveal>
@@ -334,8 +337,8 @@ export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData 
               <Picture image={featured.image} sizes="(min-width: 1024px) 55vw, 100vw" imgClassName="transition-transform duration-500 group-hover:scale-[1.02]" />
               <div className="p-6">
                 <div className="flex items-center gap-3 text-xs text-muted">
-                  <Badge tone="leaf">Featured</Badge>
-                  <time dateTime={featured.date}>{formatDateEn(featured.date)}</time>
+                  <Badge tone="leaf">{data.t.common.featured}</Badge>
+                  <time dateTime={featured.date}>{formatDate(featured.date, data.lang)}</time>
                 </div>
                 <h3 className="mt-3 font-serif text-2xl leading-snug font-semibold text-heading group-hover:text-accent">
                   <Link href={`/news/${featured.slug}`} className="after:absolute after:inset-0">
@@ -352,7 +355,7 @@ export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData 
                 <Picture image={a.image} ratio="aspect-[4/3]" className="w-28 shrink-0 rounded-lg sm:w-36" sizes="144px" />
                 <div className="min-w-0">
                   <time dateTime={a.date} className="text-xs text-muted">
-                    {formatDateEn(a.date)}
+                    {formatDate(a.date, data.lang)}
                   </time>
                   <h3 className="mt-1 leading-snug font-semibold text-heading group-hover:text-accent">
                     <Link href={`/news/${a.slug}`} className="after:absolute after:inset-0">
@@ -378,7 +381,7 @@ export function GalleryPreview({ copy, data }: { copy: SectionCopy; data: HomeDa
       <div className="container-page">
         <div className="flex items-end justify-between gap-6">
           <SectionHeading id="gallery-title" kicker={copy.kicker} title={copy.title} description={copy.description || undefined} />
-          <ArrowLink href="/gallery">Open gallery</ArrowLink>
+          <ArrowLink href="/gallery">{data.t.home.openGallery}</ArrowLink>
         </div>
         <ul className="mt-10 grid auto-rows-[9rem] grid-cols-2 gap-3 sm:auto-rows-[11rem] md:grid-cols-4">
           {picks.map((g, i) => (
@@ -388,7 +391,7 @@ export function GalleryPreview({ copy, data }: { copy: SectionCopy; data: HomeDa
               delay={i * 0.04}
               className={cn("group relative overflow-hidden rounded-xl", i === 0 && "col-span-2 row-span-2", i === 3 && "md:col-span-2")}
             >
-              <Link href="/gallery" className="block h-full" aria-label={`${g.caption} — open gallery`}>
+              <Link href="/gallery" className="block h-full" aria-label={data.t.home.galleryOpen(g.caption)}>
                 <Picture image={g.image} ratio="h-full" sizes="(min-width: 768px) 50vw, 100vw" imgClassName="transition-transform duration-500 group-hover:scale-[1.04]" />
                 <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/80 to-transparent px-3 pt-8 pb-2.5 text-sm font-medium text-white">
                   {g.caption}
@@ -416,7 +419,7 @@ export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeDat
             title={copy.title}
             description={copy.description || undefined}
           />
-          <ArrowLink href="/teachers">Meet all teachers</ArrowLink>
+          <ArrowLink href="/teachers">{data.t.home.allTeachers}</ArrowLink>
         </div>
         <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {picks.map((t, i) => (
@@ -428,8 +431,8 @@ export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeDat
 
         {data.testimonials.length > 0 && <div className="mt-16">
           <div className="flex flex-wrap items-center gap-3">
-            <h3 className="font-serif text-xl font-semibold text-heading">Guardians &amp; students say</h3>
-            <SampleTag />
+            <h3 className="font-serif text-xl font-semibold text-heading">{data.t.home.testimonials}</h3>
+            {data.site.demoNote && <SampleTag />}
           </div>
           <ul className="mt-6 grid gap-5 md:grid-cols-3">
             {data.testimonials.map((t, i) => (
@@ -458,17 +461,17 @@ export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeDat
 export function FaqContactSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
   const site = data.site;
   return (
-    <section aria-label="Frequently asked questions and contact" className="py-16 sm:py-20">
+    <section aria-label={data.t.home.faqContact} className="py-16 sm:py-20">
       <div className="container-page grid gap-12 lg:grid-cols-2">
         <Reveal>
           <SectionHeading kicker={copy.kicker} title={copy.title} description={copy.description || undefined} />
           <Accordion className="mt-6" items={data.faqs.slice(0, 6)} />
           <ArrowLink href="/faq" className="mt-5">
-            More questions
+            {data.t.home.moreQuestions}
           </ArrowLink>
         </Reveal>
         <Reveal delay={0.08}>
-          <SectionHeading kicker="যোগাযোগ" title="Write to the office" description={`${site.officeHours}. You can also call ${site.phone}.`} />
+          <SectionHeading kicker={data.t.home.contactKicker} title={data.t.home.writeOffice} description={data.t.home.officeCall(site.officeHours, site.phone)} />
           <Card className="mt-6 p-5 sm:p-7">
             <ContactForm />
           </Card>

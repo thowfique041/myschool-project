@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
@@ -10,8 +10,12 @@ import { buttonClasses } from "@/components/ui/primitives";
 import type { NavItem } from "@/types";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
+import { useI18n } from "@/i18n/client";
+import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
+import { stripLocale } from "@/i18n/config";
 
-function isActive(pathname: string, item: NavItem): boolean {
+function isActive(rawPath: string, item: NavItem): boolean {
+  const pathname = stripLocale(rawPath);
   if (item.href === "/") return pathname === "/";
   const paths = [item.href, ...(item.children?.map((c) => c.href.split("#")[0]) ?? [])];
   return paths.some((p) => p !== "/" && pathname.startsWith(p));
@@ -62,7 +66,7 @@ function DesktopDropdown({ item, active }: { item: NavItem; active: boolean }) {
         aria-controls={menuId}
         onClick={() => setOpen((o) => !o)}
         className={cn(
-          "flex items-center gap-1 rounded-md px-2.5 py-2 text-[0.92rem] font-medium transition-colors xl:px-3",
+          "flex items-center gap-0.5 rounded-md px-1.5 py-2 text-[0.86rem] font-medium whitespace-nowrap transition-colors xl:gap-1 xl:px-2 xl:text-[0.92rem] 2xl:px-3",
           active ? "text-accent" : "text-heading hover:text-accent",
         )}
       >
@@ -103,6 +107,7 @@ function DesktopDropdown({ item, active }: { item: NavItem; active: boolean }) {
 function MobileMenu({ onClose, pathname, items, ctaLabel, ctaHref }: { onClose: () => void; pathname: string; items: NavItem[]; ctaLabel: string; ctaHref: string }) {
   const [expanded, setExpanded] = useState<string | null>(null);
   const reduce = useReducedMotion();
+  const { t } = useI18n();
   return (
     <motion.div
       id="mobile-menu"
@@ -112,7 +117,7 @@ function MobileMenu({ onClose, pathname, items, ctaLabel, ctaHref }: { onClose: 
       transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
       className="overflow-hidden border-t border-line bg-surface lg:hidden"
     >
-      <nav aria-label="Mobile" className="container-page max-h-[calc(100dvh-5rem)] overflow-y-auto py-3">
+      <nav aria-label={t.common.mobileNav} className="container-page max-h-[calc(100dvh-5rem)] overflow-y-auto py-3">
         <ul className="divide-y divide-line">
           {items.map((item) => {
             const active = isActive(pathname, item);
@@ -168,6 +173,7 @@ function MobileMenu({ onClose, pathname, items, ctaLabel, ctaHref }: { onClose: 
         <Link href={ctaHref} onClick={onClose} className={cn(buttonClasses("secondary"), "mt-4 mb-2 w-full")}>
           {ctaLabel}
         </Link>
+        <LanguageSwitcher className="mb-2 w-full justify-center" />
       </nav>
     </motion.div>
   );
@@ -182,6 +188,7 @@ export type HeaderProps = {
 
 export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
   const pathname = usePathname();
+  const { t } = useI18n();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -206,12 +213,12 @@ export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
         scrolled ? "shadow-[0_1px_0_var(--color-line),0_6px_20px_-12px_rgb(15_31_54/0.25)]" : "border-b border-line",
       )}
     >
-      <div className="container-page flex h-[4.5rem] items-center justify-between gap-4 sm:h-20">
-        <Link href="/" aria-label={`${brand.name} — home`} className="rounded-md">
+      <div className="container-page flex h-[4.5rem] items-center justify-between gap-3 sm:h-20 xl:gap-4">
+        <Link href="/" aria-label={`${brand.name} — ${t.common.home}`} className="rounded-md">
           <Logo name={brand.name} nameBn={brand.nameBn} src={brand.logo} />
         </Link>
 
-        <nav aria-label="Main" className="hidden lg:block">
+        <nav aria-label={t.common.mainNav} className="hidden lg:block">
           <ul className="flex items-center">
             {items.map((item) => {
               const active = isActive(pathname, item);
@@ -223,7 +230,7 @@ export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "rounded-md px-2.5 py-2 text-[0.92rem] font-medium transition-colors xl:px-3",
+                      "rounded-md px-1.5 py-2 text-[0.86rem] font-medium whitespace-nowrap transition-colors xl:px-2 xl:text-[0.92rem] 2xl:px-3",
                       active ? "text-accent" : "text-heading hover:text-accent",
                     )}
                   >
@@ -238,14 +245,14 @@ export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <Link href={ctaHref} className={cn(buttonClasses("secondary", "sm"), "max-xl:hidden")}>
-            Apply Now
+            {ctaLabel}
           </Link>
           <button
             type="button"
             className="inline-flex size-11 items-center justify-center rounded-lg border border-line text-heading lg:hidden"
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-label={mobileOpen ? t.common.closeMenu : t.common.openMenu}
             onClick={() => setMobileOpen((o) => !o)}
           >
             {mobileOpen ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}

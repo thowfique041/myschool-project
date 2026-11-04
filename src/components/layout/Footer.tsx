@@ -1,7 +1,9 @@
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import type { SiteInfo } from "@/content/site-content";
+import { getI18n } from "@/i18n/server";
+import { toBnDigits } from "@/lib/utils";
 
 type LinkItem = { label: string; href: string };
 export type FooterContent = {
@@ -47,12 +49,14 @@ function SocialIcon({ label }: { label: string }) {
   );
 }
 
-export function Footer({ site, footer, year }: { site: SiteInfo; footer: FooterContent; year: number }) {
+export async function Footer({ site, footer, year }: { site: SiteInfo; footer: FooterContent; year: number }) {
+  const { t, lang } = await getI18n();
+  const n = (v: number) => (lang === "bn" ? toBnDigits(v) : String(v));
   return (
     <footer className="bg-navy-950 text-navy-100">
       <div className="container-page grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
-          <Logo tone="dark" name={site.name} nameBn={site.nameBn} src={site.logo} />
+          <Logo tone="dark" name={lang === "bn" ? site.nameBn : site.name} nameBn={lang === "bn" ? site.name : site.nameBn} src={site.logo} />
           <p className="mt-5 max-w-sm text-[0.92rem] leading-relaxed text-navy-200">
             {footer.about}
           </p>
@@ -78,14 +82,14 @@ export function Footer({ site, footer, year }: { site: SiteInfo; footer: FooterC
               <span>{site.officeHours}</span>
             </li>
           </ul>
-          <ul className="mt-6 flex gap-2" aria-label="Social media">
+          <ul className="mt-6 flex gap-2" aria-label={t.common.socialMedia}>
             {site.social.map((s) => (
               <li key={s.label}>
                 <a
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`${s.label} (opens in a new tab)`}
+                  aria-label={`${s.label} ${t.common.opensNewTab}`}
                   className="inline-flex size-10 items-center justify-center rounded-lg border border-white/15 text-navy-100 hover:border-white/40 hover:text-white"
                 >
                   <SocialIcon label={s.label} />
@@ -101,10 +105,10 @@ export function Footer({ site, footer, year }: { site: SiteInfo; footer: FooterC
       <div className="border-t border-white/10">
         <div className="container-page flex flex-col gap-2 py-5 text-xs text-navy-300 md:flex-row md:items-center md:justify-between">
           <p>
-            © {site.established}–{year} {site.name}. {footer.copyright}
+            © {n(site.established)}–{n(year)} {lang === "bn" ? site.nameBn : site.name}. {footer.copyright}
           </p>
-          <p lang="bn" style={{ lineHeight: 1.5 }}>
-            {site.taglineBn}
+          <p lang={lang === "bn" ? "en" : "bn"} style={{ lineHeight: 1.5 }}>
+            {lang === "bn" ? site.tagline : site.taglineBn}
           </p>
         </div>
       </div>
