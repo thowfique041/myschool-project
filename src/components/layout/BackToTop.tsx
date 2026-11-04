@@ -1,10 +1,13 @@
 "use client";
 
+import { useI18n } from "@/i18n/client";
+
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUp } from "lucide-react";
 
 export function BackToTop() {
+  const { t } = useI18n();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -19,7 +22,7 @@ export function BackToTop() {
       {visible && (
         <motion.button
           type="button"
-          aria-label="Back to top"
+          aria-label={t.common.backToTop}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.9 }}

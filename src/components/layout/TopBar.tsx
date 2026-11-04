@@ -1,7 +1,11 @@
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { toBnDigits } from "@/lib/utils";
 import type { SiteInfo } from "@/content/site-content";
+import { getI18n } from "@/i18n/server";
+import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 
-export function TopBar({ site }: { site: SiteInfo }) {
+export async function TopBar({ site }: { site: SiteInfo }) {
+  const { t, lang } = await getI18n();
   return (
     <div className="bg-navy-950 text-[0.8rem] text-navy-100">
       <div className="container-page flex min-h-9 flex-wrap items-center justify-between gap-x-6 gap-y-1 py-1.5">
@@ -30,9 +34,12 @@ export function TopBar({ site }: { site: SiteInfo }) {
         <ul className="flex items-center gap-4">
           <li className="hidden sm:block">
             <span className="text-navy-300">
-              EIIN {site.eiin}
-              {site.eiin === "000000" ? " (demo)" : ""}
+              {t.common.eiin} {lang === "bn" ? toBnDigits(site.eiin) : site.eiin}
+              {site.eiin === "000000" ? ` ${t.common.demo}` : ""}
             </span>
+          </li>
+          <li>
+            <LanguageSwitcher tone="dark" className="h-7 px-2 text-xs" />
           </li>
         </ul>
       </div>

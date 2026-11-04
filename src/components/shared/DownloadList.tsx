@@ -1,12 +1,14 @@
 import { Download, FileText } from "lucide-react";
 import { Badge } from "@/components/ui/primitives";
 import type { DownloadResource } from "@/types";
-import { formatDateEn } from "@/lib/utils";
+import { formatDate } from "@/lib/utils";
+import { getI18n } from "@/i18n/server";
 
 /** Grouped list of downloadable forms and documents, in category order. */
-export function DownloadList({ downloads }: { downloads: DownloadResource[] }) {
+export async function DownloadList({ downloads }: { downloads: DownloadResource[] }) {
+  const { t, lang } = await getI18n();
   const order = [...new Set(downloads.map((d) => d.category))];
-  if (!downloads.length) return <p className="text-muted">No files are available for download right now.</p>;
+  if (!downloads.length) return <p className="text-muted">{lang === "bn" ? "এখন ডাউনলোডের জন্য কোনো ফাইল নেই।" : "No files are available for download right now."}</p>;
   return (
     <div className="space-y-8">
       {order.map((cat) => {
@@ -31,7 +33,7 @@ export function DownloadList({ downloads }: { downloads: DownloadResource[] }) {
                     </p>
                     <p className="text-sm text-muted">{d.description}</p>
                     <p className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted">
-                      <Badge tone="neutral">{d.size}</Badge> {d.updated && <>Updated {formatDateEn(d.updated)}</>}
+                      <Badge tone="neutral">{d.size}</Badge> {d.updated && <>{t.common.updated} {formatDate(d.updated, lang)}</>}
                     </p>
                   </div>
                   <a
@@ -41,7 +43,7 @@ export function DownloadList({ downloads }: { downloads: DownloadResource[] }) {
                     rel="noopener"
                     className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-lg border border-line px-4 text-sm font-semibold text-heading hover:border-leaf-200 hover:bg-leaf-50"
                   >
-                    <Download aria-hidden className="size-4" /> Download
+                    <Download aria-hidden className="size-4" /> {t.common.download}
                     <span className="sr-only"> {d.title}</span>
                   </a>
                 </li>

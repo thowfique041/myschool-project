@@ -1,14 +1,18 @@
-import Link from "next/link";
+"use client";
+
+import Link from "@/components/i18n/Link";
 import { ArrowRight, CalendarDays, Mail, MapPin, Paperclip, Phone } from "lucide-react";
 import { Badge } from "@/components/ui/primitives";
 import { Picture } from "@/components/ui/Picture";
 import type { NewsArticle, Notice, Teacher } from "@/types";
-import { cn, dateParts, formatDateBn, formatDateEn } from "@/lib/utils";
+import { cn, datePartsL, formatDate } from "@/lib/utils";
+import { useI18n } from "@/i18n/client";
 
 /* ------------------------------------------------------------ Notice row */
 
 export function DateBlock({ iso, className }: { iso: string; className?: string }) {
-  const { day, month, year } = dateParts(iso);
+  const { lang } = useI18n();
+  const { day, month, year } = datePartsL(iso, lang);
   return (
     <time
       dateTime={iso}
@@ -25,6 +29,7 @@ export function DateBlock({ iso, className }: { iso: string; className?: string 
 }
 
 export function NoticeRow({ notice, compact = false }: { notice: Notice; compact?: boolean }) {
+  const { t, lang } = useI18n();
   return (
     <article className="group relative flex gap-4 py-4">
       <DateBlock iso={notice.date} />
@@ -33,10 +38,10 @@ export function NoticeRow({ notice, compact = false }: { notice: Notice; compact
           <Badge tone={notice.category === "admission" ? "leaf" : notice.category === "exam" ? "navy" : "neutral"}>
             {notice.categoryLabel ?? notice.category}
           </Badge>
-          {notice.important && <Badge tone="signal">Important</Badge>}
+          {notice.important && <Badge tone="signal">{t.common.important}</Badge>}
           {notice.attachment && (
             <span className="inline-flex items-center gap-1 text-xs text-muted">
-              <Paperclip aria-hidden className="size-3" /> Attachment
+              <Paperclip aria-hidden className="size-3" /> {t.common.attachment}
             </span>
           )}
         </div>
@@ -51,7 +56,7 @@ export function NoticeRow({ notice, compact = false }: { notice: Notice; compact
           </p>
         )}
         <p className="mt-1 text-xs text-muted">
-          <span lang="bn">{formatDateBn(notice.date)}</span>
+          <span lang={lang === "bn" ? "en" : "bn"}>{formatDate(notice.date, lang === "bn" ? "en" : "bn")}</span>
         </p>
       </div>
     </article>
@@ -62,13 +67,14 @@ export function NoticeRow({ notice, compact = false }: { notice: Notice; compact
 
 export function NewsCard({ article, headingLevel = "h3" }: { article: NewsArticle; headingLevel?: "h2" | "h3" }) {
   const H = headingLevel;
+  const { lang } = useI18n();
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface shadow-[var(--shadow-card)] transition-shadow hover:shadow-[var(--shadow-lift)]">
       <Picture image={article.image} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" imgClassName="transition-transform duration-500 group-hover:scale-[1.03]" />
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-center gap-3 text-xs text-muted">
           <Badge tone="leaf">{article.categoryLabel ?? article.category}</Badge>
-          <time dateTime={article.date}>{formatDateEn(article.date)}</time>
+          <time dateTime={article.date}>{formatDate(article.date, lang)}</time>
         </div>
         <H className="mt-3 text-lg leading-snug font-semibold text-heading group-hover:text-accent">
           <Link href={`/news/${article.slug}`} className="after:absolute after:inset-0">
@@ -81,7 +87,7 @@ export function NewsCard({ article, headingLevel = "h3" }: { article: NewsArticl
             {article.eventDate && (
               <span className="inline-flex items-center gap-1">
                 <CalendarDays aria-hidden className="size-3.5" />
-                {formatDateEn(article.eventDate)}
+                {formatDate(article.eventDate, lang)}
               </span>
             )}
             {article.venue && (
@@ -149,34 +155,35 @@ export function TeacherAvatar({ teacher, size = "md" }: { teacher: Teacher; size
 }
 
 export function TeacherCard({ teacher }: { teacher: Teacher }) {
+  const { t, lang } = useI18n();
   return (
     <article className="flex h-full flex-col items-center rounded-[var(--radius-card)] border border-line bg-surface p-6 text-center shadow-[var(--shadow-card)]">
       <TeacherAvatar teacher={teacher} size="lg" />
       <h3 className="mt-4 font-semibold text-heading">{teacher.name}</h3>
-      <p lang="bn" className="text-sm text-muted" style={{ lineHeight: 1.5 }}>
+      <p lang={lang === "bn" ? "en" : "bn"} className="text-sm text-muted" style={{ lineHeight: 1.5 }}>
         {teacher.nameBn}
       </p>
       <p className="mt-2 text-sm font-medium text-accent">{teacher.designation}</p>
       <p className="mt-1 text-sm text-muted">{teacher.subjects.join(", ")}</p>
       <dl className="mt-auto w-full border-t border-line pt-3 text-xs text-muted">
         <div className="flex justify-between gap-2 pt-1">
-          <dt>Qualification</dt>
+          <dt>{t.cards.qualification}</dt>
           <dd className="text-right text-ink">{teacher.qualification}</dd>
         </div>
         <div className="flex justify-between gap-2 pt-1">
-          <dt>Section</dt>
-          <dd className="text-ink">{teacher.section === "All" ? "All sections" : teacher.section}</dd>
+          <dt>{t.cards.section}</dt>
+          <dd className="text-ink">{t.sections[teacher.section] ?? teacher.section}</dd>
         </div>
       </dl>
       <div className="mt-3 w-full space-y-1.5 border-t border-line pt-3 text-left text-sm">
         <a href={`tel:${teacher.phone.replace(/[\s-]/g, "")}`} className="flex items-center gap-2 text-heading hover:text-accent">
           <Phone aria-hidden className="size-4 shrink-0 text-accent" />
-          <span className="sr-only">Phone: </span>
+          <span className="sr-only">{t.common.phone}: </span>
           {teacher.phone}
         </a>
         <a href={`mailto:${teacher.email}`} className="flex min-w-0 items-center gap-2 text-heading hover:text-accent">
           <Mail aria-hidden className="size-4 shrink-0 text-accent" />
-          <span className="sr-only">Email: </span>
+          <span className="sr-only">{t.common.email}: </span>
           <span className="truncate">{teacher.email}</span>
         </a>
       </div>

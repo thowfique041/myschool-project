@@ -57,3 +57,21 @@ export function dateParts(iso: string): { day: string; month: string; year: stri
 export function normalize(text: string): string {
   return text.toLowerCase().normalize("NFKC").trim();
 }
+
+const bnShortMonths = ["জানু", "ফেব্রু", "মার্চ", "এপ্রি", "মে", "জুন", "জুলাই", "আগ", "সেপ্টে", "অক্টো", "নভে", "ডিসে"];
+
+/** Date in the visitor's language. */
+export function formatDate(iso: string, lang: "en" | "bn"): string {
+  return lang === "bn" ? formatDateBn(iso) : formatDateEn(iso);
+}
+
+/** Day / month / year parts for date badges, localised. */
+export function datePartsL(iso: string, lang: "en" | "bn") {
+  const p = dateParts(iso);
+  if (lang === "en") return p;
+  const m = Number(iso.split("-")[1]);
+  return { day: toBnDigits(p.day), month: bnShortMonths[m - 1], year: toBnDigits(p.year) };
+}
+
+/** Number in the visitor's language. */
+export const num = (v: string | number, lang: "en" | "bn") => (lang === "bn" ? toBnDigits(v) : String(v));

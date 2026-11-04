@@ -1,5 +1,8 @@
 "use client";
 
+import { useI18n } from "@/i18n/client";
+import { num } from "@/lib/utils";
+
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
@@ -18,6 +21,7 @@ function Lightbox({
   onClose: () => void;
   onIndex: (i: number) => void;
 }) {
+  const { t, lang } = useI18n();
   const reduce = useReducedMotion();
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -70,19 +74,19 @@ function Lightbox({
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
-        aria-label={`Image ${index + 1} of ${items.length}: ${item.caption}`}
+        aria-label={t.gallery.imageOf(index + 1, items.length, item.caption)}
         className="relative w-full max-w-5xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-3 flex items-center justify-between gap-4 text-white">
           <p className="text-sm text-navy-200">
-            {index + 1} / {items.length} · {item.categoryLabel ?? item.category}
+            {num(index + 1, lang)} / {num(items.length, lang)} · {item.categoryLabel ?? item.category}
           </p>
           <button
             ref={closeRef}
             type="button"
             onClick={onClose}
-            aria-label="Close gallery"
+            aria-label={t.gallery.close}
             className="inline-flex size-11 items-center justify-center rounded-full bg-white/10 hover:bg-white/20"
           >
             <X aria-hidden className="size-5" />
@@ -101,7 +105,7 @@ function Lightbox({
             </div>
             <figcaption className="mt-3 text-white">
               <span className="font-semibold">{item.caption}</span>
-              <span lang="bn" className="block text-sm text-navy-200">
+              <span lang={lang === "bn" ? "en" : "bn"} className="block text-sm text-navy-200">
                 {item.captionBn}
               </span>
             </figcaption>
@@ -110,7 +114,7 @@ function Lightbox({
         <button
           type="button"
           onClick={prev}
-          aria-label="Previous image"
+          aria-label={t.gallery.prev}
           className="absolute top-1/2 left-2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-surface/90 text-heading shadow hover:bg-surface sm:-left-5"
         >
           <ChevronLeft aria-hidden className="size-5" />
@@ -118,7 +122,7 @@ function Lightbox({
         <button
           type="button"
           onClick={next}
-          aria-label="Next image"
+          aria-label={t.gallery.next}
           className="absolute top-1/2 right-2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-surface/90 text-heading shadow hover:bg-surface sm:-right-5"
         >
           <ChevronRight aria-hidden className="size-5" />
@@ -129,6 +133,7 @@ function Lightbox({
 }
 
 export function GalleryGrid({ items }: { items: GalleryItem[] }) {
+  const { t } = useI18n();
   const [category, setCategory] = useState<GalleryCategory | "all">("all");
   const [open, setOpen] = useState<number | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
@@ -141,7 +146,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
   }, []);
 
   const options = [
-    { value: "all" as const, label: "All", count: items.length },
+    { value: "all" as const, label: t.common.all, count: items.length },
     ...([...new Set(items.map((i) => i.category))] as GalleryCategory[]).map((c) => ({
       value: c,
       label: items.find((i) => i.category === c)?.categoryLabel ?? c,
@@ -151,7 +156,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
 
   return (
     <div>
-      <FilterChips label="Filter photos by category" options={options} value={category} onChange={setCategory} />
+      <FilterChips label={t.gallery.filter} options={options} value={category} onChange={setCategory} />
       <ul className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
         {visible.map((item, i) => (
           <li key={item.id}>
@@ -162,7 +167,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
                 setOpen(i);
               }}
               className="group relative block w-full overflow-hidden rounded-xl bg-paper-dark text-left"
-              aria-label={`Open image: ${item.caption}`}
+              aria-label={t.gallery.open(item.caption)}
             >
               <span className="relative block aspect-[4/3]">
                 <Image

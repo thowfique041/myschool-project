@@ -1,6 +1,7 @@
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import { ChevronRight } from "lucide-react";
 import type { ReactNode } from "react";
+import { getI18n } from "@/i18n/server";
 
 type Crumb = { label: string; href?: string };
 
@@ -15,9 +16,10 @@ type PageHeaderProps = {
 };
 
 /** Title band used at the top of every inner page. */
-export function PageHeader({ title, titleBn, description, crumbs = [], children, headingAs = "h1" }: PageHeaderProps) {
+export async function PageHeader({ title, titleBn, description, crumbs = [], children, headingAs = "h1" }: PageHeaderProps) {
+  const { t, lang } = await getI18n();
   const Heading = headingAs;
-  const trail: Crumb[] = [{ label: "Home", href: "/" }, ...crumbs, { label: title }];
+  const trail: Crumb[] = [{ label: t.common.home, href: "/" }, ...crumbs, { label: title }];
   return (
     <section className="relative overflow-hidden bg-navy-900 text-white">
       <svg
@@ -42,7 +44,7 @@ export function PageHeader({ title, titleBn, description, crumbs = [], children,
         <rect width="400" height="200" fill="url(#ph-pattern)" mask="url(#ph-mask)" />
       </svg>
       <div className="container-page relative py-10 sm:py-14">
-        <nav aria-label="Breadcrumb">
+        <nav aria-label={t.common.breadcrumb}>
           <ol className="flex flex-wrap items-center gap-1 text-sm text-navy-200">
             {trail.map((c, i) => (
               <li key={`${c.label}-${i}`} className="flex items-center gap-1">
@@ -61,7 +63,7 @@ export function PageHeader({ title, titleBn, description, crumbs = [], children,
           </ol>
         </nav>
         {titleBn && (
-          <p lang="bn" className="mt-5 text-sm font-medium text-leaf-200" style={{ lineHeight: 1.4 }}>
+          <p lang={lang === "bn" ? "en" : "bn"} className="mt-5 text-sm font-medium text-leaf-200" style={{ lineHeight: 1.4 }}>
             {titleBn}
           </p>
         )}

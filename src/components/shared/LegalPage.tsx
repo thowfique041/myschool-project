@@ -1,12 +1,14 @@
 import { PageHeader } from "@/components/ui/PageHeader";
 import { DemoNote } from "@/components/ui/primitives";
+import { getI18n } from "@/i18n/server";
 
 type Section = { heading: string; body: string[] };
 
-export function LegalPage({ title, titleBn, updated, intro, sections }: { title: string; titleBn: string; updated: string; intro: string; sections: Section[] }) {
+export async function LegalPage({ title, titleBn, updated, intro, sections }: { title: string; titleBn: string; updated: string; intro: string; sections: Section[] }) {
+  const { t } = await getI18n();
   return (
     <>
-      <PageHeader title={title} titleBn={titleBn} description={`Last updated ${updated}`} />
+      <PageHeader title={title} titleBn={titleBn} description={`${t.legal.updated}: ${updated}`} />
       <section className="py-12 sm:py-16">
         <div className="container-page max-w-3xl">
           <DemoNote>{intro}</DemoNote>

@@ -18,6 +18,16 @@ A complete, frontend-only website for **Webnion School & College**, a fictional 
 - **Contact** — contact cards, validated form with success state, sketch map placeholder, social links.
 - **Extras** — Students & Guardians, Academic Calendar, School Policies, FAQ, Privacy, Terms, custom 404 and error pages, sitemap and robots.
 
+## Languages (English / বাংলা)
+
+The whole public site is available in English at `/` and in Bangla at `/bn` — for example
+`/admission` and `/bn/admission`. The language button in the top bar (and in the mobile menu)
+opens the same page in the other language.
+
+- Routing: pages live in `src/app/[lang]/`; `src/proxy.ts` serves English at the root and redirects `/en/...` to the clean URL.
+- Interface text: `src/i18n/dict/en.ts` and `bn.ts` (same keys). Server components use `getI18n()`, client components `useI18n()`.
+- Content: Bangla versions of news, FAQs, academics, admission, about, homepage, menus and terms are in `src/content/bn.ts`; the content getters lay them over the English defaults using `next/root-params`.
+
 ## Admin panel (frontend demo)
 
 Open `/admin` and pick a role (Super Admin, Admin or Editor) to explore the content management panel:

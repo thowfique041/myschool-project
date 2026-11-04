@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import type { ComponentProps, ReactNode } from "react";
 import { Info } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -29,7 +29,7 @@ export function SectionHeading({
     <div className={cn(align === "center" && "mx-auto text-center", "max-w-2xl", className)}>
       {kicker && (
         <p
-          lang="bn"
+          lang={/[\u0980-\u09FF]/.test(kicker) ? "bn" : "en"}
           className={cn(
             "mb-2 inline-flex items-center gap-2 text-sm font-semibold",
             dark ? "text-leaf-200" : "text-accent",
@@ -120,13 +120,6 @@ export function Badge({
 /* --------------------------------------------------------------- Demo notes */
 
 /** Marks a block of content as sample/demonstration data. */
-export function SampleTag({ className }: { className?: string }) {
-  return (
-    <Badge tone="gold" className={className}>
-      Sample data
-    </Badge>
-  );
-}
 
 export function DemoNote({ children, className }: { children: ReactNode; className?: string }) {
   return (
