@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ButtonLink } from "@/components/ui/primitives";
 import { LogoMark } from "@/components/brand/Logo";
+import { SiteFrame } from "@/components/layout/SiteFrame";
 
 export default function NotFound() {
   const links = [
@@ -10,6 +11,7 @@ export default function NotFound() {
     { href: "/contact", label: "Contact" },
   ];
   return (
+    <SiteFrame>
     <section className="py-20 sm:py-28">
       <div className="container-page max-w-2xl text-center">
         <LogoMark className="mx-auto h-16 w-auto" />
@@ -31,5 +33,6 @@ export default function NotFound() {
         </ButtonLink>
       </div>
     </section>
+    </SiteFrame>
   );
 }

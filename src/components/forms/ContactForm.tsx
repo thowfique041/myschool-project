@@ -26,6 +26,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
   const [values, setValues] = useState<Values>(empty);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+  const [formError, setFormError] = useState("");
 
   const set = (k: keyof Values) => (e: { target: { value: string } }) => {
     setValues((v) => ({ ...v, [k]: e.target.value }));
@@ -42,7 +43,8 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
       return;
     }
     setStatus("sending");
-    // Frontend-only demo: nothing is sent to a server.
+    setFormError("");
+    // Frontend-only: nothing is sent to a server.
     await new Promise((r) => setTimeout(r, 700));
     setStatus("sent");
   }
@@ -118,6 +120,11 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
           <TextArea id={id} name="message" rows={compact ? 4 : 5} value={values.message} onChange={set("message")} aria-describedby={describedBy} invalid={invalid} />
         )}
       </Field>
+      {formError && (
+        <p role="alert" className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-signal-700">
+          {formError}
+        </p>
+      )}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p id="contact-form-note" className="text-xs text-muted">
           Demonstration form — submissions are not sent to any server.

@@ -50,13 +50,21 @@ type LogoProps = {
   className?: string;
   tone?: "light" | "dark";
   compact?: boolean;
+  name?: string;
+  nameBn?: string;
+  src?: string;
 };
 
-export function Logo({ className, tone = "light", compact = false }: LogoProps) {
+export function Logo({ className, tone = "light", compact = false, name = "Webnion School & College", nameBn = "ওয়েবনিয়ন স্কুল এন্ড কলেজ", src }: LogoProps) {
   const isLight = tone === "light";
   return (
     <span className={cn("inline-flex items-center gap-2.5 sm:gap-3", className)}>
-      <LogoMark tone={tone} className="h-11 w-auto sm:h-14" />
+      {src ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={src} alt="" className="h-11 w-auto object-contain sm:h-14" />
+      ) : (
+        <LogoMark tone={tone} className="h-11 w-auto sm:h-14" />
+      )}
       <span className="flex flex-col leading-none">
         <span
           className={cn(
@@ -64,7 +72,7 @@ export function Logo({ className, tone = "light", compact = false }: LogoProps) 
             isLight ? "text-navy-900" : "text-white",
           )}
         >
-          Webnion School &amp; College
+          {name}
         </span>
         {!compact && (
           <span
@@ -75,7 +83,7 @@ export function Logo({ className, tone = "light", compact = false }: LogoProps) 
             )}
             style={{ lineHeight: 1.3 }}
           >
-            ওয়েবনিয়ন স্কুল এন্ড কলেজ
+            {nameBn}
           </span>
         )}
       </span>

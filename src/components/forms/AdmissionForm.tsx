@@ -5,7 +5,6 @@ import { motion, useReducedMotion } from "motion/react";
 import { CheckCircle2, Loader2, Printer, RotateCcw } from "lucide-react";
 import { Field, SelectInput, TextArea, TextInput, isBdPhone, isEmail } from "@/components/ui/fields";
 import { buttonClasses } from "@/components/ui/primitives";
-import { classOptions } from "@/data/admission";
 import { cn } from "@/lib/utils";
 
 type Values = {
@@ -66,11 +65,12 @@ function validate(v: Values): Errors {
   return e;
 }
 
-export function AdmissionForm() {
+export function AdmissionForm({ classOptions, open = true }: { classOptions: string[]; open?: boolean }) {
   const [values, setValues] = useState<Values>(empty);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "done">("idle");
   const [reference, setReference] = useState("");
+  const [formError, setFormError] = useState("");
   const reduce = useReducedMotion();
 
   const set =
@@ -91,6 +91,8 @@ export function AdmissionForm() {
       return;
     }
     setStatus("submitting");
+    setFormError("");
+    // Frontend-only: nothing is sent to a server.
     await new Promise((r) => setTimeout(r, 900));
     setReference(`WSC-27-${Math.floor(100000 + Math.random() * 900000)}`);
     setStatus("done");
@@ -155,7 +157,11 @@ export function AdmissionForm() {
   const errorCount = Object.values(errors).filter(Boolean).length;
 
   return (
-    <form noValidate onSubmit={onSubmit} className="space-y-8">
+    !open ? (
+      <div className="rounded-2xl border border-line bg-white p-6 text-muted">
+        Online applications are closed at the moment. Please check the notice board for the next admission circular.
+      </div>
+    ) : <form noValidate onSubmit={onSubmit} className="space-y-8">
       {errorCount > 0 && (
         <p role="alert" className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-signal-700">
           {errorCount === 1 ? "1 field needs" : `${errorCount} fields need`} your attention.
@@ -278,6 +284,11 @@ export function AdmissionForm() {
         )}
       </div>
 
+      {formError && (
+        <p role="alert" className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-signal-700">
+          {formError}
+        </p>
+      )}
       <div className="flex flex-col-reverse gap-3 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs text-muted">Fields marked * are required.</p>
         <button type="submit" disabled={status === "submitting"} className={buttonClasses("secondary")}>

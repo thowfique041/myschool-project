@@ -5,15 +5,18 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { AlertCircle, Loader2, Printer, Search } from "lucide-react";
 import { Field, SelectInput, TextInput } from "@/components/ui/fields";
 import { Badge, buttonClasses } from "@/components/ui/primitives";
-import { mockResults, resultClasses, resultExams, resultYears } from "@/data/results";
+import { mockResults } from "@/data/results";
+import type { ResultOptions } from "@/content/site-content";
 import type { StudentResult } from "@/types";
 import { cn } from "@/lib/utils";
 
-type Query = { className: string; exam: string; year: string; roll: string };
+type Query = { className: string; examId: string; roll: string };
 type State = { kind: "idle" } | { kind: "loading" } | { kind: "found"; result: StudentResult } | { kind: "notfound"; query: Query };
 
-export function ResultLookup() {
-  const [q, setQ] = useState<Query>({ className: "Class 8", exam: "Half-Yearly Examination", year: "2026", roll: "" });
+export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDemo: boolean }) {
+  const [q, setQ] = useState<Query>({ className: options.classes.includes("Class 8") ? "Class 8" : options.classes[0] ?? "", examId: options.exams[0]?.id ?? "", roll: "" });
+  const [error, setError] = useState("");
+  const examLabel = (id: string) => options.exams.find((e) => e.id === id)?.label ?? "";
   const [rollError, setRollError] = useState<string>();
   const [state, setState] = useState<State>({ kind: "idle" });
   const reduce = useReducedMotion();
@@ -21,16 +24,23 @@ export function ResultLookup() {
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const roll = q.roll.trim();
-    if (!/^\d{1,4}$/.test(roll)) {
+    if (!/^\d{1,6}$/.test(roll)) {
       setRollError("Enter a roll number using digits only (e.g. 101).");
       document.getElementById("f-roll")?.focus();
       return;
     }
     setRollError(undefined);
     setState({ kind: "loading" });
-    await new Promise((r) => setTimeout(r, 600));
-    const result = mockResults.find((r) => r.roll === roll && r.className === q.className && r.exam === q.exam && r.year === q.year);
-    setState(result ? { kind: "found", result } : { kind: "notfound", query: { ...q, roll } });
+    setError("");
+    try {
+      await new Promise((r) => setTimeout(r, 500));
+      const [exam, year] = q.examId.split("|");
+      const result = mockResults.find((r) => r.exam === exam && r.year === year && r.className === q.className && r.roll === roll);
+      setState(result ? { kind: "found", result } : { kind: "notfound", query: { ...q, roll } });
+    } catch {
+      setError("The result could not be loaded. Please check your connection and try again.");
+      setState({ kind: "idle" });
+    }
   }
 
   return (
@@ -38,12 +48,12 @@ export function ResultLookup() {
       <form noValidate onSubmit={onSubmit} className="h-fit space-y-4 rounded-2xl border border-line bg-white p-6 shadow-[var(--shadow-card)]">
         <div className="flex items-center justify-between">
           <h3 className="font-semibold text-navy-900">Search a result</h3>
-          <Badge tone="gold">Demo data</Badge>
+          {isDemo && <Badge tone="gold">Demo data</Badge>}
         </div>
         <Field label="Class" name="className">
           {({ id }) => (
             <SelectInput id={id} value={q.className} onChange={(e) => setQ({ ...q, className: e.target.value })}>
-              {resultClasses.map((c) => (
+              {options.classes.map((c) => (
                 <option key={c}>{c}</option>
               ))}
             </SelectInput>
@@ -52,35 +62,36 @@ export function ResultLookup() {
         <div className="grid grid-cols-2 gap-3">
           <Field label="Examination" name="exam" className="col-span-2">
             {({ id }) => (
-              <SelectInput id={id} value={q.exam} onChange={(e) => setQ({ ...q, exam: e.target.value })}>
-                {resultExams.map((c) => (
-                  <option key={c}>{c}</option>
+              <SelectInput id={id} value={q.examId} onChange={(e) => setQ({ ...q, examId: e.target.value })}>
+                {options.exams.length === 0 && <option value="">No results published yet</option>}
+                {options.exams.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.label}
+                  </option>
                 ))}
               </SelectInput>
             )}
           </Field>
-          <Field label="Year" name="year">
-            {({ id }) => (
-              <SelectInput id={id} value={q.year} onChange={(e) => setQ({ ...q, year: e.target.value })}>
-                {resultYears.map((c) => (
-                  <option key={c}>{c}</option>
-                ))}
-              </SelectInput>
-            )}
-          </Field>
-          <Field label="Roll" name="roll" required error={rollError}>
+          <Field label="Roll" name="roll" required error={rollError} className="col-span-2">
             {({ id, describedBy, invalid }) => (
               <TextInput id={id} inputMode="numeric" placeholder="e.g. 101" value={q.roll} onChange={(e) => setQ({ ...q, roll: e.target.value })} aria-describedby={describedBy} invalid={invalid} />
             )}
           </Field>
         </div>
-        <button type="submit" disabled={state.kind === "loading"} className={cn(buttonClasses("primary"), "w-full")}>
+        {error && (
+          <p role="alert" className="text-sm text-signal-700">
+            {error}
+          </p>
+        )}
+        <button type="submit" disabled={state.kind === "loading" || !q.examId} className={cn(buttonClasses("primary"), "w-full")}>
           {state.kind === "loading" ? <Loader2 aria-hidden className="size-4 animate-spin" /> : <Search aria-hidden className="size-4" />}
           {state.kind === "loading" ? "Searching…" : "View result"}
         </button>
-        <p className="text-xs leading-relaxed text-muted">
-          Try <strong>Class 8 · Half-Yearly · 2026 · Roll 101</strong> or <strong>Class 9 · Roll 205</strong>. No real student records are used.
-        </p>
+        {isDemo && (
+          <p className="text-xs leading-relaxed text-muted">
+            Try <strong>Class 8 · Half-Yearly 2026 · Roll 101</strong> or <strong>Class 9 · Roll 205</strong>. No real student records are used.
+          </p>
+        )}
       </form>
 
       <div aria-live="polite" className="min-h-64 min-w-0">
@@ -106,7 +117,7 @@ export function ResultLookup() {
               <div>
                 <p className="font-semibold text-signal-700">No result found</p>
                 <p className="mt-1 text-sm text-ink">
-                  There is no demo record for roll {state.query.roll}, {state.query.className}, {state.query.exam} {state.query.year}. Please
+                  No published result was found for roll {state.query.roll}, {state.query.className}, {examLabel(state.query.examId)}. Please
                   check the details and try again.
                 </p>
               </div>
@@ -162,7 +173,10 @@ export function ResultLookup() {
                 </table>
               </div>
               <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-line bg-paper px-6 py-4">
-                <p className="text-xs text-muted">Registration {state.result.registration} · Demonstration record — not a real student.</p>
+                <p className="text-xs text-muted">
+                  Registration {state.result.registration}
+                  {isDemo && " · Demonstration record — not a real student."}
+                </p>
                 <button type="button" onClick={() => window.print()} className={buttonClasses("outline", "sm")}>
                   <Printer aria-hidden className="size-4" /> Print
                 </button>

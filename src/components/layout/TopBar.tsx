@@ -1,7 +1,7 @@
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
-import { site } from "@/data/site";
+import type { SiteInfo } from "@/content/site-content";
 
-export function TopBar() {
+export function TopBar({ site }: { site: SiteInfo }) {
   return (
     <div className="bg-navy-950 text-[0.8rem] text-navy-100">
       <div className="container-page flex min-h-9 flex-wrap items-center justify-between gap-x-6 gap-y-1 py-1.5">
@@ -20,7 +20,7 @@ export function TopBar() {
           </li>
           <li className="hidden md:inline-flex items-center gap-1.5">
             <MapPin aria-hidden className="size-3.5 text-leaf-200" />
-            Upashahar, Sylhet
+            {site.area}
           </li>
           <li className="hidden xl:inline-flex items-center gap-1.5">
             <Clock aria-hidden className="size-3.5 text-leaf-200" />
@@ -29,7 +29,10 @@ export function TopBar() {
         </ul>
         <ul className="flex items-center gap-4">
           <li className="hidden sm:block">
-            <span className="text-navy-300">EIIN {site.eiin} (demo)</span>
+            <span className="text-navy-300">
+              EIIN {site.eiin}
+              {site.eiin === "000000" ? " (demo)" : ""}
+            </span>
           </li>
         </ul>
       </div>

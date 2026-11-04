@@ -19,13 +19,15 @@ export type ImageAsset = {
   credit?: { page: string; author?: string; location?: string };
 };
 
-export type NoticeCategory = "admission" | "exam" | "academic" | "holiday" | "event" | "general";
+export type NoticeCategory = string;
 
 export type Notice = {
   slug: string;
   title: string;
   titleEn?: string;
   category: NoticeCategory;
+  categoryLabel?: string;
+  categoryLabelBn?: string;
   date: string;
   important?: boolean;
   summary: string;
@@ -34,12 +36,13 @@ export type Notice = {
   attachment?: { label: string; href: string; size: string };
 };
 
-export type NewsCategory = "event" | "achievement" | "academic" | "campus" | "culture" | "sports";
+export type NewsCategory = string;
 
 export type NewsArticle = {
   slug: string;
   title: string;
   category: NewsCategory;
+  categoryLabel?: string;
   date: string;
   eventDate?: string;
   venue?: string;
@@ -49,18 +52,7 @@ export type NewsArticle = {
   image: ImageAsset;
 };
 
-export type Department =
-  | "Administration"
-  | "Bangla"
-  | "English"
-  | "Mathematics"
-  | "Science"
-  | "ICT"
-  | "Business Studies"
-  | "Humanities"
-  | "Religion & Moral Education"
-  | "Primary Section"
-  | "Physical Education";
+export type Department = string;
 
 export type Teacher = {
   id: string;
@@ -76,13 +68,16 @@ export type Teacher = {
   phone: string;
   /** Placeholder demo address on the reserved .example domain */
   email: string;
+  photo?: string;
+  kind?: "teacher" | "staff";
 };
 
-export type GalleryCategory = "campus" | "classroom" | "sports" | "cultural" | "events";
+export type GalleryCategory = string;
 
 export type GalleryItem = {
   id: string;
   category: GalleryCategory;
+  categoryLabel?: string;
   caption: string;
   captionBn: string;
   image: ImageAsset;
@@ -110,7 +105,10 @@ export type CalendarEvent = {
   endDate?: string;
   title: string;
   titleBn: string;
-  type: "exam" | "holiday" | "event" | "academic" | "admission";
+  type: string;
+  typeLabel?: string;
+  venue?: string;
+  description?: string;
 };
 
 export type ResultSubject = {
@@ -138,7 +136,8 @@ export type DownloadResource = {
   id: string;
   title: string;
   titleBn?: string;
-  category: "Admission" | "Academic" | "Forms" | "Policy";
+  category: string;
+  categoryLabel?: string;
   description: string;
   href: string;
   size: string;
