@@ -19,6 +19,7 @@ import {
   term,
   testimonialsBn,
 } from "./bn";
+import { noticesEn } from "./en-notices";
 import type {
   AcademicLevel,
   CalendarEvent,
@@ -217,7 +218,21 @@ export async function getNotices(): Promise<Notice[]> {
   const bn = (await getLang()) === "bn";
   return rows
     .map((d) => toNotice(d, cats))
-    .map((n) => (bn ? { ...n, titleEn: undefined, categoryLabelBn: undefined } : n))
+    .map((n) => {
+      if (bn) return { ...n, titleEn: undefined, categoryLabelBn: undefined };
+      const e = noticesEn[n.slug];
+      if (!e) return { ...n, title: n.titleEn || n.title, titleEn: undefined, categoryLabelBn: undefined };
+      return {
+        ...n,
+        title: e.title ?? n.titleEn ?? n.title,
+        titleEn: undefined,
+        categoryLabelBn: undefined,
+        summary: e.summary,
+        body: e.body,
+        issuedBy: e.issuedBy,
+        attachment: n.attachment ? { ...n.attachment, label: e.attachmentLabel ?? n.attachment.label } : undefined,
+      };
+    })
     .sort((a, b) => b.date.localeCompare(a.date));
 }
 
@@ -388,13 +403,23 @@ export async function getFaqs(): Promise<FaqItem[]> {
   });
 }
 
+/** English versions of quotes that were written in Bangla. */
+const testimonialsEn: Record<string, { quote?: string; name?: string; role?: string }> = {
+  "Guardian of a Class 5 student": {
+    quote: "My daughter has studied here since Class 1. Her class teacher checks in regularly and calls us if there is ever a problem. That gives us the most confidence.",
+  },
+  "HSC 2025, Business Studies": {
+    quote: "The tutorial classes helped a lot in HSC. We could take our questions to the teachers even after class.",
+  },
+};
+
 export async function getTestimonials(): Promise<Testimonial[]> {
   "use cache";
   cacheTag("testimonials");
   cacheLife("max");
   const bn = (await getLang()) === "bn";
   return (await simpleList("testimonials", "testimonials")).map((d) => {
-    const t = bn ? testimonialsBn[str(d.role)] : undefined;
+    const t: { quote?: string; name?: string; role?: string } | undefined = bn ? testimonialsBn[str(d.role)] : testimonialsEn[str(d.role)];
     return { quote: t?.quote ?? str(d.quote), name: t?.name ?? str(d.name), role: t?.role ?? str(d.role) };
   });
 }

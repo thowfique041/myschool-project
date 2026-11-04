@@ -22,7 +22,7 @@ const copy = {
       { title: "Forms & downloads", text: "Leave application, TC request and more." },
       { title: "School policies", text: "Attendance, uniform, conduct and safety." },
     ],
-    goodK: "প্রয়োজনীয় তথ্য",
+    goodK: "Good to know",
     good: "Good to know",
     info: [
       { title: "Uniform", text: "White shirt or kameez with the school badge, navy trousers or cross-belt, and black shoes. Navy sweater in winter." },
@@ -30,7 +30,7 @@ const copy = {
       { title: "Talking to teachers", text: "Class teachers are available after the last period on Thursdays, or by appointment through the office." },
       { title: "Health & absence", text: "Send a signed leave application for any absence. For illness during school, the office will call the guardian." },
     ],
-    timesK: "সময়সূচি",
+    timesK: "School timings",
     times: "School timings",
     timings: [
       { label: "Morning shift (Play – Class 10)", value: "7:30 AM – 12:15 PM" },
@@ -54,7 +54,7 @@ const copy = {
       { title: "ফরম ও ডাউনলোড", text: "ছুটির আবেদন, ছাড়পত্রের আবেদন ও আরও।" },
       { title: "বিদ্যালয়ের নীতিমালা", text: "উপস্থিতি, পোশাক, আচরণ ও নিরাপত্তা।" },
     ],
-    goodK: "Good to know",
+    goodK: "প্রয়োজনীয় তথ্য",
     good: "জেনে রাখুন",
     info: [
       { title: "পোশাক", text: "বিদ্যালয়ের ব্যাজসহ সাদা শার্ট বা কামিজ, নেভি প্যান্ট বা ক্রস-বেল্ট এবং কালো জুতা। শীতে নেভি সোয়েটার।" },
@@ -62,7 +62,7 @@ const copy = {
       { title: "শিক্ষকের সঙ্গে কথা", text: "বৃহস্পতিবার শেষ পিরিয়ডের পর শ্রেণি শিক্ষকের সঙ্গে দেখা করা যায়, অথবা অফিসের মাধ্যমে সময় নিয়ে।" },
       { title: "স্বাস্থ্য ও অনুপস্থিতি", text: "যেকোনো অনুপস্থিতির জন্য স্বাক্ষরিত ছুটির আবেদন পাঠান। ক্লাস চলাকালে অসুস্থ হলে অফিস অভিভাবককে ফোন করবে।" },
     ],
-    timesK: "School timings",
+    timesK: "সময়সূচি",
     times: "বিদ্যালয়ের সময়সূচি",
     timings: [
       { label: "প্রভাতি শিফট (প্লে – দশম শ্রেণি)", value: "সকাল ৭:৩০ – দুপুর ১২:১৫" },

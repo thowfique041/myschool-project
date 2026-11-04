@@ -10,9 +10,6 @@ export default function Error({ reset }: { error: Error & { digest?: string }; r
     <section className="py-20">
       <div className="container-page max-w-xl text-center">
         <h1 className="font-serif text-3xl font-semibold text-heading">{t.error.title}</h1>
-        <p lang={lang === "bn" ? "en" : "bn"} className="mt-2 text-muted">
-          {t.error.other}
-        </p>
         <p className="mt-2 text-muted">{t.error.text}</p>
         <div className="mt-6 flex justify-center gap-3">
           <button type="button" onClick={reset} className={buttonClasses("primary")}>

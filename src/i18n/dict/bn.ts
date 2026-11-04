@@ -204,7 +204,7 @@ export const bn: Dictionary = {
   footer: { social: "সামাজিক মাধ্যম" },
   home: {
     readHistory: "আমাদের ইতিহাস ও মূল্যবোধ পড়ুন",
-    principalMessage: "Principal's message",
+    principalMessage: "অধ্যক্ষের বাণী",
     readFull: "পুরো বাণী পড়ুন",
     curriculum: "শিক্ষাক্রম ও বিষয়",
     allNotices: "সব নোটিশ",
@@ -234,7 +234,7 @@ export const bn: Dictionary = {
     moreQuestions: "আরও প্রশ্ন",
     faqContact: "সাধারণ জিজ্ঞাসা ও যোগাযোগ",
     noticesAdmission: "নোটিশ ও ভর্তি",
-    contactKicker: "Contact",
+    contactKicker: "যোগাযোগ",
     writeOffice: "অফিসে লিখুন",
     officeCall: (hours, phone) => `${hours}। চাইলে ${phone} নম্বরে ফোনও করতে পারেন।`,
   },

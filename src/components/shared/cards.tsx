@@ -45,19 +45,17 @@ export function NoticeRow({ notice, compact = false }: { notice: Notice; compact
             </span>
           )}
         </div>
-        <h3 lang="bn" className="mt-1.5 font-semibold text-heading group-hover:text-accent" style={{ lineHeight: 1.55 }}>
+        <h3 className="mt-1.5 font-semibold text-heading group-hover:text-accent" style={{ lineHeight: 1.55 }}>
           <Link href={`/notices/${notice.slug}`} className="after:absolute after:inset-0">
             {notice.title}
           </Link>
         </h3>
         {!compact && (
-          <p lang="bn" className="mt-1 line-clamp-2 text-sm text-muted">
+          <p className="mt-1 line-clamp-2 text-sm text-muted">
             {notice.summary}
           </p>
         )}
-        <p className="mt-1 text-xs text-muted">
-          <span lang={lang === "bn" ? "en" : "bn"}>{formatDate(notice.date, lang === "bn" ? "en" : "bn")}</span>
-        </p>
+        <p className="mt-1 text-xs text-muted">{formatDate(notice.date, lang)}</p>
       </div>
     </article>
   );
@@ -160,9 +158,6 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
     <article className="flex h-full flex-col items-center rounded-[var(--radius-card)] border border-line bg-surface p-6 text-center shadow-[var(--shadow-card)]">
       <TeacherAvatar teacher={teacher} size="lg" />
       <h3 className="mt-4 font-semibold text-heading">{teacher.name}</h3>
-      <p lang={lang === "bn" ? "en" : "bn"} className="text-sm text-muted" style={{ lineHeight: 1.5 }}>
-        {teacher.nameBn}
-      </p>
       <p className="mt-2 text-sm font-medium text-accent">{teacher.designation}</p>
       <p className="mt-1 text-sm text-muted">{teacher.subjects.join(", ")}</p>
       <dl className="mt-auto w-full border-t border-line pt-3 text-xs text-muted">

@@ -34,20 +34,15 @@ export default async function NoticeDetailPage({ params }: PageProps<"/[lang]/no
 
   return (
     <>
-      <PageHeader title={t.notices.notice} titleBn={lang === "bn" ? "Notice" : "নোটিশ"} headingAs="p" crumbs={[{ label: lang === "bn" ? "নোটিশ বোর্ড" : "Notice Board", href: "/notices" }]} />
+      <PageHeader title={t.notices.notice} headingAs="p" crumbs={[{ label: lang === "bn" ? "নোটিশ বোর্ড" : "Notice Board", href: "/notices" }]} />
       <section className="py-12 sm:py-16">
         <div className="container-page grid gap-10 lg:grid-cols-[1fr_20rem]">
           <article className="rounded-2xl border border-line bg-surface p-6 shadow-[var(--shadow-card)] sm:p-10">
             <div className="flex flex-wrap items-center gap-2">
               <Badge tone="navy">{cat.label}</Badge>
-              {cat.labelBn && (
-                <Badge tone="neutral">
-                  <span lang="bn">{cat.labelBn}</span>
-                </Badge>
-              )}
               {notice.important && <Badge tone="signal">{t.common.important}</Badge>}
             </div>
-            <h1 lang="bn" className="mt-4 font-serif text-2xl font-semibold text-heading sm:text-3xl" style={{ lineHeight: 1.45 }}>
+            <h1 className="mt-4 font-serif text-2xl font-semibold text-heading sm:text-3xl" style={{ lineHeight: 1.45 }}>
               {notice.title}
             </h1>
             {notice.titleEn && <p className="mt-1 text-muted">{notice.titleEn}</p>}
@@ -56,16 +51,15 @@ export default async function NoticeDetailPage({ params }: PageProps<"/[lang]/no
                 <dt className="inline text-muted">{t.notices.published} </dt>
                 <dd className="inline font-semibold text-heading">
                   <time dateTime={notice.date}>{formatDate(notice.date, lang)}</time>
-                  <span lang={lang === "bn" ? "en" : "bn"} className="ml-2 font-normal text-muted">({formatDate(notice.date, lang === "bn" ? "en" : "bn")})</span>
                 </dd>
               </div>
             </dl>
-            <div lang="bn" className="mt-6 space-y-4 text-[1.02rem] text-ink">
+            <div className="mt-6 space-y-4 text-[1.02rem] text-ink">
               {notice.body.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
             </div>
-            {notice.issuedBy && <p lang="bn" className="mt-10 text-right text-sm text-muted">
+            {notice.issuedBy && <p className="mt-10 text-right text-sm text-muted">
               {t.notices.orderBy}
               <br />
               <span className="font-semibold text-heading">{notice.issuedBy}</span>
@@ -80,7 +74,7 @@ export default async function NoticeDetailPage({ params }: PageProps<"/[lang]/no
               >
                 <FileText aria-hidden className="size-8 shrink-0 text-danger" />
                 <span className="min-w-0 flex-1">
-                  <span lang="bn" className="block font-semibold text-heading">{notice.attachment.label}</span>
+                  <span className="block font-semibold text-heading">{notice.attachment.label}</span>
                   <span className="block text-xs text-muted">{notice.attachment.size}</span>
                 </span>
                 <Download aria-hidden className="size-5 text-accent" />

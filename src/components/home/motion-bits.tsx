@@ -66,7 +66,7 @@ export function NoticeTicker({ notices }: { notices: Notice[] }) {
       {items.map((n) => (
         <li key={n.slug} className="flex items-center gap-3 whitespace-nowrap">
           <span aria-hidden className="size-1.5 rounded-full bg-signal-600" />
-          <Link href={`/notices/${n.slug}`} lang="bn" tabIndex={hidden ? -1 : undefined} className="text-[0.92rem] text-heading hover:text-accent hover:underline underline-offset-4">
+          <Link href={`/notices/${n.slug}`} tabIndex={hidden ? -1 : undefined} className="text-[0.92rem] text-heading hover:text-accent hover:underline underline-offset-4">
             {n.title}
           </Link>
         </li>
@@ -78,7 +78,7 @@ export function NoticeTicker({ notices }: { notices: Notice[] }) {
     <div className="flex items-stretch overflow-hidden rounded-lg border border-line bg-surface shadow-[var(--shadow-card)]">
       <div className="flex shrink-0 items-center gap-2 bg-signal-600 px-3 text-sm font-semibold text-white sm:px-4">
         <Megaphone aria-hidden className="size-4" />
-        <span lang="bn" className="hidden sm:inline">সর্বশেষ নোটিশ</span>
+        <span className="hidden sm:inline">{t.ticker.latestBn}</span>
         <span className="sm:hidden">{t.ticker.latest}</span>
       </div>
       <div

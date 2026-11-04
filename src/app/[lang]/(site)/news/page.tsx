@@ -69,9 +69,6 @@ export default async function NewsPage() {
                     </span>
                     <span>
                       <span className="block text-sm font-semibold">{e.title}</span>
-                      <span lang={lang === "bn" ? "en" : "bn"} className="block text-xs text-navy-200">
-                        {e.titleBn}
-                      </span>
                     </span>
                   </li>
                 );

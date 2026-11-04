@@ -481,6 +481,7 @@ export const settingsBn: Record<string, Record<string, unknown>> = {
     copyright: "ডেমো ওয়েবসাইট — প্রতিষ্ঠান ও এর সব তথ্য কাল্পনিক।",
   },
   homepage: {
+    heroTagline: "শিক্ষার জন্য আসো, সেবার জন্য বের হয়ে যাও।",
     heroTitle: "যে বিদ্যালয়ে প্রতিটি শিশুকে নাম ধরে চেনা হয়।",
     heroSubtitle:
       "সিলেটের উপশহরে ওয়েবনিয়ন স্কুল এন্ড কলেজ জাতীয় শিক্ষাক্রমে প্লে থেকে দ্বাদশ শ্রেণি পর্যন্ত পড়ায়। এখানে আছে শৃঙ্খলাপূর্ণ শ্রেণিকক্ষ, হাতে-কলমে বিজ্ঞান ও আইসিটি, আর প্রতিটি পরিবারের সঙ্গে যোগাযোগ রাখা শিক্ষক।",
@@ -500,15 +501,15 @@ export const settingsBn: Record<string, Record<string, unknown>> = {
     ],
     welcomePoints: ["প্রতিটি শাখায় শ্রেণি শিক্ষকের নিয়মিত খোঁজখবর", "এসএসসি ও এইচএসসি পরীক্ষার্থীদের আলাদা পড়ার কক্ষ", "প্রতি টার্মে অভিভাবক সভা", "রুটিনে বিজ্ঞান, আইসিটি ও পাঠাগারের ক্লাস"],
     sections: {
-      welcome: { kicker: "About us", title: "", description: "" },
-      levels: { kicker: "Academic levels", title: "তিনটি শাখা, একটি ধারাবাহিক যাত্রা", description: "বিদ্যালয়ের প্রথম দিন থেকে এইচএসসি পরীক্ষা পর্যন্ত শিক্ষার্থীরা আমাদের সঙ্গে পড়তে পারে।" },
-      notices: { kicker: "Notice board", title: "সাম্প্রতিক নোটিশ", description: "" },
-      facilities: { kicker: "Why Webnion", title: "পরিবারগুলো কেন ওয়েবনিয়ন বেছে নেয়", description: "ভর্তির সাক্ষাৎকারে অভিভাবকেরা যা বলেন — এবং যা ধরে রাখতে আমরা সবচেয়ে বেশি পরিশ্রম করি।" },
-      results: { kicker: "Results", title: "পাবলিক পরীক্ষার ফলাফল", description: "সাম্প্রতিক এসএসসি ও এইচএসসি ফলাফলের সারসংক্ষেপ।" },
-      news: { kicker: "News & events", title: "খবর ও অনুষ্ঠান", description: "" },
-      gallery: { kicker: "Photo gallery", title: "ক্যাম্পাস জীবন", description: "" },
-      people: { kicker: "Our teachers", title: "যে শিক্ষকেরা বিষয় জানেন — আর শিক্ষার্থীদেরও", description: "" },
-      faq: { kicker: "FAQ", title: "সাধারণ জিজ্ঞাসা", description: "" },
+      welcome: { kicker: "আমাদের সম্পর্কে", title: "", description: "" },
+      levels: { kicker: "শিক্ষা স্তর", title: "তিনটি শাখা, একটি ধারাবাহিক যাত্রা", description: "বিদ্যালয়ের প্রথম দিন থেকে এইচএসসি পরীক্ষা পর্যন্ত শিক্ষার্থীরা আমাদের সঙ্গে পড়তে পারে।" },
+      notices: { kicker: "নোটিশ বোর্ড", title: "সাম্প্রতিক নোটিশ", description: "" },
+      facilities: { kicker: "কেন ওয়েবনিয়ন", title: "পরিবারগুলো কেন ওয়েবনিয়ন বেছে নেয়", description: "ভর্তির সাক্ষাৎকারে অভিভাবকেরা যা বলেন — এবং যা ধরে রাখতে আমরা সবচেয়ে বেশি পরিশ্রম করি।" },
+      results: { kicker: "ফলাফল", title: "পাবলিক পরীক্ষার ফলাফল", description: "সাম্প্রতিক এসএসসি ও এইচএসসি ফলাফলের সারসংক্ষেপ।" },
+      news: { kicker: "খবর ও অনুষ্ঠান", title: "খবর ও অনুষ্ঠান", description: "" },
+      gallery: { kicker: "ফটো গ্যালারি", title: "ক্যাম্পাস জীবন", description: "" },
+      people: { kicker: "শিক্ষকমণ্ডলী", title: "যে শিক্ষকেরা বিষয় জানেন — আর শিক্ষার্থীদেরও", description: "" },
+      faq: { kicker: "সাধারণ জিজ্ঞাসা", title: "সাধারণ জিজ্ঞাসা", description: "" },
     },
   },
   about: {
@@ -555,13 +556,9 @@ export const settingsBn: Record<string, Record<string, unknown>> = {
       "আমাদের শিক্ষকেরা জানেন, শিশুরা সবচেয়ে ভালো শেখে যখন তারা নিরাপদ বোধ করে, তাদের কাছে পরিশ্রম আশা করা হয় এবং পিছিয়ে পড়লে তা খেয়াল করা হয়। এ কারণেই প্রতিটি শাখায় একজন শ্রেণি শিক্ষক পরিবারের সঙ্গে যোগাযোগের দায়িত্বে থাকেন, আর প্রতি টার্মে অভিভাবক সভা হয়।",
       "অফিস সময়ে আমার দরজা প্রতিটি অভিভাবকের জন্য খোলা। অনুগ্রহ করে এসে কথা বলুন — দেরিতে নয়, শুরুতেই কোনো দুশ্চিন্তার কথা জানতে পারলে আমরা বেশি খুশি হব।",
     ],
-    messageBn: "We want our students to grow up honest, hard-working and responsible — loving their own language and culture while keeping pace with the world.",
   },
   admission: {
     intro: "প্লে থেকে নবম শ্রেণিতে আবেদন চলছে। একাদশ শ্রেণির ভর্তি জাতীয় অনলাইন ভর্তির সময়সূচি অনুযায়ী হবে।",
-    noticeTitleBn: "Admission notice for Play to Class 9, session 2027",
-    noticeBodyBn:
-      "Applications are being accepted for vacant seats in Play, Nursery and Class 1 to Class 9 for the 2027 session. Forms can be collected from the school office and the website from 10 November 2026 to 3 December 2026.",
     noticeBody: "১০ নভেম্বর ২০২৬ থেকে ৩ ডিসেম্বর ২০২৬ পর্যন্ত বিদ্যালয়ের অফিসে এবং ফরম ও ডাউনলোড অংশে ফরম পাওয়া যাবে। কোনো প্রশ্ন থাকলে ভর্তি অফিসে ফোন করুন।",
     dates: [
       { label: "ফরম বিতরণ ও জমা শুরু" },

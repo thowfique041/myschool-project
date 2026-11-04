@@ -105,9 +105,6 @@ function Lightbox({
             </div>
             <figcaption className="mt-3 text-white">
               <span className="font-semibold">{item.caption}</span>
-              <span lang={lang === "bn" ? "en" : "bn"} className="block text-sm text-navy-200">
-                {item.captionBn}
-              </span>
             </figcaption>
           </motion.figure>
         </AnimatePresence>

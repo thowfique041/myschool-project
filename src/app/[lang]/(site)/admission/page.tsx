@@ -28,9 +28,9 @@ const copy = {
     notice: "Notice",
     office: "Admission office:",
     photoAlt: "Students at the school",
-    datesK: "গুরুত্বপূর্ণ তারিখ",
+    datesK: "Important dates",
     dates: "Important dates",
-    eligK: "যোগ্যতা",
+    eligK: "Eligibility",
     elig: "Eligibility and class-wise requirements",
     eligSample: "Seat numbers are indicative for this demonstration.",
     eligLabel: "Eligibility table",
@@ -38,12 +38,12 @@ const copy = {
     req: "Requirement",
     sel: "Selection",
     seats: "Seats",
-    procK: "ভর্তি প্রক্রিয়া",
+    procK: "Admission procedure",
     proc: "Admission procedure",
-    docsK: "প্রয়োজনীয় কাগজপত্র",
+    docsK: "Required documents",
     docs: "Required documents",
     circular: (y: string) => `Admission circular ${y} (PDF)`,
-    feesK: "ফি কাঠামো",
+    feesK: "Fee structure",
     fees: "Fee information",
     feesText: "Amounts in Bangladeshi Taka (BDT).",
     feeLabel: "Fee table",
@@ -52,10 +52,10 @@ const copy = {
     primary: "Primary",
     secondary: "Secondary",
     higher: "Higher Secondary",
-    applyK: "অনলাইন আবেদন",
+    applyK: "Online application",
     applyTitle: "Admission inquiry / application form",
     applyText: "Frontend demonstration — the form validates your entries and shows a confirmation, but does not send data anywhere.",
-    faqK: "ভর্তি সংক্রান্ত প্রশ্ন",
+    faqK: "Admission FAQ",
     faq: "Admission FAQ",
   },
   bn: {
@@ -66,9 +66,9 @@ const copy = {
     notice: "নোটিশ",
     office: "ভর্তি অফিস:",
     photoAlt: "বিদ্যালয়ের শিক্ষার্থীরা",
-    datesK: "Important dates",
+    datesK: "গুরুত্বপূর্ণ তারিখ",
     dates: "গুরুত্বপূর্ণ তারিখ",
-    eligK: "Eligibility",
+    eligK: "যোগ্যতা",
     elig: "যোগ্যতা ও শ্রেণিভিত্তিক শর্ত",
     eligSample: "আসনসংখ্যা এই ডেমোর জন্য আনুমানিক।",
     eligLabel: "যোগ্যতার সারণি",
@@ -76,12 +76,12 @@ const copy = {
     req: "শর্ত",
     sel: "বাছাই",
     seats: "আসন",
-    procK: "Admission procedure",
+    procK: "ভর্তি প্রক্রিয়া",
     proc: "ভর্তি প্রক্রিয়া",
-    docsK: "Required documents",
+    docsK: "প্রয়োজনীয় কাগজপত্র",
     docs: "প্রয়োজনীয় কাগজপত্র",
     circular: (y: string) => `ভর্তি বিজ্ঞপ্তি ${toBnDigits(y)} (পিডিএফ)`,
-    feesK: "Fee structure",
+    feesK: "ফি কাঠামো",
     fees: "ফি সংক্রান্ত তথ্য",
     feesText: "টাকার অঙ্ক বাংলাদেশি টাকায় (৳)।",
     feeLabel: "ফি-তালিকা",
@@ -90,10 +90,10 @@ const copy = {
     primary: "প্রাথমিক",
     secondary: "মাধ্যমিক",
     higher: "উচ্চ মাধ্যমিক",
-    applyK: "Online application",
+    applyK: "অনলাইন আবেদন",
     applyTitle: "ভর্তি জিজ্ঞাসা / আবেদন ফরম",
     applyText: "ফ্রন্টএন্ড ডেমো — ফর্মটি আপনার তথ্য যাচাই করে নিশ্চিতকরণ দেখায়, কিন্তু কোথাও কোনো তথ্য পাঠায় না।",
-    faqK: "Admission FAQ",
+    faqK: "ভর্তি সংক্রান্ত প্রশ্ন",
     faq: "ভর্তি সংক্রান্ত প্রশ্নোত্তর",
   },
 };
@@ -133,16 +133,12 @@ export default async function AdmissionPage() {
                 {c.notice} · {formatDate(a.noticeDate, lang)}
               </Badge>
             )}
-            {a.noticeTitleBn && (
-              <h2 id="announce" lang={lang === "bn" ? "en" : "bn"} className="mt-3 font-serif text-2xl font-semibold text-heading sm:text-3xl" style={{ lineHeight: 1.45 }}>
-                {a.noticeTitleBn}
+            {(lang === "bn" ? a.noticeTitleBn : a.noticeTitle) && (
+              <h2 id="announce" className="mt-3 font-serif text-2xl font-semibold text-heading sm:text-3xl" style={{ lineHeight: 1.45 }}>
+                {lang === "bn" ? a.noticeTitleBn : a.noticeTitle}
               </h2>
             )}
-            {a.noticeBodyBn && (
-              <p lang={lang === "bn" ? "en" : "bn"} className="mt-4 text-muted">
-                {a.noticeBodyBn}
-              </p>
-            )}
+            {lang === "bn" && a.noticeBodyBn && <p className="mt-4 text-muted">{a.noticeBodyBn}</p>}
             {a.noticeBody && (
               <p className="mt-4 text-muted">
                 {a.noticeBody} {c.office} {site.officePhone || site.phone}.

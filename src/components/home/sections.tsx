@@ -62,7 +62,7 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
         <Reveal delay={0.08}>
           <figure id="principal" className="relative h-full rounded-2xl bg-navy-900 p-7 text-white sm:p-9">
             <Quote aria-hidden className="size-9 text-leaf-200/60" />
-            <p lang={data.lang === "bn" ? "en" : "bn"} className="mt-2 text-sm font-medium text-leaf-200">
+            <p className="mt-2 text-sm font-medium text-leaf-200">
               {data.t.home.principalMessage}
             </p>
             <blockquote className="mt-3 font-serif text-[1.2rem] leading-relaxed sm:text-[1.3rem]">
@@ -115,10 +115,7 @@ export function LevelsSection({ copy, data }: { copy: SectionCopy; data: HomeDat
                 <span className="text-xs font-medium text-muted">{level.ages}</span>
               </div>
               <h3 className="mt-3 font-serif text-xl font-semibold text-heading">
-                {level.name}{" "}
-                <span lang={data.lang === "bn" ? "en" : "bn"} className="font-sans text-base font-medium text-accent">
-                  · {level.nameBn}
-                </span>
+                {level.name}
               </h3>
               <p className="text-sm font-semibold text-accent">{level.classes}</p>
               <p className="mt-3 text-[0.95rem] leading-relaxed text-muted">{level.summary}</p>
@@ -172,9 +169,9 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
             <h2 className="mt-3 font-serif text-2xl font-semibold text-heading">
               {data.t.home.admission} {num(adm.year, data.lang)}
             </h2>
-            {adm.noticeTitleBn && (
-              <p lang={data.lang === "bn" ? "en" : "bn"} className="text-sm text-accent">
-                {adm.noticeTitleBn}
+            {(data.lang === "bn" ? adm.noticeTitleBn : adm.noticeTitle) && (
+              <p className="text-sm text-accent">
+                {data.lang === "bn" ? adm.noticeTitleBn : adm.noticeTitle}
               </p>
             )}
             <ol className="mt-6 space-y-4">
@@ -439,7 +436,7 @@ export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeDat
               <Reveal as="li" key={i} delay={i * 0.05}>
                 <figure className="flex h-full flex-col rounded-xl border border-line bg-paper p-6">
                   <Quote aria-hidden className="size-6 text-leaf-500" />
-                  <blockquote lang={/[ঀ-৿]/.test(t.quote) ? "bn" : "en"} className="mt-3 flex-1 text-[0.97rem] leading-relaxed text-ink">
+                  <blockquote className="mt-3 flex-1 text-[0.97rem] leading-relaxed text-ink">
                     {t.quote}
                   </blockquote>
                   <figcaption className="mt-5 border-t border-line pt-4 text-sm">
