@@ -201,7 +201,6 @@ export const newsBn: Record<string, { title: string; excerpt: string; body: stri
     body: [
       "২৪ সেপ্টেম্বর অনুষ্ঠিত জেলা পর্যায়ের বাংলা বিতর্ক প্রতিযোগিতায় উচ্চ মাধ্যমিক শাখার তিন সদস্যের বিতর্ক দল চূড়ান্ত পর্বে পৌঁছায়।",
       "দলটি “জলবায়ু অভিযোজন পরিকল্পনায় স্থানীয় জনগোষ্ঠীর নেতৃত্ব দেওয়া উচিত” — এই প্রস্তাবের পক্ষে বক্তব্য রাখে। বাংলা বিভাগের শিক্ষক ও দলের প্রশিক্ষক জানান, পাঠাগারে সাপ্তাহিক অনুশীলনের মাধ্যমে দলটি ছয় সপ্তাহ প্রস্তুতি নিয়েছিল।",
-      "এটি ডেমো ওয়েবসাইটের নমুনা খবর; কোনো আসল প্রতিযোগিতার ফলাফল নয়।",
     ],
   },
   "new-computer-lab-desks": {
@@ -272,7 +271,7 @@ export const faqsBn: Record<string, { question: string; answer: string }> = {
   },
   "Can tuition fees be paid monthly?": {
     question: "বেতন কি মাসে মাসে দেওয়া যায়?",
-    answer: "হ্যাঁ, প্রতি মাসের ১০ তারিখের মধ্যে বিদ্যালয়ের অফিসে মাসিক বেতন দিতে হয়। এই ওয়েবসাইটের ফি-তালিকা ডেমোর জন্য নমুনা তথ্য।",
+    answer: "হ্যাঁ, প্রতি মাসের ১০ তারিখের মধ্যে বিদ্যালয়ের অফিসে মাসিক বেতন দিতে হয়।",
   },
   "Are there scholarships or fee waivers?": {
     question: "বৃত্তি বা বেতন মওকুফের সুযোগ আছে কি?",
@@ -280,7 +279,7 @@ export const faqsBn: Record<string, { question: string; answer: string }> = {
   },
   "How can I see my child's result?": {
     question: "সন্তানের ফলাফল কীভাবে দেখব?",
-    answer: "প্রতিটি টার্মের পর শ্রেণি শিক্ষক অগ্রগতি প্রতিবেদন দেন। এই ওয়েবসাইটের ফলাফল অনুসন্ধানটি শুধু নমুনা তথ্য দিয়ে তৈরি একটি ডেমো।",
+    answer: "প্রতিটি টার্মের পর শ্রেণি শিক্ষক অগ্রগতি প্রতিবেদন দেন। ওয়েবসাইটের ফলাফল অনুসন্ধান থেকেও রোল নম্বর দিয়ে ফলাফল দেখা যায়।",
   },
   "Does the school provide transport?": {
     question: "বিদ্যালয়ের কি নিজস্ব যানবাহন আছে?",
@@ -345,7 +344,7 @@ export const subjectLevelsBn: Record<string, { level: string; optional?: string[
 };
 
 export const routineTitlesBn: Record<string, string> = {
-  "Class 8 · Section A · Morning Shift (sample)": "অষ্টম শ্রেণি · ক শাখা · প্রভাতি শিফট (নমুনা)",
+  "Class 8 · Section A · Morning Shift": "অষ্টম শ্রেণি · ক শাখা · প্রভাতি শিফট",
 };
 
 export const policiesBn: Record<string, { title: string; points: string[] }> = {
@@ -409,7 +408,7 @@ export const facilitiesBn: Record<string, { title: string; text: string }> = {
 export const downloadsBn: Record<string, { title: string; description: string }> = {
   "Admission Circular 2027": { title: "ভর্তি বিজ্ঞপ্তি ২০২৭", description: "তারিখ, আসন, যোগ্যতা ও বাছাই প্রক্রিয়া।" },
   "Admission Form 2027": { title: "ভর্তি ফরম ২০২৭", description: "প্লে থেকে নবম শ্রেণির জন্য প্রিন্টযোগ্য আবেদন ফরম।" },
-  "Fee Structure 2027 (sample)": { title: "ফি কাঠামো ২০২৭ (নমুনা)", description: "সব শাখার নমুনা ফি-তালিকা।" },
+  "Fee Structure 2027": { title: "ফি কাঠামো ২০২৭", description: "সব শাখার ফি-তালিকা।" },
   "Annual Examination Routine 2026": { title: "বার্ষিক পরীক্ষার রুটিন ২০২৬", description: "প্রথম থেকে নবম শ্রেণির বিষয়ভিত্তিক সময়সূচি।" },
   "Academic Calendar 2026–27": { title: "একাডেমিক ক্যালেন্ডার ২০২৬–২৭", description: "সেশনের পরীক্ষা, ছুটি ও অনুষ্ঠান।" },
   "Annual Exam Syllabus — Class 6 to 9": { title: "বার্ষিক পরীক্ষার সিলেবাস — ষষ্ঠ থেকে নবম শ্রেণি", description: "বার্ষিক পরীক্ষার অধ্যায় ও বিষয়বস্তু।" },
@@ -471,14 +470,14 @@ export const settingsBn: Record<string, Record<string, unknown>> = {
   site: {
     tagline: "শিক্ষার জন্য আসো, সেবার জন্য বের হয়ে যাও",
     area: "উপশহর, সিলেট",
-    demoNote: "ওয়েবনিয়ন স্কুল এন্ড কলেজ একটি কাল্পনিক প্রতিষ্ঠান, ফ্রন্টএন্ড ডেমোর জন্য তৈরি। নাম, সংখ্যা, নোটিশ ও যোগাযোগের তথ্য সবই নমুনা।",
+    demoNote: "",
   },
   footer: {
     about: "সিলেটের একটি স্কুল ও কলেজ — জাতীয় শিক্ষাক্রমে প্লে থেকে দ্বাদশ শ্রেণি পর্যন্ত, প্রভাতি ও দিবা শিফটে পাঠদান।",
     quickTitle: "দ্রুত লিংক",
     institutionTitle: "প্রতিষ্ঠান",
     helpTitle: "সহায়তা",
-    copyright: "ডেমো ওয়েবসাইট — প্রতিষ্ঠান ও এর সব তথ্য কাল্পনিক।",
+    copyright: "সর্বস্বত্ব সংরক্ষিত।",
   },
   homepage: {
     heroTagline: "শিক্ষার জন্য আসো, সেবার জন্য বের হয়ে যাও।",
@@ -486,7 +485,7 @@ export const settingsBn: Record<string, Record<string, unknown>> = {
     heroSubtitle:
       "সিলেটের উপশহরে অবস্থিত ওয়েবনিয়ন স্কুল এন্ড কলেজ প্লে গ্রুপ থেকে দ্বাদশ শ্রেণি পর্যন্ত মানসম্মত শিক্ষা দিতে প্রতিশ্রুতিবদ্ধ। আমরা শিক্ষার্থীদের কৌতূহল জাগাই, আত্মবিশ্বাস গড়ে তুলি, আর জীবনে সফল হতে প্রয়োজনীয় জ্ঞান ও মূল্যবোধ দিয়ে তাদের সক্ষম করে তুলি।",
     heroImageAlt: "বিদ্যালয় ভবন",
-    heroCaption: "প্রতীকী ছবি, ওয়েবনিয়নের ক্যাম্পাস নয়।",
+    heroCaption: "",
     primaryLabel: "ভর্তি ২০২৭",
     secondaryLabel: "প্রতিষ্ঠান সম্পর্কে",
     facts: [
@@ -549,7 +548,7 @@ export const settingsBn: Record<string, Record<string, unknown>> = {
   },
   principal: {
     name: "ড. নাসরিন আক্তার",
-    title: "অধ্যক্ষ (নমুনা প্রোফাইল)",
+    title: "অধ্যক্ষ",
     quote: "ভালো ফলাফল গুরুত্বপূর্ণ, কিন্তু আমরা শুধু সেটাই মাপি না। আমি চাই প্রতিটি শিক্ষার্থী এখান থেকে সৎ, কৌতূহলী ও সবার সামনে কথা বলায় আত্মবিশ্বাসী হয়ে বের হোক — আর প্রতিটি অভিভাবক যেন অনুভব করেন, তাঁরা আমাদের অফিসে এসে কথা বললে শোনা হবে।",
     message: [
       "প্রিয় শিক্ষার্থী ও অভিভাবকবৃন্দ, স্বাগতম। একটি বিদ্যালয়কে তার ফলাফল দিয়ে বিচার করা হয়, আর আমরা ফলাফলকে গুরুত্ব দিই — তবে আমি মনে করি আরও বড় মাপকাঠি হলো, আমাদের সঙ্গে কাটানো বছরগুলোতে একজন শিক্ষার্থী কেমন মানুষ হয়ে ওঠে।",
@@ -602,7 +601,7 @@ export const settingsBn: Record<string, Record<string, unknown>> = {
       { item: "আইসিটি ও ল্যাব ফি (বার্ষিক)" },
       { item: "পরীক্ষার ফি (প্রতি টার্ম)" },
     ],
-    feeNote: "এই ফি-গুলো ডেমোর জন্য নমুনা সংখ্যা, কোনো আসল প্রতিষ্ঠানের ফি নয়। আংশিক বেতন মওকুফের কথা নিচের প্রশ্নোত্তরে আছে।",
+    feeNote: "",
   },
   academic: {
     examSystem: [

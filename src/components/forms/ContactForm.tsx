@@ -25,7 +25,7 @@ function validate(v: Values, t: Dictionary): Errors {
   return e;
 }
 
-export function ContactForm({ compact = false }: { compact?: boolean }) {
+export function ContactForm({ compact = false, to = "" }: { compact?: boolean; to?: string }) {
   const { t } = useI18n();
   const [values, setValues] = useState<Values>(empty);
   const [errors, setErrors] = useState<Errors>({});
@@ -48,8 +48,11 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
     }
     setStatus("sending");
     setFormError("");
-    // Frontend-only: nothing is sent to a server.
-    await new Promise((r) => setTimeout(r, 700));
+    // No backend: hand the message to the visitor's own email app, addressed to the office.
+    const subject = `${values.topic} - ${values.name}`;
+    const body = [values.message, "", values.name, values.phone, values.email].filter((l, i) => i < 3 || l).join("\n");
+    window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    await new Promise((r) => setTimeout(r, 400));
     setStatus("sent");
   }
 

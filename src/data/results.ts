@@ -32,27 +32,27 @@ function build(r: Omit<StudentResult, "gpa" | "subjects"> & { marks: [string, nu
  */
 export const mockResults: StudentResult[] = [
   build({
-    roll: "101", registration: "WSC-2026-0101", name: "Sample Student A", className: "Class 8", section: "A",
+    roll: "101", registration: "WSC-2026-0101", name: "Ayesha Siddiqua", nameBn: "আয়েশা সিদ্দিকা", className: "Class 8", section: "A",
     exam: "Half-Yearly Examination", year: "2026", position: 3,
     marks: [["Bangla", 84], ["English", 78], ["Mathematics", 91], ["Science", 86], ["History & Social Science", 74], ["Digital Technology", 88], ["Religion & Moral Education", 82]],
   }),
   build({
-    roll: "102", registration: "WSC-2026-0102", name: "Sample Student B", className: "Class 8", section: "A",
+    roll: "102", registration: "WSC-2026-0102", name: "Tanvir Ahmed", nameBn: "তানভীর আহমেদ", className: "Class 8", section: "A",
     exam: "Half-Yearly Examination", year: "2026",
     marks: [["Bangla", 71], ["English", 64], ["Mathematics", 58], ["Science", 69], ["History & Social Science", 72], ["Digital Technology", 80], ["Religion & Moral Education", 77]],
   }),
   build({
-    roll: "205", registration: "WSC-2026-0205", name: "Sample Student C", className: "Class 9", section: "B", group: "Science",
+    roll: "205", registration: "WSC-2026-0205", name: "Nafisa Islam", nameBn: "নাফিসা ইসলাম", className: "Class 9", section: "B", group: "Science",
     exam: "Half-Yearly Examination", year: "2026", position: 1,
     marks: [["Bangla", 82], ["English", 85], ["Mathematics", 95], ["Physics", 88], ["Chemistry", 84], ["Biology", 81], ["Higher Mathematics", 90], ["ICT", 92]],
   }),
   build({
-    roll: "310", registration: "WSC-2026-0310", name: "Sample Student D", className: "Class 11", section: "C", group: "Business Studies",
+    roll: "310", registration: "WSC-2026-0310", name: "Rifat Hossain", nameBn: "রিফাত হোসেন", className: "Class 11", section: "C", group: "Business Studies",
     exam: "Half-Yearly Examination", year: "2026",
     marks: [["Bangla", 68], ["English", 61], ["ICT", 75], ["Accounting", 79], ["Business Organisation & Management", 72], ["Finance, Banking & Insurance", 66]],
   }),
   build({
-    roll: "101", registration: "WSC-2025-0101", name: "Sample Student A", className: "Class 7", section: "A",
+    roll: "101", registration: "WSC-2025-0101", name: "Ayesha Siddiqua", nameBn: "আয়েশা সিদ্দিকা", className: "Class 7", section: "A",
     exam: "Annual Examination", year: "2025", position: 4,
     marks: [["Bangla", 80], ["English", 76], ["Mathematics", 88], ["Science", 82], ["History & Social Science", 70], ["Digital Technology", 85], ["Religion & Moral Education", 84]],
   }),

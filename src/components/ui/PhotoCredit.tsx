@@ -17,7 +17,7 @@ export async function PhotoCredit({ image, prefix, className }: { image: ImageAs
         Unsplash
         <span className="sr-only"> {lang === "bn" ? "(নতুন ট্যাবে খুলবে)" : "(opens in a new tab)"}</span>
       </a>
-      {location || prefix ? (lang === "bn" ? " — ওয়েবনিয়নের ক্যাম্পাস নয়।" : " — not Webnion's campus.") : "."}
+      .
     </p>
   );
 }

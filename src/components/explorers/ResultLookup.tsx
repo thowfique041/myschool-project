@@ -95,9 +95,6 @@ export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDe
           {state.kind === "loading" ? <Loader2 aria-hidden className="size-4 animate-spin" /> : <Search aria-hidden className="size-4" />}
           {state.kind === "loading" ? t.results.searching : t.results.view}
         </button>
-        {isDemo && (
-          <p className="text-xs leading-relaxed text-muted">{t.results.hint}</p>
-        )}
       </form>
 
       <div aria-live="polite" className="min-h-64 min-w-0">
@@ -141,7 +138,7 @@ export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDe
                   <p className="text-xs text-navy-200">
                     {T(state.result.exam)} {N(state.result.year)}
                   </p>
-                  <h3 className="mt-0.5 text-lg font-semibold">{state.result.name}</h3>
+                  <h3 className="mt-0.5 text-lg font-semibold">{lang === "bn" && state.result.nameBn ? state.result.nameBn : state.result.name}</h3>
                   <p className="text-sm text-navy-200">
                     {T(state.result.className)} · {t.results.section} {state.result.section}
                     {state.result.group && ` · ${T(state.result.group)}`} · {t.results.roll} {state.result.roll}

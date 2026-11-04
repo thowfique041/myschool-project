@@ -29,7 +29,7 @@ const copy = {
     park: "Park",
     road: "Main Road",
     river: "River",
-    mapNote: "Sketch map placeholder — not to scale. An embedded map can be added for a real campus.",
+    mapNote: "Sketch map, not to scale.",
   },
   bn: {
     title: "যোগাযোগ",
@@ -53,7 +53,7 @@ const copy = {
     park: "পার্ক",
     road: "প্রধান সড়ক",
     river: "নদী",
-    mapNote: "নকশাটি শুধু প্রতীকী — মাপ অনুযায়ী নয়। আসল ক্যাম্পাসের জন্য এখানে মানচিত্র যুক্ত করা যাবে।",
+    mapNote: "নকশা মানচিত্র, মাপ অনুযায়ী নয়।",
   },
 };
 
@@ -170,7 +170,7 @@ export default async function ContactPage() {
             <div>
               <SectionHeading kicker={c.sendK} title={c.send} />
               <Card className="mt-6 p-5 sm:p-7">
-                <ContactForm />
+                <ContactForm to={site.email} />
               </Card>
             </div>
             <div>

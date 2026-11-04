@@ -124,6 +124,7 @@ export type StudentResult = {
   roll: string;
   registration: string;
   name: string;
+  nameBn?: string;
   className: string;
   section: string;
   group?: string;

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { DemoNote } from "@/components/ui/primitives";
 import { images } from "@/data/images";
 import type { ImageAsset } from "@/types";
 import { getI18n } from "@/i18n/server";
@@ -37,9 +36,9 @@ const copy = {
   en: {
     title: "Photo Credits",
     alt: "ছবির কৃতজ্ঞতা",
-    meta: "Sources and photographers of the photographs used on the Webnion School & College demonstration website.",
+    meta: "Sources and photographers of the photographs used on the Webnion School & College website.",
     intro: "Photographs from Unsplash are used under the Unsplash License. The home page photo was supplied by the site owner.",
-    note: "The photos are representative images from schools and places in Bangladesh and India. None of them shows Webnion School & College, which is a fictional institution. Licence details:",
+    note: "Licence details:",
     by: (a: string) => `Photo by ${a}`,
     listed: "Photographer listed on Unsplash",
     view: "View",
@@ -48,9 +47,9 @@ const copy = {
   bn: {
     title: "ছবির কৃতজ্ঞতা",
     alt: "Photo Credits",
-    meta: "ওয়েবনিয়ন স্কুল এন্ড কলেজের ডেমো ওয়েবসাইটে ব্যবহৃত ছবির উৎস ও আলোকচিত্রী।",
+    meta: "ওয়েবনিয়ন স্কুল এন্ড কলেজের ওয়েবসাইটে ব্যবহৃত ছবির উৎস ও আলোকচিত্রী।",
     intro: "আনস্প্ল্যাশের ছবিগুলো আনস্প্ল্যাশ লাইসেন্সের অধীনে ব্যবহার করা হয়েছে। হোম পাতার ছবিটি সাইটের মালিক দিয়েছেন।",
-    note: "ছবিগুলো বাংলাদেশ ও ভারতের বিভিন্ন বিদ্যালয় ও স্থানের প্রতীকী ছবি। এর কোনোটিই কাল্পনিক ওয়েবনিয়ন স্কুল এন্ড কলেজের নয়। লাইসেন্সের বিস্তারিত:",
+    note: "লাইসেন্সের বিস্তারিত:",
     by: (a: string) => `ছবি: ${a}`,
     listed: "আলোকচিত্রীর নাম আনস্প্ল্যাশে আছে",
     view: "দেখুন",
@@ -72,13 +71,13 @@ export default async function CreditsPage() {
       <PageHeader title={c.title} titleBn={c.alt} description={c.intro} />
       <section className="py-12 sm:py-16">
         <div className="container-page max-w-4xl">
-          <DemoNote>
+          <p className="text-sm text-muted">
             {c.note}{" "}
             <a href="https://unsplash.com/license" target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-2">
               unsplash.com/license
             </a>
             .
-          </DemoNote>
+          </p>
           <ul className="mt-8 divide-y divide-line rounded-xl border border-line bg-surface">
             {list.map((img) => (
               <li key={img.src} className="flex items-center gap-4 p-4">

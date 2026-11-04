@@ -1,9 +1,7 @@
-import Link from "@/components/i18n/Link";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { DemoNote } from "@/components/ui/primitives";
 import { GalleryGrid } from "@/components/explorers/GalleryGrid";
-import { getGallery, getSite } from "@/content/site-content";
+import { getGallery } from "@/content/site-content";
 import { getI18n } from "@/i18n/server";
 
 const copy = {
@@ -17,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function GalleryPage() {
-  const [{ items }, site, { t, lang }] = await Promise.all([getGallery(), getSite(), getI18n()]);
+  const [{ items }, { t, lang }] = await Promise.all([getGallery(), getI18n()]);
   const c = copy[lang];
   return (
     <>
@@ -25,26 +23,7 @@ export default async function GalleryPage() {
       <section className="py-12 sm:py-16">
         <div className="container-page">
           {items.length ? <GalleryGrid items={items} /> : <p className="text-muted">{t.gallery.empty}</p>}
-          {site.demoNote && <DemoNote className="mt-8">
-            {lang === "bn" ? (
-              <>
-                এগুলো আনস্প্ল্যাশ (বিনামূল্যের আনস্প্ল্যাশ লাইসেন্স) থেকে নেওয়া প্রতীকী ছবি, বাংলাদেশ ও ভারতের বিভিন্ন বিদ্যালয় ও স্থানে তোলা। এগুলো কাল্পনিক ওয়েবনিয়ন স্কুল এন্ড কলেজের ছবি নয়। দেখুন{" "}
-                <Link href="/credits" className="font-semibold underline underline-offset-2">
-                  ছবির কৃতজ্ঞতা
-                </Link>
-                ।
-              </>
-            ) : (
-              <>
-                These are representative photographs from Unsplash (free Unsplash License), taken at schools and places in Bangladesh and India. They do not show
-                Webnion School &amp; College, which is fictional. See{" "}
-                <Link href="/credits" className="font-semibold underline underline-offset-2">
-                  photo credits
-                </Link>
-                .
-              </>
-            )}
-          </DemoNote>}
+
         </div>
       </section>
     </>
