@@ -171,6 +171,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
   principal: {
     name: "Dr. Nasrin Akhter",
     title: "Principal (sample profile)",
+    gender: "female",
     photo: "",
     quote:
       "Good results matter, but they are not the only thing we measure. I want every student to leave this school honest, curious and confident to speak in front of others — and every guardian to feel they can walk into our office and be heard.",
@@ -266,6 +267,7 @@ export function seedCollections(): Record<string, Record<string, unknown>[]> {
       subjects: t.subjects,
       qualification: t.qualification,
       section: t.section,
+      gender: t.gender,
       joined: t.joined,
       phone: t.phone,
       email: t.email,

@@ -226,7 +226,7 @@ export const en = {
     openGallery: "Open gallery",
     galleryOpen: (c: string) => `${c} — open gallery`,
     allTeachers: "Meet all teachers",
-    teachersSample: "Faculty profiles are sample entries. Portraits use initials rather than invented photographs.",
+    teachersSample: "Faculty profiles are sample entries. Placeholder pictures are shown until real photos are added.",
     testimonials: "Guardians & students say",
     moreQuestions: "More questions",
     faqContact: "Frequently asked questions and contact",

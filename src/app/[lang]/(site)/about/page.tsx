@@ -1,3 +1,4 @@
+import { DefaultAvatar } from "@/components/ui/DefaultAvatar";
 import type { Metadata } from "next";
 import { Compass, Eye, HeartHandshake } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -92,16 +93,6 @@ type About = {
   staffText: string;
 };
 type Mission = { mission: string; vision: string; values: { title: string; text: string }[] };
-
-const initials = (name: string) =>
-  name
-    .replace(/^(Dr|Md|Mr|Mrs|Ms|Alhaj)\.?\s+/gi, "")
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join("")
-    .toUpperCase();
 
 export default async function AboutPage() {
   const [site, about, mission, principal, facilities, teachers] = await Promise.all([
@@ -222,9 +213,7 @@ export default async function AboutPage() {
               // eslint-disable-next-line @next/next/no-img-element
               <img src={principal.photo} alt={principal.name} className="size-28 rounded-full object-cover" />
             ) : (
-              <span aria-hidden className="flex size-28 items-center justify-center rounded-full bg-white/10 font-serif text-3xl font-semibold">
-                {initials(principal.name)}
-              </span>
+              <DefaultAvatar gender={principal.gender === "male" ? "male" : "female"} className="size-28" />
             )}
             <div>
               <p className="text-lg font-semibold">{principal.name}</p>

@@ -197,6 +197,7 @@ export const resources: ResourceConfig[] = [
       { name: "active", label: "Show on website", type: "boolean", span: 1 },
       { name: "name", label: "Name (English)", type: "text", required: true, span: 1 },
       { name: "nameBn", label: "Name (Bangla)", type: "text", bn: true, span: 1 },
+      { name: "gender", label: "Placeholder picture", type: "select", span: 1, help: "Used when no photo is uploaded", options: [{ value: "male", label: "Male" }, { value: "female", label: "Female" }] },
       { name: "designation", label: "Designation", type: "text", required: true, span: 1 },
       { name: "department", label: "Department / subject area", type: "select", taxonomy: "department", required: true, span: 1 },
       { name: "subjects", label: "Subjects taught", type: "lines", rows: 3, help: "One per line" },

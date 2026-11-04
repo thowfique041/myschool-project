@@ -16,8 +16,8 @@ type PageHeaderProps = {
 };
 
 /** Title band used at the top of every inner page. */
-export async function PageHeader({ title, titleBn, description, crumbs = [], children, headingAs = "h1" }: PageHeaderProps) {
-  const { t, lang } = await getI18n();
+export async function PageHeader({ title, description, crumbs = [], children, headingAs = "h1" }: PageHeaderProps) {
+  const { t } = await getI18n();
   const Heading = headingAs;
   const trail: Crumb[] = [{ label: t.common.home, href: "/" }, ...crumbs, { label: title }];
   return (

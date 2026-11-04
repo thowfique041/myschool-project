@@ -1,4 +1,5 @@
 "use client";
+import { DefaultAvatar } from "@/components/ui/DefaultAvatar";
 
 import Link from "@/components/i18n/Link";
 import { ArrowRight, CalendarDays, Mail, MapPin, Paperclip, Phone } from "lucide-react";
@@ -103,31 +104,7 @@ export function NewsCard({ article, headingLevel = "h3" }: { article: NewsArticl
 
 /* ------------------------------------------------------------ Teacher card */
 
-const avatarTones = [
-  "bg-tint text-heading",
-  "bg-leaf-100 text-leaf-800",
-  "bg-[#f3e6c8] text-[#6e5214]",
-  "bg-[#ecdfe6] text-[#6b2f4f]",
-];
-
-function initials(name: string): string {
-  return name
-    .replace(/^(Dr\.|Md\.|Maulana)\s+/i, "")
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((p) => p[0])
-    .join("")
-    .toUpperCase();
-}
-
-function hash(s: string): number {
-  let h = 0;
-  for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0;
-  return h;
-}
-
 export function TeacherAvatar({ teacher, size = "md" }: { teacher: Teacher; size?: "md" | "lg" }) {
-  const tone = avatarTones[hash(teacher.name) % avatarTones.length];
   if (teacher.photo) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
@@ -138,22 +115,11 @@ export function TeacherAvatar({ teacher, size = "md" }: { teacher: Teacher; size
       />
     );
   }
-  return (
-    <div
-      aria-hidden
-      className={cn(
-        "flex shrink-0 items-center justify-center rounded-full font-serif font-semibold ring-4 ring-white",
-        size === "lg" ? "size-24 text-2xl" : "size-16 text-lg",
-        tone,
-      )}
-    >
-      {initials(teacher.name)}
-    </div>
-  );
+  return <DefaultAvatar gender={teacher.gender} className={cn("ring-4 ring-surface", size === "lg" ? "size-24" : "size-16")} />;
 }
 
 export function TeacherCard({ teacher }: { teacher: Teacher }) {
-  const { t, lang } = useI18n();
+  const { t } = useI18n();
   return (
     <article className="flex h-full flex-col items-center rounded-[var(--radius-card)] border border-line bg-surface p-6 text-center shadow-[var(--shadow-card)]">
       <TeacherAvatar teacher={teacher} size="lg" />

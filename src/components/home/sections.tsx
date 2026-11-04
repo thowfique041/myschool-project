@@ -1,3 +1,4 @@
+import { DefaultAvatar } from "@/components/ui/DefaultAvatar";
 import Link from "@/components/i18n/Link";
 import {
   CheckCircle2,
@@ -17,16 +18,6 @@ import { ContactForm } from "@/components/forms/ContactForm";
 import { StatCounter } from "./motion-bits";
 import type { HomeData, HomeContent, SectionCopy } from "./types";
 import { cn, formatDate, num } from "@/lib/utils";
-
-const initials = (name: string) =>
-  name
-    .replace(/^(Dr|Md|Mr|Mrs|Ms|Alhaj)\.?\s+/gi, "")
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join("")
-    .toUpperCase();
 
 /* ------------------------------------------------- About + principal */
 
@@ -73,9 +64,7 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={p.photo} alt="" className="size-14 rounded-full object-cover" />
               ) : (
-                <span aria-hidden className="flex size-14 items-center justify-center rounded-full bg-white/10 font-serif text-lg font-semibold">
-                  {initials(p.name)}
-                </span>
+                <DefaultAvatar gender={p.gender === "male" ? "male" : "female"} className="size-14" />
               )}
               <span>
                 <span className="block font-semibold">{p.name}</span>
