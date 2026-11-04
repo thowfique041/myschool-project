@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
   }
   return {
     metadataBase: base,
-    title: lang === "bn" ? { default: `${site.nameBn} — সিলেট`, template: `%s | ${site.nameBn}` } : { default: seo.title || site.name, template: `%s | ${site.name}` },
+    title: lang === "bn" ? { default: `${site.nameBn} | সিলেট`, template: `%s | ${site.nameBn}` } : { default: seo.title || site.name, template: `%s | ${site.name}` },
     description: seo.description,
     applicationName: lang === "bn" ? site.nameBn : site.name,
     keywords: seo.keywords,

@@ -122,7 +122,7 @@ export function AdminFrame({ groups, badges, user, siteName, children }: Props) 
         </header>
         <main id="main" className="px-4 py-6 sm:px-6 lg:px-8">
           <p className="mb-5 rounded-lg border border-amber-200 bg-amber-50 px-4 py-2.5 text-xs text-amber-900">
-            <strong>Frontend demo.</strong> Changes are saved only in this browser and do not change the public website. Roles are simulated — this is not real security.
+            <strong>Frontend demo.</strong> Changes are saved only in this browser and do not change the public website. Roles are simulated; this is not real security.
           </p>
           {children}
         </main>

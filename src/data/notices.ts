@@ -105,8 +105,8 @@ export const notices: Notice[] = [
   },
   {
     slug: "science-fair-2026",
-    title: "আন্তঃশ্রেণি বিজ্ঞান মেলা ২০২৬ — প্রজেক্ট জমার শেষ তারিখ",
-    titleEn: "Inter-class science fair 2026 — project submission deadline",
+    title: "আন্তঃশ্রেণি বিজ্ঞান মেলা ২০২৬: প্রজেক্ট জমার শেষ তারিখ",
+    titleEn: "Inter-class science fair 2026: project submission deadline",
     category: "event",
     date: "2026-09-30",
     summary: "ষষ্ঠ থেকে দ্বাদশ শ্রেণির শিক্ষার্থীরা ১৫ অক্টোবরের মধ্যে প্রজেক্টের সারসংক্ষেপ জমা দিতে পারবে।",

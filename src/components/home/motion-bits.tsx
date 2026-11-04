@@ -50,7 +50,7 @@ export function StatCounter({ value, suffix = "", decimals = 0, bn = false }: { 
 }
 
 /**
- * The scrolling "latest notice" strip familiar from Bangladeshi school sites —
+ * The scrolling "latest notice" strip familiar from Bangladeshi school sites,
  * pausable, pauses on hover/focus, and static for reduced-motion users.
  */
 export function NoticeTicker({ notices }: { notices: Notice[] }) {

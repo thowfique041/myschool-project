@@ -553,7 +553,7 @@ export async function getCurrentYear(): Promise<number> {
   return new Date().getFullYear();
 }
 
-/** Today's date (YYYY-MM-DD, Asia/Dhaka), refreshed hourly — for "upcoming" lists. */
+/** Today's date (YYYY-MM-DD, Asia/Dhaka), refreshed hourly, for "upcoming" lists. */
 export async function getToday(): Promise<string> {
   "use cache";
   cacheLife("hours");

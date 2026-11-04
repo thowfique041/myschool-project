@@ -2,7 +2,7 @@ import type { ImageAsset } from "@/types";
 
 /**
  * Central image registry. All photos are free-to-use images from Unsplash
- * (Unsplash License — https://unsplash.com/license). They are representative
+ * (Unsplash License, https://unsplash.com/license). They are representative
  * photographs from Bangladesh and India; none of them shows Webnion School &
  * College, which is fictional. Every component reads images from this file,
  * so swapping in the institution's own photos only means editing entries here.

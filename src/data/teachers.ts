@@ -2,7 +2,7 @@ import type { Department, Teacher } from "@/types";
 
 type TeacherInput = Omit<Teacher, "phone" | "email">;
 
-/** Sample faculty list — names are fictional. */
+/** Sample faculty list, names are fictional. */
 const faculty: TeacherInput[] = [
   { id: "t01", name: "Dr. Nasrin Akhter", nameBn: "ড. নাসরিন আক্তার", designation: "Principal", department: "Administration", subjects: ["Educational Leadership"], qualification: "Ph.D. in Education", joined: 2009, gender: "female", section: "All" },
   { id: "t02", name: "Md. Abdul Kader", nameBn: "মো. আব্দুল কাদের", designation: "Vice Principal", department: "Administration", subjects: ["Physics"], qualification: "M.Sc. in Physics, B.Ed.", joined: 2001, gender: "male", section: "All" },

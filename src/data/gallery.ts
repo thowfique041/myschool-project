@@ -28,6 +28,6 @@ export const gallery: GalleryItem[] = [
   { id: "g12", category: "events", caption: "Learning by doing at a science session", captionBn: "হাতে-কলমে বিজ্ঞান শিক্ষা", image: images.scienceFair },
   { id: "g13", category: "cultural", caption: "Public speaking practice", captionBn: "বক্তৃতা চর্চা", image: images.speaker },
   { id: "g14", category: "classroom", caption: "A student answering in class", captionBn: "ক্লাসে প্রশ্নের উত্তর দিচ্ছে শিক্ষার্থী", image: images.studentAnswering },
-  { id: "g15", category: "events", caption: "Tea gardens — a favourite study tour destination", captionBn: "চা বাগান — শিক্ষা সফরের প্রিয় গন্তব্য", image: images.teaGarden },
+  { id: "g15", category: "events", caption: "Tea gardens, a favourite study tour destination", captionBn: "চা বাগান, শিক্ষা সফরের প্রিয় গন্তব্য", image: images.teaGarden },
   { id: "g16", category: "classroom", caption: "Studying together at the desk", captionBn: "একসাথে পড়াশোনা", image: images.deskStudy },
 ];

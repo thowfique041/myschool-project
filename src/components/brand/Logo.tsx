@@ -9,7 +9,7 @@ type LogoMarkProps = {
 
 /**
  * Original Webnion emblem: a crest holding an open book with a two-leaf
- * sprout rising from its spine — knowledge as the ground growth comes from.
+ * sprout rising from its spine, knowledge as the ground growth comes from.
  */
 export function LogoMark({ className, tone = "light", title }: LogoMarkProps) {
   const shield = tone === "light" ? "#172c4a" : "#ffffff";
