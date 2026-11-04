@@ -44,10 +44,10 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
     heroTagline: staticSite.taglineBn,
     heroTitle: "A school where every child is known by name.",
     heroSubtitle:
-      "Webnion School & College in Upashahar, Sylhet teaches from Play to Class 12 under the national curriculum — with disciplined classrooms, practical science and ICT, and teachers who stay in touch with every family.",
+      "Webnion School & College in Upashahar, Sylhet teaches from Play to Class 12 under the national curriculum, with disciplined classrooms, practical science and ICT, and teachers who stay in touch with every family.",
     heroImage: images.heroCampus.src,
     heroImageAlt: images.heroCampus.alt,
-    heroCaption: "Representative photo — not Webnion's campus.",
+    heroCaption: "Representative photo, not Webnion's campus.",
     primaryLabel: "Admission 2027",
     primaryHref: "/admission",
     secondaryLabel: "About the institution",
