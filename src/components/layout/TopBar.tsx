@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { site } from "@/data/site";
 
@@ -31,16 +30,6 @@ export function TopBar() {
         <ul className="flex items-center gap-4">
           <li className="hidden sm:block">
             <span className="text-navy-300">EIIN {site.eiin} (demo)</span>
-          </li>
-          <li>
-            <Link href="/notices" className="hover:text-white">
-              Notices
-            </Link>
-          </li>
-          <li>
-            <Link href="/results" className="hover:text-white">
-              Results
-            </Link>
           </li>
         </ul>
       </div>
