@@ -32,11 +32,10 @@ export function SectionHeading({
           lang="bn"
           className={cn(
             "mb-2 inline-flex items-center gap-2 text-sm font-semibold",
-            dark ? "text-leaf-200" : "text-leaf-700",
+            dark ? "text-leaf-200" : "text-accent",
           )}
           style={{ lineHeight: 1.4 }}
         >
-          <span aria-hidden className={cn("h-px w-6", dark ? "bg-leaf-200" : "bg-leaf-600")} />
           {kicker}
         </p>
       )}
@@ -44,7 +43,7 @@ export function SectionHeading({
         id={id}
         className={cn(
           "font-serif text-[1.75rem] leading-tight font-semibold tracking-tight sm:text-[2.1rem]",
-          dark ? "text-white" : "text-navy-900",
+          dark ? "text-white" : "text-heading",
         )}
       >
         {title}
@@ -63,10 +62,10 @@ export function SectionHeading({
 type Variant = "primary" | "secondary" | "outline" | "ghost" | "light";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-navy-800 text-white hover:bg-navy-700 shadow-sm",
+  primary: "bg-brand hover:bg-brand-hover text-white shadow-sm",
   secondary: "bg-leaf-600 text-white hover:bg-leaf-700 shadow-sm",
-  outline: "border border-navy-200 bg-white text-navy-800 hover:border-navy-400 hover:bg-navy-50",
-  ghost: "text-navy-800 hover:bg-navy-50",
+  outline: "border border-line-strong bg-surface text-heading hover:border-line-strong hover:bg-tint",
+  ghost: "text-heading hover:bg-tint",
   light: "bg-white text-navy-900 hover:bg-navy-50 shadow-sm",
 };
 
@@ -89,10 +88,10 @@ export function ButtonLink({ variant = "primary", size = "md", className, ...pro
 type BadgeTone = "navy" | "leaf" | "signal" | "gold" | "neutral";
 
 const badgeTones: Record<BadgeTone, string> = {
-  navy: "bg-navy-50 text-navy-700 ring-navy-100",
-  leaf: "bg-leaf-50 text-leaf-700 ring-leaf-100",
-  signal: "bg-signal-50 text-signal-700 ring-signal-100",
-  gold: "bg-[#faf3e3] text-[#7d5c17] ring-[#efe0bb]",
+  navy: "bg-tint text-subheading ring-line-strong",
+  leaf: "bg-leaf-50 text-accent ring-leaf-100",
+  signal: "bg-signal-50 text-danger ring-signal-100",
+  gold: "bg-[#faf3e3] text-[#7d5c17] ring-[#efe0bb] dark:bg-[#2e2410] dark:text-[#f4cf7f] dark:ring-[#6b5420]",
   neutral: "bg-paper-dark text-muted ring-line",
 };
 
@@ -134,7 +133,7 @@ export function DemoNote({ children, className }: { children: ReactNode; classNa
     <div
       role="note"
       className={cn(
-        "flex gap-3 rounded-lg border border-[#efe0bb] bg-[#fcf8ee] px-4 py-3 text-sm text-[#5f4712]",
+        "flex gap-3 rounded-lg border border-[#efe0bb] bg-[#fcf8ee] px-4 py-3 text-sm text-[#5f4712] dark:border-[#6b5420] dark:bg-[#251d0d] dark:text-[#f1d796]",
         className,
       )}
     >
@@ -156,7 +155,7 @@ export function Card({
   as?: "div" | "article" | "li" | "section";
 }) {
   return (
-    <As className={cn("rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)]", className)}>
+    <As className={cn("rounded-[var(--radius-card)] border border-line bg-surface shadow-[var(--shadow-card)]", className)}>
       {children}
     </As>
   );

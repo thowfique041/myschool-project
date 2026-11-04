@@ -78,7 +78,7 @@ function Cell({ col, value }: { col: ListColumn; value: unknown }) {
     case "badge":
       return v ? <StatusBadge value={String(v)} label={col.labels?.[String(v)] ?? String(v).replace(/_/g, " ")} /> : <span className="text-muted">—</span>;
     case "boolean":
-      return v ? <Check aria-label="Yes" className="size-4 text-leaf-600" /> : <span className="text-muted" aria-label="No">—</span>;
+      return v ? <Check aria-label="Yes" className="size-4 text-accent" /> : <span className="text-muted" aria-label="No">—</span>;
     case "date":
       return <span className="whitespace-nowrap">{v ? new Date(String(v) + (String(v).length === 10 ? "T00:00:00" : "")).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "—"}</span>;
     case "datetime":
@@ -166,8 +166,8 @@ export function ResourceTable({
   return (
     <div>
       {selected.length > 0 && (
-        <div className="mb-3 flex flex-wrap items-center gap-2 rounded-xl border border-navy-100 bg-navy-50 px-4 py-2.5 text-sm">
-          <span className="font-semibold text-navy-900">{selected.length} selected</span>
+        <div className="mb-3 flex flex-wrap items-center gap-2 rounded-xl border border-line-strong bg-tint px-4 py-2.5 text-sm">
+          <span className="font-semibold text-heading">{selected.length} selected</span>
           {canEdit &&
             quickActions.map((a) => (
               <AdminButton key={a.label} size="sm" variant="outline" busy={busy} onClick={() => runQuick(selected, a)}>
@@ -184,7 +184,7 @@ export function ResourceTable({
           </AdminButton>
         </div>
       )}
-      <div className="overflow-x-auto rounded-xl border border-line bg-white">
+      <div className="overflow-x-auto rounded-xl border border-line bg-surface">
         <table className="w-full min-w-[40rem] text-left text-sm">
           <thead className="border-b border-line bg-paper text-xs text-muted uppercase">
             <tr>
@@ -198,7 +198,7 @@ export function ResourceTable({
                   {c.format === "image" ? (
                     <span className="sr-only">{c.label}</span>
                   ) : (
-                    <Link href={sortHref(c.key)} className="inline-flex items-center gap-1 hover:text-navy-900">
+                    <Link href={sortHref(c.key)} className="inline-flex items-center gap-1 hover:text-heading">
                       {c.label}
                       {sort === c.key && (dir === "asc" ? <ArrowUp aria-hidden className="size-3" /> : <ArrowDown aria-hidden className="size-3" />)}
                     </Link>
@@ -227,9 +227,9 @@ export function ResourceTable({
                     </td>
                   )}
                   {columns.map((c, i) => (
-                    <td key={c.key} className={cn("px-3 py-2.5 align-middle", i === (columns[0].format === "image" ? 1 : 0) && "font-semibold text-navy-900")}>
+                    <td key={c.key} className={cn("px-3 py-2.5 align-middle", i === (columns[0].format === "image" ? 1 : 0) && "font-semibold text-heading")}>
                       {i === (columns[0].format === "image" ? 1 : 0) ? (
-                        <Link href={`${baseHref}/${r._id}`} className="hover:text-leaf-700 hover:underline underline-offset-2">
+                        <Link href={`${baseHref}/${r._id}`} className="hover:text-accent hover:underline underline-offset-2">
                           <Cell col={c} value={r[c.key]} />
                         </Link>
                       ) : (
@@ -248,11 +248,11 @@ export function ResourceTable({
                               {a.label}
                             </AdminButton>
                           ))}
-                      <Link href={`${baseHref}/${r._id}`} className="inline-flex min-h-8 items-center rounded-lg px-3 text-xs font-semibold text-navy-800 hover:bg-paper">
+                      <Link href={`${baseHref}/${r._id}`} className="inline-flex min-h-8 items-center rounded-lg px-3 text-xs font-semibold text-heading hover:bg-paper">
                         {canEdit ? "Edit" : "View"}
                       </Link>
                       {canDelete && (
-                        <button type="button" onClick={() => setConfirm({ ids: [r._id], label: `“${title.slice(0, 60)}”` })} aria-label={`Delete ${title}`} className="rounded-lg p-2 text-muted hover:bg-signal-50 hover:text-signal-700">
+                        <button type="button" onClick={() => setConfirm({ ids: [r._id], label: `“${title.slice(0, 60)}”` })} aria-label={`Delete ${title}`} className="rounded-lg p-2 text-muted hover:bg-signal-50 hover:text-danger">
                           <Trash2 aria-hidden className="size-4" />
                         </button>
                       )}

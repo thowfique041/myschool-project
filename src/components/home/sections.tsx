@@ -48,7 +48,7 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
           <ul className="mt-7 grid gap-3 sm:grid-cols-2">
             {home.welcomePoints.map((t) => (
               <li key={t} className="flex gap-2.5 text-[0.95rem] text-ink">
-                <CheckCircle2 aria-hidden className="mt-0.5 size-5 shrink-0 text-leaf-600" />
+                <CheckCircle2 aria-hidden className="mt-0.5 size-5 shrink-0 text-accent" />
                 {t}
               </li>
             ))}
@@ -93,7 +93,7 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
 
 export function LevelsSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
   return (
-    <section aria-labelledby="levels-title" className="border-y border-line bg-white py-16 sm:py-20">
+    <section aria-labelledby="levels-title" className="border-y border-line bg-surface py-16 sm:py-20">
       <div className="container-page">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <SectionHeading
@@ -106,18 +106,18 @@ export function LevelsSection({ copy, data }: { copy: SectionCopy; data: HomeDat
         </div>
         <ol className={cn("mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line", data.levels.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2")}>
           {data.levels.map((level, i) => (
-            <Reveal as="li" key={level.id} delay={i * 0.06} className="flex flex-col bg-white p-7">
+            <Reveal as="li" key={level.id} delay={i * 0.06} className="flex flex-col bg-surface p-7">
               <div className="flex items-baseline justify-between">
                 <span className="font-serif text-4xl font-semibold text-navy-100">{String(i + 1).padStart(2, "0")}</span>
                 <span className="text-xs font-medium text-muted">{level.ages}</span>
               </div>
-              <h3 className="mt-3 font-serif text-xl font-semibold text-navy-900">
+              <h3 className="mt-3 font-serif text-xl font-semibold text-heading">
                 {level.name}{" "}
-                <span lang="bn" className="font-sans text-base font-medium text-leaf-700">
+                <span lang="bn" className="font-sans text-base font-medium text-accent">
                   · {level.nameBn}
                 </span>
               </h3>
-              <p className="text-sm font-semibold text-leaf-700">{level.classes}</p>
+              <p className="text-sm font-semibold text-accent">{level.classes}</p>
               <p className="mt-3 text-[0.95rem] leading-relaxed text-muted">{level.summary}</p>
               <ul className="mt-4 space-y-1.5 text-sm text-ink">
                 {level.highlights.map((h) => (
@@ -166,9 +166,9 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
         <Reveal delay={0.08}>
           <div id="admission" className="h-full rounded-2xl border border-leaf-200 bg-leaf-50 p-6 sm:p-8">
             <Badge tone={adm.open ? "leaf" : "neutral"}>{adm.open ? "Admission open" : "Admission closed"}</Badge>
-            <h2 className="mt-3 font-serif text-2xl font-semibold text-navy-900">Admission {adm.year}</h2>
+            <h2 className="mt-3 font-serif text-2xl font-semibold text-heading">Admission {adm.year}</h2>
             {adm.noticeTitleBn && (
-              <p lang="bn" className="text-sm text-leaf-700">
+              <p lang="bn" className="text-sm text-accent">
                 {adm.noticeTitleBn}
               </p>
             )}
@@ -179,7 +179,7 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
                     {i + 1}
                   </span>
                   <div>
-                    <p className="font-semibold text-navy-900">{step.title}</p>
+                    <p className="font-semibold text-heading">{step.title}</p>
                     <p className="text-sm text-muted">{step.text}</p>
                   </div>
                 </li>
@@ -189,7 +189,7 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
               {adm.dates.slice(0, 4).map((d) => (
                 <div key={d.label} className="flex justify-between gap-4">
                   <dt className="text-muted">{d.label}</dt>
-                  <dd className="shrink-0 font-semibold text-navy-900">{formatDateEn(d.date)}</dd>
+                  <dd className="shrink-0 font-semibold text-heading">{formatDateEn(d.date)}</dd>
                 </div>
               ))}
             </dl>
@@ -302,9 +302,9 @@ export function ResultsSection({ copy, data }: { copy: SectionCopy; data: HomeDa
         </div>
         <dl className={cn("mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line", stats.length >= 4 && "lg:grid-cols-4")}>
           {stats.map((s) => (
-            <div key={s.label} className="bg-white p-6">
+            <div key={s.label} className="bg-surface p-6">
               <dt className="text-sm text-muted">{s.label}</dt>
-              <dd className="mt-1 font-serif text-4xl font-semibold text-navy-900">
+              <dd className="mt-1 font-serif text-4xl font-semibold text-heading">
                 <StatCounter value={s.value} suffix={s.suffix} decimals={s.decimals} />
               </dd>
             </div>
@@ -322,7 +322,7 @@ export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData 
   const rest = data.news.filter((n) => n !== featured);
   if (!featured) return null;
   return (
-    <section aria-labelledby="news-title" className="border-y border-line bg-white py-16 sm:py-20">
+    <section aria-labelledby="news-title" className="border-y border-line bg-surface py-16 sm:py-20">
       <div className="container-page">
         <div className="flex items-end justify-between gap-6">
           <SectionHeading id="news-title" kicker={copy.kicker} title={copy.title} description={copy.description || undefined} />
@@ -337,7 +337,7 @@ export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData 
                   <Badge tone="leaf">Featured</Badge>
                   <time dateTime={featured.date}>{formatDateEn(featured.date)}</time>
                 </div>
-                <h3 className="mt-3 font-serif text-2xl leading-snug font-semibold text-navy-900 group-hover:text-leaf-700">
+                <h3 className="mt-3 font-serif text-2xl leading-snug font-semibold text-heading group-hover:text-accent">
                   <Link href={`/news/${featured.slug}`} className="after:absolute after:inset-0">
                     {featured.title}
                   </Link>
@@ -354,7 +354,7 @@ export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData 
                   <time dateTime={a.date} className="text-xs text-muted">
                     {formatDateEn(a.date)}
                   </time>
-                  <h3 className="mt-1 leading-snug font-semibold text-navy-900 group-hover:text-leaf-700">
+                  <h3 className="mt-1 leading-snug font-semibold text-heading group-hover:text-accent">
                     <Link href={`/news/${a.slug}`} className="after:absolute after:inset-0">
                       {a.title}
                     </Link>
@@ -407,7 +407,7 @@ export function GalleryPreview({ copy, data }: { copy: SectionCopy; data: HomeDa
 export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
   const picks = data.people.filter((t) => t.kind !== "staff").slice(0, 4);
   return (
-    <section aria-labelledby="faculty-title" className="border-y border-line bg-white py-16 sm:py-20">
+    <section aria-labelledby="faculty-title" className="border-y border-line bg-surface py-16 sm:py-20">
       <div className="container-page">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <SectionHeading
@@ -428,7 +428,7 @@ export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeDat
 
         {data.testimonials.length > 0 && <div className="mt-16">
           <div className="flex flex-wrap items-center gap-3">
-            <h3 className="font-serif text-xl font-semibold text-navy-900">Guardians &amp; students say</h3>
+            <h3 className="font-serif text-xl font-semibold text-heading">Guardians &amp; students say</h3>
             <SampleTag />
           </div>
           <ul className="mt-6 grid gap-5 md:grid-cols-3">
@@ -440,7 +440,7 @@ export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeDat
                     {t.quote}
                   </blockquote>
                   <figcaption className="mt-5 border-t border-line pt-4 text-sm">
-                    <span className="font-semibold text-navy-900">{t.name}</span>
+                    <span className="font-semibold text-heading">{t.name}</span>
                     <span className="block text-muted">{t.role}</span>
                   </figcaption>
                 </figure>

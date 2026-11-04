@@ -16,12 +16,12 @@ export function DownloadList({ downloads }: { downloads: DownloadResource[] }) {
             <h3 id={`dl-${cat}`} className="text-sm font-semibold tracking-wide text-muted uppercase">
               {list[0]?.categoryLabel ?? cat}
             </h3>
-            <ul className="mt-3 divide-y divide-line rounded-xl border border-line bg-white">
+            <ul className="mt-3 divide-y divide-line rounded-xl border border-line bg-surface">
               {list.map((d) => (
                 <li key={d.id} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:gap-5 sm:px-5">
-                  <FileText aria-hidden className="hidden size-7 shrink-0 text-signal-600 sm:block" />
+                  <FileText aria-hidden className="hidden size-7 shrink-0 text-danger sm:block" />
                   <div className="min-w-0 flex-1">
-                    <p className="font-semibold text-navy-900">
+                    <p className="font-semibold text-heading">
                       {d.title}
                       {d.titleBn && (
                         <span lang="bn" className="ml-2 text-sm font-normal text-muted">
@@ -39,7 +39,7 @@ export function DownloadList({ downloads }: { downloads: DownloadResource[] }) {
                     download
                     target="_blank"
                     rel="noopener"
-                    className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-lg border border-line px-4 text-sm font-semibold text-navy-800 hover:border-leaf-200 hover:bg-leaf-50"
+                    className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-lg border border-line px-4 text-sm font-semibold text-heading hover:border-leaf-200 hover:bg-leaf-50"
                   >
                     <Download aria-hidden className="size-4" /> Download
                     <span className="sr-only"> {d.title}</span>

@@ -36,7 +36,7 @@ export default async function NoticeDetailPage({ params }: PageProps<"/notices/[
       <PageHeader title="Notice" titleBn="নোটিশ" headingAs="p" crumbs={[{ label: "Notice Board", href: "/notices" }]} />
       <section className="py-12 sm:py-16">
         <div className="container-page grid gap-10 lg:grid-cols-[1fr_20rem]">
-          <article className="rounded-2xl border border-line bg-white p-6 shadow-[var(--shadow-card)] sm:p-10">
+          <article className="rounded-2xl border border-line bg-surface p-6 shadow-[var(--shadow-card)] sm:p-10">
             <div className="flex flex-wrap items-center gap-2">
               <Badge tone="navy">{cat.label}</Badge>
               {cat.labelBn && (
@@ -46,14 +46,14 @@ export default async function NoticeDetailPage({ params }: PageProps<"/notices/[
               )}
               {notice.important && <Badge tone="signal">Important</Badge>}
             </div>
-            <h1 lang="bn" className="mt-4 font-serif text-2xl font-semibold text-navy-900 sm:text-3xl" style={{ lineHeight: 1.45 }}>
+            <h1 lang="bn" className="mt-4 font-serif text-2xl font-semibold text-heading sm:text-3xl" style={{ lineHeight: 1.45 }}>
               {notice.title}
             </h1>
             {notice.titleEn && <p className="mt-1 text-muted">{notice.titleEn}</p>}
             <dl className="mt-5 flex flex-wrap gap-x-8 gap-y-2 border-y border-line py-3 text-sm">
               <div>
                 <dt className="inline text-muted">Published: </dt>
-                <dd className="inline font-semibold text-navy-900">
+                <dd className="inline font-semibold text-heading">
                   <time dateTime={notice.date}>{formatDateEn(notice.date)}</time>
                   <span lang="bn" className="ml-2 font-normal text-muted">({formatDateBn(notice.date)})</span>
                 </dd>
@@ -67,7 +67,7 @@ export default async function NoticeDetailPage({ params }: PageProps<"/notices/[
             {notice.issuedBy && <p lang="bn" className="mt-10 text-right text-sm text-muted">
               আদেশক্রমে
               <br />
-              <span className="font-semibold text-navy-900">{notice.issuedBy}</span>
+              <span className="font-semibold text-heading">{notice.issuedBy}</span>
             </p>}
 
             {notice.attachment && (
@@ -77,17 +77,17 @@ export default async function NoticeDetailPage({ params }: PageProps<"/notices/[
                 rel="noopener"
                 className="mt-8 flex items-center gap-4 rounded-xl border border-line bg-paper p-4 transition-colors hover:border-leaf-200"
               >
-                <FileText aria-hidden className="size-8 shrink-0 text-signal-600" />
+                <FileText aria-hidden className="size-8 shrink-0 text-danger" />
                 <span className="min-w-0 flex-1">
-                  <span lang="bn" className="block font-semibold text-navy-900">{notice.attachment.label}</span>
+                  <span lang="bn" className="block font-semibold text-heading">{notice.attachment.label}</span>
                   <span className="block text-xs text-muted">{notice.attachment.size}</span>
                 </span>
-                <Download aria-hidden className="size-5 text-leaf-700" />
+                <Download aria-hidden className="size-5 text-accent" />
               </a>
             )}
 
             <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-5">
-              <Link href="/notices" className="inline-flex items-center gap-1.5 text-sm font-semibold text-navy-800 hover:text-leaf-700">
+              <Link href="/notices" className="inline-flex items-center gap-1.5 text-sm font-semibold text-heading hover:text-accent">
                 <ArrowLeft aria-hidden className="size-4" /> Back to notice board
               </Link>
               <PrintButton>
@@ -97,8 +97,8 @@ export default async function NoticeDetailPage({ params }: PageProps<"/notices/[
           </article>
 
           <aside aria-labelledby="related-notices" className="space-y-6">
-            <div className="rounded-xl border border-line bg-white px-5">
-              <h2 id="related-notices" className="pt-5 font-semibold text-navy-900">
+            <div className="rounded-xl border border-line bg-surface px-5">
+              <h2 id="related-notices" className="pt-5 font-semibold text-heading">
                 {related.length ? `More ${cat.label.toLowerCase()} notices` : "Recent notices"}
               </h2>
               <div className="divide-y divide-line">

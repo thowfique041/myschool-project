@@ -18,6 +18,7 @@ import { MediaLibrary } from "./media";
 import { AdminButton, ConfirmDialog, FormRow, Modal, StatusBadge, adminBtn, inputCls, useToast } from "./ui";
 import { LogoMark } from "@/components/brand/Logo";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 /* ---------------------------------------------------------------- shell */
 
@@ -48,7 +49,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
 }
 
 function Denied() {
-  return <p className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-signal-700">Your role does not have access to this page.</p>;
+  return <p className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-danger">Your role does not have access to this page.</p>;
 }
 
 function useCan() {
@@ -66,11 +67,12 @@ export function DemoLogin() {
     if (v !== -1 && store.currentUser()) router.replace("/admin/dashboard");
   }, [v, router]);
   return (
-    <main className="flex min-h-dvh items-center justify-center bg-paper px-4 py-12">
+    <main className="relative flex min-h-dvh items-center justify-center bg-paper px-4 py-12">
+      <ThemeToggle className="absolute top-4 right-4" />
       <div className="w-full max-w-md">
         <div className="mb-6 flex flex-col items-center text-center">
           <LogoMark className="h-14 w-auto" />
-          <h1 className="mt-4 font-serif text-2xl font-semibold text-navy-900">Admin panel (demo)</h1>
+          <h1 className="mt-4 font-serif text-2xl font-semibold text-heading">Admin panel (demo)</h1>
           <p className="mt-1 text-sm text-muted">Frontend preview of the school&apos;s content management panel.</p>
         </div>
         <form
@@ -79,19 +81,19 @@ export function DemoLogin() {
             const res = store.signIn(role);
             if (res.ok) router.push("/admin/dashboard");
           }}
-          className="space-y-5 rounded-2xl border border-line bg-white p-6 shadow-[var(--shadow-card)] sm:p-8"
+          className="space-y-5 rounded-2xl border border-line bg-surface p-6 shadow-[var(--shadow-card)] sm:p-8"
         >
           <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2.5 text-xs leading-relaxed text-amber-900">
             This is a frontend-only demo. There is no real sign-in: choose a role to explore. Everything you change is stored only in this browser and does not affect the public website.
           </p>
           <fieldset>
-            <legend className="mb-2 text-sm font-semibold text-navy-900">Explore as</legend>
+            <legend className="mb-2 text-sm font-semibold text-heading">Explore as</legend>
             <div className="space-y-2">
               {roleKeys.map((r) => (
                 <label key={r} className={cn("flex cursor-pointer items-start gap-3 rounded-lg border px-3 py-2.5", role === r ? "border-leaf-500 bg-leaf-50" : "border-line")}>
                   <input type="radio" name="role" value={r} checked={role === r} onChange={() => setRole(r)} className="mt-1 accent-leaf-600" />
                   <span>
-                    <span className="block text-sm font-semibold text-navy-900">{roleLabels[r]}</span>
+                    <span className="block text-sm font-semibold text-heading">{roleLabels[r]}</span>
                     <span className="block text-xs text-muted">
                       {r === "super_admin" ? "Everything, including users and role permissions" : r === "admin" ? "All content, admissions, results and settings" : "Notices, news, gallery and website pages"}
                     </span>
@@ -105,7 +107,7 @@ export function DemoLogin() {
           </AdminButton>
         </form>
         <p className="mt-6 text-center text-sm">
-          <Link href="/" className="font-semibold text-navy-800 hover:text-leaf-700">
+          <Link href="/" className="font-semibold text-heading hover:text-accent">
             ← Back to the website
           </Link>
         </p>
@@ -150,15 +152,15 @@ export function DashboardView() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-serif text-2xl font-semibold text-navy-900">Welcome, {user.name.split(" ")[0]}</h1>
+        <h1 className="font-serif text-2xl font-semibold text-heading">Welcome, {user.name.split(" ")[0]}</h1>
         <p className="text-sm text-muted">Signed in as {roleLabels[user.role]}.</p>
       </div>
       <ul className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {stats.map(({ label, value, href, icon: Icon }) => (
           <li key={label}>
-            <Link href={href} className="block h-full rounded-xl border border-line bg-white p-4 hover:border-navy-200">
-              <Icon aria-hidden className="size-5 text-leaf-600" />
-              <p className="mt-3 font-serif text-3xl font-semibold text-navy-900 tabular-nums">{value}</p>
+            <Link href={href} className="block h-full rounded-xl border border-line bg-surface p-4 hover:border-line-strong">
+              <Icon aria-hidden className="size-5 text-accent" />
+              <p className="mt-3 font-serif text-3xl font-semibold text-heading tabular-nums">{value}</p>
               <p className="text-sm text-muted">{label}</p>
             </Link>
           </li>
@@ -166,8 +168,8 @@ export function DashboardView() {
       </ul>
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         {can("admissions.view") && (
-          <section aria-labelledby="apps-chart" className="rounded-xl border border-line bg-white p-5">
-            <h2 id="apps-chart" className="font-semibold text-navy-900">
+          <section aria-labelledby="apps-chart" className="rounded-xl border border-line bg-surface p-5">
+            <h2 id="apps-chart" className="font-semibold text-heading">
               Admission applications per month
             </h2>
             <p className="text-xs text-muted">Last 6 months</p>
@@ -185,7 +187,7 @@ export function DashboardView() {
               {series.map((s) => (
                 <span key={s.key} className="flex-1">
                   {s.label}
-                  <span className="block font-semibold text-navy-900 tabular-nums">{s.n}</span>
+                  <span className="block font-semibold text-heading tabular-nums">{s.n}</span>
                 </span>
               ))}
             </div>
@@ -202,8 +204,8 @@ export function DashboardView() {
             </table>
           </section>
         )}
-        <section aria-labelledby="sys" className="rounded-xl border border-line bg-white p-5">
-          <h2 id="sys" className="font-semibold text-navy-900">
+        <section aria-labelledby="sys" className="rounded-xl border border-line bg-surface p-5">
+          <h2 id="sys" className="font-semibold text-heading">
             Demo status
           </h2>
           <dl className="mt-3 divide-y divide-line text-sm">
@@ -215,7 +217,7 @@ export function DashboardView() {
             </div>
             <div className="flex justify-between py-2">
               <dt className="text-muted">Unpublished drafts</dt>
-              <dd className="font-semibold text-navy-900">{drafts}</dd>
+              <dd className="font-semibold text-heading">{drafts}</dd>
             </div>
           </dl>
           <AdminButton variant="outline" size="sm" className="mt-3" onClick={() => setReset(true)}>
@@ -252,8 +254,8 @@ export function DashboardView() {
           <MiniList title="Latest applications" href="/admin/content/applications">
             {[...apps].sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt))).slice(0, 5).map((a) => (
               <li key={a._id} className="flex items-center justify-between gap-2 py-2">
-                <Link href={`/admin/content/applications/${a._id}`} className="min-w-0 hover:text-leaf-700">
-                  <span className="block truncate font-semibold text-navy-900">{String(a.studentName)}</span>
+                <Link href={`/admin/content/applications/${a._id}`} className="min-w-0 hover:text-accent">
+                  <span className="block truncate font-semibold text-heading">{String(a.studentName)}</span>
                   <span className="text-xs text-muted">
                     {String(a.classApplied)} · {String(a.reference)}
                   </span>
@@ -267,8 +269,8 @@ export function DashboardView() {
           <MiniList title="Latest messages" href="/admin/content/messages">
             {store.collection("messages").slice(0, 5).map((m) => (
               <li key={m._id} className="flex items-center justify-between gap-2 py-2">
-                <Link href={`/admin/content/messages/${m._id}`} className="min-w-0 hover:text-leaf-700">
-                  <span className="block truncate font-semibold text-navy-900">{String(m.name)}</span>
+                <Link href={`/admin/content/messages/${m._id}`} className="min-w-0 hover:text-accent">
+                  <span className="block truncate font-semibold text-heading">{String(m.name)}</span>
                   <span className="block truncate text-xs text-muted">{String(m.topic)}</span>
                 </Link>
                 <StatusBadge value={String(m.status)} />
@@ -283,10 +285,10 @@ export function DashboardView() {
 
 function MiniList({ title, href, children }: { title: string; href: string; children: ReactNode }) {
   return (
-    <section className="rounded-xl border border-line bg-white p-5">
+    <section className="rounded-xl border border-line bg-surface p-5">
       <div className="flex items-center justify-between">
-        <h2 className="font-semibold text-navy-900">{title}</h2>
-        <Link href={href} className="text-xs font-semibold text-leaf-700 hover:underline">
+        <h2 className="font-semibold text-heading">{title}</h2>
+        <Link href={href} className="text-xs font-semibold text-accent hover:underline">
           View all
         </Link>
       </div>
@@ -416,8 +418,8 @@ export function ContentListView() {
         {q ? ` matching “${q}”` : ""}
       </p>
       {list.items.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-line bg-white px-6 py-14 text-center">
-          <p className="font-semibold text-navy-900">Nothing here yet</p>
+        <div className="rounded-xl border border-dashed border-line bg-surface px-6 py-14 text-center">
+          <p className="font-semibold text-heading">Nothing here yet</p>
           <p className="mt-1 text-sm text-muted">{q || Object.values(filters).some(Boolean) ? "Try a different search or clear the filters." : r.canCreate === false ? "Items appear here when visitors submit the form on the website." : `Create the first ${r.singular.toLowerCase()}.`}</p>
         </div>
       ) : (
@@ -479,8 +481,8 @@ export function ContentEditView() {
         back={{ href: `/admin/content/${r.key}`, label: r.label }}
       />
       {r.key === "results" && doc && (
-        <p className="mb-4 rounded-lg border border-line bg-white px-4 py-3 text-sm">
-          GPA (calculated from the marks when saved): <strong className="text-navy-900">{Number(doc.gpa ?? 0).toFixed(2)}</strong>
+        <p className="mb-4 rounded-lg border border-line bg-surface px-4 py-3 text-sm">
+          GPA (calculated from the marks when saved): <strong className="text-heading">{Number(doc.gpa ?? 0).toFixed(2)}</strong>
         </p>
       )}
       <ResourceForm
@@ -580,7 +582,7 @@ export function UsersView() {
           )
         }
       />
-      <div className="overflow-x-auto rounded-xl border border-line bg-white">
+      <div className="overflow-x-auto rounded-xl border border-line bg-surface">
         <table className="w-full min-w-[40rem] text-left text-sm">
           <thead className="border-b border-line bg-paper text-xs text-muted uppercase">
             <tr>
@@ -595,7 +597,7 @@ export function UsersView() {
             {store.users().map((u) => (
               <tr key={u.id}>
                 <td className="px-3 py-2.5">
-                  <span className="block font-semibold text-navy-900">
+                  <span className="block font-semibold text-heading">
                     {u.name} {u.id === me?.id && <span className="text-xs font-normal text-muted">(you)</span>}
                   </span>
                   <span className="text-xs text-muted">{u.email}</span>
@@ -612,7 +614,7 @@ export function UsersView() {
                     </AdminButton>
                   )}
                   {can("users.delete") && u.id !== me?.id && (
-                    <AdminButton size="sm" variant="ghost" className="text-signal-700" onClick={() => setConfirm(u)}>
+                    <AdminButton size="sm" variant="ghost" className="text-danger" onClick={() => setConfirm(u)}>
                       Delete
                     </AdminButton>
                   )}
@@ -697,13 +699,13 @@ export function RolesView() {
               setRole(r);
               setPerms([...store.roles()[r]]);
             }}
-            className={cn("min-h-9 rounded-full px-4 text-sm font-semibold", role === r ? "bg-navy-800 text-white" : "border border-line bg-white text-navy-800")}
+            className={cn("min-h-9 rounded-full px-4 text-sm font-semibold", role === r ? "bg-brand hover:bg-brand-hover text-white" : "border border-line bg-surface text-heading")}
           >
             {roleLabels[r]}
           </button>
         ))}
       </div>
-      <div className="overflow-x-auto rounded-xl border border-line bg-white">
+      <div className="overflow-x-auto rounded-xl border border-line bg-surface">
         <table className="w-full min-w-[36rem] text-sm">
           <thead className="border-b border-line bg-paper text-xs text-muted uppercase">
             <tr>
@@ -718,7 +720,7 @@ export function RolesView() {
           <tbody className="divide-y divide-line">
             {areas.map((a) => (
               <tr key={a.key}>
-                <th scope="row" className="px-3 py-2.5 text-left font-medium text-navy-900">
+                <th scope="row" className="px-3 py-2.5 text-left font-medium text-heading">
                   {a.label}
                 </th>
                 {actions.map((x) => {
@@ -769,7 +771,7 @@ export function ActivityView() {
     <div>
       <PageTitle title="Activity log" description="Every change made in the admin panel, with who made it and when." />
       <ListFilters filters={[{ key: "action", label: "Actions", options: acts.map((a) => ({ value: a, label: a })) }]} searchPlaceholder="Search the log" />
-      <div className="mt-4 overflow-x-auto rounded-xl border border-line bg-white">
+      <div className="mt-4 overflow-x-auto rounded-xl border border-line bg-surface">
         <table className="w-full min-w-[36rem] text-left text-sm">
           <thead className="border-b border-line bg-paper text-xs text-muted uppercase">
             <tr>
@@ -783,7 +785,7 @@ export function ActivityView() {
             {rows.slice((page - 1) * size, page * size).map((a) => (
               <tr key={a.id}>
                 <td className="px-3 py-2.5 whitespace-nowrap text-muted">{new Date(a.createdAt).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" })}</td>
-                <td className="px-3 py-2.5 font-semibold text-navy-900">{a.adminName}</td>
+                <td className="px-3 py-2.5 font-semibold text-heading">{a.adminName}</td>
                 <td className="px-3 py-2.5">
                   <span className="rounded bg-paper px-2 py-0.5 text-xs font-semibold">{a.action}</span>
                 </td>
@@ -841,7 +843,7 @@ export function ProfileView() {
           setError(res.ok ? "" : res.error);
           toast(res.ok ? "success" : "error", res.ok ? (res.message ?? "Saved.") : res.error);
         }}
-        className="space-y-4 rounded-2xl border border-line bg-white p-6"
+        className="space-y-4 rounded-2xl border border-line bg-surface p-6"
       >
         <FormRow label="Full name" htmlFor="p-name" required error={error}>
           <input id="p-name" className={inputCls(Boolean(error))} value={name} onChange={(e) => setName(e.target.value)} />
@@ -874,7 +876,7 @@ export function ResultsImportView() {
   return (
     <div className="max-w-3xl">
       <PageTitle title="Import results (CSV)" description="Upload or paste a CSV. Existing results for the same exam, class and roll are updated." back={{ href: "/admin/content/results", label: "Results" }} />
-      <div className="space-y-5 rounded-2xl border border-line bg-white p-6">
+      <div className="space-y-5 rounded-2xl border border-line bg-surface p-6">
         <FormRow label="Examination" htmlFor="ri-exam" required>
           <select id="ri-exam" className={inputCls()} value={exam} onChange={(e) => setExam(e.target.value)}>
             {exams.map((e) => (
@@ -894,7 +896,7 @@ export function ResultsImportView() {
           <input type="checkbox" checked={publish} disabled={!can("results.publish")} onChange={(e) => setPublish(e.target.checked)} className="size-4 accent-leaf-600" /> Publish imported results
         </label>
         {msg && (
-          <p role="status" className={cn("rounded-lg px-4 py-3 text-sm", msg.ok ? "bg-leaf-50 text-navy-900" : "bg-signal-50 text-signal-700")}>
+          <p role="status" className={cn("rounded-lg px-4 py-3 text-sm", msg.ok ? "bg-leaf-50 text-heading" : "bg-signal-50 text-danger")}>
             {msg.text}
           </p>
         )}

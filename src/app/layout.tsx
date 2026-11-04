@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { bangla, banglaSerif, inter, serifEn } from "@/lib/fonts";
 import { getSetting, getSite } from "@/content/site-content";
+import { themeScript } from "@/components/layout/ThemeToggle";
 
 type Seo = { title?: string; description?: string; keywords?: string[]; ogImage?: string; siteUrl?: string };
 
@@ -32,6 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export const viewport: Viewport = {
   themeColor: "#172c4a",
+  colorScheme: "light dark",
   width: "device-width",
   initialScale: 1,
 };
@@ -40,8 +42,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${inter.variable} ${serifEn.variable} ${bangla.variable} ${banglaSerif.variable} antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="flex min-h-dvh flex-col overflow-x-clip">{children}</body>
     </html>
   );

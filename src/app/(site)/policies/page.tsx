@@ -19,7 +19,7 @@ export default async function PoliciesPage() {
             <ul className="flex flex-wrap gap-2 lg:flex-col">
               {all.map((p) => (
                 <li key={p.id}>
-                  <a href={`#${p.id}`} className="inline-flex min-h-9 items-center rounded-md px-3 text-sm font-medium text-navy-800 hover:bg-white">
+                  <a href={`#${p.id}`} className="inline-flex min-h-9 items-center rounded-md px-3 text-sm font-medium text-heading hover:bg-surface">
                     {p.title}
                   </a>
                 </li>
@@ -28,8 +28,8 @@ export default async function PoliciesPage() {
           </nav>
           <div className="space-y-6">
             {all.map((p, i) => (
-              <section key={p.id} id={p.id} aria-labelledby={`${p.id}-h`} className="scroll-mt-28 rounded-xl border border-line bg-white p-6">
-                <h2 id={`${p.id}-h`} className="font-serif text-xl font-semibold text-navy-900">
+              <section key={p.id} id={p.id} aria-labelledby={`${p.id}-h`} className="scroll-mt-28 rounded-xl border border-line bg-surface p-6">
+                <h2 id={`${p.id}-h`} className="font-serif text-xl font-semibold text-heading">
                   {i + 1}. {p.title}
                 </h2>
                 <ol className="mt-3 list-decimal space-y-2 pl-5 text-[0.97rem] text-ink marker:text-muted">
@@ -39,7 +39,7 @@ export default async function PoliciesPage() {
                 </ol>
               </section>
             ))}
-            <a href="/downloads/code-of-conduct.pdf" download className="inline-block text-sm font-semibold text-leaf-700 hover:underline underline-offset-4">
+            <a href="/downloads/code-of-conduct.pdf" download className="inline-block text-sm font-semibold text-accent hover:underline underline-offset-4">
               Download the student code of conduct (sample PDF)
             </a>
             {site.demoNote && <DemoNote>These policies are sample content for a fictional institution.</DemoNote>}

@@ -48,7 +48,7 @@ export default async function AdmissionPage() {
           <Reveal>
             {a.noticeDate && <Badge tone="signal">Notice · {formatDateEn(a.noticeDate)}</Badge>}
             {a.noticeTitleBn && (
-              <h2 id="announce" lang="bn" className="mt-3 font-serif text-2xl font-semibold text-navy-900 sm:text-3xl" style={{ lineHeight: 1.45 }}>
+              <h2 id="announce" lang="bn" className="mt-3 font-serif text-2xl font-semibold text-heading sm:text-3xl" style={{ lineHeight: 1.45 }}>
                 {a.noticeTitleBn}
               </h2>
             )}
@@ -70,15 +70,15 @@ export default async function AdmissionPage() {
       </section>
 
       {/* Dates */}
-      <section aria-labelledby="dates" className="border-y border-line bg-white py-16">
+      <section aria-labelledby="dates" className="border-y border-line bg-surface py-16">
         <div className="container-page">
           <SectionHeading id="dates" kicker="গুরুত্বপূর্ণ তারিখ" title="Important dates" />
           <ol className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {a.dates.map((d, i) => (
               <Reveal as="li" key={d.label} delay={i * 0.03} className="flex gap-3 rounded-xl border border-line bg-paper p-4">
-                <CalendarClock aria-hidden className="mt-0.5 size-5 shrink-0 text-leaf-600" />
+                <CalendarClock aria-hidden className="mt-0.5 size-5 shrink-0 text-accent" />
                 <div>
-                  <p className="font-semibold text-navy-900">{formatDateEn(d.date)}</p>
+                  <p className="font-semibold text-heading">{formatDateEn(d.date)}</p>
                   <p className="text-sm text-muted">{d.label}</p>
                 </div>
               </Reveal>
@@ -91,9 +91,9 @@ export default async function AdmissionPage() {
       <section id="eligibility" aria-labelledby="elig" className="scroll-mt-24 py-16">
         <div className="container-page">
           <SectionHeading id="elig" kicker="যোগ্যতা" title="Eligibility and class-wise requirements" description={site.demoNote ? "Seat numbers are indicative for this demonstration." : undefined} />
-          <div className="mt-8 overflow-x-auto rounded-xl border border-line bg-white" tabIndex={0} aria-label="Eligibility table">
+          <div className="mt-8 overflow-x-auto rounded-xl border border-line bg-surface" tabIndex={0} aria-label="Eligibility table">
             <table className="w-full min-w-[44rem] text-left text-sm">
-              <thead className="bg-navy-800 text-xs text-white uppercase">
+              <thead className="bg-brand text-xs text-white uppercase">
                 <tr>
                   <th scope="col" className="px-4 py-3 font-semibold">Class</th>
                   <th scope="col" className="px-4 py-3 font-semibold">Requirement</th>
@@ -104,7 +104,7 @@ export default async function AdmissionPage() {
               <tbody className="divide-y divide-line">
                 {a.eligibility.map((e) => (
                   <tr key={e.cls}>
-                    <th scope="row" className="px-4 py-3 font-semibold whitespace-nowrap text-navy-900">
+                    <th scope="row" className="px-4 py-3 font-semibold whitespace-nowrap text-heading">
                       {e.cls}
                     </th>
                     <td className="px-4 py-3 text-ink">{e.requirement}</td>
@@ -119,15 +119,15 @@ export default async function AdmissionPage() {
       </section>
 
       {/* Procedure + documents */}
-      <section aria-labelledby="proc" className="border-y border-line bg-white py-16">
+      <section aria-labelledby="proc" className="border-y border-line bg-surface py-16">
         <div className="container-page grid gap-12 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
             <SectionHeading id="proc" kicker="ভর্তি প্রক্রিয়া" title="Admission procedure" />
             <ol className="mt-8 grid gap-4 sm:grid-cols-2">
               {a.steps.map((s, i) => (
                 <Reveal as="li" key={s.title} delay={i * 0.03} className="rounded-xl border border-line p-5">
-                  <span className="flex size-8 items-center justify-center rounded-full bg-navy-800 text-sm font-semibold text-white">{i + 1}</span>
-                  <h3 className="mt-3 font-semibold text-navy-900">{s.title}</h3>
+                  <span className="flex size-8 items-center justify-center rounded-full bg-brand text-sm font-semibold text-white">{i + 1}</span>
+                  <h3 className="mt-3 font-semibold text-heading">{s.title}</h3>
                   <p className="mt-1 text-sm text-muted">{s.text}</p>
                 </Reveal>
               ))}
@@ -139,7 +139,7 @@ export default async function AdmissionPage() {
               <ul className="space-y-3">
                 {a.documents.map((d) => (
                   <li key={d} className="flex gap-3 text-[0.95rem] text-ink">
-                    <CheckCircle2 aria-hidden className="mt-0.5 size-5 shrink-0 text-leaf-600" />
+                    <CheckCircle2 aria-hidden className="mt-0.5 size-5 shrink-0 text-accent" />
                     {d}
                   </li>
                 ))}
@@ -148,9 +148,9 @@ export default async function AdmissionPage() {
                 href={a.circularFile}
                 target="_blank"
                 rel="noopener"
-                className="mt-6 flex items-center gap-3 rounded-lg border border-line bg-paper p-3 text-sm font-semibold text-navy-900 hover:border-leaf-200"
+                className="mt-6 flex items-center gap-3 rounded-lg border border-line bg-paper p-3 text-sm font-semibold text-heading hover:border-leaf-200"
               >
-                <FileText aria-hidden className="size-5 text-signal-600" />
+                <FileText aria-hidden className="size-5 text-danger" />
                 Admission circular {admissionYear} (PDF)
               </a>}
             </Card>
@@ -165,7 +165,7 @@ export default async function AdmissionPage() {
             <SectionHeading id="fees-h" kicker="ফি কাঠামো" title="Fee information" description="Amounts in Bangladeshi Taka (BDT)." />
             {site.demoNote && <SampleTag />}
           </div>
-          <div className="mt-8 overflow-x-auto rounded-xl border border-line bg-white" tabIndex={0} aria-label="Fee table">
+          <div className="mt-8 overflow-x-auto rounded-xl border border-line bg-surface" tabIndex={0} aria-label="Fee table">
             <table className="w-full min-w-[36rem] text-left text-sm">
               <caption className="sr-only">Fee structure for {admissionYear} in BDT</caption>
               <thead className="border-b border-line bg-paper text-xs text-muted uppercase">
@@ -179,7 +179,7 @@ export default async function AdmissionPage() {
               <tbody className="divide-y divide-line">
                 {a.fees.map((f) => (
                   <tr key={f.item}>
-                    <th scope="row" className="px-4 py-3 font-medium text-navy-900">
+                    <th scope="row" className="px-4 py-3 font-medium text-heading">
                       {f.item}
                     </th>
                     <td className="px-4 py-3 text-right tabular-nums">{f.primary}</td>
@@ -195,7 +195,7 @@ export default async function AdmissionPage() {
       </section>
 
       {/* Form + FAQ */}
-      <section id="apply" aria-labelledby="apply-h" className="scroll-mt-24 border-t border-line bg-white py-16">
+      <section id="apply" aria-labelledby="apply-h" className="scroll-mt-24 border-t border-line bg-surface py-16">
         <div className="container-page grid gap-12 lg:grid-cols-[1.25fr_0.75fr]">
           <div>
             <SectionHeading

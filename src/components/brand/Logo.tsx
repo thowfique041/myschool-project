@@ -27,6 +27,7 @@ export function LogoMark({ className, tone = "light", title }: LogoMarkProps) {
       <path
         d="M24 2 44 8.5V26c0 13.6-8.3 22.6-20 28C12.3 48.6 4 39.6 4 26V8.5Z"
         fill={shield}
+        style={tone === "light" ? { fill: "var(--color-crest)" } : undefined}
       />
       <path
         d="M24 5.2 41 10.7V26c0 11.8-7 19.7-17 24.7C14 45.7 7 37.8 7 26V10.7Z"
@@ -69,7 +70,7 @@ export function Logo({ className, tone = "light", compact = false, name = "Webni
         <span
           className={cn(
             "font-serif text-[1.02rem] font-semibold tracking-tight whitespace-nowrap min-[400px]:text-[1.12rem] sm:text-[1.35rem]",
-            isLight ? "text-navy-900" : "text-white",
+            isLight ? "text-heading" : "text-white",
           )}
         >
           {name}
@@ -79,7 +80,7 @@ export function Logo({ className, tone = "light", compact = false, name = "Webni
             lang="bn"
             className={cn(
               "mt-1 text-[0.74rem] font-medium whitespace-nowrap sm:text-sm",
-              isLight ? "text-leaf-700" : "text-leaf-200",
+              isLight ? "text-accent" : "text-leaf-200",
             )}
             style={{ lineHeight: 1.3 }}
           >

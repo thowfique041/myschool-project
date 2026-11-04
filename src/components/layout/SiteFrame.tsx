@@ -44,9 +44,9 @@ export async function SiteFrame({ children }: { children: ReactNode }) {
         <main id="main" className="flex flex-1 items-center bg-paper py-20">
           <div className="container-page max-w-xl text-center">
             <LogoMark className="mx-auto h-16 w-auto" />
-            <h1 className="mt-6 font-serif text-3xl font-semibold text-navy-900">{maintenance.title}</h1>
+            <h1 className="mt-6 font-serif text-3xl font-semibold text-heading">{maintenance.title}</h1>
             <p className="mt-3 text-muted">{maintenance.message}</p>
-            <p className="mt-6 text-sm text-navy-700">
+            <p className="mt-6 text-sm text-subheading">
               {site.name} · <a className="underline" href={site.phoneHref}>{site.phone}</a> ·{" "}
               <a className="underline" href={`mailto:${site.email}`}>{site.email}</a>
             </p>
@@ -61,7 +61,7 @@ export async function SiteFrame({ children }: { children: ReactNode }) {
       {css && <style>{css}</style>}
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:font-semibold focus:text-navy-900 focus:shadow"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-surface focus:px-4 focus:py-2 focus:font-semibold focus:text-heading focus:shadow"
       >
         Skip to main content
       </a>

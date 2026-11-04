@@ -26,10 +26,10 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             role={t.tone === "error" ? "alert" : "status"}
             className={cn(
               "pointer-events-auto flex items-start gap-3 rounded-xl border px-4 py-3 text-sm shadow-lg",
-              t.tone === "success" ? "border-leaf-200 bg-white text-navy-900" : "border-signal-100 bg-signal-50 text-signal-700",
+              t.tone === "success" ? "border-leaf-200 bg-surface text-heading" : "border-signal-100 bg-signal-50 text-danger",
             )}
           >
-            {t.tone === "success" ? <CheckCircle2 aria-hidden className="mt-0.5 size-4 shrink-0 text-leaf-600" /> : <AlertTriangle aria-hidden className="mt-0.5 size-4 shrink-0" />}
+            {t.tone === "success" ? <CheckCircle2 aria-hidden className="mt-0.5 size-4 shrink-0 text-accent" /> : <AlertTriangle aria-hidden className="mt-0.5 size-4 shrink-0" />}
             <p className="flex-1">{t.text}</p>
             <button type="button" aria-label="Dismiss" onClick={() => setToasts((all) => all.filter((x) => x.id !== t.id))} className="text-muted hover:text-ink">
               <X aria-hidden className="size-4" />
@@ -78,14 +78,14 @@ export function Modal({
         if (e.target === ref.current) onClose();
       }}
       className={cn(
-        "m-auto max-h-[90dvh] w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-line bg-white p-0 shadow-2xl backdrop:bg-navy-950/50",
+        "m-auto max-h-[90dvh] w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-line bg-surface p-0 shadow-2xl backdrop:bg-navy-950/50",
         wide ? "max-w-5xl" : "max-w-lg",
       )}
     >
       {open && (
         <div className="flex max-h-[90dvh] flex-col">
           <div className="flex items-center justify-between gap-4 border-b border-line px-5 py-4">
-            <h2 id={titleId} className="font-semibold text-navy-900">
+            <h2 id={titleId} className="font-semibold text-heading">
               {title}
             </h2>
             <button type="button" onClick={onClose} aria-label="Close" className="rounded-md p-1 text-muted hover:bg-paper hover:text-ink">
@@ -140,11 +140,11 @@ export const adminBtn = (variant: BtnVariant = "primary", size: "sm" | "md" = "m
   cn(
     "inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60 whitespace-nowrap",
     size === "sm" ? "min-h-8 px-3 text-xs" : "min-h-10 px-4 text-sm",
-    variant === "primary" && "bg-navy-800 text-white hover:bg-navy-900",
+    variant === "primary" && "bg-brand hover:bg-brand-hover text-white",
     variant === "secondary" && "bg-leaf-600 text-white hover:bg-leaf-700",
     variant === "danger" && "bg-signal-600 text-white hover:bg-signal-700",
-    variant === "outline" && "border border-line bg-white text-navy-800 hover:border-navy-300",
-    variant === "ghost" && "text-navy-800 hover:bg-paper",
+    variant === "outline" && "border border-line bg-surface text-heading hover:border-line-strong",
+    variant === "ghost" && "text-heading hover:bg-paper",
   );
 
 export function AdminButton({
@@ -168,7 +168,7 @@ export function AdminButton({
 
 export const inputCls = (invalid?: boolean) =>
   cn(
-    "w-full rounded-lg border bg-white px-3 py-2 text-sm text-ink placeholder:text-muted/70 focus:outline-none focus:ring-2 focus:ring-leaf-500/40",
+    "w-full rounded-lg border bg-surface px-3 py-2 text-sm text-ink placeholder:text-muted/70 focus:outline-none focus:ring-2 focus:ring-leaf-500/40",
     invalid ? "border-signal-600" : "border-line focus:border-leaf-500",
   );
 
@@ -191,14 +191,14 @@ export function FormRow({
 }) {
   return (
     <div className={className}>
-      <label htmlFor={htmlFor} className="mb-1.5 block text-sm font-semibold text-navy-900">
+      <label htmlFor={htmlFor} className="mb-1.5 block text-sm font-semibold text-heading">
         {label}
-        {required && <span className="text-signal-600"> *</span>}
+        {required && <span className="text-danger"> *</span>}
       </label>
       {children}
       {help && !error && <p className="mt-1 text-xs text-muted">{help}</p>}
       {error && (
-        <p id={htmlFor ? `${htmlFor}-error` : undefined} className="mt-1 text-xs font-medium text-signal-700">
+        <p id={htmlFor ? `${htmlFor}-error` : undefined} className="mt-1 text-xs font-medium text-danger">
           {error}
         </p>
       )}
@@ -209,19 +209,19 @@ export function FormRow({
 export function StatusBadge({ value, label }: { value: string; label?: string }) {
   const tone =
     {
-      published: "bg-leaf-50 text-leaf-700 ring-leaf-200",
-      approved: "bg-leaf-50 text-leaf-700 ring-leaf-200",
-      active: "bg-leaf-50 text-leaf-700 ring-leaf-200",
-      replied: "bg-leaf-50 text-leaf-700 ring-leaf-200",
-      draft: "bg-paper text-navy-700 ring-line",
+      published: "bg-leaf-50 text-accent ring-leaf-200",
+      approved: "bg-leaf-50 text-accent ring-leaf-200",
+      active: "bg-leaf-50 text-accent ring-leaf-200",
+      replied: "bg-leaf-50 text-accent ring-leaf-200",
+      draft: "bg-paper text-subheading ring-line",
       scheduled: "bg-amber-50 text-amber-800 ring-amber-200",
       pending: "bg-amber-50 text-amber-800 ring-amber-200",
       new: "bg-amber-50 text-amber-800 ring-amber-200",
-      under_review: "bg-navy-50 text-navy-700 ring-navy-100",
-      read: "bg-navy-50 text-navy-700 ring-navy-100",
-      rejected: "bg-signal-50 text-signal-700 ring-signal-100",
-      inactive: "bg-signal-50 text-signal-700 ring-signal-100",
-    }[value] ?? "bg-paper text-navy-700 ring-line";
+      under_review: "bg-tint text-subheading ring-line-strong",
+      read: "bg-tint text-subheading ring-line-strong",
+      rejected: "bg-signal-50 text-danger ring-signal-100",
+      inactive: "bg-signal-50 text-danger ring-signal-100",
+    }[value] ?? "bg-paper text-subheading ring-line";
   return <span className={cn("inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold whitespace-nowrap ring-1", tone)}>{label ?? value.replace(/_/g, " ")}</span>;
 }
 

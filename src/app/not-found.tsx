@@ -16,13 +16,13 @@ export default function NotFound() {
       <div className="container-page max-w-2xl text-center">
         <LogoMark className="mx-auto h-16 w-auto" />
         <p className="mt-6 font-serif text-6xl font-semibold text-navy-200">404</p>
-        <h1 className="mt-2 font-serif text-3xl font-semibold text-navy-900">This page could not be found</h1>
+        <h1 className="mt-2 font-serif text-3xl font-semibold text-heading">This page could not be found</h1>
         <p lang="bn" className="mt-2 text-muted">দুঃখিত, আপনি যে পাতাটি খুঁজছেন সেটি পাওয়া যায়নি।</p>
         <p className="mt-3 text-muted">The link may be old or mistyped. Try one of these instead:</p>
         <ul className="mt-6 flex flex-wrap justify-center gap-2">
           {links.map((l) => (
             <li key={l.href}>
-              <Link href={l.href} className="inline-flex min-h-10 items-center rounded-full border border-line bg-white px-4 text-sm font-semibold text-navy-800 hover:border-navy-300">
+              <Link href={l.href} className="inline-flex min-h-10 items-center rounded-full border border-line bg-surface px-4 text-sm font-semibold text-heading hover:border-line-strong">
                 {l.label}
               </Link>
             </li>

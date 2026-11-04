@@ -12,7 +12,7 @@ export function Hero({ home, notices }: { home: HomeContent; notices: Notice[] }
   return (
     <section aria-labelledby="hero-title" className="relative bg-paper">
       <div className="container-page pt-5 sm:pt-8">
-        <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-[var(--shadow-card)]">
+        <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-[var(--shadow-card)]">
           {/* Photo with a dark gradient on the text side, contained to the page width */}
           <div className="relative isolate overflow-hidden bg-navy-950">
             <Image
@@ -73,7 +73,7 @@ export function Hero({ home, notices }: { home: HomeContent; notices: Notice[] }
           </div>
 
           {/* Key facts bar */}
-          {facts.length > 0 && <div className="bg-white">
+          {facts.length > 0 && <div className="bg-surface">
             <div className="px-5 sm:px-10 lg:px-14">
               <dl className="grid max-w-3xl grid-flow-col auto-cols-fr divide-x divide-line py-4 sm:py-5">
                 {facts.map((f, i) => (
@@ -82,7 +82,7 @@ export function Hero({ home, notices }: { home: HomeContent; notices: Notice[] }
                     className={i === 0 ? "pr-3 sm:pr-8" : "px-3 sm:px-8"}
                   >
                     <dt className="text-xs text-muted">{f.label}</dt>
-                    <dd className="mt-0.5 text-[0.95rem] font-semibold text-navy-900 sm:text-xl">
+                    <dd className="mt-0.5 text-[0.95rem] font-semibold text-heading sm:text-xl">
                       {f.value}
                     </dd>
                   </div>

@@ -25,7 +25,7 @@ export default function CreditsPage() {
             </a>
             .
           </DemoNote>
-          <ul className="mt-8 divide-y divide-line rounded-xl border border-line bg-white">
+          <ul className="mt-8 divide-y divide-line rounded-xl border border-line bg-surface">
             {list.map((img) => (
               <li key={img.src} className="flex items-center gap-4 p-4">
                 <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-md bg-paper-dark">
@@ -39,7 +39,7 @@ export default function CreditsPage() {
                   </p>
                 </div>
                 {img.credit && (
-                  <a href={img.credit.page} target="_blank" rel="noopener noreferrer" className="shrink-0 text-sm font-semibold text-leaf-700 hover:underline underline-offset-4">
+                  <a href={img.credit.page} target="_blank" rel="noopener noreferrer" className="shrink-0 text-sm font-semibold text-accent hover:underline underline-offset-4">
                     View<span className="sr-only"> on Unsplash (opens in a new tab)</span>
                   </a>
                 )}

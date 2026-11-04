@@ -8,6 +8,7 @@ import type { NavGroup } from "./nav";
 import { signOut } from "./demo-store";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 type Props = {
   groups: NavGroup[];
@@ -90,18 +91,19 @@ export function AdminFrame({ groups, badges, user, siteName, children }: Props) 
       )}
 
       <div className="min-w-0">
-        <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-3 border-b border-line bg-white/95 px-4 backdrop-blur sm:px-6">
+        <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-3 border-b border-line bg-surface/95 px-4 backdrop-blur sm:px-6">
           <button type="button" onClick={() => setOpen(true)} aria-expanded={open} aria-controls="admin-menu" className="inline-flex size-10 items-center justify-center rounded-lg border border-line lg:hidden" aria-label="Open menu">
             <Menu aria-hidden className="size-5" />
           </button>
-          <a href="/" target="_blank" rel="noopener" className="hidden items-center gap-1.5 text-sm font-semibold text-navy-800 hover:text-leaf-700 sm:inline-flex">
+          <a href="/" target="_blank" rel="noopener" className="hidden items-center gap-1.5 text-sm font-semibold text-heading hover:text-accent sm:inline-flex">
             View website <ExternalLink aria-hidden className="size-3.5" />
           </a>
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <Link href="/admin/profile" className="flex items-center gap-2 rounded-lg px-2 py-1 hover:bg-paper">
               <UserRound aria-hidden className="size-5 text-navy-500" />
               <span className="text-right leading-tight">
-                <span className="block max-w-40 truncate text-sm font-semibold text-navy-900">{user.name}</span>
+                <span className="block max-w-40 truncate text-sm font-semibold text-heading">{user.name}</span>
                 <span className="block text-[0.7rem] text-muted">{user.roleLabel}</span>
               </span>
             </Link>
@@ -112,7 +114,7 @@ export function AdminFrame({ groups, badges, user, siteName, children }: Props) 
                 router.push("/admin");
               }}
             >
-              <button type="submit" className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-line px-3 text-sm font-semibold text-navy-800 hover:border-navy-300">
+              <button type="submit" className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-line px-3 text-sm font-semibold text-heading hover:border-line-strong">
                 <LogOut aria-hidden className="size-4" /> <span className="hidden sm:inline">Sign out</span>
               </button>
             </form>

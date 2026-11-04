@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /*
  * Webnion School & College — design tokens
  * Navy carries the institution, green is the restrained accent,
@@ -38,6 +40,18 @@
   --color-line: #e2ddd2;
   --color-gold: #b88a2e;
 
+  /* Semantic tokens — these switch in dark mode (see html.dark below) */
+  --color-surface: #ffffff;
+  --color-heading: #0f1f36;
+  --color-subheading: #1f3a60;
+  --color-accent: #0a5c42;
+  --color-danger: #a51f30;
+  --color-tint: #f1f5fa;
+  --color-line-strong: #bdcde2;
+  --color-crest: #172c4a;
+  --color-brand: #172c4a;
+  --color-brand-hover: #1f3a60;
+
   --font-sans: var(--font-inter), var(--font-bangla), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-serif-en), var(--font-bangla-serif), ui-serif, Georgia, serif;
   --font-bangla: var(--font-bangla), var(--font-inter), sans-serif;
@@ -45,6 +59,36 @@
   --radius-card: 0.75rem;
   --shadow-card: 0 1px 2px rgb(15 31 54 / 0.05), 0 4px 16px -6px rgb(15 31 54 / 0.12);
   --shadow-lift: 0 2px 4px rgb(15 31 54 / 0.06), 0 14px 32px -12px rgb(15 31 54 / 0.22);
+}
+
+/* Dark theme: surfaces and text flip; navy bands (top bar, hero, footer) stay navy. */
+html.dark {
+  color-scheme: dark;
+  --color-surface: #131d2e;
+  --color-paper: #0b1320;
+  --color-paper-dark: #1a2639;
+  --color-ink: #dfe6ef;
+  --color-muted: #9eabbd;
+  --color-line: #263449;
+  --color-line-strong: #3a4c66;
+  --color-heading: #f1f5fa;
+  --color-subheading: #c3d1e4;
+  --color-accent: #5fcf9f;
+  --color-danger: #f28b97;
+  --color-tint: #1b2840;
+  --color-crest: #2a4a76;
+  --color-brand: #2f5d96;
+  --color-brand-hover: #3a6eaf;
+  --color-leaf-50: #10291f;
+  --color-leaf-100: #15382a;
+  --color-signal-50: #33161b;
+  --color-signal-100: #5a2129;
+  --color-amber-50: #2e2410;
+  --color-amber-200: #6b5420;
+  --color-amber-800: #f4cf7f;
+  --color-amber-900: #f8dc9c;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 4px 16px -6px rgb(0 0 0 / 0.5);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.3), 0 14px 32px -12px rgb(0 0 0 / 0.6);
 }
 
 @layer base {
@@ -83,8 +127,8 @@
   }
 
   ::selection {
-    background-color: var(--color-navy-100);
-    color: var(--color-navy-900);
+    background-color: var(--color-leaf-200);
+    color: var(--color-navy-950);
   }
 }
 

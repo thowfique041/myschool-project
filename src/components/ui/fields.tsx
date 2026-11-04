@@ -2,7 +2,7 @@ import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTML
 import { cn } from "@/lib/utils";
 
 const control =
-  "block w-full rounded-lg border bg-white px-3.5 py-2.5 text-[0.95rem] text-ink placeholder:text-muted/70 transition-colors focus:border-leaf-600 focus:outline-2 focus:outline-offset-0 focus:outline-leaf-600/25 min-h-11";
+  "block w-full rounded-lg border bg-surface px-3.5 py-2.5 text-[0.95rem] text-ink placeholder:text-muted/70 transition-colors focus:border-leaf-600 focus:outline-2 focus:outline-offset-0 focus:outline-leaf-600/25 min-h-11";
 
 type FieldProps = {
   label: string;
@@ -21,10 +21,10 @@ export function Field({ label, name, error, hint, required, className, children 
   const describedBy = [hintId, errorId].filter(Boolean).join(" ") || undefined;
   return (
     <div className={className}>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-semibold text-navy-900">
+      <label htmlFor={id} className="mb-1.5 block text-sm font-semibold text-heading">
         {label}
         {required && (
-          <span className="text-signal-600" aria-hidden>
+          <span className="text-danger" aria-hidden>
             {" "}
             *
           </span>
@@ -37,7 +37,7 @@ export function Field({ label, name, error, hint, required, className, children 
         </p>
       )}
       {error && (
-        <p id={errorId} className="mt-1 text-xs font-medium text-signal-700">
+        <p id={errorId} className="mt-1 text-xs font-medium text-danger">
           {error}
         </p>
       )}

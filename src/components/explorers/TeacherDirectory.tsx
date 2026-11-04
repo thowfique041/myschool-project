@@ -33,7 +33,7 @@ export function TeacherDirectory({ teachers, departments }: { teachers: Teacher[
           id="section-filter"
           value={section}
           onChange={(e) => setSection(e.target.value as Teacher["section"] | "any")}
-          className="min-h-11 rounded-lg border border-line bg-white px-3 text-ink"
+          className="min-h-11 rounded-lg border border-line bg-surface px-3 text-ink"
         >
           <option value="any">All sections</option>
           <option value="Primary">Primary</option>
@@ -61,8 +61,8 @@ export function TeacherDirectory({ teachers, departments }: { teachers: Teacher[
           ))}
         </ul>
       ) : (
-        <div className="mt-3 rounded-xl border border-dashed border-line bg-white px-6 py-12 text-center">
-          <p className="font-semibold text-navy-900">No teachers match these filters.</p>
+        <div className="mt-3 rounded-xl border border-dashed border-line bg-surface px-6 py-12 text-center">
+          <p className="font-semibold text-heading">No teachers match these filters.</p>
           <button
             type="button"
             onClick={() => {
@@ -70,7 +70,7 @@ export function TeacherDirectory({ teachers, departments }: { teachers: Teacher[
               setSection("any");
               setQuery("");
             }}
-            className="mt-3 text-sm font-semibold text-leaf-700 hover:underline underline-offset-4"
+            className="mt-3 text-sm font-semibold text-accent hover:underline underline-offset-4"
           >
             Reset filters
           </button>

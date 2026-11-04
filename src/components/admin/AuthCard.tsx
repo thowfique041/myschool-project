@@ -8,12 +8,12 @@ export function AuthCard({ title, subtitle, children }: { title: string; subtitl
       <div className="w-full max-w-md">
         <div className="mb-6 flex flex-col items-center text-center">
           <LogoMark className="h-14 w-auto" />
-          <h1 className="mt-4 font-serif text-2xl font-semibold text-navy-900">{title}</h1>
+          <h1 className="mt-4 font-serif text-2xl font-semibold text-heading">{title}</h1>
           {subtitle && <p className="mt-1 text-sm text-muted">{subtitle}</p>}
         </div>
-        <div className="rounded-2xl border border-line bg-white p-6 shadow-[var(--shadow-card)] sm:p-8">{children}</div>
+        <div className="rounded-2xl border border-line bg-surface p-6 shadow-[var(--shadow-card)] sm:p-8">{children}</div>
         <p className="mt-6 text-center text-sm">
-          <Link href="/" className="font-semibold text-navy-800 hover:text-leaf-700">
+          <Link href="/" className="font-semibold text-heading hover:text-accent">
             ← Back to the website
           </Link>
         </p>
@@ -25,7 +25,7 @@ export function AuthCard({ title, subtitle, children }: { title: string; subtitl
 export function EnvMissing() {
   return (
     <div className="space-y-3 text-sm leading-relaxed text-ink">
-      <p className="font-semibold text-signal-700">The admin panel needs a database before anyone can sign in.</p>
+      <p className="font-semibold text-danger">The admin panel needs a database before anyone can sign in.</p>
       <p>Add these environment variables to the hosting project (Vercel → Settings → Environment Variables), then redeploy:</p>
       <ul className="list-disc space-y-1 pl-5">
         <li>

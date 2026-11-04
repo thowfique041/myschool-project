@@ -24,13 +24,13 @@ export default async function NoticesPage() {
         <div className="container-page grid gap-10 lg:grid-cols-[1fr_18rem]">
           <NoticeExplorer notices={notices} />
           <aside aria-label="Upcoming dates" className="space-y-6">
-            <div className="rounded-xl border border-line bg-white p-5">
-              <h2 className="font-semibold text-navy-900">Coming up</h2>
+            <div className="rounded-xl border border-line bg-surface p-5">
+              <h2 className="font-semibold text-heading">Coming up</h2>
               <ul className="mt-3 space-y-3 text-sm">
                 {upcoming.length === 0 && <li className="text-muted">No upcoming dates.</li>}
                 {upcoming.map((e) => (
                   <li key={e.date + e.title}>
-                    <time dateTime={e.date} className="font-semibold text-leaf-700">
+                    <time dateTime={e.date} className="font-semibold text-accent">
                       {formatDateEn(e.date)}
                     </time>
                     <p className="text-ink">{e.title}</p>
@@ -43,16 +43,16 @@ export default async function NoticesPage() {
             </div>
             <a
               href="#downloads"
-              className="flex items-center gap-3 rounded-xl border border-leaf-200 bg-leaf-50 p-4 text-sm font-semibold text-navy-900 hover:border-leaf-500"
+              className="flex items-center gap-3 rounded-xl border border-leaf-200 bg-leaf-50 p-4 text-sm font-semibold text-heading hover:border-leaf-500"
             >
-              <FileDown aria-hidden className="size-5 text-leaf-700" />
+              <FileDown aria-hidden className="size-5 text-accent" />
               Forms &amp; downloads
             </a>
             {site.demoNote && <DemoNote>Notices on this site are sample content for a fictional institution.</DemoNote>}
           </aside>
         </div>
       </section>
-      <section id="downloads" aria-labelledby="downloads-title" className="scroll-mt-24 border-t border-line bg-white py-12 sm:py-16">
+      <section id="downloads" aria-labelledby="downloads-title" className="scroll-mt-24 border-t border-line bg-surface py-12 sm:py-16">
         <div className="container-page max-w-5xl">
           <SectionHeading
             id="downloads-title"
