@@ -42,9 +42,9 @@ const extraPolicies = [
 export const singletonDefaults: Record<string, Record<string, unknown>> = {
   homepage: {
     heroTagline: staticSite.tagline,
-    heroTitle: "A school where every child is known by name.",
+    heroTitle: "Where learning inspires a brighter future.",
     heroSubtitle:
-      "Webnion School & College in Upashahar, Sylhet teaches from Play to Class 12 under the national curriculum, with disciplined classrooms, practical science and ICT, and teachers who stay in touch with every family.",
+      "Webnion School & College, located in Upashahar, Sylhet, is committed to providing quality education from Play Group to Class 12. We nurture curiosity, build confidence, and empower students with the knowledge and values they need to succeed in life.",
     heroImage: images.heroCampus.src,
     heroImageAlt: images.heroCampus.alt,
     heroCaption: "Representative photo, not Webnion's campus.",
