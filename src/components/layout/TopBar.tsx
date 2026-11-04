@@ -32,12 +32,13 @@ export async function TopBar({ site }: { site: SiteInfo }) {
           </li>
         </ul>
         <ul className="flex items-center gap-4">
-          <li className="hidden sm:block">
-            <span className="text-navy-300">
-              {t.common.eiin} {lang === "bn" ? toBnDigits(site.eiin) : site.eiin}
-              {site.eiin === "000000" ? ` ${t.common.demo}` : ""}
-            </span>
-          </li>
+          {site.eiin && site.eiin !== "000000" && (
+            <li className="hidden sm:block">
+              <span className="text-navy-300">
+                {t.common.eiin} {lang === "bn" ? toBnDigits(site.eiin) : site.eiin}
+              </span>
+            </li>
+          )}
           <li>
             <LanguageSwitcher tone="dark" className="h-7 px-2 text-xs" />
           </li>

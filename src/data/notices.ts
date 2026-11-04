@@ -28,7 +28,7 @@ export const notices: Notice[] = [
       "বিস্তারিত তথ্যের জন্য ভর্তি পাতা দেখুন অথবা অফিস চলাকালীন সময়ে যোগাযোগ করুন।",
     ],
     issuedBy: principal,
-    attachment: { label: "ভর্তি বিজ্ঞপ্তি (PDF)", href: "/downloads/admission-circular-2027.pdf", size: "Sample PDF" },
+    attachment: { label: "ভর্তি বিজ্ঞপ্তি (PDF)", href: "/downloads/admission-circular-2027.pdf", size: "PDF" },
   },
   {
     slug: "annual-exam-routine-2026",
@@ -45,7 +45,7 @@ export const notices: Notice[] = [
       "প্রবেশপত্র ছাড়া কোনো পরীক্ষার্থীকে পরীক্ষার হলে প্রবেশ করতে দেওয়া হবে না। বকেয়া বেতন ১৮ নভেম্বরের মধ্যে পরিশোধ করে প্রবেশপত্র সংগ্রহ করতে হবে।",
     ],
     issuedBy: "পরীক্ষা কমিটি, ওয়েবনিয়ন স্কুল এন্ড কলেজ",
-    attachment: { label: "পরীক্ষার রুটিন (PDF)", href: "/downloads/annual-exam-routine-2026.pdf", size: "Sample PDF" },
+    attachment: { label: "পরীক্ষার রুটিন (PDF)", href: "/downloads/annual-exam-routine-2026.pdf", size: "PDF" },
   },
   {
     slug: "hsc-2027-form-fill-up",

@@ -17,7 +17,7 @@ const copy = {
     intro: "Everything a family needs to know for a smooth school year.",
     meta: "Practical information for students and guardians: school timings, uniform, leave, progress reports and contacts.",
     links: [
-      { title: "Class routine", text: "Period timings and the sample weekly routine." },
+      { title: "Class routine", text: "Period timings and the weekly class routine." },
       { title: "Exam schedule", text: "Annual examination dates and subjects." },
       { title: "Forms & downloads", text: "Leave application, TC request and more." },
       { title: "School policies", text: "Attendance, uniform, conduct and safety." },
@@ -49,7 +49,7 @@ const copy = {
     intro: "একটি নির্বিঘ্ন শিক্ষাবর্ষের জন্য পরিবারের যা কিছু জানা দরকার।",
     meta: "শিক্ষার্থী ও অভিভাবকদের জন্য প্রয়োজনীয় তথ্য: বিদ্যালয়ের সময়, পোশাক, ছুটি, অগ্রগতি প্রতিবেদন ও যোগাযোগ।",
     links: [
-      { title: "ক্লাস রুটিন", text: "পিরিয়ডের সময় ও নমুনা সাপ্তাহিক রুটিন।" },
+      { title: "ক্লাস রুটিন", text: "পিরিয়ডের সময় ও সাপ্তাহিক ক্লাস রুটিন।" },
       { title: "পরীক্ষার সময়সূচি", text: "বার্ষিক পরীক্ষার তারিখ ও বিষয়।" },
       { title: "ফরম ও ডাউনলোড", text: "ছুটির আবেদন, ছাড়পত্রের আবেদন ও আরও।" },
       { title: "বিদ্যালয়ের নীতিমালা", text: "উপস্থিতি, পোশাক, আচরণ ও নিরাপত্তা।" },

@@ -60,7 +60,7 @@ export type RoutineRow = { time: string; sat: string; sun: string; mon: string; 
 
 /** Sample routine — Class 8, Section A, morning shift */
 export const sampleRoutine: { title: string; rows: RoutineRow[] } = {
-  title: "Class 8 · Section A · Morning Shift (sample)",
+  title: "Class 8 · Section A · Morning Shift",
   rows: [
     { time: "7:30 – 7:45", sat: "Assembly", sun: "Assembly", mon: "Assembly", tue: "Assembly", wed: "Assembly", thu: "Assembly" },
     { time: "7:45 – 8:30", sat: "Bangla", sun: "English", mon: "Bangla", tue: "English", wed: "Bangla", thu: "Mathematics" },

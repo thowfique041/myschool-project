@@ -68,7 +68,7 @@ export default async function NewsDetailPage({ params }: PageProps<"/[lang]/news
         </div>
         <div className="container-page mt-8 max-w-4xl">
           <Picture image={article.image} priority className="rounded-2xl" sizes="(min-width: 1024px) 56rem, 100vw" />
-          <PhotoCredit image={article.image} prefix={t.common.representativePhoto} className="mt-2" />
+          <PhotoCredit image={article.image} className="mt-2" />
         </div>
         <div className="container-page mt-8 max-w-3xl space-y-5 text-[1.05rem] leading-relaxed text-ink">
           {article.body.map((p, i) => (

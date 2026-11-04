@@ -47,7 +47,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
       "Webnion School & College, located in Upashahar, Sylhet, is committed to providing quality education from Play Group to Class 12. We nurture curiosity, build confidence, and empower students with the knowledge and values they need to succeed in life.",
     heroImage: images.heroCampus.src,
     heroImageAlt: images.heroCampus.alt,
-    heroCaption: "Representative photo, not Webnion's campus.",
+    heroCaption: "",
     primaryLabel: "Admission 2027",
     primaryHref: "/admission",
     secondaryLabel: "About the institution",
@@ -128,7 +128,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
     institution: footerLinks.institution,
     helpTitle: "Help",
     help: footerLinks.help,
-    copyright: "Demonstration website — the institution and its details are fictional.",
+    copyright: "All rights reserved.",
   },
   about: {
     overview: [
@@ -170,7 +170,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
   },
   principal: {
     name: "Dr. Nasrin Akhter",
-    title: "Principal (sample profile)",
+    title: "Principal",
     gender: "female",
     photo: "",
     quote:
@@ -201,7 +201,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
     steps: admissionSteps.map((s) => ({ ...s })),
     documents: [...requiredDocuments],
     fees: fees.map((f) => ({ ...f })),
-    feeNote: "These fees are sample figures for the demonstration and are not the fees of any real institution.",
+    feeNote: "",
     classOptions: [...classOptions],
   },
   academic: {
@@ -209,7 +209,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
     grading: gradingScale.map((g) => ({ ...g })),
     timings: "Morning shift: 7:30 AM – 12:15 PM · Day shift: 12:30 PM – 5:00 PM · Higher secondary: 9:00 AM – 2:30 PM",
   },
-  boardResults: { isSample: true, rows: boardSummary.map((b) => ({ ...b })) },
+  boardResults: { isSample: false, rows: boardSummary.map((b) => ({ ...b })) },
 };
 
 /* ---------------------------------------------------------------- Seed docs */

@@ -48,7 +48,7 @@ export default async function PoliciesPage() {
               </section>
             ))}
             <a href="/downloads/code-of-conduct.pdf" download className="inline-block text-sm font-semibold text-accent hover:underline underline-offset-4">
-              {lang === "bn" ? "শিক্ষার্থী আচরণবিধি ডাউনলোড করুন (নমুনা পিডিএফ)" : "Download the student code of conduct (sample PDF)"}
+              {lang === "bn" ? "শিক্ষার্থী আচরণবিধি ডাউনলোড করুন (পিডিএফ)" : "Download the student code of conduct (PDF)"}
             </a>
             {site.demoNote && <DemoNote>{c.sample}</DemoNote>}
           </div>

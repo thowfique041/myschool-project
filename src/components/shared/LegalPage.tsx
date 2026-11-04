@@ -1,5 +1,4 @@
 import { PageHeader } from "@/components/ui/PageHeader";
-import { DemoNote } from "@/components/ui/primitives";
 import { getI18n } from "@/i18n/server";
 
 type Section = { heading: string; body: string[] };
@@ -11,7 +10,7 @@ export async function LegalPage({ title, titleBn, updated, intro, sections }: { 
       <PageHeader title={title} titleBn={titleBn} description={`${t.legal.updated}: ${updated}`} />
       <section className="py-12 sm:py-16">
         <div className="container-page max-w-3xl">
-          <DemoNote>{intro}</DemoNote>
+          <p className="text-muted">{intro}</p>
           <div className="mt-8 space-y-8">
             {sections.map((s, i) => (
               <section key={s.heading} aria-labelledby={`s-${i}`}>

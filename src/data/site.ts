@@ -28,8 +28,7 @@ export const site = {
     { label: "Facebook", href: "https://www.facebook.com/" },
     { label: "YouTube", href: "https://www.youtube.com/" },
   ],
-  demoNote:
-    "Webnion School & College is a fictional institution created for a frontend demonstration. Names, figures, notices and contact details are sample content.",
+  demoNote: "",
 } as const;
 
 export const navigation: NavItem[] = [

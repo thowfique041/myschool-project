@@ -7,9 +7,9 @@ export const faqs: FaqItem[] = [
   { topic: "admission", question: "How do I get admission to Class 11 (HSC)?", answer: "Class 11 admission follows the national online admission process announced by the education boards. The school publishes its group-wise seats and minimum GPA in the HSC circular." },
   { topic: "academic", question: "Which curriculum does the school follow?", answer: "The school follows the national curriculum and textbooks prescribed by the National Curriculum and Textbook Board (NCTB) for every class." },
   { topic: "academic", question: "Are there morning and day shifts?", answer: "The primary section runs in the morning shift. Class 6 to 10 have separate morning and day shifts. Higher secondary classes run from 9:00 AM." },
-  { topic: "fees", question: "Can tuition fees be paid monthly?", answer: "Yes, tuition is paid monthly by the 10th of each month at the school office. The fee table on this website is sample information for the demonstration." },
+  { topic: "fees", question: "Can tuition fees be paid monthly?", answer: "Yes, tuition is paid monthly by the 10th of each month at the school office." },
   { topic: "fees", question: "Are there scholarships or fee waivers?", answer: "Students with strong results or financial need can apply for a partial fee waiver through the office. Applications are reviewed by the managing committee each January." },
-  { topic: "results", question: "How can I see my child's result?", answer: "Progress reports are given by the class teacher after each term. The result search on this website is a demonstration using sample data only." },
+  { topic: "results", question: "How can I see my child's result?", answer: "Progress reports are given by the class teacher after each term. Results can also be checked by roll number through the result search on this website." },
   { topic: "general", question: "Does the school provide transport?", answer: "The school does not run its own buses. The office can share contact details of registered transport providers used by guardians." },
   { topic: "general", question: "What should I do if my child will be absent?", answer: "Send a written leave application signed by a guardian to the class teacher. For long absences, inform the office in advance." },
 ];

@@ -8,7 +8,7 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
-import { Badge, ButtonLink, Card, DemoNote, SectionHeading } from "@/components/ui/primitives";
+import { Badge, ButtonLink, Card, SectionHeading } from "@/components/ui/primitives";
 import { SampleTag } from "@/components/ui/SampleTag";
 import { Picture } from "@/components/ui/Picture";
 import { Reveal } from "@/components/ui/Reveal";
@@ -459,9 +459,8 @@ export function FaqContactSection({ copy, data }: { copy: SectionCopy; data: Hom
         <Reveal delay={0.08}>
           <SectionHeading kicker={data.t.home.contactKicker} title={data.t.home.writeOffice} description={data.t.home.officeCall(site.officeHours, site.phone)} />
           <Card className="mt-6 p-5 sm:p-7">
-            <ContactForm />
+            <ContactForm to={site.email} />
           </Card>
-          {site.demoNote && <DemoNote className="mt-4">{site.demoNote}</DemoNote>}
         </Reveal>
       </div>
     </section>

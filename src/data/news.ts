@@ -57,7 +57,6 @@ export const news: NewsArticle[] = [
     body: [
       "A three-member debate team from the higher secondary section reached the final round of a district-level Bangla debate competition held on 24 September.",
       "The team spoke for the motion that local communities should lead climate adaptation planning. Their coach, a teacher from the Bangla department, said the team prepared for six weeks through weekly practice sessions in the library.",
-      "This is sample news content for the demonstration website and does not describe a real competition result.",
     ],
     image: images.speaker,
   },
