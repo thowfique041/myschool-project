@@ -41,7 +41,7 @@ const extraPolicies = [
 
 export const singletonDefaults: Record<string, Record<string, unknown>> = {
   homepage: {
-    heroTagline: staticSite.taglineBn,
+    heroTagline: staticSite.tagline,
     heroTitle: "A school where every child is known by name.",
     heroSubtitle:
       "Webnion School & College in Upashahar, Sylhet teaches from Play to Class 12 under the national curriculum, with disciplined classrooms, practical science and ICT, and teachers who stay in touch with every family.",
@@ -69,15 +69,15 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
       "Science, ICT and library periods in the routine",
     ],
     sections: [
-      { key: "welcome", enabled: true, kicker: "আমাদের সম্পর্কে", title: "", description: "" },
-      { key: "levels", enabled: true, kicker: "শিক্ষা স্তর", title: "Three sections, one continuous journey", description: "Students can study with us from their first day of school until the HSC examination." },
-      { key: "notices", enabled: true, kicker: "নোটিশ বোর্ড", title: "Recent notices", description: "" },
-      { key: "facilities", enabled: true, kicker: "কেন ওয়েবনিয়ন", title: "Why families choose Webnion", description: "What guardians tell us during admission interviews — and what we work hardest to keep true." },
-      { key: "results", enabled: true, kicker: "ফলাফল", title: "Public examination results", description: "A summary of recent SSC and HSC results." },
-      { key: "news", enabled: true, kicker: "খবর ও অনুষ্ঠান", title: "News & events", description: "" },
-      { key: "gallery", enabled: true, kicker: "ফটো গ্যালারি", title: "Campus life", description: "" },
-      { key: "people", enabled: true, kicker: "শিক্ষকমণ্ডলী", title: "Teachers who know their subjects — and their students", description: "" },
-      { key: "faq", enabled: true, kicker: "সাধারণ জিজ্ঞাসা", title: "Frequently asked questions", description: "" },
+      { key: "welcome", enabled: true, kicker: "About us", title: "", description: "" },
+      { key: "levels", enabled: true, kicker: "Academic levels", title: "Three sections, one continuous journey", description: "Students can study with us from their first day of school until the HSC examination." },
+      { key: "notices", enabled: true, kicker: "Notice board", title: "Recent notices", description: "" },
+      { key: "facilities", enabled: true, kicker: "Why Webnion", title: "Why families choose Webnion", description: "What guardians tell us during admission interviews — and what we work hardest to keep true." },
+      { key: "results", enabled: true, kicker: "Results", title: "Public examination results", description: "A summary of recent SSC and HSC results." },
+      { key: "news", enabled: true, kicker: "News & events", title: "News & events", description: "" },
+      { key: "gallery", enabled: true, kicker: "Photo gallery", title: "Campus life", description: "" },
+      { key: "people", enabled: true, kicker: "Our teachers", title: "Teachers who know their subjects — and their students", description: "" },
+      { key: "faq", enabled: true, kicker: "FAQ", title: "Frequently asked questions", description: "" },
     ],
   },
   site: {
@@ -188,6 +188,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
     noticeDate: "2026-11-01",
     formFile: "/downloads/admission-form-2027.pdf",
     circularFile: "/downloads/admission-circular-2027.pdf",
+    noticeTitle: "Admission notice for Play to Class 9, academic year 2027",
     noticeTitleBn: "২০২৭ শিক্ষাবর্ষে প্লে থেকে নবম শ্রেণিতে ভর্তি বিজ্ঞপ্তি",
     noticeBodyBn:
       "২০২৭ শিক্ষাবর্ষে প্লে, নার্সারি এবং প্রথম থেকে নবম শ্রেণির শূন্য আসনে ভর্তির জন্য আবেদন গ্রহণ করা হচ্ছে। আবেদন ফরম ১০ নভেম্বর ২০২৬ থেকে ৩ ডিসেম্বর ২০২৬ পর্যন্ত প্রতিষ্ঠানের অফিস ও ওয়েবসাইট থেকে সংগ্রহ করা যাবে।",

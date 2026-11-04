@@ -56,7 +56,7 @@ export async function Footer({ site, footer, year }: { site: SiteInfo; footer: F
     <footer className="bg-navy-950 text-navy-100">
       <div className="container-page grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
-          <Logo tone="dark" name={lang === "bn" ? site.nameBn : site.name} nameBn={lang === "bn" ? site.name : site.nameBn} src={site.logo} />
+          <Logo tone="dark" name={lang === "bn" ? site.nameBn : site.name} nameBn={lang === "bn" ? `স্থাপিত ${String(site.established).replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[Number(d)])}` : `Established ${site.established}`} src={site.logo} />
           <p className="mt-5 max-w-sm text-[0.92rem] leading-relaxed text-navy-200">
             {footer.about}
           </p>
@@ -107,9 +107,7 @@ export async function Footer({ site, footer, year }: { site: SiteInfo; footer: F
           <p>
             © {n(site.established)}–{n(year)} {lang === "bn" ? site.nameBn : site.name}. {footer.copyright}
           </p>
-          <p lang={lang === "bn" ? "en" : "bn"} style={{ lineHeight: 1.5 }}>
-            {lang === "bn" ? site.tagline : site.taglineBn}
-          </p>
+          <p style={{ lineHeight: 1.5 }}>{lang === "bn" ? site.taglineBn : site.tagline}</p>
         </div>
       </div>
     </footer>

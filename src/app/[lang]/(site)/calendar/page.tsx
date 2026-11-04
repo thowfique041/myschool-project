@@ -96,9 +96,6 @@ export default async function CalendarPage() {
                           </span>
                           <div className="min-w-0 flex-1">
                             <p className="font-semibold text-heading">{e.title}</p>
-                            <p lang={lang === "bn" ? "en" : "bn"} className="text-sm text-muted">
-                              {e.titleBn}
-                            </p>
                             {e.endDate && <p className="mt-0.5 text-xs text-muted">{lang === "bn" ? `${formatDate(e.endDate, lang)} পর্যন্ত` : `${c.until} ${formatDate(e.endDate, lang)}`}</p>}
                             {(e.venue || e.description) && (
                               <p className="mt-1 text-sm text-ink">

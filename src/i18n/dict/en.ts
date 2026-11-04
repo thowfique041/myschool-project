@@ -201,7 +201,7 @@ export const en = {
   footer: { social: "Social media" },
   home: {
     readHistory: "Read our history and values",
-    principalMessage: "অধ্যক্ষের বাণী",
+    principalMessage: "Principal's message",
     readFull: "Read the full message",
     curriculum: "Curriculum & subjects",
     allNotices: "All notices",
@@ -231,7 +231,7 @@ export const en = {
     moreQuestions: "More questions",
     faqContact: "Frequently asked questions and contact",
     noticesAdmission: "Notices and admission",
-    contactKicker: "যোগাযোগ",
+    contactKicker: "Contact",
     writeOffice: "Write to the office",
     officeCall: (hours: string, phone: string) => `${hours}. You can also call ${phone}.`,
   },

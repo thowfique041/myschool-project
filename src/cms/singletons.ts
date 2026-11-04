@@ -275,7 +275,7 @@ export const singletons: SingletonConfig[] = [
       { name: "photo", label: "Photo", type: "image", span: 1 },
       { name: "quote", label: "Short quote (homepage)", type: "textarea", rows: 3 },
       { name: "message", label: "Full message", type: "paragraphs", rows: 8 },
-      { name: "messageBn", label: "Message in Bangla", type: "textarea", rows: 3, bn: true },
+      { name: "messageBn", label: "Extra paragraph (Bangla site only)", type: "textarea", rows: 3, bn: true },
     ],
   },
   {
@@ -292,6 +292,7 @@ export const singletons: SingletonConfig[] = [
       { name: "noticeDate", label: "Announcement date", type: "date", span: 1 },
       { name: "formFile", label: "Printable admission form (PDF)", type: "file", accept: "application/pdf", span: 1 },
       { name: "circularFile", label: "Admission circular (PDF)", type: "file", accept: "application/pdf", span: 1 },
+      { name: "noticeTitle", label: "Announcement title (English)", type: "text" },
       { name: "noticeTitleBn", label: "Announcement title (Bangla)", type: "text", bn: true },
       { name: "noticeBodyBn", label: "Announcement (Bangla)", type: "textarea", rows: 3, bn: true },
       { name: "noticeBody", label: "Announcement (English)", type: "textarea", rows: 3 },

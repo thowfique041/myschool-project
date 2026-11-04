@@ -25,11 +25,6 @@ export async function DownloadList({ downloads }: { downloads: DownloadResource[
                   <div className="min-w-0 flex-1">
                     <p className="font-semibold text-heading">
                       {d.title}
-                      {d.titleBn && (
-                        <span lang="bn" className="ml-2 text-sm font-normal text-muted">
-                          {d.titleBn}
-                        </span>
-                      )}
                     </p>
                     <p className="text-sm text-muted">{d.description}</p>
                     <p className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted">

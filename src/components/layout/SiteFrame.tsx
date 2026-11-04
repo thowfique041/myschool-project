@@ -40,7 +40,7 @@ export async function SiteFrame({ children }: { children: ReactNode }) {
   const css = brandingCss(site.primary, site.accent);
   const { lang } = await getI18n();
   const brandName = lang === "bn" ? site.nameBn : site.name;
-  const brandSub = lang === "bn" ? site.name : site.nameBn;
+  const brandSub = lang === "bn" ? `স্থাপিত ${String(site.established).replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[Number(d)])}` : `Established ${site.established}`;
 
   if (maintenance.enabled) {
     return (

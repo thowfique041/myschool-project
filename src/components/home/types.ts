@@ -30,6 +30,7 @@ export type AdmissionContent = {
   noticeDate: string;
   formFile: string;
   circularFile: string;
+  noticeTitle: string;
   noticeTitleBn: string;
   noticeBodyBn: string;
   noticeBody: string;

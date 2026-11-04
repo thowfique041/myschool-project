@@ -62,11 +62,6 @@ export async function PageHeader({ title, titleBn, description, crumbs = [], chi
             ))}
           </ol>
         </nav>
-        {titleBn && (
-          <p lang={lang === "bn" ? "en" : "bn"} className="mt-5 text-sm font-medium text-leaf-200" style={{ lineHeight: 1.4 }}>
-            {titleBn}
-          </p>
-        )}
         <Heading className="mt-1 font-serif text-3xl font-semibold tracking-tight sm:text-[2.6rem] sm:leading-tight">
           {title}
         </Heading>

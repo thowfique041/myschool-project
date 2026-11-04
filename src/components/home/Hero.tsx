@@ -32,7 +32,6 @@ export function Hero({ home, notices }: { home: HomeContent; notices: Notice[] }
               <div className="max-w-2xl">
                 <HeroIntro>
                   <p
-                    lang="bn"
                     className="font-serif text-xl font-semibold text-leaf-200 sm:text-2xl"
                     style={{ lineHeight: 1.5 }}
                   >

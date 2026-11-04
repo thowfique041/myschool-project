@@ -18,9 +18,9 @@ const copy = {
     hours: "Office hours",
     office: "Office:",
     admission: "Admission:",
-    sendK: "বার্তা পাঠান",
+    sendK: "Send a message",
     send: "Send a message",
-    findK: "অবস্থান",
+    findK: "Location",
     find: "Find us",
     map: "Map:",
     follow: "Follow us",
@@ -42,9 +42,9 @@ const copy = {
     hours: "অফিস সময়",
     office: "অফিস:",
     admission: "ভর্তি:",
-    sendK: "Send a message",
+    sendK: "বার্তা পাঠান",
     send: "বার্তা পাঠান",
-    findK: "Location",
+    findK: "অবস্থান",
     find: "আমাদের অবস্থান",
     map: "মানচিত্র:",
     follow: "আমাদের অনুসরণ করুন",
@@ -132,10 +132,10 @@ export default async function ContactPage() {
   const c = copy[lang];
   const mapOk = /^https:\/\/(www\.)?google\.com\/maps\/embed\?/.test(site.mapUrl);
   const items = [
-    { icon: MapPin, label: c.address, value: site.address, sub: site.addressBn },
+    { icon: MapPin, label: c.address, value: site.address, sub: undefined },
     { icon: Phone, label: c.phone, value: site.phone, href: site.phoneHref, sub: site.officePhone ? `${c.office} ${site.officePhone}` : "" },
     { icon: Mail, label: c.email, value: site.email, href: `mailto:${site.email}`, sub: site.admissionEmail ? `${c.admission} ${site.admissionEmail}` : "" },
-    { icon: Clock, label: c.hours, value: site.officeHours, sub: lang === "bn" ? "" : site.officeHoursBn },
+    { icon: Clock, label: c.hours, value: site.officeHours, sub: undefined },
   ];
 
   return (

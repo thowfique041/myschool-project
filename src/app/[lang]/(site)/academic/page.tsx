@@ -17,26 +17,26 @@ const copy = {
     intro: "How teaching, routines and examinations work at each level — following the national curriculum.",
     onPage: "On this page",
     nav: { levels: "Levels", curriculum: "Curriculum", calendar: "Calendar", routine: "Class routine", exams: "Examinations", resources: "Syllabus & resources", policies: "Policies" },
-    levelsK: "শিক্ষা স্তর",
+    levelsK: "Academic levels",
     levels: "Academic levels and classes",
     groups: "Groups",
-    currK: "পাঠ্যক্রম",
+    currK: "Curriculum",
     curr: "Subjects and curriculum",
     currText: "All classes use NCTB textbooks. Subject names follow the current national curriculum for each level.",
     compulsory: "Compulsory",
     groupSubjects: "Group subjects",
-    calK: "একাডেমিক ক্যালেন্ডার",
+    calK: "Academic calendar",
     cal: "Academic calendar",
     calText: "The next important dates. The full calendar has every holiday, exam and event for the session.",
     fullCal: "Full academic calendar",
-    routineK: "ক্লাস রুটিন",
+    routineK: "Class routine",
     routine: "Class routine",
     routineText: "School week: Saturday to Thursday. Friday is the weekly holiday.",
     routineLabel: "Class routine table, scroll horizontally on small screens",
     weekly: "Weekly class routine:",
     time: "Time",
     days: ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
-    examsK: "পরীক্ষা পদ্ধতি",
+    examsK: "Examination system",
     exams: "Examination system",
     examLink: "Exam schedule and result search",
     grading: "Grading scale",
@@ -44,12 +44,12 @@ const copy = {
     marks: "Marks",
     grade: "Grade",
     point: "Point",
-    resK: "সিলেবাস ও রিসোর্স",
+    resK: "Syllabus & resources",
     res: "Syllabus and resources",
     resSample: "Sample documents prepared for this demonstration.",
     resNone: "No academic resources yet.",
     allDownloads: "All downloads",
-    polK: "নীতিমালা",
+    polK: "Policies",
     pol: "Policies for students and guardians",
     fullPol: "Full school policies",
   },
@@ -60,26 +60,26 @@ const copy = {
     intro: "প্রতিটি স্তরে পাঠদান, রুটিন ও পরীক্ষা কীভাবে চলে — জাতীয় শিক্ষাক্রম অনুযায়ী।",
     onPage: "এই পাতায়",
     nav: { levels: "স্তর", curriculum: "শিক্ষাক্রম", calendar: "ক্যালেন্ডার", routine: "ক্লাস রুটিন", exams: "পরীক্ষা", resources: "সিলেবাস ও রিসোর্স", policies: "নীতিমালা" },
-    levelsK: "Academic levels",
+    levelsK: "শিক্ষা স্তর",
     levels: "শিক্ষা স্তর ও শ্রেণি",
     groups: "বিভাগ",
-    currK: "Curriculum",
+    currK: "পাঠ্যক্রম",
     curr: "বিষয় ও শিক্ষাক্রম",
     currText: "সব শ্রেণিতে এনসিটিবির পাঠ্যবই ব্যবহার করা হয়। বিষয়ের নাম প্রতিটি স্তরের বর্তমান জাতীয় শিক্ষাক্রম অনুযায়ী।",
     compulsory: "আবশ্যিক",
     groupSubjects: "বিভাগভিত্তিক বিষয়",
-    calK: "Academic calendar",
+    calK: "একাডেমিক ক্যালেন্ডার",
     cal: "একাডেমিক ক্যালেন্ডার",
     calText: "সামনের গুরুত্বপূর্ণ তারিখগুলো। পূর্ণ ক্যালেন্ডারে পুরো সেশনের সব ছুটি, পরীক্ষা ও অনুষ্ঠান আছে।",
     fullCal: "পূর্ণ একাডেমিক ক্যালেন্ডার",
-    routineK: "Class routine",
+    routineK: "ক্লাস রুটিন",
     routine: "ক্লাস রুটিন",
     routineText: "শনিবার থেকে বৃহস্পতিবার ক্লাস হয়। শুক্রবার সাপ্তাহিক ছুটি।",
     routineLabel: "ক্লাস রুটিনের সারণি, ছোট পর্দায় পাশে স্ক্রল করুন",
     weekly: "সাপ্তাহিক ক্লাস রুটিন:",
     time: "সময়",
     days: ["শনিবার", "রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার"],
-    examsK: "Examination system",
+    examsK: "পরীক্ষা পদ্ধতি",
     exams: "পরীক্ষা পদ্ধতি",
     examLink: "পরীক্ষার সময়সূচি ও ফলাফল অনুসন্ধান",
     grading: "গ্রেডিং পদ্ধতি",
@@ -87,12 +87,12 @@ const copy = {
     marks: "নম্বর",
     grade: "গ্রেড",
     point: "পয়েন্ট",
-    resK: "Syllabus & resources",
+    resK: "সিলেবাস ও রিসোর্স",
     res: "সিলেবাস ও রিসোর্স",
     resSample: "এই ডেমোর জন্য তৈরি নমুনা কাগজপত্র।",
     resNone: "এখনো কোনো একাডেমিক রিসোর্স নেই।",
     allDownloads: "সব ডাউনলোড",
-    polK: "Policies",
+    polK: "নীতিমালা",
     pol: "শিক্ষার্থী ও অভিভাবকদের জন্য নীতিমালা",
     fullPol: "বিদ্যালয়ের পূর্ণ নীতিমালা",
   },
@@ -164,9 +164,6 @@ export default async function AcademicPage() {
             {academicLevels.map((l, i) => (
               <Reveal key={l.id} delay={i * 0.05}>
                 <Card className="h-full p-6">
-                  <p lang={lang === "bn" ? "en" : "bn"} className="text-sm text-accent">
-                    {l.nameBn}
-                  </p>
                   <h3 className="font-serif text-xl font-semibold text-heading">{l.name}</h3>
                   <p className="text-sm font-semibold text-subheading">
                     {l.classes} · {l.ages}
@@ -248,9 +245,6 @@ export default async function AcademicPage() {
                 </time>
                 <span className="flex-1 text-ink">
                   {e.title}
-                  <span lang={lang === "bn" ? "en" : "bn"} className="block text-sm text-muted">
-                    {e.titleBn}
-                  </span>
                 </span>
               </li>
             ))}
