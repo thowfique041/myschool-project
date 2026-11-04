@@ -64,6 +64,8 @@ export type Teacher = {
   qualification: string;
   joined: number;
   section: "Primary" | "Secondary" | "Higher Secondary" | "All";
+  /** Picks the male or female placeholder picture when there is no photo. */
+  gender?: "male" | "female";
   /** Placeholder demo number */
   phone: string;
   /** Placeholder demo address on the reserved .example domain */

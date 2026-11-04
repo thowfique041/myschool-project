@@ -5,7 +5,7 @@ import { SiteFrame } from "@/components/layout/SiteFrame";
 import { getI18n } from "@/i18n/server";
 
 export default async function NotFound() {
-  const { t, lang } = await getI18n();
+  const { t } = await getI18n();
   const links = t.notFound.links;
   return (
     <SiteFrame>

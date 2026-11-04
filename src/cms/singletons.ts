@@ -273,6 +273,7 @@ export const singletons: SingletonConfig[] = [
       { name: "name", label: "Principal's name", type: "text", required: true, span: 1 },
       { name: "title", label: "Title", type: "text", span: 1 },
       { name: "photo", label: "Photo", type: "image", span: 1 },
+      { name: "gender", label: "Placeholder picture", type: "select", span: 1, help: "Used when no photo is uploaded", options: [{ value: "female", label: "Female" }, { value: "male", label: "Male" }] },
       { name: "quote", label: "Short quote (homepage)", type: "textarea", rows: 3 },
       { name: "message", label: "Full message", type: "paragraphs", rows: 8 },
       { name: "messageBn", label: "Extra paragraph (Bangla site only)", type: "textarea", rows: 3, bn: true },

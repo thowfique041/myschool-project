@@ -5,7 +5,7 @@ import { buttonClasses } from "@/components/ui/primitives";
 import { useI18n } from "@/i18n/client";
 
 export default function Error({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
-  const { t, lang } = useI18n();
+  const { t } = useI18n();
   return (
     <section className="py-20">
       <div className="container-page max-w-xl text-center">

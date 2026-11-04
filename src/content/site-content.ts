@@ -324,6 +324,7 @@ export async function getPeople(): Promise<Teacher[]> {
     qualification: T(str(d.qualification)),
     joined: Number(d.joined) || 0,
     section: (str(d.section) || "All") as Teacher["section"],
+    gender: str(d.gender) === "female" ? "female" : "male",
     phone: str(d.phone),
     email: str(d.email),
     photo: str(d.photo) || undefined,

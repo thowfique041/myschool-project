@@ -44,7 +44,7 @@ export type AdmissionContent = {
   classOptions: string[];
 };
 
-export type PrincipalContent = { name: string; title: string; photo: string; quote: string; message: string[]; messageBn: string };
+export type PrincipalContent = { name: string; title: string; gender?: string; photo: string; quote: string; message: string[]; messageBn: string };
 
 export type HomeData = {
   t: Dictionary;

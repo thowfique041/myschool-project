@@ -12,7 +12,7 @@ const copy = {
     crumb: "About",
     intro: "Find teachers by department, section, name or subject.",
     meta: "Faculty directory of Webnion School & College by department and section.",
-    sample: "All faculty names and qualifications are sample entries. We show initials instead of photographs so that no real person is presented as a member of this fictional institution.",
+    sample: "All faculty names and qualifications are sample entries. Until real photos are added, each profile shows a plain placeholder picture, so no real person is presented as a member of this fictional institution.",
   },
   bn: {
     title: "শিক্ষক ও কর্মচারী",
@@ -20,7 +20,7 @@ const copy = {
     crumb: "আমাদের সম্পর্কে",
     intro: "বিভাগ, শাখা, নাম বা বিষয় দিয়ে শিক্ষক খুঁজুন।",
     meta: "বিভাগ ও শাখা অনুযায়ী ওয়েবনিয়ন স্কুল এন্ড কলেজের শিক্ষক তালিকা।",
-    sample: "সব শিক্ষকের নাম ও যোগ্যতা নমুনা। কোনো আসল মানুষকে এই কাল্পনিক প্রতিষ্ঠানের সদস্য হিসেবে না দেখাতে ছবির বদলে নামের আদ্যক্ষর দেখানো হয়েছে।",
+    sample: "সব শিক্ষকের নাম ও যোগ্যতা নমুনা। আসল ছবি যোগ না হওয়া পর্যন্ত প্রতিটি প্রোফাইলে একটি সাধারণ ডামি ছবি দেখানো হয়েছে, যাতে কোনো আসল মানুষকে এই কাল্পনিক প্রতিষ্ঠানের সদস্য হিসেবে দেখানো না হয়।",
   },
 };
 
