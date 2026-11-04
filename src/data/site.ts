@@ -11,7 +11,7 @@ export const site = {
   tagline: "Enter to learn, leave to serve",
   taglineBn: "শিক্ষার জন্য আসো, সেবার জন্য বের হয়ে যাও।",
   established: 1998,
-  eiin: "000000",
+  eiin: "111825",
   collegeCode: "0000",
   address: "Webnion Road, Upashahar, Sylhet 3100",
   addressBn: "ওয়েবনিয়ন রোড, উপশহর, সিলেট ৩১০০",
