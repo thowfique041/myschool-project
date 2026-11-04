@@ -42,22 +42,22 @@ export default async function NewsDetailPage({ params }: PageProps<"/news/[slug]
             <Badge tone="leaf">{article.categoryLabel ?? article.category}</Badge>
             <time dateTime={article.date}>Published {formatDateEn(article.date)}</time>
           </div>
-          <h1 className="mt-4 font-serif text-3xl leading-tight font-semibold text-navy-900 sm:text-4xl">{article.title}</h1>
+          <h1 className="mt-4 font-serif text-3xl leading-tight font-semibold text-heading sm:text-4xl">{article.title}</h1>
           <p className="mt-4 text-lg leading-relaxed text-muted">{article.excerpt}</p>
           {(article.eventDate || article.venue) && (
-            <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-2 rounded-xl border border-line bg-white px-5 py-4 text-sm">
+            <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-2 rounded-xl border border-line bg-surface px-5 py-4 text-sm">
               {article.eventDate && (
                 <div className="flex items-center gap-2">
-                  <CalendarDays aria-hidden className="size-4 text-leaf-600" />
+                  <CalendarDays aria-hidden className="size-4 text-accent" />
                   <dt className="text-muted">Event date:</dt>
-                  <dd className="font-semibold text-navy-900">{formatDateEn(article.eventDate)}</dd>
+                  <dd className="font-semibold text-heading">{formatDateEn(article.eventDate)}</dd>
                 </div>
               )}
               {article.venue && (
                 <div className="flex items-center gap-2">
-                  <MapPin aria-hidden className="size-4 text-leaf-600" />
+                  <MapPin aria-hidden className="size-4 text-accent" />
                   <dt className="text-muted">Venue:</dt>
-                  <dd className="font-semibold text-navy-900">{article.venue}</dd>
+                  <dd className="font-semibold text-heading">{article.venue}</dd>
                 </div>
               )}
             </dl>
@@ -72,14 +72,14 @@ export default async function NewsDetailPage({ params }: PageProps<"/news/[slug]
             <p key={i}>{p}</p>
           ))}
           {site.demoNote && <DemoNote>This article is sample content written for a fictional institution.</DemoNote>}
-          <Link href="/news" className="inline-flex items-center gap-1.5 text-sm font-semibold text-navy-800 hover:text-leaf-700">
+          <Link href="/news" className="inline-flex items-center gap-1.5 text-sm font-semibold text-heading hover:text-accent">
             <ArrowLeft aria-hidden className="size-4" /> All news & events
           </Link>
         </div>
       </article>
-      {more.length > 0 && <section aria-labelledby="more-news" className="border-t border-line bg-white py-12 sm:py-16">
+      {more.length > 0 && <section aria-labelledby="more-news" className="border-t border-line bg-surface py-12 sm:py-16">
         <div className="container-page">
-          <h2 id="more-news" className="font-serif text-2xl font-semibold text-navy-900">
+          <h2 id="more-news" className="font-serif text-2xl font-semibold text-heading">
             More news
           </h2>
           <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

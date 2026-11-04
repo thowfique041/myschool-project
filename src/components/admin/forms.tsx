@@ -126,13 +126,13 @@ export function ResourceForm({
       {publishable && !canPublish && canEdit && (
         <p className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">Your role can save drafts. An Admin must publish them.</p>
       )}
-      <div className="rounded-2xl border border-line bg-white p-5 sm:p-7">
+      <div className="rounded-2xl border border-line bg-surface p-5 sm:p-7">
         <FieldGrid fields={fields} values={values} setValue={setValue} errors={errors} options={options} disabled={!canEdit} />
       </div>
-      <div className="sticky bottom-0 z-10 -mx-4 flex flex-wrap items-center justify-between gap-3 border-t border-line bg-white/95 px-4 py-3 backdrop-blur sm:mx-0 sm:rounded-xl sm:border">
+      <div className="sticky bottom-0 z-10 -mx-4 flex flex-wrap items-center justify-between gap-3 border-t border-line bg-surface/95 px-4 py-3 backdrop-blur sm:mx-0 sm:rounded-xl sm:border">
         <div className="flex items-center gap-2">
           {id && canDelete && (
-            <AdminButton variant="ghost" className="text-signal-700" onClick={() => setConfirm(true)} disabled={busy}>
+            <AdminButton variant="ghost" className="text-danger" onClick={() => setConfirm(true)} disabled={busy}>
               <Trash2 aria-hidden className="size-4" /> Delete
             </AdminButton>
           )}
@@ -254,10 +254,10 @@ export function SettingsForm({
         </p>
       )}
       {!canEdit && <p className="rounded-lg border border-line bg-paper px-4 py-3 text-sm text-muted">Your role can view these settings but not change them.</p>}
-      <div className="rounded-2xl border border-line bg-white p-5 sm:p-7">
+      <div className="rounded-2xl border border-line bg-surface p-5 sm:p-7">
         <FieldGrid fields={fields} values={values} setValue={setValue} errors={errors} options={{}} disabled={!canEdit} />
       </div>
-      <div className="sticky bottom-0 z-10 -mx-4 flex flex-wrap items-center justify-between gap-3 border-t border-line bg-white/95 px-4 py-3 backdrop-blur sm:mx-0 sm:rounded-xl sm:border">
+      <div className="sticky bottom-0 z-10 -mx-4 flex flex-wrap items-center justify-between gap-3 border-t border-line bg-surface/95 px-4 py-3 backdrop-blur sm:mx-0 sm:rounded-xl sm:border">
         <div className="flex items-center gap-2">
           {publicPath && (
             <a href={publicPath} target="_blank" rel="noopener" className={adminBtn("ghost")}>

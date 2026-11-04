@@ -9,6 +9,7 @@ import { Logo } from "@/components/brand/Logo";
 import { buttonClasses } from "@/components/ui/primitives";
 import type { NavItem } from "@/types";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "./ThemeToggle";
 
 function isActive(pathname: string, item: NavItem): boolean {
   if (item.href === "/") return pathname === "/";
@@ -62,7 +63,7 @@ function DesktopDropdown({ item, active }: { item: NavItem; active: boolean }) {
         onClick={() => setOpen((o) => !o)}
         className={cn(
           "flex items-center gap-1 rounded-md px-2.5 py-2 text-[0.92rem] font-medium transition-colors xl:px-3",
-          active ? "text-leaf-700" : "text-navy-800 hover:text-leaf-700",
+          active ? "text-accent" : "text-heading hover:text-accent",
         )}
       >
         {item.label}
@@ -78,7 +79,7 @@ function DesktopDropdown({ item, active }: { item: NavItem; active: boolean }) {
             transition={{ duration: 0.16 }}
             className="absolute left-0 top-full z-50 w-64 pt-2"
           >
-            <ul className="overflow-hidden rounded-lg border border-line bg-white py-1.5 shadow-[var(--shadow-lift)]">
+            <ul className="overflow-hidden rounded-lg border border-line bg-surface py-1.5 shadow-[var(--shadow-lift)]">
               {item.children?.map((child) => (
                 <li key={child.href}>
                   <Link
@@ -86,7 +87,7 @@ function DesktopDropdown({ item, active }: { item: NavItem; active: boolean }) {
                     onClick={() => setOpen(false)}
                     className="block px-4 py-2.5 hover:bg-paper focus-visible:bg-paper"
                   >
-                    <span className="block text-sm font-semibold text-navy-900">{child.label}</span>
+                    <span className="block text-sm font-semibold text-heading">{child.label}</span>
                     {child.description && <span className="block text-xs text-muted">{child.description}</span>}
                   </Link>
                 </li>
@@ -109,7 +110,7 @@ function MobileMenu({ onClose, pathname, items, ctaLabel, ctaHref }: { onClose: 
       animate={{ opacity: 1, height: "auto" }}
       exit={reduce ? { opacity: 0 } : { opacity: 0, height: 0 }}
       transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-      className="overflow-hidden border-t border-line bg-white lg:hidden"
+      className="overflow-hidden border-t border-line bg-surface lg:hidden"
     >
       <nav aria-label="Mobile" className="container-page max-h-[calc(100dvh-5rem)] overflow-y-auto py-3">
         <ul className="divide-y divide-line">
@@ -122,7 +123,7 @@ function MobileMenu({ onClose, pathname, items, ctaLabel, ctaHref }: { onClose: 
                     href={item.href}
                     onClick={onClose}
                     aria-current={active ? "page" : undefined}
-                    className={cn("flex min-h-12 items-center text-base font-medium", active ? "text-leaf-700" : "text-navy-900")}
+                    className={cn("flex min-h-12 items-center text-base font-medium", active ? "text-accent" : "text-heading")}
                   >
                     {item.label}
                   </Link>
@@ -136,7 +137,7 @@ function MobileMenu({ onClose, pathname, items, ctaLabel, ctaHref }: { onClose: 
                   type="button"
                   aria-expanded={isOpen}
                   onClick={() => setExpanded(isOpen ? null : item.label)}
-                  className={cn("flex min-h-12 w-full items-center justify-between text-base font-medium", active ? "text-leaf-700" : "text-navy-900")}
+                  className={cn("flex min-h-12 w-full items-center justify-between text-base font-medium", active ? "text-accent" : "text-heading")}
                 >
                   {item.label}
                   <ChevronDown aria-hidden className={cn("size-4 transition-transform", isOpen && "rotate-180")} />
@@ -152,7 +153,7 @@ function MobileMenu({ onClose, pathname, items, ctaLabel, ctaHref }: { onClose: 
                     >
                       {item.children.map((child) => (
                         <li key={child.href}>
-                          <Link href={child.href} onClick={onClose} className="flex min-h-11 items-center border-l-2 border-leaf-200 pl-4 text-[0.95rem] text-muted hover:text-navy-900">
+                          <Link href={child.href} onClick={onClose} className="flex min-h-11 items-center border-l-2 border-leaf-200 pl-4 text-[0.95rem] text-muted hover:text-heading">
                             {child.label}
                           </Link>
                         </li>
@@ -201,7 +202,7 @@ export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/90 transition-shadow",
+        "sticky top-0 z-40 bg-surface/95 backdrop-blur supports-[backdrop-filter]:bg-surface/90 transition-shadow",
         scrolled ? "shadow-[0_1px_0_var(--color-line),0_6px_20px_-12px_rgb(15_31_54/0.25)]" : "border-b border-line",
       )}
     >
@@ -223,7 +224,7 @@ export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
                     aria-current={active ? "page" : undefined}
                     className={cn(
                       "rounded-md px-2.5 py-2 text-[0.92rem] font-medium transition-colors xl:px-3",
-                      active ? "text-leaf-700" : "text-navy-800 hover:text-leaf-700",
+                      active ? "text-accent" : "text-heading hover:text-accent",
                     )}
                   >
                     {item.label}
@@ -235,12 +236,13 @@ export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
         </nav>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <Link href={ctaHref} className={cn(buttonClasses("secondary", "sm"), "max-xl:hidden")}>
             Apply Now
           </Link>
           <button
             type="button"
-            className="inline-flex size-11 items-center justify-center rounded-lg border border-line text-navy-900 lg:hidden"
+            className="inline-flex size-11 items-center justify-center rounded-lg border border-line text-heading lg:hidden"
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}

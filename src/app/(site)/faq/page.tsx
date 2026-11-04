@@ -30,7 +30,7 @@ export default async function FaqPage() {
             <ul className="flex flex-wrap gap-2 lg:flex-col">
               {shown.map((t) => (
                 <li key={t.id}>
-                  <a href={`#${t.id}`} className="inline-flex min-h-9 items-center rounded-md px-3 text-sm font-medium text-navy-800 hover:bg-white">
+                  <a href={`#${t.id}`} className="inline-flex min-h-9 items-center rounded-md px-3 text-sm font-medium text-heading hover:bg-surface">
                     {t.label}
                   </a>
                 </li>
@@ -40,14 +40,14 @@ export default async function FaqPage() {
           <div className="space-y-10">
             {shown.map((t) => (
               <section key={t.id} id={t.id} aria-labelledby={`${t.id}-h`} className="scroll-mt-28">
-                <h2 id={`${t.id}-h`} className="font-serif text-xl font-semibold text-navy-900">
+                <h2 id={`${t.id}-h`} className="font-serif text-xl font-semibold text-heading">
                   {t.label}
                 </h2>
                 <Accordion className="mt-4" items={faqs.filter((f) => f.topic === t.id)} />
               </section>
             ))}
-            <div className="rounded-xl border border-line bg-white p-6">
-              <p className="font-semibold text-navy-900">Still have a question?</p>
+            <div className="rounded-xl border border-line bg-surface p-6">
+              <p className="font-semibold text-heading">Still have a question?</p>
               <p className="mt-1 text-sm text-muted">Write to the office and we will get back to you during office hours.</p>
               <ButtonLink href="/contact" className="mt-4" variant="primary">
                 Contact the office

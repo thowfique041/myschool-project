@@ -45,9 +45,9 @@ export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDe
 
   return (
     <div className="grid gap-8 lg:grid-cols-[22rem_1fr]">
-      <form noValidate onSubmit={onSubmit} className="h-fit space-y-4 rounded-2xl border border-line bg-white p-6 shadow-[var(--shadow-card)]">
+      <form noValidate onSubmit={onSubmit} className="h-fit space-y-4 rounded-2xl border border-line bg-surface p-6 shadow-[var(--shadow-card)]">
         <div className="flex items-center justify-between">
-          <h3 className="font-semibold text-navy-900">Search a result</h3>
+          <h3 className="font-semibold text-heading">Search a result</h3>
           {isDemo && <Badge tone="gold">Demo data</Badge>}
         </div>
         <Field label="Class" name="className">
@@ -79,7 +79,7 @@ export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDe
           </Field>
         </div>
         {error && (
-          <p role="alert" className="text-sm text-signal-700">
+          <p role="alert" className="text-sm text-danger">
             {error}
           </p>
         )}
@@ -97,14 +97,14 @@ export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDe
       <div aria-live="polite" className="min-h-64 min-w-0">
         <AnimatePresence mode="wait">
           {state.kind === "idle" && (
-            <motion.div key="idle" initial={false} exit={{ opacity: 0 }} className="flex h-full min-h-64 flex-col items-center justify-center rounded-2xl border border-dashed border-line bg-white p-8 text-center">
+            <motion.div key="idle" initial={false} exit={{ opacity: 0 }} className="flex h-full min-h-64 flex-col items-center justify-center rounded-2xl border border-dashed border-line bg-surface p-8 text-center">
               <Search aria-hidden className="size-8 text-navy-200" />
-              <p className="mt-3 font-semibold text-navy-900">Your result will appear here</p>
+              <p className="mt-3 font-semibold text-heading">Your result will appear here</p>
               <p className="mt-1 max-w-sm text-sm text-muted">Choose the class, examination and year, then enter the roll number.</p>
             </motion.div>
           )}
           {state.kind === "loading" && (
-            <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-3 rounded-2xl border border-line bg-white p-6">
+            <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-3 rounded-2xl border border-line bg-surface p-6">
               {[0, 1, 2, 3, 4].map((i) => (
                 <div key={i} className="h-5 animate-pulse rounded bg-paper-dark" style={{ width: `${90 - i * 12}%` }} />
               ))}
@@ -113,9 +113,9 @@ export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDe
           )}
           {state.kind === "notfound" && (
             <motion.div key="nf" initial={reduce ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} role="alert" className="flex gap-3 rounded-2xl border border-signal-100 bg-signal-50 p-6">
-              <AlertCircle aria-hidden className="size-6 shrink-0 text-signal-600" />
+              <AlertCircle aria-hidden className="size-6 shrink-0 text-danger" />
               <div>
-                <p className="font-semibold text-signal-700">No result found</p>
+                <p className="font-semibold text-danger">No result found</p>
                 <p className="mt-1 text-sm text-ink">
                   No published result was found for roll {state.query.roll}, {state.query.className}, {examLabel(state.query.examId)}. Please
                   check the details and try again.
@@ -129,7 +129,7 @@ export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDe
               initial={reduce ? false : { opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="overflow-hidden rounded-2xl border border-line bg-white shadow-[var(--shadow-card)]"
+              className="overflow-hidden rounded-2xl border border-line bg-surface shadow-[var(--shadow-card)]"
             >
               <header className="flex flex-wrap items-start justify-between gap-4 bg-navy-900 px-6 py-5 text-white">
                 <div>
@@ -165,7 +165,7 @@ export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDe
                           {s.subject}
                         </th>
                         <td className="px-4 py-2.5 text-right tabular-nums">{s.marks}</td>
-                        <td className="px-4 py-2.5 text-center font-semibold text-navy-900">{s.grade}</td>
+                        <td className="px-4 py-2.5 text-center font-semibold text-heading">{s.grade}</td>
                         <td className="px-6 py-2.5 text-right tabular-nums">{s.point.toFixed(2)}</td>
                       </tr>
                     ))}

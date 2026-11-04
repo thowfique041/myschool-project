@@ -58,8 +58,8 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
           role="status"
           className="rounded-[var(--radius-card)] border border-leaf-200 bg-leaf-50 p-6"
         >
-          <CheckCircle2 aria-hidden className="size-8 text-leaf-600" />
-          <h3 className="mt-3 text-lg font-semibold text-navy-900">Thank you, {values.name.split(" ")[0]}.</h3>
+          <CheckCircle2 aria-hidden className="size-8 text-accent" />
+          <h3 className="mt-3 text-lg font-semibold text-heading">Thank you, {values.name.split(" ")[0]}.</h3>
           <p className="mt-1 text-sm leading-relaxed text-muted">
             Your message has been recorded in this demonstration. On a live site the office would reply within two working days.
             <strong className="block pt-2 text-ink">No data was sent anywhere — this form is frontend-only.</strong>
@@ -82,7 +82,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
   return (
     <form noValidate onSubmit={onSubmit} className="space-y-4" aria-describedby="contact-form-note">
       {Object.keys(errors).some((k) => errors[k as keyof Values]) && (
-        <p role="alert" className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-2.5 text-sm text-signal-700">
+        <p role="alert" className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-2.5 text-sm text-danger">
           Please correct the highlighted fields.
         </p>
       )}
@@ -121,7 +121,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
         )}
       </Field>
       {formError && (
-        <p role="alert" className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-signal-700">
+        <p role="alert" className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-danger">
           {formError}
         </p>
       )}

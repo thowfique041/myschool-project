@@ -32,7 +32,7 @@ export default async function CalendarPage() {
   return (
     <>
       <PageHeader title="Academic Calendar" titleBn="একাডেমিক ক্যালেন্ডার" crumbs={[{ label: "Academic", href: "/academic" }]} description="Session 2026–27. Holidays follow the government holiday list; dates may change by notice.">
-        {calendarFile && <a href={calendarFile.href} target="_blank" rel="noopener" className="mt-6 inline-flex min-h-11 items-center rounded-lg bg-white px-5 text-sm font-semibold text-navy-900 hover:bg-navy-50">
+        {calendarFile && <a href={calendarFile.href} target="_blank" rel="noopener" className="mt-6 inline-flex min-h-11 items-center rounded-lg bg-surface px-5 text-sm font-semibold text-heading hover:bg-tint">
           Download calendar (PDF)
         </a>}
       </PageHeader>
@@ -50,20 +50,20 @@ export default async function CalendarPage() {
               const [y, m] = key.split("-").map(Number);
               return (
                 <section key={key} aria-labelledby={`m-${key}`}>
-                  <h2 id={`m-${key}`} className="font-serif text-xl font-semibold text-navy-900">
+                  <h2 id={`m-${key}`} className="font-serif text-xl font-semibold text-heading">
                     {monthNames[m - 1]} {y}
                   </h2>
-                  <ul className="mt-3 divide-y divide-line rounded-xl border border-line bg-white">
+                  <ul className="mt-3 divide-y divide-line rounded-xl border border-line bg-surface">
                     {events.map((e) => {
                       const d = dateParts(e.date);
                       return (
                         <li key={e.date + e.title} className="flex items-start gap-4 p-4 sm:px-5">
                           <span className="flex w-12 shrink-0 flex-col items-center rounded-md border border-line py-1 text-center">
                             <span className="text-[0.65rem] text-muted uppercase">{d.month}</span>
-                            <span className="font-serif text-lg leading-none font-semibold text-navy-900">{d.day}</span>
+                            <span className="font-serif text-lg leading-none font-semibold text-heading">{d.day}</span>
                           </span>
                           <div className="min-w-0 flex-1">
-                            <p className="font-semibold text-navy-900">{e.title}</p>
+                            <p className="font-semibold text-heading">{e.title}</p>
                             <p lang="bn" className="text-sm text-muted">
                               {e.titleBn}
                             </p>

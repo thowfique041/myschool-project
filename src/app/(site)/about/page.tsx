@@ -65,15 +65,15 @@ export default async function AboutPage() {
             <dl className="mt-8 grid grid-cols-3 gap-4 border-t border-line pt-6">
               <div>
                 <dt className="text-xs text-muted">Established</dt>
-                <dd className="font-serif text-2xl font-semibold text-navy-900">{site.established}</dd>
+                <dd className="font-serif text-2xl font-semibold text-heading">{site.established}</dd>
               </div>
               <div>
                 <dt className="text-xs text-muted">Classes</dt>
-                <dd className="font-serif text-2xl font-semibold text-navy-900">Play–12</dd>
+                <dd className="font-serif text-2xl font-semibold text-heading">Play–12</dd>
               </div>
               <div>
                 <dt className="text-xs text-muted">Faculty listed</dt>
-                <dd className="font-serif text-2xl font-semibold text-navy-900">{staff}</dd>
+                <dd className="font-serif text-2xl font-semibold text-heading">{staff}</dd>
               </div>
             </dl>
           </Reveal>
@@ -86,21 +86,21 @@ export default async function AboutPage() {
       </section>
 
       {/* Mission & vision */}
-      <section aria-labelledby="mission" className="border-y border-line bg-white py-16 sm:py-20">
+      <section aria-labelledby="mission" className="border-y border-line bg-surface py-16 sm:py-20">
         <div className="container-page">
           <SectionHeading id="mission" kicker="লক্ষ্য ও উদ্দেশ্য" title="Mission, vision and values" align="center" />
           <div className="mt-10 grid gap-6 md:grid-cols-2">
             <Reveal>
               <Card className="h-full p-7">
-                <Compass aria-hidden className="size-7 text-leaf-600" />
-                <h3 className="mt-4 font-serif text-xl font-semibold text-navy-900">Mission</h3>
+                <Compass aria-hidden className="size-7 text-accent" />
+                <h3 className="mt-4 font-serif text-xl font-semibold text-heading">Mission</h3>
                 <p className="mt-2 leading-relaxed text-muted">{mission.mission}</p>
               </Card>
             </Reveal>
             <Reveal delay={0.06}>
               <Card className="h-full p-7">
-                <Eye aria-hidden className="size-7 text-leaf-600" />
-                <h3 className="mt-4 font-serif text-xl font-semibold text-navy-900">Vision</h3>
+                <Eye aria-hidden className="size-7 text-accent" />
+                <h3 className="mt-4 font-serif text-xl font-semibold text-heading">Vision</h3>
                 <p className="mt-2 leading-relaxed text-muted">{mission.vision}</p>
               </Card>
             </Reveal>
@@ -108,8 +108,8 @@ export default async function AboutPage() {
           <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {values.map((v, i) => (
               <Reveal as="li" key={v.title} delay={i * 0.04} className="rounded-xl border border-line bg-paper p-5">
-                <HeartHandshake aria-hidden className="size-5 text-leaf-600" />
-                <h3 className="mt-3 font-semibold text-navy-900">{v.title}</h3>
+                <HeartHandshake aria-hidden className="size-5 text-accent" />
+                <h3 className="mt-3 font-semibold text-heading">{v.title}</h3>
                 <p className="mt-1 text-sm text-muted">{v.text}</p>
               </Reveal>
             ))}
@@ -132,7 +132,7 @@ export default async function AboutPage() {
             {milestones.map((m, i) => (
               <Reveal as="li" key={m.year + m.text} delay={i * 0.03} className="relative pb-7 last:pb-0">
                 <span aria-hidden className="absolute top-1.5 -left-[1.95rem] size-3.5 rounded-full border-2 border-white bg-leaf-600 ring-2 ring-leaf-200" />
-                <p className="font-serif text-lg font-semibold text-navy-900">{m.year}</p>
+                <p className="font-serif text-lg font-semibold text-heading">{m.year}</p>
                 <p className="mt-0.5 text-muted">{m.text}</p>
               </Reveal>
             ))}
@@ -179,7 +179,7 @@ export default async function AboutPage() {
                 <Card className="h-full overflow-hidden">
                   {f.image && <Picture image={{ src: f.image, alt: f.imageAlt, width: 1600, height: 1000 }} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" />}
                   <div className="p-5">
-                    <h3 className="font-semibold text-navy-900">{f.title}</h3>
+                    <h3 className="font-semibold text-heading">{f.title}</h3>
                     <p className="mt-1 text-sm text-muted">{f.text}</p>
                   </div>
                 </Card>
@@ -190,7 +190,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Committee & staff */}
-      <section id="committee" aria-labelledby="committee-title" className="scroll-mt-24 border-t border-line bg-white py-16 sm:py-20">
+      <section id="committee" aria-labelledby="committee-title" className="scroll-mt-24 border-t border-line bg-surface py-16 sm:py-20">
         <div className="container-page grid gap-12 lg:grid-cols-2">
           <div className="min-w-0">
             <SectionHeading id="committee-title" kicker="পরিচালনা পর্ষদ" title="Managing committee" description={site.demoNote ? "Sample committee list." : undefined} />
@@ -206,7 +206,7 @@ export default async function AboutPage() {
                   {committee.map((c) => (
                     <tr key={c.name + c.role}>
                       <td className="px-4 py-3">
-                        <span className="font-semibold text-navy-900">{c.name}</span>
+                        <span className="font-semibold text-heading">{c.name}</span>
                         <span className="block text-xs text-muted">{c.note}</span>
                       </td>
                       <td className="px-4 py-3 text-ink">{c.role}</td>

@@ -43,15 +43,15 @@ export function NewsExplorer({ articles }: { articles: NewsArticle[] }) {
           ))}
         </ul>
       ) : (
-        <div className="mt-3 rounded-xl border border-dashed border-line bg-white px-6 py-12 text-center">
-          <p className="font-semibold text-navy-900">No articles found.</p>
+        <div className="mt-3 rounded-xl border border-dashed border-line bg-surface px-6 py-12 text-center">
+          <p className="font-semibold text-heading">No articles found.</p>
           <button
             type="button"
             onClick={() => {
               setCategory("all");
               setQuery("");
             }}
-            className="mt-3 text-sm font-semibold text-leaf-700 hover:underline underline-offset-4"
+            className="mt-3 text-sm font-semibold text-accent hover:underline underline-offset-4"
           >
             Reset filters
           </button>

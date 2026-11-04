@@ -95,14 +95,14 @@ export function FieldInput({
   if (f.type === "boolean") {
     return (
       <div className={cn(f.span !== 1 && "sm:col-span-2")}>
-        <label htmlFor={id} className="flex cursor-pointer items-start gap-3 rounded-lg border border-line bg-white px-3 py-2.5">
+        <label htmlFor={id} className="flex cursor-pointer items-start gap-3 rounded-lg border border-line bg-surface px-3 py-2.5">
           <input id={id} type="checkbox" disabled={disabled} checked={Boolean(value)} onChange={(e) => onChange(e.target.checked)} className="mt-0.5 size-4 accent-leaf-600" />
           <span>
-            <span className="block text-sm font-semibold text-navy-900">{f.label}</span>
+            <span className="block text-sm font-semibold text-heading">{f.label}</span>
             {f.help && <span className="block text-xs text-muted">{f.help}</span>}
           </span>
         </label>
-        {error && <p className="mt-1 text-xs text-signal-700">{error}</p>}
+        {error && <p className="mt-1 text-xs text-danger">{error}</p>}
       </div>
     );
   }
@@ -149,7 +149,7 @@ export function FieldInput({
     case "color":
       input = (
         <div className="flex items-center gap-2">
-          <input type="color" aria-label={`${f.label} picker`} disabled={disabled} value={/^#[0-9a-f]{6}$/i.test(str) ? str : "#000000"} onChange={(e) => onChange(e.target.value)} className="h-10 w-14 cursor-pointer rounded-lg border border-line bg-white p-1" />
+          <input type="color" aria-label={`${f.label} picker`} disabled={disabled} value={/^#[0-9a-f]{6}$/i.test(str) ? str : "#000000"} onChange={(e) => onChange(e.target.value)} className="h-10 w-14 cursor-pointer rounded-lg border border-line bg-surface p-1" />
           <input {...common} className={cn(inputCls(Boolean(error)), "font-mono")} value={str} onChange={(e) => onChange(e.target.value)} maxLength={7} />
         </div>
       );
@@ -213,11 +213,11 @@ function MediaField({ id, kind, value, onChange, invalid, disabled }: { id: stri
       <div className="min-w-0 flex-1 space-y-2">
         <input id={id} className={inputCls(invalid)} value={value} disabled={disabled} placeholder="Choose from the library or paste a link" onChange={(e) => onChange(e.target.value)} />
         <div className="flex gap-2">
-          <button type="button" disabled={disabled} onClick={() => setOpen(true)} className="inline-flex min-h-8 items-center rounded-lg border border-line bg-white px-3 text-xs font-semibold text-navy-800 hover:border-navy-300">
+          <button type="button" disabled={disabled} onClick={() => setOpen(true)} className="inline-flex min-h-8 items-center rounded-lg border border-line bg-surface px-3 text-xs font-semibold text-heading hover:border-line-strong">
             {kind === "image" ? "Choose image" : "Choose file"}
           </button>
           {value && (
-            <button type="button" disabled={disabled} onClick={() => onChange("")} className="inline-flex min-h-8 items-center gap-1 rounded-lg px-2 text-xs font-semibold text-muted hover:text-signal-700">
+            <button type="button" disabled={disabled} onClick={() => onChange("")} className="inline-flex min-h-8 items-center gap-1 rounded-lg px-2 text-xs font-semibold text-muted hover:text-danger">
               <X aria-hidden className="size-3.5" /> Remove
             </button>
           )}
@@ -258,7 +258,7 @@ function Repeater({
   const canAdd = !f.max || value.length < f.max;
   return (
     <fieldset className="sm:col-span-2">
-      <legend className="mb-1.5 text-sm font-semibold text-navy-900">
+      <legend className="mb-1.5 text-sm font-semibold text-heading">
         {f.label} <span className="font-normal text-muted">({value.length})</span>
       </legend>
       {f.help && <p className="mb-2 text-xs text-muted">{f.help}</p>}
@@ -270,13 +270,13 @@ function Repeater({
                 {f.itemLabel ?? "Item"} {i + 1}
               </span>
               <span className="flex gap-1">
-                <button type="button" disabled={disabled || i === 0} onClick={() => move(i, -1)} aria-label={`Move ${f.itemLabel ?? "item"} ${i + 1} up`} className="rounded p-1.5 text-muted hover:bg-white disabled:opacity-30">
+                <button type="button" disabled={disabled || i === 0} onClick={() => move(i, -1)} aria-label={`Move ${f.itemLabel ?? "item"} ${i + 1} up`} className="rounded p-1.5 text-muted hover:bg-surface disabled:opacity-30">
                   <ArrowUp aria-hidden className="size-4" />
                 </button>
-                <button type="button" disabled={disabled || i === value.length - 1} onClick={() => move(i, 1)} aria-label={`Move ${f.itemLabel ?? "item"} ${i + 1} down`} className="rounded p-1.5 text-muted hover:bg-white disabled:opacity-30">
+                <button type="button" disabled={disabled || i === value.length - 1} onClick={() => move(i, 1)} aria-label={`Move ${f.itemLabel ?? "item"} ${i + 1} down`} className="rounded p-1.5 text-muted hover:bg-surface disabled:opacity-30">
                   <ArrowDown aria-hidden className="size-4" />
                 </button>
-                <button type="button" disabled={disabled} onClick={() => onChange(value.filter((_, j) => j !== i))} aria-label={`Remove ${f.itemLabel ?? "item"} ${i + 1}`} className="rounded p-1.5 text-signal-700 hover:bg-white">
+                <button type="button" disabled={disabled} onClick={() => onChange(value.filter((_, j) => j !== i))} aria-label={`Remove ${f.itemLabel ?? "item"} ${i + 1}`} className="rounded p-1.5 text-danger hover:bg-surface">
                   <Trash2 aria-hidden className="size-4" />
                 </button>
               </span>
@@ -300,11 +300,11 @@ function Repeater({
         ))}
       </ol>
       {canAdd && (
-        <button type="button" disabled={disabled} onClick={() => onChange([...value, blank()])} className="mt-3 inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-dashed border-navy-300 bg-white px-3 text-sm font-semibold text-navy-800 hover:border-navy-500">
+        <button type="button" disabled={disabled} onClick={() => onChange([...value, blank()])} className="mt-3 inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-dashed border-line-strong bg-surface px-3 text-sm font-semibold text-heading hover:border-navy-500">
           <Plus aria-hidden className="size-4" /> Add {(f.itemLabel ?? "item").toLowerCase()}
         </button>
       )}
-      {error && <p className="mt-1 text-xs text-signal-700">{error}</p>}
+      {error && <p className="mt-1 text-xs text-danger">{error}</p>}
     </fieldset>
   );
 }

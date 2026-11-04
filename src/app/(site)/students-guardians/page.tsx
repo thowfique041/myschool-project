@@ -42,9 +42,9 @@ export default async function StudentsGuardiansPage() {
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {links.map(({ title, text, href, icon: Icon }) => (
               <li key={href}>
-                <Link href={href} className="group block h-full rounded-xl border border-line bg-white p-5 transition-colors hover:border-leaf-200 hover:bg-leaf-50">
-                  <Icon aria-hidden className="size-6 text-leaf-600" />
-                  <p className="mt-3 font-semibold text-navy-900 group-hover:text-leaf-700">{title}</p>
+                <Link href={href} className="group block h-full rounded-xl border border-line bg-surface p-5 transition-colors hover:border-leaf-200 hover:bg-leaf-50">
+                  <Icon aria-hidden className="size-6 text-accent" />
+                  <p className="mt-3 font-semibold text-heading group-hover:text-accent">{title}</p>
                   <p className="mt-1 text-sm text-muted">{text}</p>
                 </Link>
               </li>
@@ -58,8 +58,8 @@ export default async function StudentsGuardiansPage() {
                 {info.map(({ icon: Icon, title, text }) => (
                   <li key={title}>
                     <Card className="h-full p-5">
-                      <Icon aria-hidden className="size-5 text-leaf-600" />
-                      <h3 className="mt-3 font-semibold text-navy-900">{title}</h3>
+                      <Icon aria-hidden className="size-5 text-accent" />
+                      <h3 className="mt-3 font-semibold text-heading">{title}</h3>
                       <p className="mt-1 text-sm leading-relaxed text-muted">{text}</p>
                     </Card>
                   </li>
@@ -68,16 +68,16 @@ export default async function StudentsGuardiansPage() {
             </div>
             <div>
               <SectionHeading kicker="সময়সূচি" title="School timings" />
-              <dl className="mt-6 divide-y divide-line rounded-xl border border-line bg-white">
+              <dl className="mt-6 divide-y divide-line rounded-xl border border-line bg-surface">
                 {timings.map((t) => (
                   <div key={t.label} className="flex flex-col gap-0.5 px-5 py-3.5 sm:flex-row sm:justify-between">
                     <dt className="text-sm text-muted">{t.label}</dt>
-                    <dd className="font-semibold text-navy-900">{t.value}</dd>
+                    <dd className="font-semibold text-heading">{t.value}</dd>
                   </div>
                 ))}
               </dl>
               <p className="mt-4 text-sm text-muted">
-                Questions? Call <a href={site.phoneHref} className="font-semibold text-navy-900 hover:underline">{site.phone}</a> during office hours.
+                Questions? Call <a href={site.phoneHref} className="font-semibold text-heading hover:underline">{site.phone}</a> during office hours.
               </p>
             </div>
           </div>

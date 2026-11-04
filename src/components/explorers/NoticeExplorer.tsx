@@ -31,7 +31,7 @@ export function FilterChips<T extends string>({
             onClick={() => onChange(o.value)}
             className={cn(
               "inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3.5 text-sm font-medium transition-colors",
-              active ? "border-navy-800 bg-navy-800 text-white" : "border-line bg-white text-navy-800 hover:border-navy-300",
+              active ? "border-brand bg-brand hover:bg-brand-hover text-white" : "border-line bg-surface text-heading hover:border-line-strong",
             )}
           >
             {o.label}
@@ -56,7 +56,7 @@ export function SearchBox({ value, onChange, placeholder, label }: { value: stri
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="min-h-11 w-full rounded-lg border border-line bg-white py-2.5 pr-10 pl-10 text-[0.95rem] focus:border-leaf-600 focus:outline-2 focus:outline-offset-0 focus:outline-leaf-600/25"
+        className="min-h-11 w-full rounded-lg border border-line bg-surface py-2.5 pr-10 pl-10 text-[0.95rem] focus:border-leaf-600 focus:outline-2 focus:outline-offset-0 focus:outline-leaf-600/25"
       />
       {value && (
         <button type="button" onClick={() => onChange("")} aria-label="Clear search" className="absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-muted hover:text-ink">
@@ -94,7 +94,7 @@ export function NoticeExplorer({ notices }: { notices: Notice[] }) {
         <SearchBox value={query} onChange={setQuery} label="Search notices" placeholder="Search notices in Bangla or English…" />
         <label className="flex items-center gap-2 text-sm text-muted">
           Sort
-          <select value={sort} onChange={(e) => setSort(e.target.value as "new" | "old")} className="min-h-11 rounded-lg border border-line bg-white px-3 text-ink">
+          <select value={sort} onChange={(e) => setSort(e.target.value as "new" | "old")} className="min-h-11 rounded-lg border border-line bg-surface px-3 text-ink">
             <option value="new">Newest first</option>
             <option value="old">Oldest first</option>
           </select>
@@ -107,14 +107,14 @@ export function NoticeExplorer({ notices }: { notices: Notice[] }) {
         Showing {results.length} of {notices.length} notices
       </p>
       {results.length > 0 ? (
-        <div className="mt-2 divide-y divide-line rounded-[var(--radius-card)] border border-line bg-white px-5 shadow-[var(--shadow-card)]">
+        <div className="mt-2 divide-y divide-line rounded-[var(--radius-card)] border border-line bg-surface px-5 shadow-[var(--shadow-card)]">
           {results.map((n) => (
             <NoticeRow key={n.slug} notice={n} />
           ))}
         </div>
       ) : (
-        <div className="mt-2 rounded-[var(--radius-card)] border border-dashed border-line bg-white px-6 py-12 text-center">
-          <p className="font-semibold text-navy-900">No notices match your search.</p>
+        <div className="mt-2 rounded-[var(--radius-card)] border border-dashed border-line bg-surface px-6 py-12 text-center">
+          <p className="font-semibold text-heading">No notices match your search.</p>
           <p className="mt-1 text-sm text-muted">Try a different word or choose “All” categories.</p>
           <button
             type="button"
@@ -122,7 +122,7 @@ export function NoticeExplorer({ notices }: { notices: Notice[] }) {
               setQuery("");
               setCategory("all");
             }}
-            className="mt-4 text-sm font-semibold text-leaf-700 hover:underline underline-offset-4"
+            className="mt-4 text-sm font-semibold text-accent hover:underline underline-offset-4"
           >
             Reset filters
           </button>

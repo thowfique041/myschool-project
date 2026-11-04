@@ -13,12 +13,12 @@ export function DateBlock({ iso, className }: { iso: string; className?: string 
     <time
       dateTime={iso}
       className={cn(
-        "flex w-14 shrink-0 flex-col items-center overflow-hidden rounded-md border border-line bg-white text-center",
+        "flex w-14 shrink-0 flex-col items-center overflow-hidden rounded-md border border-line bg-surface text-center",
         className,
       )}
     >
-      <span className="w-full bg-navy-800 py-0.5 text-[0.65rem] font-semibold tracking-wider text-white uppercase">{month}</span>
-      <span className="pt-1 font-serif text-xl leading-none font-semibold text-navy-900">{day}</span>
+      <span className="w-full bg-brand py-0.5 text-[0.65rem] font-semibold tracking-wider text-white uppercase">{month}</span>
+      <span className="pt-1 font-serif text-xl leading-none font-semibold text-heading">{day}</span>
       <span className="pb-1 text-[0.65rem] text-muted">{year}</span>
     </time>
   );
@@ -40,7 +40,7 @@ export function NoticeRow({ notice, compact = false }: { notice: Notice; compact
             </span>
           )}
         </div>
-        <h3 lang="bn" className="mt-1.5 font-semibold text-navy-900 group-hover:text-leaf-700" style={{ lineHeight: 1.55 }}>
+        <h3 lang="bn" className="mt-1.5 font-semibold text-heading group-hover:text-accent" style={{ lineHeight: 1.55 }}>
           <Link href={`/notices/${notice.slug}`} className="after:absolute after:inset-0">
             {notice.title}
           </Link>
@@ -63,14 +63,14 @@ export function NoticeRow({ notice, compact = false }: { notice: Notice; compact
 export function NewsCard({ article, headingLevel = "h3" }: { article: NewsArticle; headingLevel?: "h2" | "h3" }) {
   const H = headingLevel;
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)] transition-shadow hover:shadow-[var(--shadow-lift)]">
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface shadow-[var(--shadow-card)] transition-shadow hover:shadow-[var(--shadow-lift)]">
       <Picture image={article.image} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" imgClassName="transition-transform duration-500 group-hover:scale-[1.03]" />
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-center gap-3 text-xs text-muted">
           <Badge tone="leaf">{article.categoryLabel ?? article.category}</Badge>
           <time dateTime={article.date}>{formatDateEn(article.date)}</time>
         </div>
-        <H className="mt-3 text-lg leading-snug font-semibold text-navy-900 group-hover:text-leaf-700">
+        <H className="mt-3 text-lg leading-snug font-semibold text-heading group-hover:text-accent">
           <Link href={`/news/${article.slug}`} className="after:absolute after:inset-0">
             {article.title}
           </Link>
@@ -100,7 +100,7 @@ export function NewsCard({ article, headingLevel = "h3" }: { article: NewsArticl
 /* ------------------------------------------------------------ Teacher card */
 
 const avatarTones = [
-  "bg-navy-100 text-navy-800",
+  "bg-tint text-heading",
   "bg-leaf-100 text-leaf-800",
   "bg-[#f3e6c8] text-[#6e5214]",
   "bg-[#ecdfe6] text-[#6b2f4f]",
@@ -150,13 +150,13 @@ export function TeacherAvatar({ teacher, size = "md" }: { teacher: Teacher; size
 
 export function TeacherCard({ teacher }: { teacher: Teacher }) {
   return (
-    <article className="flex h-full flex-col items-center rounded-[var(--radius-card)] border border-line bg-white p-6 text-center shadow-[var(--shadow-card)]">
+    <article className="flex h-full flex-col items-center rounded-[var(--radius-card)] border border-line bg-surface p-6 text-center shadow-[var(--shadow-card)]">
       <TeacherAvatar teacher={teacher} size="lg" />
-      <h3 className="mt-4 font-semibold text-navy-900">{teacher.name}</h3>
+      <h3 className="mt-4 font-semibold text-heading">{teacher.name}</h3>
       <p lang="bn" className="text-sm text-muted" style={{ lineHeight: 1.5 }}>
         {teacher.nameBn}
       </p>
-      <p className="mt-2 text-sm font-medium text-leaf-700">{teacher.designation}</p>
+      <p className="mt-2 text-sm font-medium text-accent">{teacher.designation}</p>
       <p className="mt-1 text-sm text-muted">{teacher.subjects.join(", ")}</p>
       <dl className="mt-auto w-full border-t border-line pt-3 text-xs text-muted">
         <div className="flex justify-between gap-2 pt-1">
@@ -169,13 +169,13 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
         </div>
       </dl>
       <div className="mt-3 w-full space-y-1.5 border-t border-line pt-3 text-left text-sm">
-        <a href={`tel:${teacher.phone.replace(/[\s-]/g, "")}`} className="flex items-center gap-2 text-navy-800 hover:text-leaf-700">
-          <Phone aria-hidden className="size-4 shrink-0 text-leaf-600" />
+        <a href={`tel:${teacher.phone.replace(/[\s-]/g, "")}`} className="flex items-center gap-2 text-heading hover:text-accent">
+          <Phone aria-hidden className="size-4 shrink-0 text-accent" />
           <span className="sr-only">Phone: </span>
           {teacher.phone}
         </a>
-        <a href={`mailto:${teacher.email}`} className="flex min-w-0 items-center gap-2 text-navy-800 hover:text-leaf-700">
-          <Mail aria-hidden className="size-4 shrink-0 text-leaf-600" />
+        <a href={`mailto:${teacher.email}`} className="flex min-w-0 items-center gap-2 text-heading hover:text-accent">
+          <Mail aria-hidden className="size-4 shrink-0 text-accent" />
           <span className="sr-only">Email: </span>
           <span className="truncate">{teacher.email}</span>
         </a>
@@ -190,7 +190,7 @@ export function ArrowLink({ href, children, className }: { href: string; childre
   return (
     <Link
       href={href}
-      className={cn("group inline-flex items-center gap-1.5 text-sm font-semibold text-navy-800 hover:text-leaf-700", className)}
+      className={cn("group inline-flex items-center gap-1.5 text-sm font-semibold text-heading hover:text-accent", className)}
     >
       {children}
       <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-0.5" />

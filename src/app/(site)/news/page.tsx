@@ -24,14 +24,14 @@ export default async function NewsPage() {
 
       {featured && <section aria-labelledby="featured" className="py-12 sm:py-16">
         <div className="container-page grid gap-8 lg:grid-cols-[1.4fr_0.6fr]">
-          <article className="group relative grid overflow-hidden rounded-2xl border border-line bg-white shadow-[var(--shadow-card)] md:grid-cols-2">
+          <article className="group relative grid overflow-hidden rounded-2xl border border-line bg-surface shadow-[var(--shadow-card)] md:grid-cols-2">
             <Picture image={featured.image} ratio="aspect-[16/10] md:aspect-auto md:h-full" sizes="(min-width: 768px) 40vw, 100vw" />
             <div className="flex flex-col p-6 sm:p-8">
               <div className="flex items-center gap-3 text-xs text-muted">
                 <Badge tone="leaf">Featured · {featured.categoryLabel}</Badge>
                 <time dateTime={featured.date}>{formatDateEn(featured.date)}</time>
               </div>
-              <h2 id="featured" className="mt-3 font-serif text-2xl leading-snug font-semibold text-navy-900 group-hover:text-leaf-700">
+              <h2 id="featured" className="mt-3 font-serif text-2xl leading-snug font-semibold text-heading group-hover:text-accent">
                 <Link href={`/news/${featured.slug}`} className="after:absolute after:inset-0">
                   {featured.title}
                 </Link>
@@ -70,7 +70,7 @@ export default async function NewsPage() {
         </div>
       </section>}
 
-      <section aria-labelledby="all-news" className="border-t border-line bg-white py-12 sm:py-16">
+      <section aria-labelledby="all-news" className="border-t border-line bg-surface py-12 sm:py-16">
         <div className="container-page">
           <SectionHeading id="all-news" title="All news" />
           <div className="mt-6">

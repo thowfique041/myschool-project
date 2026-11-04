@@ -104,31 +104,31 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
         role="status"
         initial={reduce ? false : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-2xl border border-leaf-200 bg-white p-6 sm:p-8"
+        className="rounded-2xl border border-leaf-200 bg-surface p-6 sm:p-8"
       >
-        <CheckCircle2 aria-hidden className="size-10 text-leaf-600" />
-        <h3 className="mt-4 font-serif text-2xl font-semibold text-navy-900">Application recorded (demo)</h3>
+        <CheckCircle2 aria-hidden className="size-10 text-accent" />
+        <h3 className="mt-4 font-serif text-2xl font-semibold text-heading">Application recorded (demo)</h3>
         <p className="mt-2 text-muted">
           This is a frontend demonstration. Nothing has been sent to the school, and no data has been stored.
         </p>
         <dl className="mt-6 grid gap-x-8 gap-y-3 rounded-xl bg-paper p-5 text-sm sm:grid-cols-2">
           <div>
             <dt className="text-muted">Demo reference</dt>
-            <dd className="font-mono font-semibold text-navy-900">{reference}</dd>
+            <dd className="font-mono font-semibold text-heading">{reference}</dd>
           </div>
           <div>
             <dt className="text-muted">Student</dt>
-            <dd className="font-semibold text-navy-900">{values.studentName}</dd>
+            <dd className="font-semibold text-heading">{values.studentName}</dd>
           </div>
           <div>
             <dt className="text-muted">Class applied</dt>
-            <dd className="font-semibold text-navy-900">
+            <dd className="font-semibold text-heading">
               {values.classApplied} · {values.shift}
             </dd>
           </div>
           <div>
             <dt className="text-muted">Guardian contact</dt>
-            <dd className="font-semibold text-navy-900">{values.phone}</dd>
+            <dd className="font-semibold text-heading">{values.phone}</dd>
           </div>
         </dl>
         <p className="mt-5 text-sm text-muted">
@@ -158,18 +158,18 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
 
   return (
     !open ? (
-      <div className="rounded-2xl border border-line bg-white p-6 text-muted">
+      <div className="rounded-2xl border border-line bg-surface p-6 text-muted">
         Online applications are closed at the moment. Please check the notice board for the next admission circular.
       </div>
     ) : <form noValidate onSubmit={onSubmit} className="space-y-8">
       {errorCount > 0 && (
-        <p role="alert" className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-signal-700">
+        <p role="alert" className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-danger">
           {errorCount === 1 ? "1 field needs" : `${errorCount} fields need`} your attention.
         </p>
       )}
 
       <fieldset>
-        <legend className="mb-4 font-serif text-lg font-semibold text-navy-900">Student information</legend>
+        <legend className="mb-4 font-serif text-lg font-semibold text-heading">Student information</legend>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Student's full name" name="studentName" required error={errors.studentName} className="sm:col-span-2">
             {({ id, describedBy, invalid }) => (
@@ -226,7 +226,7 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
       </fieldset>
 
       <fieldset>
-        <legend className="mb-4 font-serif text-lg font-semibold text-navy-900">Guardian information</legend>
+        <legend className="mb-4 font-serif text-lg font-semibold text-heading">Guardian information</legend>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Guardian's name" name="guardianName" required error={errors.guardianName}>
             {({ id, describedBy, invalid }) => (
@@ -265,7 +265,7 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
       </fieldset>
 
       <div>
-        <label className={cn("flex items-start gap-3 text-sm", errors.consent ? "text-signal-700" : "text-ink")}>
+        <label className={cn("flex items-start gap-3 text-sm", errors.consent ? "text-danger" : "text-ink")}>
           <input
             id="f-consent"
             type="checkbox"
@@ -278,14 +278,14 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
           I confirm the information is correct and understand this is a demonstration form that does not submit to the school.
         </label>
         {errors.consent && (
-          <p id="f-consent-error" className="mt-1 pl-8 text-xs font-medium text-signal-700">
+          <p id="f-consent-error" className="mt-1 pl-8 text-xs font-medium text-danger">
             {errors.consent}
           </p>
         )}
       </div>
 
       {formError && (
-        <p role="alert" className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-signal-700">
+        <p role="alert" className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-danger">
           {formError}
         </p>
       )}

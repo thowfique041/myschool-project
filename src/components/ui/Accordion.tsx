@@ -13,7 +13,7 @@ export function Accordion({ items, className }: { items: AccordionItem[]; classN
   const baseId = useId();
 
   return (
-    <div className={cn("divide-y divide-line rounded-[var(--radius-card)] border border-line bg-white", className)}>
+    <div className={cn("divide-y divide-line rounded-[var(--radius-card)] border border-line bg-surface", className)}>
       {items.map((item, i) => {
         const isOpen = open === i;
         const panelId = `${baseId}-panel-${i}`;
@@ -27,12 +27,12 @@ export function Accordion({ items, className }: { items: AccordionItem[]; classN
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => setOpen(isOpen ? null : i)}
-                className="flex w-full items-start justify-between gap-4 px-5 py-4 text-left font-semibold text-navy-900 hover:text-leaf-700"
+                className="flex w-full items-start justify-between gap-4 px-5 py-4 text-left font-semibold text-heading hover:text-accent"
               >
                 <span>{item.question}</span>
                 <Plus
                   aria-hidden
-                  className={cn("mt-0.5 size-5 shrink-0 text-leaf-600 transition-transform duration-200", isOpen && "rotate-45")}
+                  className={cn("mt-0.5 size-5 shrink-0 text-accent transition-transform duration-200", isOpen && "rotate-45")}
                 />
               </button>
             </h3>

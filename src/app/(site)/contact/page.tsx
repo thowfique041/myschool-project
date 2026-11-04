@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 function MapPlaceholder() {
   return (
-    <figure className="overflow-hidden rounded-2xl border border-line bg-white">
+    <figure className="overflow-hidden rounded-2xl border border-line bg-surface">
       <svg viewBox="0 0 640 380" role="img" aria-labelledby="map-title map-desc" className="h-auto w-full">
         <title id="map-title">Location sketch</title>
         <desc id="map-desc">A simplified sketch map showing the school near a main road and a park in Upashahar. Not to scale.</desc>
@@ -62,7 +62,7 @@ function MapPlaceholder() {
 
 function MapEmbed({ url, title }: { url: string; title: string }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-line bg-white">
+    <div className="overflow-hidden rounded-2xl border border-line bg-surface">
       <iframe
         src={url}
         title={title}
@@ -94,14 +94,14 @@ export default async function ContactPage() {
             {items.map(({ icon: Icon, label, value, href, sub }) => (
               <li key={label}>
                 <Card className="h-full p-5">
-                  <Icon aria-hidden className="size-6 text-leaf-600" />
+                  <Icon aria-hidden className="size-6 text-accent" />
                   <h2 className="mt-3 text-sm font-semibold text-muted">{label}</h2>
                   {href ? (
-                    <a href={href} className="mt-0.5 block font-semibold break-words text-navy-900 hover:text-leaf-700">
+                    <a href={href} className="mt-0.5 block font-semibold break-words text-heading hover:text-accent">
                       {value}
                     </a>
                   ) : (
-                    <p className="mt-0.5 font-semibold text-navy-900">{value}</p>
+                    <p className="mt-0.5 font-semibold text-heading">{value}</p>
                   )}
                   {sub && (
                     <p lang={/[ঀ-৿]/.test(sub) ? "bn" : undefined} className="mt-1 text-sm text-muted">
@@ -125,12 +125,12 @@ export default async function ContactPage() {
               <div className="mt-6">
                 {mapOk ? <MapEmbed url={site.mapUrl} title={`Map: ${site.name}`} /> : <MapPlaceholder />}
               </div>
-              <div className="mt-6 rounded-xl border border-line bg-white p-5">
-                <h3 className="font-semibold text-navy-900">Follow us</h3>
+              <div className="mt-6 rounded-xl border border-line bg-surface p-5">
+                <h3 className="font-semibold text-heading">Follow us</h3>
                 <ul className="mt-3 flex flex-wrap gap-3">
                   {site.social.map((s) => (
                     <li key={s.label}>
-                      <a href={s.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center rounded-lg border border-line px-4 text-sm font-semibold text-navy-800 hover:border-navy-300">
+                      <a href={s.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center rounded-lg border border-line px-4 text-sm font-semibold text-heading hover:border-line-strong">
                         {s.label}
                         <span className="sr-only"> (opens in a new tab)</span>
                       </a>

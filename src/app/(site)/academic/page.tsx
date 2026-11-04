@@ -61,7 +61,7 @@ export default async function AcademicPage() {
             ["#policies", "Policies"],
           ].map(([href, label]) => (
             <li key={href}>
-              <a href={href} className="inline-flex min-h-9 items-center rounded-md px-3 font-medium text-navy-800 hover:bg-white">
+              <a href={href} className="inline-flex min-h-9 items-center rounded-md px-3 font-medium text-heading hover:bg-surface">
                 {label}
               </a>
             </li>
@@ -76,9 +76,9 @@ export default async function AcademicPage() {
             {academicLevels.map((l, i) => (
               <Reveal key={l.id} delay={i * 0.05}>
                 <Card className="h-full p-6">
-                  <p lang="bn" className="text-sm text-leaf-700">{l.nameBn}</p>
-                  <h3 className="font-serif text-xl font-semibold text-navy-900">{l.name}</h3>
-                  <p className="text-sm font-semibold text-navy-700">
+                  <p lang="bn" className="text-sm text-accent">{l.nameBn}</p>
+                  <h3 className="font-serif text-xl font-semibold text-heading">{l.name}</h3>
+                  <p className="text-sm font-semibold text-subheading">
                     {l.classes} · {l.ages}
                   </p>
                   <p className="mt-3 text-sm leading-relaxed text-muted">{l.summary}</p>
@@ -99,7 +99,7 @@ export default async function AcademicPage() {
         </div>
       </section>
 
-      <section id="curriculum" aria-labelledby="curr-h" className="scroll-mt-36 border-y border-line bg-white py-16">
+      <section id="curriculum" aria-labelledby="curr-h" className="scroll-mt-36 border-y border-line bg-surface py-16">
         <div className="container-page">
           <SectionHeading
             id="curr-h"
@@ -111,7 +111,7 @@ export default async function AcademicPage() {
             {subjectsByLevel.map((s) => (
               <Reveal key={s.level}>
                 <div className="h-full rounded-xl border border-line p-6">
-                  <h3 className="font-semibold text-navy-900">{s.level}</h3>
+                  <h3 className="font-semibold text-heading">{s.level}</h3>
                   <p className="mt-3 text-xs font-semibold text-muted uppercase">Compulsory</p>
                   <ul className="mt-2 flex flex-wrap gap-1.5">
                     {s.compulsory.map((c) => (
@@ -148,11 +148,11 @@ export default async function AcademicPage() {
               Full academic calendar
             </ButtonLink>
           </div>
-          <ul className="divide-y divide-line rounded-xl border border-line bg-white">
+          <ul className="divide-y divide-line rounded-xl border border-line bg-surface">
             {upcoming.length === 0 && <li className="px-5 py-4 text-muted">No upcoming dates.</li>}
             {upcoming.map((e) => (
               <li key={e.date + e.title} className="flex flex-col gap-1 px-5 py-4 sm:flex-row sm:items-center sm:gap-6">
-                <time dateTime={e.date} className="w-44 shrink-0 text-sm font-semibold text-navy-900">
+                <time dateTime={e.date} className="w-44 shrink-0 text-sm font-semibold text-heading">
                   {formatDateEn(e.date)}
                   {e.endDate && ` – ${formatDateEn(e.endDate)}`}
                 </time>
@@ -166,7 +166,7 @@ export default async function AcademicPage() {
         </div>
       </section>
 
-      <section id="routine" aria-labelledby="routine-h" className="scroll-mt-36 border-y border-line bg-white py-16">
+      <section id="routine" aria-labelledby="routine-h" className="scroll-mt-36 border-y border-line bg-surface py-16">
         <div className="container-page">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionHeading id="routine-h" kicker="ক্লাস রুটিন" title="Class routine" description="School week: Saturday to Thursday. Friday is the weekly holiday." />
@@ -174,7 +174,7 @@ export default async function AcademicPage() {
           </div>
           {routines.map((routine) => (
           <div key={routine.title} className="mt-6 rounded-xl border border-line">
-            <p className="border-b border-line bg-paper px-4 py-3 text-sm font-semibold text-navy-900">{routine.title}</p>
+            <p className="border-b border-line bg-paper px-4 py-3 text-sm font-semibold text-heading">{routine.title}</p>
             <div className="overflow-x-auto" tabIndex={0} aria-label="Class routine table, scroll horizontally on small screens">
               <table className="w-full min-w-[52rem] text-left text-sm">
                 <caption className="sr-only">Weekly class routine: {routine.title}</caption>
@@ -193,11 +193,11 @@ export default async function AcademicPage() {
                     const isBreak = row.sat === "Break" || row.sat === "Assembly";
                     return (
                       <tr key={row.time + row.sat} className={isBreak ? "bg-leaf-50/60" : undefined}>
-                        <th scope="row" className="px-4 py-3 font-semibold whitespace-nowrap text-navy-900">
+                        <th scope="row" className="px-4 py-3 font-semibold whitespace-nowrap text-heading">
                           {row.time}
                         </th>
                         {isBreak ? (
-                          <td colSpan={6} className="px-4 py-3 text-center font-medium text-leaf-700">
+                          <td colSpan={6} className="px-4 py-3 text-center font-medium text-accent">
                             {row.sat}
                           </td>
                         ) : (
@@ -225,10 +225,10 @@ export default async function AcademicPage() {
             <SectionHeading id="exams-h" kicker="পরীক্ষা পদ্ধতি" title="Examination system" />
             <ol className="mt-6 space-y-4">
               {examSystem.map((e, i) => (
-                <li key={e.title} className="flex gap-4 rounded-xl border border-line bg-white p-5">
+                <li key={e.title} className="flex gap-4 rounded-xl border border-line bg-surface p-5">
                   <span className="font-serif text-2xl font-semibold text-navy-200">{i + 1}</span>
                   <div>
-                    <h3 className="font-semibold text-navy-900">{e.title}</h3>
+                    <h3 className="font-semibold text-heading">{e.title}</h3>
                     <p className="mt-1 text-sm leading-relaxed text-muted">{e.text}</p>
                   </div>
                 </li>
@@ -239,10 +239,10 @@ export default async function AcademicPage() {
             </ArrowLink>
           </div>
           <div>
-            <h3 className="font-serif text-xl font-semibold text-navy-900">Grading scale</h3>
+            <h3 className="font-serif text-xl font-semibold text-heading">Grading scale</h3>
             <p className="mt-1 text-sm text-muted">Letter grades and grade points used for SSC, HSC and internal examinations.</p>
-            <table className="mt-4 w-full overflow-hidden rounded-xl border border-line bg-white text-sm">
-              <thead className="bg-navy-800 text-left text-xs text-white uppercase">
+            <table className="mt-4 w-full overflow-hidden rounded-xl border border-line bg-surface text-sm">
+              <thead className="bg-brand text-left text-xs text-white uppercase">
                 <tr>
                   <th scope="col" className="px-4 py-2.5 font-semibold">Marks</th>
                   <th scope="col" className="px-4 py-2.5 font-semibold">Grade</th>
@@ -253,7 +253,7 @@ export default async function AcademicPage() {
                 {gradingScale.map((g) => (
                   <tr key={g.grade}>
                     <td className="px-4 py-2.5">{g.range}</td>
-                    <td className="px-4 py-2.5 font-semibold text-navy-900">{g.grade}</td>
+                    <td className="px-4 py-2.5 font-semibold text-heading">{g.grade}</td>
                     <td className="px-4 py-2.5 tabular-nums">{g.point}</td>
                   </tr>
                 ))}
@@ -263,18 +263,18 @@ export default async function AcademicPage() {
         </div>
       </section>
 
-      <section id="resources" aria-labelledby="res-h" className="scroll-mt-36 border-y border-line bg-white py-16">
+      <section id="resources" aria-labelledby="res-h" className="scroll-mt-36 border-y border-line bg-surface py-16">
         <div className="container-page">
           <SectionHeading id="res-h" kicker="সিলেবাস ও রিসোর্স" title="Syllabus and resources" description={site.demoNote ? "Sample documents prepared for this demonstration." : undefined} />
           <ul className="mt-6 grid gap-4 md:grid-cols-3">
             {resources.length === 0 && <li className="text-muted">No academic resources yet.</li>}
             {resources.map((r) => (
               <li key={r.id} className="flex items-start gap-4 rounded-xl border border-line p-5">
-                <FileText aria-hidden className="mt-0.5 size-6 shrink-0 text-signal-600" />
+                <FileText aria-hidden className="mt-0.5 size-6 shrink-0 text-danger" />
                 <div className="min-w-0 flex-1">
-                  <p className="font-semibold text-navy-900">{r.title}</p>
+                  <p className="font-semibold text-heading">{r.title}</p>
                   <p className="text-sm text-muted">{r.description}</p>
-                  <a href={r.href} target="_blank" rel="noopener" className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-leaf-700 hover:underline underline-offset-4">
+                  <a href={r.href} target="_blank" rel="noopener" className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:underline underline-offset-4">
                     <Download aria-hidden className="size-4" /> Download PDF
                   </a>
                 </div>
@@ -292,8 +292,8 @@ export default async function AcademicPage() {
           <SectionHeading id="pol-h" kicker="নীতিমালা" title="Policies for students and guardians" />
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             {policies.map((p) => (
-              <div key={p.id} className="rounded-xl border border-line bg-white p-6">
-                <h3 className="font-semibold text-navy-900">{p.title}</h3>
+              <div key={p.id} className="rounded-xl border border-line bg-surface p-6">
+                <h3 className="font-semibold text-heading">{p.title}</h3>
                 <ul className="mt-3 space-y-2 text-sm text-muted">
                   {p.points.map((pt) => (
                     <li key={pt} className="flex gap-2">

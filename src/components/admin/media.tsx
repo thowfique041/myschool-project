@@ -75,7 +75,7 @@ export function UploadBox({ kind, onUploaded, defaultCategory = "general" }: { k
   }
 
   return (
-    <div className="rounded-xl border border-dashed border-navy-200 bg-paper p-4">
+    <div className="rounded-xl border border-dashed border-line-strong bg-paper p-4">
       <div
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => {
@@ -88,15 +88,15 @@ export function UploadBox({ kind, onUploaded, defaultCategory = "general" }: { k
           // eslint-disable-next-line @next/next/no-img-element
           <img src={preview} alt="" className="size-16 rounded-lg object-cover" />
         ) : (
-          <span className="flex size-12 items-center justify-center rounded-lg bg-white text-navy-400">
+          <span className="flex size-12 items-center justify-center rounded-lg bg-surface text-navy-400">
             <Upload aria-hidden className="size-5" />
           </span>
         )}
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-semibold text-navy-900">{file ? file.name : "Drop a file here or choose one"}</p>
+          <p className="text-sm font-semibold text-heading">{file ? file.name : "Drop a file here or choose one"}</p>
           <p className="text-xs text-muted">{file ? formatBytes(file.size) : kind === "image" ? "JPG, PNG, WebP or GIF · up to 1.5 MB" : "Images, PDF, DOCX or XLSX · up to 1.5 MB"}</p>
         </div>
-        <label className={cn("cursor-pointer", "inline-flex min-h-9 items-center rounded-lg border border-line bg-white px-3 text-sm font-semibold text-navy-800 hover:border-navy-300")}>
+        <label className={cn("cursor-pointer", "inline-flex min-h-9 items-center rounded-lg border border-line bg-surface px-3 text-sm font-semibold text-heading hover:border-line-strong")}>
           Choose file
           <input ref={inputRef} type="file" className="sr-only" accept={kind === "image" ? ACCEPT_IMAGES : ACCEPT_ALL} onChange={(e) => choose(e.target.files?.[0])} />
         </label>
@@ -115,12 +115,12 @@ export function UploadBox({ kind, onUploaded, defaultCategory = "general" }: { k
         </div>
       )}
       {progress !== null && (
-        <div className="mt-3 h-2 overflow-hidden rounded-full bg-white" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100} aria-label="Upload progress">
+        <div className="mt-3 h-2 overflow-hidden rounded-full bg-surface" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100} aria-label="Upload progress">
           <div className="h-full bg-leaf-600 transition-[width]" style={{ width: `${progress}%` }} />
         </div>
       )}
       {error && (
-        <p role="alert" className="mt-2 text-sm text-signal-700">
+        <p role="alert" className="mt-2 text-sm text-danger">
           {error}
         </p>
       )}
@@ -184,7 +184,7 @@ export function MediaPicker({ open, onClose, kind, onPick }: { open: boolean; on
         <Search aria-hidden className="size-4 text-muted" />
         <input aria-label="Search files" placeholder="Search by name or alt text" className={inputCls()} value={m.q} onChange={(e) => (m.setQ(e.target.value), m.setPage(1))} />
       </div>
-      {m.error && <p className="mt-3 text-sm text-signal-700">{m.error}</p>}
+      {m.error && <p className="mt-3 text-sm text-danger">{m.error}</p>}
       <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6">
         {m.data?.items.map((item) => (
           <li key={item.id}>
@@ -261,16 +261,16 @@ export function MediaLibrary({ canEdit, canDelete }: { canEdit: boolean; canDele
             type="button"
             aria-pressed={kind === k}
             onClick={() => (setKind(k as typeof kind), m.setPage(1))}
-            className={cn("min-h-9 rounded-full px-4 text-sm font-semibold", kind === k ? "bg-navy-800 text-white" : "border border-line bg-white text-navy-800")}
+            className={cn("min-h-9 rounded-full px-4 text-sm font-semibold", kind === k ? "bg-brand hover:bg-brand-hover text-white" : "border border-line bg-surface text-heading")}
           >
             {label}
           </button>
         ))}
       </div>
-      {m.error && <p className="mt-3 text-sm text-signal-700">{m.error}</p>}
+      {m.error && <p className="mt-3 text-sm text-danger">{m.error}</p>}
       <ul className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
         {m.data?.items.map((item) => (
-          <li key={item.id} className="rounded-xl border border-line bg-white p-2">
+          <li key={item.id} className="rounded-xl border border-line bg-surface p-2">
             <button
               type="button"
               className="block w-full text-left"
@@ -281,7 +281,7 @@ export function MediaLibrary({ canEdit, canDelete }: { canEdit: boolean; canDele
               }}
             >
               <Thumb item={item} />
-              <span className="mt-2 block truncate text-xs font-semibold text-navy-900">{item.originalName}</span>
+              <span className="mt-2 block truncate text-xs font-semibold text-heading">{item.originalName}</span>
               <span className="block text-[0.7rem] text-muted">
                 {formatBytes(item.size)} · {item.category}
               </span>
@@ -290,9 +290,9 @@ export function MediaLibrary({ canEdit, canDelete }: { canEdit: boolean; canDele
         ))}
       </ul>
       {m.data && m.data.items.length === 0 && (
-        <div className="mt-6 flex flex-col items-center rounded-xl border border-dashed border-line bg-white py-14 text-center">
+        <div className="mt-6 flex flex-col items-center rounded-xl border border-dashed border-line bg-surface py-14 text-center">
           <ImageIcon aria-hidden className="size-8 text-navy-200" />
-          <p className="mt-2 font-semibold text-navy-900">No files found</p>
+          <p className="mt-2 font-semibold text-heading">No files found</p>
           <p className="text-sm text-muted">Uploaded images and documents appear here.</p>
         </div>
       )}
@@ -303,7 +303,7 @@ export function MediaLibrary({ canEdit, canDelete }: { canEdit: boolean; canDele
           <div className="space-y-4">
             <Thumb item={editing} className="aspect-video object-contain" />
             <div className="flex gap-2">
-              <a href={editing.url} download={editing.originalName} className="inline-flex min-h-10 items-center rounded-lg border border-line px-4 text-sm font-semibold text-navy-800 hover:border-navy-300">
+              <a href={editing.url} download={editing.originalName} className="inline-flex min-h-10 items-center rounded-lg border border-line px-4 text-sm font-semibold text-heading hover:border-line-strong">
                 Download
               </a>
             </div>
@@ -318,7 +318,7 @@ export function MediaLibrary({ canEdit, canDelete }: { canEdit: boolean; canDele
             </FormRow>
             <div className="flex justify-between gap-2">
               {canDelete ? (
-                <AdminButton variant="ghost" className="text-signal-700" onClick={() => setConfirm(editing)}>
+                <AdminButton variant="ghost" className="text-danger" onClick={() => setConfirm(editing)}>
                   <Trash2 aria-hidden className="size-4" /> Delete
                 </AdminButton>
               ) : (

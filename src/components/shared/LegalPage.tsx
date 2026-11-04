@@ -13,7 +13,7 @@ export function LegalPage({ title, titleBn, updated, intro, sections }: { title:
           <div className="mt-8 space-y-8">
             {sections.map((s, i) => (
               <section key={s.heading} aria-labelledby={`s-${i}`}>
-                <h2 id={`s-${i}`} className="font-serif text-xl font-semibold text-navy-900">
+                <h2 id={`s-${i}`} className="font-serif text-xl font-semibold text-heading">
                   {s.heading}
                 </h2>
                 <div className="mt-2 space-y-3 leading-relaxed text-ink">

@@ -28,7 +28,7 @@ export function BackToTop() {
             const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
             window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
           }}
-          className="fixed right-4 bottom-4 z-30 inline-flex size-11 items-center justify-center rounded-full bg-navy-800 text-white shadow-[var(--shadow-lift)] hover:bg-navy-700 sm:right-6 sm:bottom-6"
+          className="fixed right-4 bottom-4 z-30 inline-flex size-11 items-center justify-center rounded-full bg-brand hover:bg-brand-hover text-white shadow-[var(--shadow-lift)] sm:right-6 sm:bottom-6"
         >
           <ArrowUp aria-hidden className="size-5" />
         </motion.button>
