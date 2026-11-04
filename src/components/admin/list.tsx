@@ -76,13 +76,13 @@ function Cell({ col, value }: { col: ListColumn; value: unknown }) {
   const v = value;
   switch (col.format) {
     case "badge":
-      return v ? <StatusBadge value={String(v)} label={col.labels?.[String(v)] ?? String(v).replace(/_/g, " ")} /> : <span className="text-muted">—</span>;
+      return v ? <StatusBadge value={String(v)} label={col.labels?.[String(v)] ?? String(v).replace(/_/g, " ")} /> : <span className="text-muted">N/A</span>;
     case "boolean":
-      return v ? <Check aria-label="Yes" className="size-4 text-accent" /> : <span className="text-muted" aria-label="No">—</span>;
+      return v ? <Check aria-label="Yes" className="size-4 text-accent" /> : <span className="text-muted" aria-label="No">N/A</span>;
     case "date":
-      return <span className="whitespace-nowrap">{v ? new Date(String(v) + (String(v).length === 10 ? "T00:00:00" : "")).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "—"}</span>;
+      return <span className="whitespace-nowrap">{v ? new Date(String(v) + (String(v).length === 10 ? "T00:00:00" : "")).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "N/A"}</span>;
     case "datetime":
-      return <span className="whitespace-nowrap">{v ? new Date(String(v)).toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "—"}</span>;
+      return <span className="whitespace-nowrap">{v ? new Date(String(v)).toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "N/A"}</span>;
     case "image":
       return v ? (
         // eslint-disable-next-line @next/next/no-img-element
@@ -98,7 +98,7 @@ function Cell({ col, value }: { col: ListColumn; value: unknown }) {
       return <span lang="bn">{String(v ?? "")}</span>;
     default: {
       const s = col.labels?.[String(v)] ?? (Array.isArray(v) ? v.join(", ") : v == null ? "" : String(v));
-      return <span className="line-clamp-2">{s || "—"}</span>;
+      return <span className="line-clamp-2">{s || "N/A"}</span>;
     }
   }
 }
@@ -145,7 +145,7 @@ export function ResourceTable({
     const res = ids.length === 1 ? setField(resource, ids[0], a.field, a.value) : bulkOp(resource, ids, { kind: "set", field: a.field, value: a.value });
     setBusy(false);
     if (!res.ok) return toast("error", res.error);
-    toast("success", res.message ?? `${a.label} — done.`);
+    toast("success", res.message ?? `${a.label}: done.`);
     setSelected([]);
   }
 

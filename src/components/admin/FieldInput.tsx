@@ -131,7 +131,7 @@ export function FieldInput({
       const opts = f.options && !f.taxonomy && !f.ref ? f.options : (options[f.name] ?? []);
       input = (
         <select {...common} className={inputCls(Boolean(error))} value={str} onChange={(e) => onChange(e.target.value)}>
-          <option value="">{f.required ? "Select…" : "— None —"}</option>
+          <option value="">{f.required ? "Select…" : "None"}</option>
           {opts.map((o) => (
             <option key={o.value} value={o.value}>
               {o.label}

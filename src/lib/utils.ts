@@ -1,6 +1,6 @@
 type ClassValue = string | false | null | undefined;
 
-/** Joins truthy class names. Small on purpose — no extra dependency needed. */
+/** Joins truthy class names. Small on purpose, no extra dependency needed. */
 export function cn(...classes: ClassValue[]): string {
   return classes.filter(Boolean).join(" ");
 }

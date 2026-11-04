@@ -33,18 +33,18 @@ export const requiredDocuments = [
   "Online birth registration certificate (photocopy)",
   "Two recent passport-size photographs of the student",
   "One passport-size photograph of each guardian",
-  "Transfer certificate (TC) from the previous school — for Class 2 and above",
-  "Last examination transcript or progress report — for Class 2 and above",
+  "Transfer certificate (TC) from the previous school, for Class 2 and above",
+  "Last examination transcript or progress report, for Class 2 and above",
   "National ID card photocopy of father and mother (or legal guardian)",
 ];
 
-/** Sample fee structure — clearly not real fees. */
+/** Sample fee structure, clearly not real fees. */
 export const fees = [
   { item: "Admission form fee", primary: "300", secondary: "400", higher: "500" },
   { item: "Admission fee (one time)", primary: "5,000", secondary: "6,000", higher: "7,000" },
   { item: "Monthly tuition fee", primary: "1,200", secondary: "1,500", higher: "1,800" },
   { item: "Session charge (yearly)", primary: "2,000", secondary: "2,500", higher: "3,000" },
-  { item: "ICT & lab fee (yearly)", primary: "—", secondary: "1,000", higher: "1,500" },
+  { item: "ICT & lab fee (yearly)", primary: "N/A", secondary: "1,000", higher: "1,500" },
   { item: "Examination fee (per term)", primary: "500", secondary: "700", higher: "900" },
 ];
 

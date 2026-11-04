@@ -308,7 +308,7 @@ export function MediaLibrary({ canEdit, canDelete }: { canEdit: boolean; canDele
               </a>
             </div>
             <p className="text-xs text-muted">
-              {editing.mimeType} · {formatBytes(editing.size)} · uploaded by {editing.uploadedBy || "—"} on {new Date(editing.createdAt).toLocaleString()} · stored in this browser only
+              {editing.mimeType} · {formatBytes(editing.size)} · uploaded by {editing.uploadedBy || "N/A"} on {new Date(editing.createdAt).toLocaleString()} · stored in this browser only
             </p>
             <FormRow label="Alternative text" htmlFor="m-alt">
               <input id="m-alt" className={inputCls()} value={alt} onChange={(e) => setAlt(e.target.value)} disabled={!canEdit} />

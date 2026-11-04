@@ -29,13 +29,13 @@ export function EnvMissing() {
       <p>Add these environment variables to the hosting project (Vercel → Settings → Environment Variables), then redeploy:</p>
       <ul className="list-disc space-y-1 pl-5">
         <li>
-          <code>MONGODB_URI</code> — MongoDB Atlas connection string
+          <code>MONGODB_URI</code>: MongoDB Atlas connection string
         </li>
         <li>
-          <code>ADMIN_SETUP_TOKEN</code> — a long random secret used once to create the first Super Admin
+          <code>ADMIN_SETUP_TOKEN</code>: a long random secret used once to create the first Super Admin
         </li>
         <li>
-          <code>BLOB_READ_WRITE_TOKEN</code> — Vercel Blob token for image and file uploads
+          <code>BLOB_READ_WRITE_TOKEN</code>: Vercel Blob token for image and file uploads
         </li>
       </ul>
       <p className="text-muted">Until then, the public website shows its built-in content.</p>

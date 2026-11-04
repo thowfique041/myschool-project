@@ -606,7 +606,7 @@ export function UsersView() {
                 <td className="px-3 py-2.5">
                   <StatusBadge value={u.active ? "active" : "inactive"} />
                 </td>
-                <td className="px-3 py-2.5 text-muted">{u.lastLoginAt ? new Date(u.lastLoginAt).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" }) : "—"}</td>
+                <td className="px-3 py-2.5 text-muted">{u.lastLoginAt ? new Date(u.lastLoginAt).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" }) : "N/A"}</td>
                 <td className="px-3 py-2.5 text-right">
                   {can("users.edit") && (
                     <AdminButton size="sm" variant="ghost" onClick={() => open(u)}>

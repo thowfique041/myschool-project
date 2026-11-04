@@ -17,7 +17,7 @@ type Base = {
   /** Column span in the admin form grid (1 or 2). Defaults to 2 for long fields. */
   span?: 1 | 2;
   placeholder?: string;
-  /** Bangla text — sets lang="bn" on the input. */
+  /** Bangla text, sets lang="bn" on the input. */
   bn?: boolean;
 };
 

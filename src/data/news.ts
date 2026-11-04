@@ -40,7 +40,7 @@ export const news: NewsArticle[] = [
       "Heats for sprint, long jump and relay events will begin after the annual examinations. House captains will collect entry forms in December.",
     body: [
       "The annual sports day will be held on 14 January 2027 on the school playground. Heats for track events will take place during the first week of January.",
-      "Students will compete for their houses — Padma, Meghna, Jamuna and Surma — in athletics, relay, sack race, and a guardians' musical chairs event.",
+      "Students will compete for their houses (Padma, Meghna, Jamuna and Surma) in athletics, relay, sack race, and a guardians' musical chairs event.",
       "House captains will distribute entry forms in December. Students with medical concerns should inform their class teacher before registering.",
     ],
     image: images.sports,

@@ -11,7 +11,7 @@ import { seedCollections, seedExams, seedResultsFor, singletonDefaults } from "@
 /*
  * Frontend-only admin demo. All data lives in this browser's localStorage.
  * Nothing is sent to a server and nothing here changes the public website.
- * The permission checks below only simulate roles for the demo — they are
+ * The permission checks below only simulate roles for the demo, they are
  * not security. A real deployment needs server-side auth and a database.
  */
 
@@ -106,7 +106,7 @@ function commit() {
     localStorage.setItem(KEY, JSON.stringify(db));
     quotaWarned = false;
   } catch {
-    if (!quotaWarned) console.warn("Demo storage is full — changes are kept until the page is reloaded.");
+    if (!quotaWarned) console.warn("Demo storage is full; changes are kept until the page is reloaded.");
     quotaWarned = true;
   }
   listeners.forEach((l) => l());
@@ -292,7 +292,7 @@ export function saveItem(key: string, id: string | null, input: Record<string, u
     let savedId = id;
     if (id) {
       const i = rows.findIndex((d) => d._id === id);
-      if (i < 0) return { ok: false, error: "Item not found — it may have been deleted." };
+      if (i < 0) return { ok: false, error: "Item not found. It may have been deleted." };
       rows[i] = { ...rows[i], ...data, _id: id, updatedAt: now() };
     } else {
       savedId = uid();

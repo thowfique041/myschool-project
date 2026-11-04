@@ -58,7 +58,7 @@ export const subjectsByLevel: { level: string; compulsory: string[]; optional?: 
 
 export type RoutineRow = { time: string; sat: string; sun: string; mon: string; tue: string; wed: string; thu: string };
 
-/** Sample routine — Class 8, Section A, morning shift */
+/** Sample routine, Class 8, Section A, morning shift */
 export const sampleRoutine: { title: string; rows: RoutineRow[] } = {
   title: "Class 8 · Section A · Morning Shift",
   rows: [

@@ -27,7 +27,7 @@ function build(r: Omit<StudentResult, "gpa" | "subjects"> & { marks: [string, nu
 }
 
 /**
- * Demonstration records only — these students do not exist.
+ * Demonstration records only, these students do not exist.
  * Try roll 101 / 102 / 205 / 310 with the matching class and exam.
  */
 export const mockResults: StudentResult[] = [
@@ -62,7 +62,7 @@ export const resultClasses = ["Class 6", "Class 7", "Class 8", "Class 9", "Class
 export const resultExams = ["Half-Yearly Examination", "Annual Examination"];
 export const resultYears = ["2026", "2025"];
 
-/** Illustrative board-exam summary — clearly labelled as sample data in the UI. */
+/** Illustrative board-exam summary, clearly labelled as sample data in the UI. */
 export const boardSummary = [
   { exam: "SSC", year: "2026", examinees: 186, passed: 181, aPlus: 64 },
   { exam: "SSC", year: "2025", examinees: 172, passed: 166, aPlus: 51 },

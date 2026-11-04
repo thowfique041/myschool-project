@@ -214,7 +214,7 @@ export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
       )}
     >
       <div className="container-page flex h-[4.5rem] items-center justify-between gap-3 sm:h-20 xl:gap-4">
-        <Link href="/" aria-label={`${brand.name} — ${t.common.home}`} className="rounded-md">
+        <Link href="/" aria-label={`${brand.name}, ${t.common.home}`} className="rounded-md">
           <Logo name={brand.name} nameBn={brand.nameBn} src={brand.logo} />
         </Link>
 

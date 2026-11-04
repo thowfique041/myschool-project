@@ -34,7 +34,7 @@ const extraPolicies = [
 ];
 
 /**
- * Default content — the content the website shipped with. Used as the
+ * Default content, the content the website shipped with. Used as the
  * fallback when no database is configured and as seed data when the CMS is
  * first set up, so the live site looks the same before and after.
  */
@@ -72,11 +72,11 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
       { key: "welcome", enabled: true, kicker: "About us", title: "", description: "" },
       { key: "levels", enabled: true, kicker: "Academic levels", title: "Three sections, one continuous journey", description: "Students can study with us from their first day of school until the HSC examination." },
       { key: "notices", enabled: true, kicker: "Notice board", title: "Recent notices", description: "" },
-      { key: "facilities", enabled: true, kicker: "Why Webnion", title: "Why families choose Webnion", description: "What guardians tell us during admission interviews — and what we work hardest to keep true." },
+      { key: "facilities", enabled: true, kicker: "Why Webnion", title: "Why families choose Webnion", description: "What guardians tell us during admission interviews, and what we work hardest to keep true." },
       { key: "results", enabled: true, kicker: "Results", title: "Public examination results", description: "A summary of recent SSC and HSC results." },
       { key: "news", enabled: true, kicker: "News & events", title: "News & events", description: "" },
       { key: "gallery", enabled: true, kicker: "Photo gallery", title: "Campus life", description: "" },
-      { key: "people", enabled: true, kicker: "Our teachers", title: "Teachers who know their subjects — and their students", description: "" },
+      { key: "people", enabled: true, kicker: "Our teachers", title: "Teachers who know their subjects, and their students", description: "" },
       { key: "faq", enabled: true, kicker: "FAQ", title: "Frequently asked questions", description: "" },
     ],
   },
@@ -103,9 +103,9 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
   social: { links: staticSite.social.map((s) => ({ ...s })) },
   branding: { logo: "", favicon: "", primary: "#172c4a", accent: "#0c7351" },
   seo: {
-    title: `${staticSite.name} — Sylhet`,
+    title: `${staticSite.name} | Sylhet`,
     description:
-      "Webnion School & College, Sylhet — Play to Class 12 under the national curriculum. Admission, notices, results, academic calendar and campus life.",
+      "Webnion School & College, Sylhet, Play to Class 12 under the national curriculum. Admission, notices, results, academic calendar and campus life.",
     keywords: ["school in Sylhet", "college in Sylhet", "admission", "SSC", "HSC", "Bangladesh school"],
     ogImage: "",
     siteUrl: "https://webnion-school-college.vercel.app",
@@ -154,13 +154,13 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
       { role: "Teacher member", name: "Sabina Yasmin", note: "Teachers' representative (primary)" },
     ],
     staffText:
-      "Teaching is organised in departments — Bangla, English, Mathematics, Science, ICT, Business Studies, Humanities, Religion & Moral Education, the Primary section and Physical Education. Office, library, laboratory and support staff work across both shifts.",
+      "Teaching is organised in departments: Bangla, English, Mathematics, Science, ICT, Business Studies, Humanities, Religion & Moral Education, the Primary section and Physical Education. Office, library, laboratory and support staff work across both shifts.",
   },
   mission: {
     mission:
       "To provide disciplined, affordable and well-supervised education under the national curriculum, so that every student builds strong foundations in language, mathematics and science, and grows in character.",
     vision:
-      "To be the school Sylhet families trust for steady teaching and honest guidance — where students leave confident, curious and ready to serve their community and country.",
+      "To be the school Sylhet families trust for steady teaching and honest guidance, where students leave confident, curious and ready to serve their community and country.",
     values: [
       { title: "Honesty", text: "In examinations, in work and in how we speak to one another." },
       { title: "Respect", text: "For teachers, families, classmates of every background, and our language and heritage." },
@@ -174,13 +174,13 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
     gender: "female",
     photo: "",
     quote:
-      "Good results matter, but they are not the only thing we measure. I want every student to leave this school honest, curious and confident to speak in front of others — and every guardian to feel they can walk into our office and be heard.",
+      "Good results matter, but they are not the only thing we measure. I want every student to leave this school honest, curious and confident to speak in front of others, and every guardian to feel they can walk into our office and be heard.",
     message: [
-      "Dear students and guardians, welcome. A school is judged by its results, and we take results seriously — but I believe the more important measure is the kind of person a student becomes during the years they spend with us.",
+      "Dear students and guardians, welcome. A school is judged by its results, and we take results seriously, but I believe the more important measure is the kind of person a student becomes during the years they spend with us.",
       "Our teachers know that children learn best when they feel safe, are expected to work hard, and are noticed when they struggle. That is why every section has a class teacher responsible for following up with families, and why we hold guardian meetings every term.",
-      "My office door is open to every guardian during office hours. Please come and talk to us — we would much rather hear about a concern early than late.",
+      "My office door is open to every guardian during office hours. Please come and talk to us. We would much rather hear about a concern early than late.",
     ],
-    messageBn: "আমরা চাই আমাদের শিক্ষার্থীরা সৎ, পরিশ্রমী ও দায়িত্বশীল মানুষ হয়ে গড়ে উঠুক — নিজের ভাষা ও সংস্কৃতিকে ভালোবেসে বিশ্বের সাথে তাল মিলিয়ে চলুক।",
+    messageBn: "আমরা চাই আমাদের শিক্ষার্থীরা সৎ, পরিশ্রমী ও দায়িত্বশীল মানুষ হয়ে গড়ে উঠুক, নিজের ভাষা ও সংস্কৃতিকে ভালোবেসে বিশ্বের সাথে তাল মিলিয়ে চলুক।",
   },
   admission: {
     year: admissionYear,
