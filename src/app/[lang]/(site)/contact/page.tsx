@@ -64,7 +64,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 function MapPlaceholder({ c }: { c: (typeof copy)["en"] }) {
   return (
-    <figure className="overflow-hidden rounded-2xl border border-line bg-surface">
+    <figure className="overflow-hidden rounded-md border border-line bg-surface">
       <svg viewBox="0 0 640 380" role="img" aria-labelledby="map-title map-desc" className="h-auto w-full">
         <title id="map-title">{c.map1}</title>
         <desc id="map-desc">{c.map2}</desc>
@@ -88,7 +88,7 @@ function MapPlaceholder({ c }: { c: (typeof copy)["en"] }) {
           <rect x="30" y="215" width="70" height="25" rx="4" />
           <rect x="440" y="205" width="120" height="30" rx="4" />
         </g>
-        <rect x="190" y="110" width="110" height="64" rx="6" fill="#172c4a" />
+        <rect x="190" y="110" width="110" height="64" rx="6" fill="#7a1e2a" />
         <circle cx="245" cy="104" r="20" fill="#c8283a" />
         <path d="M245 132 l-12 -22 a14 14 0 1 1 24 0Z" fill="#c8283a" />
         <circle cx="245" cy="102" r="6" fill="#fff" />
@@ -114,7 +114,7 @@ function MapPlaceholder({ c }: { c: (typeof copy)["en"] }) {
 
 function MapEmbed({ url, title }: { url: string; title: string }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-line bg-surface">
+    <div className="overflow-hidden rounded-md border border-line bg-surface">
       <iframe
         src={url}
         title={title}
@@ -178,7 +178,7 @@ export default async function ContactPage() {
               <div className="mt-6">
                 {mapOk ? <MapEmbed url={site.mapUrl} title={`${c.map} ${site.name}`} /> : <MapPlaceholder c={c} />}
               </div>
-              <div className="mt-6 rounded-xl border border-line bg-surface p-5">
+              <div className="mt-6 rounded-md border border-line bg-surface p-5">
                 <h3 className="font-semibold text-heading">{c.follow}</h3>
                 <ul className="mt-3 flex flex-wrap gap-3">
                   {site.social.map((s) => (

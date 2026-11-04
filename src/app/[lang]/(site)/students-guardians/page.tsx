@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "@/components/i18n/Link";
-import { BookOpen, CalendarDays, ClipboardCheck, FileDown, HeartPulse, MessageSquare, Shirt, Users } from "lucide-react";
+import { BookOpen, CalendarDays, ClipboardCheck, FileDown } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { Card, SectionHeading } from "@/components/ui/primitives";
+import { SectionHeading } from "@/components/ui/primitives";
 import { getSite } from "@/content/site-content";
 import { getI18n } from "@/i18n/server";
 
-const icons = { links: [CalendarDays, ClipboardCheck, FileDown, BookOpen], info: [Shirt, Users, MessageSquare, HeartPulse] };
+const icons = { links: [CalendarDays, ClipboardCheck, FileDown, BookOpen] };
 const hrefs = ["/academic#routine", "/results#schedule", "/notices#downloads", "/policies"];
 
 const copy = {
@@ -85,7 +85,7 @@ export default async function StudentsGuardiansPage() {
   const [site, { lang }] = await Promise.all([getSite(), getI18n()]);
   const c = copy[lang];
   const links = c.links.map((l, i) => ({ ...l, href: hrefs[i], icon: icons.links[i] }));
-  const info = c.info.map((l, i) => ({ ...l, icon: icons.info[i] }));
+  const info = c.info;
   const timings = c.timings;
   return (
     <>
@@ -95,7 +95,7 @@ export default async function StudentsGuardiansPage() {
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {links.map(({ title, text, href, icon: Icon }) => (
               <li key={href}>
-                <Link href={href} className="group block h-full rounded-xl border border-line bg-surface p-5 transition-colors hover:border-leaf-200 hover:bg-leaf-50">
+                <Link href={href} className="group block h-full rounded-md border border-line bg-surface p-5 transition-colors hover:border-leaf-200 hover:bg-leaf-50">
                   <Icon aria-hidden className="size-6 text-accent" />
                   <p className="mt-3 font-semibold text-heading group-hover:text-accent">{title}</p>
                   <p className="mt-1 text-sm text-muted">{text}</p>
@@ -107,21 +107,18 @@ export default async function StudentsGuardiansPage() {
           <div className="mt-14 grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
             <div>
               <SectionHeading kicker={c.goodK} title={c.good} />
-              <ul className="mt-6 grid gap-4 sm:grid-cols-2">
-                {info.map(({ icon: Icon, title, text }) => (
-                  <li key={title}>
-                    <Card className="h-full p-5">
-                      <Icon aria-hidden className="size-5 text-accent" />
-                      <h3 className="mt-3 font-semibold text-heading">{title}</h3>
-                      <p className="mt-1 text-sm leading-relaxed text-muted">{text}</p>
-                    </Card>
-                  </li>
+              <dl className="mt-6 divide-y divide-line border-y border-line">
+                {info.map(({ title, text }) => (
+                  <div key={title} className="py-3">
+                    <dt className="font-semibold text-heading">{title}</dt>
+                    <dd className="text-[0.95rem] leading-relaxed text-muted">{text}</dd>
+                  </div>
                 ))}
-              </ul>
+              </dl>
             </div>
             <div>
               <SectionHeading kicker={c.timesK} title={c.times} />
-              <dl className="mt-6 divide-y divide-line rounded-xl border border-line bg-surface">
+              <dl className="mt-6 divide-y divide-line rounded-md border border-line bg-surface">
                 {timings.map((t) => (
                   <div key={t.label} className="flex flex-col gap-0.5 px-5 py-3.5 sm:flex-row sm:justify-between">
                     <dt className="text-sm text-muted">{t.label}</dt>
