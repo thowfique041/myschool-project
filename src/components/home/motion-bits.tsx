@@ -1,53 +1,12 @@
 "use client";
 
 import { useI18n } from "@/i18n/client";
-import { toBnDigits } from "@/lib/utils";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useState } from "react";
 import Link from "@/components/i18n/Link";
-import { animate, motion, useInView, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "motion/react";
 import { Megaphone, Pause, Play } from "lucide-react";
 import type { Notice } from "@/types";
-
-/** Staggered entrance for hero content on first load. */
-export function HeroIntro({ children, delay = 0, className }: { children: ReactNode; delay?: number; className?: string }) {
-  const reduce = useReducedMotion();
-  return (
-    <motion.div
-      className={className}
-      initial={reduce ? false : { opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-/** Counts up to a value once visible. */
-export function StatCounter({ value, suffix = "", decimals = 0, bn = false }: { value: number; suffix?: string; decimals?: number; bn?: boolean }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-40px" });
-  const reduce = useReducedMotion();
-  const [display, setDisplay] = useState(reduce ? value : 0);
-
-  useEffect(() => {
-    if (!inView || reduce) return;
-    const controls = animate(0, value, {
-      duration: 1.1,
-      ease: "easeOut",
-      onUpdate: (v) => setDisplay(v),
-    });
-    return () => controls.stop();
-  }, [inView, reduce, value]);
-
-  return (
-    <span ref={ref} className="tabular-nums">
-      {bn ? toBnDigits((reduce ? value : display).toFixed(decimals)) : (reduce ? value : display).toFixed(decimals)}
-      {suffix}
-    </span>
-  );
-}
 
 /**
  * The scrolling "latest notice" strip familiar from Bangladeshi school sites,

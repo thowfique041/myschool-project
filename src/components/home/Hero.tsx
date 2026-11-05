@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "@/components/i18n/Link";
 import { ArrowRight } from "lucide-react";
 import { ButtonLink } from "@/components/ui/primitives";
-import { HeroIntro, NoticeTicker } from "./motion-bits";
+import { NoticeTicker } from "./motion-bits";
 import type { Notice } from "@/types";
 import type { HomeContent } from "./types";
 
@@ -30,7 +30,7 @@ export function Hero({ home, notices }: { home: HomeContent; notices: Notice[] }
 
             <div className="flex min-h-[28rem] flex-col justify-center px-5 py-14 sm:min-h-[32rem] sm:px-10 lg:min-h-[34rem] lg:px-14">
               <div className="max-w-2xl">
-                <HeroIntro>
+                <div>
                   <p
                     className="font-serif text-xl font-semibold text-leaf-200 sm:text-2xl"
                     style={{ lineHeight: 1.5 }}
@@ -43,13 +43,13 @@ export function Hero({ home, notices }: { home: HomeContent; notices: Notice[] }
                   >
                     {home.heroTitle}
                   </h1>
-                </HeroIntro>
-                <HeroIntro delay={0.08}>
+                </div>
+                <div>
                   <p className="mt-5 max-w-xl text-[1.02rem] leading-relaxed text-navy-100 sm:text-lg">
                     {home.heroSubtitle}
                   </p>
-                </HeroIntro>
-                <HeroIntro delay={0.16} className="mt-8 flex flex-wrap gap-3">
+                </div>
+                <div className="mt-8 flex flex-wrap gap-3">
                   <ButtonLink href={home.primaryHref || "/admission"} variant="secondary">
                     {home.primaryLabel}
                     <ArrowRight aria-hidden className="size-4" />
@@ -60,7 +60,7 @@ export function Hero({ home, notices }: { home: HomeContent; notices: Notice[] }
                   >
                     {home.secondaryLabel}
                   </Link>}
-                </HeroIntro>
+                </div>
               </div>
             </div>
 

@@ -3,7 +3,6 @@ import { Download, FileText } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Badge, ButtonLink, Card, SectionHeading } from "@/components/ui/primitives";
 import { SampleTag } from "@/components/ui/SampleTag";
-import { Reveal } from "@/components/ui/Reveal";
 import { ArrowLink } from "@/components/shared/cards";
 import { getAcademic, getDownloads, getEvents, getSetting, getSite, getToday } from "@/content/site-content";
 import { formatDate, toBnDigits } from "@/lib/utils";
@@ -161,8 +160,8 @@ export default async function AcademicPage() {
         <div className="container-page">
           <SectionHeading id="levels-h" kicker={c.levelsK} title={c.levels} />
           <div className="mt-8 grid gap-6 lg:grid-cols-3">
-            {academicLevels.map((l, i) => (
-              <Reveal key={l.id} delay={i * 0.05}>
+            {academicLevels.map((l) => (
+              <div key={l.id}>
                 <Card className="h-full p-6">
                   <h3 className="font-serif text-xl font-semibold text-heading">{l.name}</h3>
                   <p className="text-sm font-semibold text-subheading">
@@ -180,7 +179,7 @@ export default async function AcademicPage() {
                     </div>
                   )}
                 </Card>
-              </Reveal>
+              </div>
             ))}
           </div>
         </div>
@@ -196,7 +195,7 @@ export default async function AcademicPage() {
           />
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             {subjectsByLevel.map((s) => (
-              <Reveal key={s.level}>
+              <div key={s.level}>
                 <div className="h-full rounded-xl border border-line p-6">
                   <h3 className="font-semibold text-heading">{s.level}</h3>
                   <p className="mt-3 text-xs font-semibold text-muted uppercase">{c.compulsory}</p>
@@ -221,7 +220,7 @@ export default async function AcademicPage() {
                     </>
                   )}
                 </div>
-              </Reveal>
+              </div>
             ))}
           </div>
         </div>
