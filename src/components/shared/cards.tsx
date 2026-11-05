@@ -111,7 +111,7 @@ export function TeacherAvatar({ teacher, size = "md" }: { teacher: Teacher; size
       <img
         src={teacher.photo}
         alt=""
-        className={cn("shrink-0 rounded-full object-cover ring-4 ring-white", size === "lg" ? "size-24" : "size-16")}
+        className={cn("shrink-0 rounded-full object-cover ring-4 ring-surface", size === "lg" ? "size-24" : "size-16")}
       />
     );
   }
