@@ -272,7 +272,7 @@ const FACILITY_ICONS = [FlaskConical, Monitor, Library, Trophy, HeartPulse, User
 
 export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
   // Checkerboard of filled cards, like a printed prospectus page.
-  const filled: Record<number, string> = { 1: "bg-leaf-700 text-white border-leaf-700", 3: "bg-navy-800 text-white border-navy-800", 5: "bg-navy-800 text-white border-navy-800" };
+  const filled: Record<number, string> = { 1: "bg-navy-800 text-white border-navy-800", 3: "bg-navy-800 text-white border-navy-800", 5: "bg-navy-800 text-white border-navy-800" };
   const iconTone = ["bg-leaf-700", "bg-navy-800"];
   return (
     <section aria-labelledby="why-title" className="border-t border-line py-14 sm:py-16">
