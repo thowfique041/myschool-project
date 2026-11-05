@@ -46,7 +46,7 @@ export function NewsExplorer({ articles }: { articles: NewsArticle[] }) {
           ))}
         </ul>
       ) : (
-        <div className="mt-3 rounded-md border border-dashed border-line bg-surface px-6 py-12 text-center">
+        <div className="mt-3 rounded-xl border border-dashed border-line bg-surface px-6 py-12 text-center">
           <p className="font-semibold text-heading">{t.news.none}</p>
           <button
             type="button"

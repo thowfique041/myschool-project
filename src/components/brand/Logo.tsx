@@ -12,8 +12,8 @@ type LogoMarkProps = {
  * sprout rising from its spine, knowledge as the ground growth comes from.
  */
 export function LogoMark({ className, tone = "light", title }: LogoMarkProps) {
-  const shield = tone === "light" ? "#7a1e2a" : "#ffffff";
-  const book = tone === "light" ? "#ffffff" : "#7a1e2a";
+  const shield = tone === "light" ? "#172c4a" : "#ffffff";
+  const book = tone === "light" ? "#ffffff" : "#172c4a";
   const rim = "#b88a2e";
 
   return (
@@ -36,9 +36,9 @@ export function LogoMark({ className, tone = "light", title }: LogoMarkProps) {
         strokeWidth="1.2"
       />
       {/* sprout */}
-      <path d="M24 33V19" stroke="#d9a93f" strokeWidth="2" strokeLinecap="round" />
-      <path d="M24 25c-1.2-5.4-5.4-8.2-10.2-8 .6 5.2 4.6 8.4 10.2 8Z" fill="#d9a93f" />
-      <path d="M24 21.5c1-5.6 5.2-8.8 10.4-8.8-.4 5.6-4.4 9-10.4 8.8Z" fill="#ecc66a" />
+      <path d="M24 33V19" stroke="#13895f" strokeWidth="2" strokeLinecap="round" />
+      <path d="M24 25c-1.2-5.4-5.4-8.2-10.2-8 .6 5.2 4.6 8.4 10.2 8Z" fill="#13895f" />
+      <path d="M24 21.5c1-5.6 5.2-8.8 10.4-8.8-.4 5.6-4.4 9-10.4 8.8Z" fill="#1fa774" />
       {/* open book */}
       <path d="M24 36.5c-4.6-3.4-9.6-4.2-14-3.4v8.4c4.6-.8 9.4.2 14 3.4Z" fill={book} />
       <path d="M24 36.5c4.6-3.4 9.6-4.2 14-3.4v8.4c-4.6-.8-9.4.2-14 3.4Z" fill={book} />
@@ -69,7 +69,7 @@ export function Logo({ className, tone = "light", compact = false, name = "Webni
       <span className="flex flex-col leading-none">
         <span
           className={cn(
-            "font-serif text-[1.02rem] font-semibold whitespace-nowrap min-[400px]:text-[1.12rem] sm:text-[1.35rem] lg:text-[1.15rem] xl:text-[1.35rem]",
+            "font-serif text-[1.02rem] font-semibold tracking-tight whitespace-nowrap min-[400px]:text-[1.12rem] sm:text-[1.35rem] lg:text-[1.15rem] xl:text-[1.35rem]",
             /[\u0980-\u09FF]/.test(name) && "sm:text-[1.3rem]",
             isLight ? "text-heading" : "text-white",
           )}

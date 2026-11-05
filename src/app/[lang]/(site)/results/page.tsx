@@ -109,7 +109,7 @@ export default async function ResultsPage() {
         <div className="container-page grid gap-10 lg:grid-cols-[1.3fr_0.7fr]">
           {schedule ? <div className="min-w-0">
             <SectionHeading id="sched-h" kicker={c.schedKicker} title={c.sched(schedule.name, schedule.year)} description={schedule.note || undefined} />
-            <div className="mt-6 overflow-x-auto rounded-md border border-line" tabIndex={0} aria-label={c.schedLabel}>
+            <div className="mt-6 overflow-x-auto rounded-xl border border-line" tabIndex={0} aria-label={c.schedLabel}>
               <table className="w-full min-w-[36rem] text-left text-sm">
                 <thead className="bg-paper text-xs text-muted uppercase">
                   <tr>
@@ -157,7 +157,7 @@ export default async function ResultsPage() {
             <SectionHeading id="sum-h" kicker={c.sumKicker} title={c.sum} description={board.isSample ? c.sumSample : undefined} />
             {board.isSample && <SampleTag />}
           </div>
-          <div className="mt-8 overflow-x-auto rounded-md border border-line bg-surface" tabIndex={0} aria-label={c.sumLabel}>
+          <div className="mt-8 overflow-x-auto rounded-xl border border-line bg-surface" tabIndex={0} aria-label={c.sumLabel}>
             <table className="w-full min-w-[34rem] text-left text-sm">
               <thead className="bg-brand text-xs text-white uppercase">
                 <tr>
