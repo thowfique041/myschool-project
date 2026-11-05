@@ -14,7 +14,7 @@ const copy = {
     title: "Students & Guardians",
     alt: "শিক্ষার্থী ও অভিভাবক",
     crumb: "Campus Life",
-    intro: "Everything a family needs to know for a smooth school year.",
+    intro: "School timings, uniform, leave and other practical information.",
     meta: "Practical information for students and guardians: school timings, uniform, leave, progress reports and contacts.",
     links: [
       { title: "Class routine", text: "Period timings and the weekly class routine." },
@@ -46,7 +46,7 @@ const copy = {
     title: "শিক্ষার্থী ও অভিভাবক",
     alt: "Students & Guardians",
     crumb: "ক্যাম্পাস জীবন",
-    intro: "একটি নির্বিঘ্ন শিক্ষাবর্ষের জন্য পরিবারের যা কিছু জানা দরকার।",
+    intro: "বিদ্যালয়ের সময়সূচি, পোশাক, ছুটি ও অন্যান্য দরকারি তথ্য।",
     meta: "শিক্ষার্থী ও অভিভাবকদের জন্য প্রয়োজনীয় তথ্য: বিদ্যালয়ের সময়, পোশাক, ছুটি, অগ্রগতি প্রতিবেদন ও যোগাযোগ।",
     links: [
       { title: "ক্লাস রুটিন", text: "পিরিয়ডের সময় ও সাপ্তাহিক ক্লাস রুটিন।" },

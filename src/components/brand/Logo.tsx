@@ -7,10 +7,7 @@ type LogoMarkProps = {
   title?: string;
 };
 
-/**
- * Original Webnion emblem: a crest holding an open book with a two-leaf
- * sprout rising from its spine, knowledge as the ground growth comes from.
- */
+/** School crest: shield with an open book and a two-leaf sprout. */
 export function LogoMark({ className, tone = "light", title }: LogoMarkProps) {
   const shield = tone === "light" ? "#172c4a" : "#ffffff";
   const book = tone === "light" ? "#ffffff" : "#172c4a";
