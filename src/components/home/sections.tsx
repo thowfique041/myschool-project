@@ -176,7 +176,7 @@ export function LevelsSection({ copy, data }: { copy: SectionCopy; data: HomeDat
 
 /* ------------------------------------------------------ Statistics band */
 
-export function StatsSection({ home, copy, data }: { home: HomeContent; copy: SectionCopy; data: HomeData }) {
+export function StatsSection({ home, data }: { home: HomeContent; copy?: SectionCopy; data: HomeData }) {
   const n = (v: number | string) => num(v, data.lang);
   const ssc = [...data.board.rows].filter((r) => r.exam === "SSC" || r.exam === "এসএসসি").sort((a, b) => b.year.localeCompare(a.year))[0];
   const computed: Record<string, string> = {
