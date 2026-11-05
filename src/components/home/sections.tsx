@@ -26,7 +26,7 @@ function TextLink({ href, children }: { href: string; children: React.ReactNode 
 export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
   const adm = data.admission;
   return (
-    <section aria-label={data.t.home.noticesAdmission} className="pt-4 pb-14 sm:pb-16">
+    <section aria-label={data.t.home.noticesAdmission} className="border-t border-line py-14 sm:py-16">
       <div className="container-page grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
           <SectionHeading id="notices-title" variant="rule" title={copy.title} />
