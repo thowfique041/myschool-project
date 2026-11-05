@@ -1,6 +1,6 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { seedCollections, seedExams, singletonDefaults } from "./defaults";
-import { slugify } from "@/cms/fields";
+import { slugify } from "@/lib/utils";
 import { mockResults } from "@/data/results";
 import { getLang } from "@/i18n/server";
 import {
