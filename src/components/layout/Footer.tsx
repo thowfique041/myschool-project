@@ -53,7 +53,10 @@ export async function Footer({ site, footer, year }: { site: SiteInfo; footer: F
   const { t, lang } = await getI18n();
   const n = (v: number) => (lang === "bn" ? toBnDigits(v) : String(v));
   return (
-    <footer className="bg-navy-950 text-navy-100">
+    <footer className="relative isolate bg-navy-950 text-navy-100 [clip-path:inset(0)]">
+      {/* Fixed photo clipped to the footer: it stays still while the footer scrolls over it. */}
+      <div aria-hidden className="fixed inset-0 -z-20 bg-cover bg-center" style={{ backgroundImage: "url(/images/footer-campus.jpg)" }} />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-navy-950/80" />
       <div className="container-page grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <Logo tone="dark" name={lang === "bn" ? site.nameBn : site.name} nameBn={lang === "bn" ? `স্থাপিত ${String(site.established).replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[Number(d)])}` : `Established ${site.established}`} src={site.logo} />
