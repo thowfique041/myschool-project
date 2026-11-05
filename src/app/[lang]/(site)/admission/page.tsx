@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { FileText } from "lucide-react";
+import { CalendarClock, CheckCircle2, FileText } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Badge, ButtonLink, buttonClasses, Card, DemoNote, SectionHeading } from "@/components/ui/primitives";
 import { SampleTag } from "@/components/ui/SampleTag";
@@ -146,7 +146,7 @@ export default async function AdmissionPage() {
             )}
           </Reveal>
           <Reveal delay={0.06}>
-            {a.image && <Picture image={{ src: a.image, alt: c.photoAlt, width: 1600, height: 1000 }} className="rounded-md" sizes="(min-width: 1024px) 45vw, 100vw" />}
+            {a.image && <Picture image={{ src: a.image, alt: c.photoAlt, width: 1600, height: 1000 }} className="rounded-2xl" sizes="(min-width: 1024px) 45vw, 100vw" />}
           </Reveal>
         </div>
       </section>
@@ -155,14 +155,17 @@ export default async function AdmissionPage() {
       <section aria-labelledby="dates" className="border-y border-line bg-surface py-16">
         <div className="container-page">
           <SectionHeading id="dates" kicker={c.datesK} title={c.dates} />
-          <dl className="mt-6 max-w-2xl divide-y divide-line border-y border-line">
-            {a.dates.map((d) => (
-              <div key={d.label} className="flex justify-between gap-4 py-2.5 text-[0.97rem]">
-                <dt className="text-ink">{d.label}</dt>
-                <dd className="shrink-0 font-semibold text-heading">{formatDate(d.date, lang)}</dd>
-              </div>
+          <ol className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {a.dates.map((d, i) => (
+              <Reveal as="li" key={d.label} delay={i * 0.03} className="flex gap-3 rounded-xl border border-line bg-paper p-4">
+                <CalendarClock aria-hidden className="mt-0.5 size-5 shrink-0 text-accent" />
+                <div>
+                  <p className="font-semibold text-heading">{formatDate(d.date, lang)}</p>
+                  <p className="text-sm text-muted">{d.label}</p>
+                </div>
+              </Reveal>
             ))}
-          </dl>
+          </ol>
         </div>
       </section>
 
@@ -170,7 +173,7 @@ export default async function AdmissionPage() {
       <section id="eligibility" aria-labelledby="elig" className="scroll-mt-24 py-16">
         <div className="container-page">
           <SectionHeading id="elig" kicker={c.eligK} title={c.elig} description={site.demoNote ? c.eligSample : undefined} />
-          <div className="mt-8 overflow-x-auto rounded-md border border-line bg-surface" tabIndex={0} aria-label={c.eligLabel}>
+          <div className="mt-8 overflow-x-auto rounded-xl border border-line bg-surface" tabIndex={0} aria-label={c.eligLabel}>
             <table className="w-full min-w-[44rem] text-left text-sm">
               <thead className="bg-brand text-xs text-white uppercase">
                 <tr>
@@ -202,23 +205,25 @@ export default async function AdmissionPage() {
         <div className="container-page grid gap-12 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
             <SectionHeading id="proc" kicker={c.procK} title={c.proc} />
-            <ol className="mt-6 space-y-4">
+            <ol className="mt-8 grid gap-4 sm:grid-cols-2">
               {a.steps.map((s, i) => (
-                <li key={s.title} className="flex gap-3">
-                  <span className="w-6 shrink-0 font-bold text-accent">{n(i + 1)}.</span>
-                  <p className="text-[0.97rem] text-ink">
-                    <span className="font-semibold text-heading">{s.title}.</span> {s.text}
-                  </p>
-                </li>
+                <Reveal as="li" key={s.title} delay={i * 0.03} className="rounded-xl border border-line p-5">
+                  <span className="flex size-8 items-center justify-center rounded-full bg-brand text-sm font-semibold text-white">{n(i + 1)}</span>
+                  <h3 className="mt-3 font-semibold text-heading">{s.title}</h3>
+                  <p className="mt-1 text-sm text-muted">{s.text}</p>
+                </Reveal>
               ))}
             </ol>
           </div>
           <div>
             <SectionHeading kicker={c.docsK} title={c.docs} />
-            <Card className="mt-6 p-6">
-              <ul className="list-disc space-y-2 pl-5 text-[0.95rem] text-ink marker:text-accent">
+            <Card className="mt-8 p-6">
+              <ul className="space-y-3">
                 {a.documents.map((d) => (
-                  <li key={d}>{d}</li>
+                  <li key={d} className="flex gap-3 text-[0.95rem] text-ink">
+                    <CheckCircle2 aria-hidden className="mt-0.5 size-5 shrink-0 text-accent" />
+                    {d}
+                  </li>
                 ))}
               </ul>
               {a.circularFile && <a
@@ -242,7 +247,7 @@ export default async function AdmissionPage() {
             <SectionHeading id="fees-h" kicker={c.feesK} title={c.fees} description={c.feesText} />
             {site.demoNote && <SampleTag />}
           </div>
-          <div className="mt-8 overflow-x-auto rounded-md border border-line bg-surface" tabIndex={0} aria-label={c.feeLabel}>
+          <div className="mt-8 overflow-x-auto rounded-xl border border-line bg-surface" tabIndex={0} aria-label={c.feeLabel}>
             <table className="w-full min-w-[36rem] text-left text-sm">
               <caption className="sr-only">{c.feeCaption(admissionYear)}</caption>
               <thead className="border-b border-line bg-paper text-xs text-muted uppercase">
@@ -281,7 +286,7 @@ export default async function AdmissionPage() {
               title={c.applyTitle}
               description={c.applyText}
             />
-            <div className="mt-8 rounded-md border border-line bg-paper p-5 sm:p-8">
+            <div className="mt-8 rounded-2xl border border-line bg-paper p-5 sm:p-8">
               <AdmissionForm classOptions={a.classOptions} open={a.open} />
             </div>
           </div>

@@ -16,6 +16,7 @@ type SectionHeadingProps = {
 };
 
 export function SectionHeading({
+  kicker,
   title,
   description,
   align = "left",
@@ -26,10 +27,22 @@ export function SectionHeading({
   const dark = tone === "dark";
   return (
     <div className={cn(align === "center" && "mx-auto text-center", "max-w-2xl", className)}>
+      {kicker && (
+        <p
+          lang={/[\u0980-\u09FF]/.test(kicker) ? "bn" : "en"}
+          className={cn(
+            "mb-2 inline-flex items-center gap-2 text-sm font-semibold",
+            dark ? "text-leaf-200" : "text-accent",
+          )}
+          style={{ lineHeight: 1.4 }}
+        >
+          {kicker}
+        </p>
+      )}
       <h2
         id={id}
         className={cn(
-          "font-serif text-[1.6rem] leading-snug font-bold sm:text-[1.9rem]",
+          "font-serif text-[1.75rem] leading-tight font-semibold tracking-tight sm:text-[2.1rem]",
           dark ? "text-white" : "text-heading",
         )}
       >
@@ -58,7 +71,7 @@ const variants: Record<Variant, string> = {
 
 export const buttonClasses = (variant: Variant = "primary", size: "sm" | "md" = "md") =>
   cn(
-    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded font-semibold transition-colors duration-150",
+    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg font-semibold transition-colors duration-150",
     "focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60",
     size === "md" ? "min-h-11 px-5 text-[0.95rem]" : "min-h-9 px-3.5 text-sm",
     variants[variant],

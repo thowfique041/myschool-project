@@ -78,7 +78,7 @@ export default async function CreditsPage() {
             </a>
             .
           </p>
-          <ul className="mt-8 divide-y divide-line rounded-md border border-line bg-surface">
+          <ul className="mt-8 divide-y divide-line rounded-xl border border-line bg-surface">
             {list.map((img) => (
               <li key={img.src} className="flex items-center gap-4 p-4">
                 <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-md bg-paper-dark">
