@@ -75,14 +75,14 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
               <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950/70 via-navy-950/25 to-navy-950/10 md:bg-gradient-to-r md:from-navy-950/75 md:via-navy-950/25 md:to-transparent" />
               <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-navy-950/50 to-transparent" />
               <div className="container-page flex h-full flex-col justify-center pb-10">
-                <div className="max-w-2xl [text-shadow:0_1px_3px_rgb(0_0_0/0.55),0_2px_14px_rgb(0_0_0/0.35)]">
+                <div className="max-w-2xl rounded-md border-l-4 border-[#e8b84a] bg-navy-950/75 p-6 shadow-[0_8px_30px_rgb(0_0_0/0.35)] sm:p-8">
                   <Heading id={i === 0 ? "hero-title" : undefined} className="font-serif text-4xl leading-tight font-semibold sm:text-5xl lg:text-6xl">
                     {s.title}
                   </Heading>
-                  {s.lines[0] && <p className="mt-3 text-lg font-medium text-white sm:text-xl">{s.lines[0]}</p>}
-                  {s.motto && <p className="mt-1 text-sm text-white/90 italic">{s.motto}</p>}
+                  {s.lines[0] && <p className="mt-3 text-lg text-white sm:text-xl">{s.lines[0]}</p>}
+                  {s.motto && <p className="mt-1 text-sm text-[#e8b84a] italic">{s.motto}</p>}
                   {s.lines.slice(1).map((l) => (
-                    <p key={l} className="mt-4 text-base font-semibold sm:text-lg">{l}</p>
+                    <p key={l} className="mt-4 text-base font-semibold text-[#f3cc6e] sm:text-lg">{l}</p>
                   ))}
                   <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
                     <ButtonLink href={s.href} variant="secondary">
