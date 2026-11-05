@@ -100,7 +100,7 @@ function Lightbox({
             exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.985 }}
             transition={{ duration: 0.18 }}
           >
-            <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-navy-900">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-md bg-navy-900">
               <Image src={item.image.src} alt={item.image.alt} fill sizes="(min-width: 1024px) 64rem, 100vw" unoptimized={item.image.src.endsWith(".svg")} className="object-contain" />
             </div>
             <figcaption className="mt-3 text-white">
@@ -163,7 +163,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
                 triggerRef.current = e.currentTarget;
                 setOpen(i);
               }}
-              className="group relative block w-full overflow-hidden rounded-xl bg-paper-dark text-left"
+              className="group relative block w-full overflow-hidden rounded-md bg-paper-dark text-left"
               aria-label={t.gallery.open(item.caption)}
             >
               <span className="relative block aspect-[4/3]">

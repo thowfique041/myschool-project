@@ -85,7 +85,7 @@ export default async function CalendarPage() {
                   <h2 id={`m-${key}`} className="font-serif text-xl font-semibold text-heading">
                     {monthNames[lang][m - 1]} {lang === "bn" ? toBnDigits(y) : y}
                   </h2>
-                  <ul className="mt-3 divide-y divide-line rounded-xl border border-line bg-surface">
+                  <ul className="mt-3 divide-y divide-line rounded-md border border-line bg-surface">
                     {events.map((e) => {
                       const d = datePartsL(e.date, lang);
                       return (

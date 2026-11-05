@@ -49,9 +49,9 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
         </div>
 
         <div>
-          <figure id="principal" className="relative h-full rounded-2xl bg-navy-900 p-7 text-white sm:p-9">
-            <Quote aria-hidden className="size-9 text-leaf-200/60" />
-            <p className="mt-2 text-sm font-medium text-leaf-200">
+          <figure id="principal" className="relative h-full rounded-lg bg-navy-900 p-7 text-white sm:p-9">
+            <Quote aria-hidden className="size-9 text-navy-200/60" />
+            <p className="mt-2 text-sm font-medium text-navy-200">
               {data.t.home.principalMessage}
             </p>
             <blockquote className="mt-3 font-serif text-lg leading-relaxed sm:text-xl">
@@ -69,7 +69,7 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
                 <span className="block text-sm text-navy-200">{p.title}</span>
               </span>
             </figcaption>
-            <Link href="/about#principal" className="mt-5 inline-block text-sm font-semibold text-leaf-200 hover:text-white hover:underline underline-offset-4">
+            <Link href="/about#principal" className="mt-5 inline-block text-sm font-semibold text-navy-200 hover:text-white hover:underline underline-offset-4">
               {data.t.home.readFull}
             </Link>
           </figure>
@@ -94,7 +94,7 @@ export function LevelsSection({ copy, data }: { copy: SectionCopy; data: HomeDat
           />
           <ArrowLink href="/academic">{data.t.home.curriculum}</ArrowLink>
         </div>
-        <ol className={cn("mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line", data.levels.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2")}>
+        <ol className={cn("mt-10 grid gap-px overflow-hidden rounded-lg border border-line bg-line", data.levels.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2")}>
           {data.levels.map((level, i) => (
             <li key={level.id} className="flex flex-col bg-surface p-7">
               <div className="flex items-baseline justify-between">
@@ -109,7 +109,7 @@ export function LevelsSection({ copy, data }: { copy: SectionCopy; data: HomeDat
               <ul className="mt-4 space-y-1.5 text-sm text-ink">
                 {level.highlights.map((h) => (
                   <li key={h} className="flex gap-2">
-                    <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-leaf-500" />
+                    <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-navy-400" />
                     {h}
                   </li>
                 ))}
@@ -151,7 +151,7 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
         </div>
 
         <div>
-          <div id="admission" className="h-full rounded-2xl border border-leaf-200 bg-leaf-50 p-6 sm:p-8">
+          <div id="admission" className="h-full rounded-lg border border-line-strong bg-leaf-50 p-6 sm:p-8">
             <Badge tone={adm.open ? "leaf" : "neutral"}>{adm.open ? data.t.home.admissionOpen : data.t.home.admissionClosed}</Badge>
             <h2 className="mt-3 font-serif text-2xl font-semibold text-heading">
               {data.t.home.admission} {num(adm.year, data.lang)}
@@ -174,7 +174,7 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
                 </li>
               ))}
             </ol>
-            <dl className="mt-6 space-y-2 border-t border-leaf-200 pt-5 text-sm">
+            <dl className="mt-6 space-y-2 border-t border-line-strong pt-5 text-sm">
               {adm.dates.slice(0, 4).map((d) => (
                 <div key={d.label} className="flex justify-between gap-4">
                   <dt className="text-muted">{d.label}</dt>
@@ -221,7 +221,7 @@ export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: 
                 return (
                 <li key={title} className="flex gap-4">
                   <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white/10">
-                    <Icon aria-hidden className="size-5 text-leaf-200" />
+                    <Icon aria-hidden className="size-5 text-navy-200" />
                   </span>
                   <div>
                     <h3 className="font-semibold">{title}</h3>
@@ -234,11 +234,11 @@ export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: 
           </div>
           <div>
             <div>
-              <h3 className="flex items-center gap-2 text-sm font-semibold tracking-wide text-leaf-200 uppercase">{data.t.home.facilities}</h3>
+              <h3 className="flex items-center gap-2 text-sm font-semibold tracking-wide text-navy-200 uppercase">{data.t.home.facilities}</h3>
             </div>
             <ul className="mt-4 grid gap-4 sm:grid-cols-2">
               {data.facilities.map(({ title, text, image, imageAlt }) => (
-                <li key={title} className="overflow-hidden rounded-xl bg-white/[0.04] ring-1 ring-white/10">
+                <li key={title} className="overflow-hidden rounded-md bg-white/[0.04] ring-1 ring-white/10">
                   {image && (
                     <Picture image={{ src: image, alt: imageAlt, width: 1600, height: 900 }} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" ratio="aspect-[16/9]" />
                   )}
@@ -287,7 +287,7 @@ export function ResultsSection({ copy, data }: { copy: SectionCopy; data: HomeDa
             <ArrowLink href="/results">{data.t.home.resultSearch}</ArrowLink>
           </div>
         </div>
-        <dl className={cn("mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line", stats.length >= 4 && "lg:grid-cols-4")}>
+        <dl className={cn("mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-line bg-line", stats.length >= 4 && "lg:grid-cols-4")}>
           {stats.map((s) => (
             <div key={s.label} className="bg-surface p-6">
               <dt className="text-sm text-muted">{s.label}</dt>
@@ -317,7 +317,7 @@ export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData 
         </div>
         <div className="mt-10 grid gap-6 lg:grid-cols-[1.25fr_1fr]">
           <div>
-            <article className="group relative h-full overflow-hidden rounded-2xl border border-line bg-paper">
+            <article className="group relative h-full overflow-hidden rounded-lg border border-line bg-paper">
               <Picture image={featured.image} sizes="(min-width: 1024px) 55vw, 100vw" />
               <div className="p-6">
                 <div className="flex items-center gap-3 text-xs text-muted">
@@ -371,7 +371,7 @@ export function GalleryPreview({ copy, data }: { copy: SectionCopy; data: HomeDa
           {picks.map((g, i) => (
             <li
               key={g.id}
-              className={cn("group relative overflow-hidden rounded-xl", i === 0 && "col-span-2 row-span-2", i === 3 && "md:col-span-2")}
+              className={cn("group relative overflow-hidden rounded-md", i === 0 && "col-span-2 row-span-2", i === 3 && "md:col-span-2")}
             >
               <Link href="/gallery" className="block h-full" aria-label={data.t.home.galleryOpen(g.caption)}>
                 <Picture image={g.image} ratio="h-full" sizes="(min-width: 768px) 50vw, 100vw" />
@@ -419,8 +419,8 @@ export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeDat
           <ul className="mt-6 grid gap-5 md:grid-cols-3">
             {data.testimonials.map((t, i) => (
               <li key={i}>
-                <figure className="flex h-full flex-col rounded-xl border border-line bg-paper p-6">
-                  <Quote aria-hidden className="size-6 text-leaf-500" />
+                <figure className="flex h-full flex-col rounded-md border border-line bg-paper p-6">
+                  <Quote aria-hidden className="size-6 text-navy-500" />
                   <blockquote className="mt-3 flex-1 text-base leading-relaxed text-ink">
                     {t.quote}
                   </blockquote>

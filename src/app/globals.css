@@ -3,9 +3,10 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * Webnion School & College: design tokens
- * Navy carries the institution, green is the restrained accent,
- * red is reserved for urgent/new markers only.
+ * Design tokens.
+ * navy-*: institutional colour (header bands, headings, links, tables).
+ * leaf-*: primary call-to-action and "admission open" state only.
+ * signal-*: urgent / important notices only.
  */
 @theme {
   --color-navy-50: #f1f5fa;
@@ -33,18 +34,18 @@
   --color-signal-600: #c8283a;
   --color-signal-700: #a51f30;
 
-  --color-paper: #f8f6f1;
-  --color-paper-dark: #efebe2;
+  --color-paper: #f4f5f7;
+  --color-paper-dark: #e8eaee;
   --color-ink: #1a2433;
   --color-muted: #5a6577;
-  --color-line: #e2ddd2;
+  --color-line: #dde1e7;
   --color-gold: #b88a2e;
 
-  /* Semantic tokens: these switch in dark mode (see html.dark below) */
+  /* Semantic tokens (overridden in html.dark) */
   --color-surface: #ffffff;
   --color-heading: #0f1f36;
   --color-subheading: #1f3a60;
-  --color-accent: #0a5c42;
+  --color-accent: #1f3a60;
   --color-danger: #a51f30;
   --color-tint: #f1f5fa;
   --color-line-strong: #bdcde2;
@@ -56,12 +57,13 @@
   --font-serif: var(--font-serif-en), var(--font-bangla-serif), ui-serif, Georgia, serif;
   --font-bn: var(--font-bangla), var(--font-sans-en), ui-sans-serif, system-ui, sans-serif;
 
-  --radius-card: 0.75rem;
-  --shadow-card: 0 1px 2px rgb(15 31 54 / 0.05), 0 4px 16px -6px rgb(15 31 54 / 0.12);
+  --radius-card: 0.375rem;
+  /* Cards use borders; shadow-lift is only for floating elements (menus, back-to-top). */
+  --shadow-card: none;
   --shadow-lift: 0 2px 4px rgb(15 31 54 / 0.06), 0 14px 32px -12px rgb(15 31 54 / 0.22);
 }
 
-/* Dark theme: surfaces and text flip; navy bands (top bar, hero, footer) stay navy. */
+/* Dark theme overrides. */
 html.dark {
   color-scheme: dark;
   --color-surface: #131d2e;
@@ -73,7 +75,7 @@ html.dark {
   --color-line-strong: #3a4c66;
   --color-heading: #f1f5fa;
   --color-subheading: #c3d1e4;
-  --color-accent: #5fcf9f;
+  --color-accent: #a9c2e6;
   --color-danger: #f28b97;
   --color-tint: #1b2840;
   --color-crest: #2a4a76;
@@ -87,7 +89,7 @@ html.dark {
   --color-amber-200: #6b5420;
   --color-amber-800: #f4cf7f;
   --color-amber-900: #f8dc9c;
-  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 4px 16px -6px rgb(0 0 0 / 0.5);
+  --shadow-card: none;
   --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.3), 0 14px 32px -12px rgb(0 0 0 / 0.6);
 }
 

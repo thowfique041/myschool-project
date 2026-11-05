@@ -145,7 +145,7 @@ export default async function AdmissionPage() {
             )}
           </div>
           <div>
-            {a.image && <Picture image={{ src: a.image, alt: c.photoAlt, width: 1600, height: 1000 }} className="rounded-2xl" sizes="(min-width: 1024px) 45vw, 100vw" />}
+            {a.image && <Picture image={{ src: a.image, alt: c.photoAlt, width: 1600, height: 1000 }} className="rounded-lg" sizes="(min-width: 1024px) 45vw, 100vw" />}
           </div>
         </div>
       </section>
@@ -156,7 +156,7 @@ export default async function AdmissionPage() {
           <SectionHeading id="dates" kicker={c.datesK} title={c.dates} />
           <ol className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {a.dates.map((d) => (
-              <li key={d.label} className="flex gap-3 rounded-xl border border-line bg-paper p-4">
+              <li key={d.label} className="flex gap-3 rounded-md border border-line bg-paper p-4">
                 <CalendarClock aria-hidden className="mt-0.5 size-5 shrink-0 text-accent" />
                 <div>
                   <p className="font-semibold text-heading">{formatDate(d.date, lang)}</p>
@@ -172,7 +172,7 @@ export default async function AdmissionPage() {
       <section id="eligibility" aria-labelledby="elig" className="scroll-mt-24 py-16">
         <div className="container-page">
           <SectionHeading id="elig" kicker={c.eligK} title={c.elig} description={site.demoNote ? c.eligSample : undefined} />
-          <div className="mt-8 overflow-x-auto rounded-xl border border-line bg-surface" tabIndex={0} aria-label={c.eligLabel}>
+          <div className="mt-8 overflow-x-auto rounded-md border border-line bg-surface" tabIndex={0} aria-label={c.eligLabel}>
             <table className="w-full min-w-[44rem] text-left text-sm">
               <thead className="bg-brand text-xs text-white uppercase">
                 <tr>
@@ -206,7 +206,7 @@ export default async function AdmissionPage() {
             <SectionHeading id="proc" kicker={c.procK} title={c.proc} />
             <ol className="mt-8 grid gap-4 sm:grid-cols-2">
               {a.steps.map((s, i) => (
-                <li key={s.title} className="rounded-xl border border-line p-5">
+                <li key={s.title} className="rounded-md border border-line p-5">
                   <span className="flex size-8 items-center justify-center rounded-full bg-brand text-sm font-semibold text-white">{n(i + 1)}</span>
                   <h3 className="mt-3 font-semibold text-heading">{s.title}</h3>
                   <p className="mt-1 text-sm text-muted">{s.text}</p>
@@ -229,7 +229,7 @@ export default async function AdmissionPage() {
                 href={a.circularFile}
                 target="_blank"
                 rel="noopener"
-                className="mt-6 flex items-center gap-3 rounded-lg border border-line bg-paper p-3 text-sm font-semibold text-heading hover:border-leaf-200"
+                className="mt-6 flex items-center gap-3 rounded-lg border border-line bg-paper p-3 text-sm font-semibold text-heading hover:border-line-strong"
               >
                 <FileText aria-hidden className="size-5 text-danger" />
                 {c.circular(admissionYear)}
@@ -246,7 +246,7 @@ export default async function AdmissionPage() {
             <SectionHeading id="fees-h" kicker={c.feesK} title={c.fees} description={c.feesText} />
             {site.demoNote && <SampleTag />}
           </div>
-          <div className="mt-8 overflow-x-auto rounded-xl border border-line bg-surface" tabIndex={0} aria-label={c.feeLabel}>
+          <div className="mt-8 overflow-x-auto rounded-md border border-line bg-surface" tabIndex={0} aria-label={c.feeLabel}>
             <table className="w-full min-w-[36rem] text-left text-sm">
               <caption className="sr-only">{c.feeCaption(admissionYear)}</caption>
               <thead className="border-b border-line bg-paper text-xs text-muted uppercase">
@@ -285,7 +285,7 @@ export default async function AdmissionPage() {
               title={c.applyTitle}
               description={c.applyText}
             />
-            <div className="mt-8 rounded-2xl border border-line bg-paper p-5 sm:p-8">
+            <div className="mt-8 rounded-lg border border-line bg-paper p-5 sm:p-8">
               <AdmissionForm classOptions={a.classOptions} open={a.open} />
             </div>
           </div>
