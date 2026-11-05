@@ -11,6 +11,7 @@ export type HomeContent = {
   heroSubtitle: string;
   heroNote?: string;
   slides?: { image: string; imageAlt: string; title: string; text: string; label: string; href: string }[];
+  statsText?: string;
   stats?: { key: string; label: string; value?: string }[];
   heroImage: string;
   heroImageAlt: string;

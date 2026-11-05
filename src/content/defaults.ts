@@ -50,6 +50,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
       { image: images.classroom.src, imageAlt: images.classroom.alt, title: "Annual examination 2026", text: "Examinations for Class 1 to Class 9 begin on 22 November. The routine is on the notice board.", label: "View the routine", href: "/notices/annual-exam-routine-2026" },
       { image: images.sports.src, imageAlt: images.sports.alt, title: "Annual Sports Day 2027", text: "Sports day will be held on the school field in January.", label: "Read more", href: "/news/annual-sports-2026-dates" },
     ],
+    statsText: "Play to Class 12 under the national curriculum, in Upashahar, Sylhet, since 1998.",
     stats: [
       { key: "teachers", label: "Teachers" },
       { key: "years", label: "Years of teaching" },

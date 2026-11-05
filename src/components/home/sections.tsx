@@ -11,6 +11,7 @@ import { formatDate, num } from "@/lib/utils";
 import { images } from "@/data/images";
 
 const STATS_IMAGE = images.campus;
+const STATS_PHOTO = images.scienceLab;
 
 /** Plain underlined text link, used where an arrow link would be one too many. */
 function TextLink({ href, children }: { href: string; children: React.ReactNode }) {
@@ -188,19 +189,29 @@ export function StatsSection({ home, copy, data }: { home: HomeContent; copy: Se
     .filter((s) => s.value);
   if (items.length === 0) return null;
   return (
-    <section aria-labelledby="stats-title" className="relative isolate overflow-hidden bg-navy-950 py-14 text-white sm:py-16">
+    <section aria-labelledby="stats-title" className="relative isolate overflow-hidden bg-navy-950 py-16 text-white sm:py-20">
       <Image src={STATS_IMAGE.src} alt="" fill sizes="100vw" className="-z-20 object-cover" />
       <div aria-hidden className="absolute inset-0 -z-10 bg-navy-950/80" />
       <div className="container-page">
-        <h2 id="stats-title" className="sr-only">{copy.title}</h2>
-        <dl className="grid grid-cols-2 gap-y-8 text-center lg:grid-cols-4">
-          {items.map((s) => (
-            <div key={s.label} className="px-3 lg:border-l lg:border-white/20 lg:first:border-l-0">
-              <dd className="font-serif text-4xl font-semibold tabular-nums sm:text-5xl">{s.value}</dd>
-              <dt className="mt-1 text-sm text-navy-100 sm:text-base">{s.label}</dt>
-            </div>
-          ))}
-        </dl>
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 id="stats-title" className="font-serif text-3xl font-semibold sm:text-4xl">
+            {data.lang === "bn" ? data.site.nameBn : data.site.name}
+          </h2>
+          {home.statsText && <p className="mt-3 text-base text-navy-100 sm:text-lg">{home.statsText}</p>}
+        </div>
+        <div className="mt-10 grid items-stretch gap-6 lg:grid-cols-2 lg:gap-8">
+          <div className="relative min-h-64 overflow-hidden rounded-md sm:min-h-80">
+            <Image src={STATS_PHOTO.src} alt="" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+          </div>
+          <dl className="grid grid-cols-2 gap-4 sm:gap-6">
+            {items.map((s) => (
+              <div key={s.label} className="flex flex-col items-center justify-center rounded-md border border-white/25 bg-white/[0.04] px-3 py-8 text-center sm:py-10">
+                <dd className="font-serif text-4xl font-semibold tabular-nums sm:text-5xl">{s.value}</dd>
+                <dt className="mt-2 text-sm font-semibold tracking-wide text-navy-100 uppercase sm:text-base">{s.label}</dt>
+              </div>
+            ))}
+          </dl>
+        </div>
       </div>
     </section>
   );
@@ -343,7 +354,7 @@ export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData 
 export function GalleryPreview({ copy, data }: { copy: SectionCopy; data: HomeData }) {
   // The featured news photo is already on this page; don't show it twice.
   const featured = data.news.find((n) => n.featured) ?? data.news[0];
-  const used = new Set([featured?.image.src, STATS_IMAGE.src, ...(data.slideImages ?? [])].filter(Boolean));
+  const used = new Set([featured?.image.src, STATS_IMAGE.src, STATS_PHOTO.src, ...(data.slideImages ?? [])].filter(Boolean));
   const picks = data.gallery.filter((g) => !used.has(g.image.src)).slice(0, 8);
   if (picks.length === 0) return null;
   return (
