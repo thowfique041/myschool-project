@@ -103,9 +103,9 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
         <figure id="principal" className="grid gap-5 border-l-4 border-navy-700 pl-5 sm:grid-cols-[auto_1fr] sm:pl-7 dark:border-navy-300">
           {p.photo ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={p.photo} alt="" className="size-24 rounded-md object-cover" />
+            <img src={p.photo} alt="" className="size-28 rounded-full border-4 border-surface object-cover ring-2 ring-navy-700 dark:ring-navy-300" />
           ) : (
-            <DefaultAvatar gender={p.gender === "male" ? "male" : "female"} className="size-24 rounded-md" />
+            <DefaultAvatar gender={p.gender === "male" ? "male" : "female"} className="size-28 rounded-full border-4 border-surface ring-2 ring-navy-700 dark:ring-navy-300" />
           )}
           <div>
             <h2 className="font-serif text-2xl font-semibold text-heading">{data.t.home.principalMessage}</h2>
