@@ -9,6 +9,7 @@ export type HomeContent = {
   heroTagline: string;
   heroTitle: string;
   heroSubtitle: string;
+  heroNote?: string;
   heroImage: string;
   heroImageAlt: string;
   heroCaption: string;
@@ -16,7 +17,6 @@ export type HomeContent = {
   primaryHref: string;
   secondaryLabel: string;
   secondaryHref: string;
-  facts: { label: string; value: string }[];
   welcomeTitle: string;
   welcomeText: string[];
   welcomePoints: string[];

@@ -106,7 +106,7 @@ export default async function StudentsGuardiansPage() {
 
           <div className="mt-14 grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
             <div>
-              <SectionHeading kicker={c.goodK} title={c.good} />
+              <SectionHeading title={c.good} />
               <ul className="mt-6 grid gap-4 sm:grid-cols-2">
                 {info.map(({ icon: Icon, title, text }) => (
                   <li key={title}>
@@ -120,7 +120,7 @@ export default async function StudentsGuardiansPage() {
               </ul>
             </div>
             <div>
-              <SectionHeading kicker={c.timesK} title={c.times} />
+              <SectionHeading title={c.times} />
               <dl className="mt-6 divide-y divide-line rounded-md border border-line bg-surface">
                 {timings.map((t) => (
                   <div key={t.label} className="flex flex-col gap-0.5 px-5 py-3.5 sm:flex-row sm:justify-between">

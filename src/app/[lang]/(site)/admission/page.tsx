@@ -153,7 +153,7 @@ export default async function AdmissionPage() {
       {/* Dates */}
       <section aria-labelledby="dates" className="border-y border-line bg-surface py-16">
         <div className="container-page">
-          <SectionHeading id="dates" kicker={c.datesK} title={c.dates} />
+          <SectionHeading id="dates" title={c.dates} />
           <ol className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {a.dates.map((d) => (
               <li key={d.label} className="flex gap-3 rounded-md border border-line bg-paper p-4">
@@ -171,7 +171,7 @@ export default async function AdmissionPage() {
       {/* Eligibility */}
       <section id="eligibility" aria-labelledby="elig" className="scroll-mt-24 py-16">
         <div className="container-page">
-          <SectionHeading id="elig" kicker={c.eligK} title={c.elig} description={site.demoNote ? c.eligSample : undefined} />
+          <SectionHeading id="elig" title={c.elig} description={site.demoNote ? c.eligSample : undefined} />
           <div className="mt-8 overflow-x-auto rounded-md border border-line bg-surface" tabIndex={0} aria-label={c.eligLabel}>
             <table className="w-full min-w-[44rem] text-left text-sm">
               <thead className="bg-brand text-xs text-white uppercase">
@@ -203,7 +203,7 @@ export default async function AdmissionPage() {
       <section aria-labelledby="proc" className="border-y border-line bg-surface py-16">
         <div className="container-page grid gap-12 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
-            <SectionHeading id="proc" kicker={c.procK} title={c.proc} />
+            <SectionHeading id="proc" title={c.proc} />
             <ol className="mt-8 grid gap-4 sm:grid-cols-2">
               {a.steps.map((s, i) => (
                 <li key={s.title} className="rounded-md border border-line p-5">
@@ -215,7 +215,7 @@ export default async function AdmissionPage() {
             </ol>
           </div>
           <div>
-            <SectionHeading kicker={c.docsK} title={c.docs} />
+            <SectionHeading title={c.docs} />
             <Card className="mt-8 p-6">
               <ul className="space-y-3">
                 {a.documents.map((d) => (
@@ -243,7 +243,7 @@ export default async function AdmissionPage() {
       <section id="fees" aria-labelledby="fees-h" className="scroll-mt-24 py-16">
         <div className="container-page">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <SectionHeading id="fees-h" kicker={c.feesK} title={c.fees} description={c.feesText} />
+            <SectionHeading id="fees-h" title={c.fees} description={c.feesText} />
             {site.demoNote && <SampleTag />}
           </div>
           <div className="mt-8 overflow-x-auto rounded-md border border-line bg-surface" tabIndex={0} aria-label={c.feeLabel}>
@@ -281,7 +281,6 @@ export default async function AdmissionPage() {
           <div>
             <SectionHeading
               id="apply-h"
-              kicker={c.applyK}
               title={c.applyTitle}
               description={c.applyText}
             />
@@ -290,7 +289,7 @@ export default async function AdmissionPage() {
             </div>
           </div>
           <div>
-            <SectionHeading kicker={c.faqK} title={c.faq} />
+            <SectionHeading title={c.faq} />
             <Accordion className="mt-8" items={faqs.filter((f) => f.topic === "admission" || f.topic === "fees")} />
           </div>
         </div>

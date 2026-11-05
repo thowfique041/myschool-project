@@ -89,7 +89,6 @@ export default async function NoticesPage() {
         <div className="container-page max-w-5xl">
           <SectionHeading
             id="downloads-title"
-            kicker={c.dlKicker}
             title={c.downloads}
             description={c.dlIntro}
           />
