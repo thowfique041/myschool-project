@@ -176,7 +176,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
                   className="object-cover"
                 />
               </span>
-              <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/85 to-transparent px-3 pt-8 pb-2.5 text-[0.82rem] leading-snug font-medium text-white">
+              <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/85 to-transparent px-3 pt-8 pb-2.5 text-sm leading-snug font-medium text-white">
                 {item.caption}
               </span>
               <span aria-hidden className="absolute top-2 right-2 flex size-8 items-center justify-center rounded-full bg-surface/90 text-heading opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">

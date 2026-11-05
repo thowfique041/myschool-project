@@ -42,14 +42,14 @@ export function SectionHeading({
       <h2
         id={id}
         className={cn(
-          "font-serif text-[1.75rem] leading-tight font-semibold tracking-tight sm:text-[2.1rem]",
+          "font-serif text-[1.75rem] leading-tight font-semibold sm:text-[2.1rem]",
           dark ? "text-white" : "text-heading",
         )}
       >
         {title}
       </h2>
       {description && (
-        <p className={cn("mt-3 text-[0.98rem] leading-relaxed", dark ? "text-navy-100" : "text-muted")}>
+        <p className={cn("mt-3 text-base leading-relaxed", dark ? "text-navy-100" : "text-muted")}>
           {description}
         </p>
       )}
@@ -73,7 +73,7 @@ export const buttonClasses = (variant: Variant = "primary", size: "sm" | "md" = 
   cn(
     "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg font-semibold transition-colors duration-150",
     "focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60",
-    size === "md" ? "min-h-11 px-5 text-[0.95rem]" : "min-h-9 px-3.5 text-sm",
+    size === "md" ? "min-h-11 px-5 text-base" : "min-h-9 px-3.5 text-sm",
     variants[variant],
   );
 

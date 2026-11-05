@@ -54,7 +54,7 @@ export default async function NoticeDetailPage({ params }: PageProps<"/[lang]/no
                 </dd>
               </div>
             </dl>
-            <div className="mt-6 space-y-4 text-[1.02rem] text-ink">
+            <div className="mt-6 space-y-4 text-base text-ink">
               {notice.body.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}

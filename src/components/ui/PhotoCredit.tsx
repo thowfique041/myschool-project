@@ -8,7 +8,7 @@ export async function PhotoCredit({ image, prefix, className }: { image: ImageAs
   const { lang } = await getI18n();
   const { author, location, page } = image.credit;
   return (
-    <p className={cn("text-[0.72rem] leading-snug text-muted", className)}>
+    <p className={cn("text-xs leading-snug text-muted", className)}>
       {prefix && <span>{prefix} </span>}
       {location && <span>{location}. </span>}
       {lang === "bn" ? "ছবি" : "Photo"}

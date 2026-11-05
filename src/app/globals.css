@@ -52,9 +52,9 @@
   --color-brand: #172c4a;
   --color-brand-hover: #1f3a60;
 
-  --font-sans: var(--font-inter), var(--font-bangla), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-sans-en), var(--font-bangla), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-serif-en), var(--font-bangla-serif), ui-serif, Georgia, serif;
-  --font-bn: var(--font-bangla), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-bn: var(--font-bangla), var(--font-sans-en), ui-sans-serif, system-ui, sans-serif;
 
   --radius-card: 0.75rem;
   --shadow-card: 0 1px 2px rgb(15 31 54 / 0.05), 0 4px 16px -6px rgb(15 31 54 / 0.12);
@@ -106,7 +106,7 @@ html.dark {
 
   /* Bangla script needs a little more line height to stay readable */
   :lang(bn) {
-    font-family: var(--font-bangla), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-bangla), var(--font-sans-en), ui-sans-serif, system-ui, sans-serif;
     line-height: 1.75;
   }
 
@@ -185,5 +185,5 @@ html[lang="bn"] ol.list-decimal {
 
 /* English fragments inside the Bangla site keep the English typeface */
 html[lang="bn"] [lang="en"]:not(.font-serif) {
-  font-family: var(--font-inter), var(--font-bangla), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans-en), var(--font-bangla), ui-sans-serif, system-ui, sans-serif;
 }

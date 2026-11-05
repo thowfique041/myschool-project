@@ -60,7 +60,7 @@ export function SearchBox({ value, onChange, placeholder, label }: { value: stri
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="min-h-11 w-full rounded-lg border border-line bg-surface py-2.5 pr-10 pl-10 text-[0.95rem] focus:border-leaf-600 focus:outline-2 focus:outline-offset-0 focus:outline-leaf-600/25"
+        className="min-h-11 w-full rounded-lg border border-line bg-surface py-2.5 pr-10 pl-10 text-base focus:border-leaf-600 focus:outline-2 focus:outline-offset-0 focus:outline-leaf-600/25"
       />
       {value && (
         <button type="button" onClick={() => onChange("")} aria-label={t.common.clearSearch} className="absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-muted hover:text-ink">

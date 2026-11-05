@@ -64,7 +64,7 @@ export default async function NewsPage() {
                 return (
                   <li key={e.date + e.title} className="flex gap-3">
                     <span className="flex w-12 shrink-0 flex-col items-center rounded-md bg-white/10 py-1 text-center">
-                      <span className="text-[0.65rem] text-navy-200 uppercase">{d.month}</span>
+                      <span className="text-xs text-navy-200 uppercase">{d.month}</span>
                       <span className="font-serif text-lg leading-none font-semibold">{d.day}</span>
                     </span>
                     <span>
