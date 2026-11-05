@@ -77,7 +77,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
     sections: [
       { key: "welcome", enabled: true, kicker: "", title: "About the school", description: "" },
       { key: "notices", enabled: true, kicker: "", title: "Notice board", description: "" },
-      { key: "levels", enabled: true, kicker: "", title: "Classes and sections", description: "" },
+      { key: "levels", enabled: false, kicker: "", title: "Classes and sections", description: "" },
       { key: "stats", enabled: true, kicker: "", title: "At a glance", description: "" },
       { key: "results", enabled: false, kicker: "", title: "Public examination results", description: "" },
       { key: "facilities", enabled: true, kicker: "", title: "Facilities", description: "" },
