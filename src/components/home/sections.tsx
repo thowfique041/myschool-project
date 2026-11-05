@@ -31,7 +31,7 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
         <div>
           <SectionHeading id="notices-title" variant="rule" title={copy.title} />
           <div className="divide-y divide-line border-b border-line">
-            {data.notices.slice(0, 5).map((n) => (
+            {data.notices.slice(0, 3).map((n) => (
               <NoticeRow key={n.slug} notice={n} compact />
             ))}
           </div>
