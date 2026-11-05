@@ -22,7 +22,7 @@ function isActive(rawPath: string, item: NavItem): boolean {
   return paths.some((p) => p !== "/" && pathname.startsWith(p));
 }
 
-function DesktopDropdown({ item, active }: { item: NavItem; active: boolean }) {
+function DesktopDropdown({ item, active, alignRight = false }: { item: NavItem; active: boolean; alignRight?: boolean }) {
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
   const menuId = useId();
@@ -82,11 +82,11 @@ function DesktopDropdown({ item, active }: { item: NavItem; active: boolean }) {
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 4 }}
             transition={{ duration: 0.16 }}
-            className={cn("absolute top-full z-50 pt-2", (item.children?.length ?? 0) > 4 ? "left-1/2 w-[36rem] -translate-x-1/2" : "left-0 w-80")}
+            className={cn("absolute top-full z-50 w-80 pt-2", alignRight ? "right-0" : "left-0")}
           >
             <div className="overflow-hidden rounded-md border border-line border-t-[3px] border-t-navy-700 bg-surface shadow-[var(--shadow-lift)] dark:border-t-navy-300">
               <p className="border-b border-line bg-paper px-5 py-2.5 text-xs font-semibold tracking-wide text-muted uppercase">{item.label}</p>
-              <ul className={cn("grid p-2", (item.children?.length ?? 0) > 4 && "grid-cols-2")}>
+              <ul className="p-2">
                 {item.children?.map((child) => (
                   <li key={child.href}>
                     <Link
@@ -224,10 +224,10 @@ export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
 
         <nav aria-label={t.common.mainNav} className="hidden lg:block">
           <ul className="flex items-center">
-            {items.map((item) => {
+            {items.map((item, i) => {
               const active = isActive(pathname, item);
               return item.children ? (
-                <DesktopDropdown key={item.label} item={item} active={active} />
+                <DesktopDropdown key={item.label} item={item} active={active} alignRight={i >= items.length - 3} />
               ) : (
                 <li key={item.href} className={item.href === "/" ? "hidden 2xl:block" : undefined}>
                   <Link
