@@ -189,3 +189,22 @@ html[lang="bn"] ol.list-decimal {
 html[lang="bn"] [lang="en"]:not(.font-serif) {
   font-family: var(--font-sans-en), var(--font-bangla), ui-sans-serif, system-ui, sans-serif;
 }
+
+/* Text fade-up on scroll (classes are added by TextReveal, so no-JS shows everything). */
+.tr {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.tr.tr-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tr {
+    opacity: 1;
+    transform: none;
+  }
+}
