@@ -20,7 +20,7 @@ export function Hero({ home, notices }: { home: HomeContent; notices: Notice[] }
   return (
     <>
       <HeroSlider slides={[first, ...rest]} />
-      <div className="container-page py-5">
+      <div className="no-reveal container-page py-5">
         <NoticeTicker notices={notices} />
       </div>
     </>

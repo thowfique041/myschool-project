@@ -3,6 +3,7 @@ import { TopBar } from "./TopBar";
 import { SiteHeader } from "./SiteHeader";
 import { Footer, type FooterContent } from "./Footer";
 import { BackToTop } from "./BackToTop";
+import { TextReveal } from "./TextReveal";
 import { LogoMark } from "@/components/brand/Logo";
 import { getCurrentYear, getFooter, getNavigation, getSetting, getSite } from "@/content/site-content";
 import { getI18n } from "@/i18n/server";
@@ -75,6 +76,7 @@ export async function SiteFrame({ children }: { children: ReactNode }) {
       <main id="main" className="flex-1">
         {children}
       </main>
+      <TextReveal />
       <Footer site={site} footer={footer} year={year} />
       <BackToTop />
     </>
