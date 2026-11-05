@@ -1,4 +1,5 @@
 import { DefaultAvatar } from "@/components/ui/DefaultAvatar";
+import Image from "next/image";
 import Link from "@/components/i18n/Link";
 import { Badge, ButtonLink, Card, SectionHeading } from "@/components/ui/primitives";
 import { Picture } from "@/components/ui/Picture";
@@ -7,6 +8,9 @@ import { ArrowLink, NoticeRow, TeacherCard } from "@/components/shared/cards";
 import { ContactForm } from "@/components/forms/ContactForm";
 import type { HomeData, HomeContent, SectionCopy } from "./types";
 import { formatDate, num } from "@/lib/utils";
+import { images } from "@/data/images";
+
+const STATS_IMAGE = images.campus;
 
 /** Plain underlined text link, used where an arrow link would be one too many. */
 function TextLink({ href, children }: { href: string; children: React.ReactNode }) {
@@ -169,6 +173,39 @@ export function LevelsSection({ copy, data }: { copy: SectionCopy; data: HomeDat
   );
 }
 
+/* ------------------------------------------------------ Statistics band */
+
+export function StatsSection({ home, copy, data }: { home: HomeContent; copy: SectionCopy; data: HomeData }) {
+  const n = (v: number | string) => num(v, data.lang);
+  const ssc = [...data.board.rows].filter((r) => r.exam === "SSC" || r.exam === "এসএসসি").sort((a, b) => b.year.localeCompare(a.year))[0];
+  const computed: Record<string, string> = {
+    teachers: n(data.people.filter((p) => p.kind !== "staff").length),
+    years: n(Math.max(0, data.year - data.site.established)),
+    ssc: ssc && ssc.examinees ? `${n(((ssc.passed / ssc.examinees) * 100).toFixed(1))}%` : "",
+  };
+  const items = (home.stats ?? [])
+    .map((s) => ({ label: s.key === "ssc" && ssc ? `${s.label} ${ssc.year}` : s.label, value: s.value || computed[s.key] || "" }))
+    .filter((s) => s.value);
+  if (items.length === 0) return null;
+  return (
+    <section aria-labelledby="stats-title" className="relative isolate overflow-hidden bg-navy-950 py-14 text-white sm:py-16">
+      <Image src={STATS_IMAGE.src} alt="" fill sizes="100vw" className="-z-20 object-cover" />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-navy-950/80" />
+      <div className="container-page">
+        <h2 id="stats-title" className="sr-only">{copy.title}</h2>
+        <dl className="grid grid-cols-2 gap-y-8 text-center lg:grid-cols-4">
+          {items.map((s) => (
+            <div key={s.label} className="px-3 lg:border-l lg:border-white/20 lg:first:border-l-0">
+              <dd className="font-serif text-4xl font-semibold tabular-nums sm:text-5xl">{s.value}</dd>
+              <dt className="mt-1 text-sm text-navy-100 sm:text-base">{s.label}</dt>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  );
+}
+
 /* ------------------------------------------- Public examination results */
 
 export function ResultsSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
@@ -306,7 +343,7 @@ export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData 
 export function GalleryPreview({ copy, data }: { copy: SectionCopy; data: HomeData }) {
   // The featured news photo is already on this page; don't show it twice.
   const featured = data.news.find((n) => n.featured) ?? data.news[0];
-  const used = new Set([featured?.image.src].filter(Boolean));
+  const used = new Set([featured?.image.src, STATS_IMAGE.src, ...(data.slideImages ?? [])].filter(Boolean));
   const picks = data.gallery.filter((g) => !used.has(g.image.src)).slice(0, 8);
   if (picks.length === 0) return null;
   return (

@@ -10,6 +10,8 @@ export type HomeContent = {
   heroTitle: string;
   heroSubtitle: string;
   heroNote?: string;
+  slides?: { image: string; imageAlt: string; title: string; text: string; label: string; href: string }[];
+  stats?: { key: string; label: string; value?: string }[];
   heroImage: string;
   heroImageAlt: string;
   heroCaption: string;
@@ -60,5 +62,8 @@ export type HomeData = {
   facilities: { title: string; text: string; image: string; imageAlt: string }[];
   admission: AdmissionContent;
   principal: PrincipalContent;
+  year: number;
+  /** Photos already used in the hero slider, so the gallery preview can skip them. */
+  slideImages?: string[];
   board: { isSample: boolean; rows: { exam: string; year: string; examinees: number; passed: number; aPlus: number }[] };
 };

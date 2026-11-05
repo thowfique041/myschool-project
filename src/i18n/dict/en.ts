@@ -42,6 +42,15 @@ export const en = {
     langSwitch: "Language",
   },
   sections: { Primary: "Primary", Secondary: "Secondary", "Higher Secondary": "Higher Secondary", All: "All sections" } as Record<string, string>,
+  slider: {
+    label: "Highlights",
+    prev: "Previous slide",
+    next: "Next slide",
+    pause: "Pause slideshow",
+    play: "Play slideshow",
+    goTo: (n: number) => `Go to slide ${n}`,
+    slideOf: (i: number, n: number) => `${i} of ${n}`,
+  },
   ticker: { latest: "Latest", latestBn: "Latest notices", pause: "Pause scrolling notices", resume: "Resume scrolling notices" },
   cards: { qualification: "Qualification", section: "Section", allSections: "All sections" },
   notices: {

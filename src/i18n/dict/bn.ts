@@ -45,6 +45,15 @@ export const bn: Dictionary = {
     langSwitch: "ভাষা",
   },
   sections: { Primary: "প্রাথমিক", Secondary: "মাধ্যমিক", "Higher Secondary": "উচ্চ মাধ্যমিক", All: "সব শাখা" },
+  slider: {
+    label: "প্রধান খবর",
+    prev: "আগের স্লাইড",
+    next: "পরের স্লাইড",
+    pause: "স্লাইড থামান",
+    play: "স্লাইড চালু করুন",
+    goTo: (n) => `${toBnDigits(n)} নম্বর স্লাইডে যান`,
+    slideOf: (i, n) => `${toBnDigits(n)}টির মধ্যে ${toBnDigits(i)}`,
+  },
   ticker: { latest: "সর্বশেষ", latestBn: "সর্বশেষ নোটিশ", pause: "নোটিশ চলা থামান", resume: "নোটিশ আবার চালু করুন" },
   cards: { qualification: "শিক্ষাগত যোগ্যতা", section: "শাখা", allSections: "সব শাখা" },
   notices: {
