@@ -79,7 +79,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
       { key: "welcome", enabled: true, kicker: "", title: "About the school", description: "" },
       { key: "levels", enabled: true, kicker: "", title: "Classes and sections", description: "" },
       { key: "stats", enabled: true, kicker: "", title: "At a glance", description: "" },
-      { key: "results", enabled: true, kicker: "", title: "Public examination results", description: "" },
+      { key: "results", enabled: false, kicker: "", title: "Public examination results", description: "" },
       { key: "facilities", enabled: true, kicker: "", title: "Facilities", description: "" },
       { key: "news", enabled: true, kicker: "", title: "News & events", description: "" },
       { key: "gallery", enabled: true, kicker: "", title: "Photo gallery", description: "" },
