@@ -49,6 +49,7 @@ export default async function TeachersPage() {
               {c.sample}
             </DemoNote>
           )}
+          <h2 className="sr-only">{c.title}</h2>
           <TeacherDirectory teachers={teachers} departments={departments} />
         </div>
       </section>

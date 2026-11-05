@@ -55,6 +55,7 @@ export default async function NoticesPage() {
       <PageHeader title={c.title} titleBn={c.alt} description={c.intro} />
       <section className="py-12 sm:py-16">
         <div className="container-page grid gap-10 lg:grid-cols-[1fr_18rem]">
+          <h2 className="sr-only">{c.title}</h2>
           <NoticeExplorer notices={notices} />
           <aside aria-label={c.upcoming} className="space-y-6">
             <div className="rounded-md border border-line bg-surface p-5">
