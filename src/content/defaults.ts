@@ -304,6 +304,8 @@ export function seedCollections(): Record<string, Record<string, unknown>[]> {
       { title: "ICT lab", text: "Thirty student workstations with timetabled practical classes.", image: images.computerLab.src, imageAlt: images.computerLab.alt, order: 1 },
       { title: "Central library", text: "Bangla and English collections, reference books and a quiet reading hall.", image: images.library.src, imageAlt: images.library.alt, order: 2 },
       { title: "Playground & sports", text: "Open field for cricket, football and the annual sports day.", image: images.sports.src, imageAlt: images.sports.alt, order: 3 },
+      { title: "Prayer & first-aid rooms", text: "A separate prayer room, and a first-aid room for students who feel unwell during school.", image: "", imageAlt: "", order: 4 },
+      { title: "Common room & scouts", text: "A girls' common room, a scout den and a covered assembly area.", image: "", imageAlt: "", order: 5 },
     ],
   };
 }

@@ -402,6 +402,8 @@ export const facilitiesBn: Record<string, { title: string; text: string }> = {
   "ICT lab": { title: "আইসিটি ল্যাব", text: "রুটিনভুক্ত ব্যবহারিক ক্লাসের জন্য ৩০টি শিক্ষার্থী কম্পিউটার।" },
   "Central library": { title: "কেন্দ্রীয় পাঠাগার", text: "বাংলা ও ইংরেজি বই, রেফারেন্স বই আর নিরিবিলি পড়ার কক্ষ।" },
   "Playground & sports": { title: "খেলার মাঠ ও ক্রীড়া", text: "ক্রিকেট, ফুটবল আর বার্ষিক ক্রীড়া প্রতিযোগিতার জন্য খোলা মাঠ।" },
+  "Prayer & first-aid rooms": { title: "নামাজ ও প্রাথমিক চিকিৎসা কক্ষ", text: "আলাদা নামাজের কক্ষ, আর বিদ্যালয়ে অসুস্থ বোধ করা শিক্ষার্থীদের জন্য প্রাথমিক চিকিৎসা কক্ষ।" },
+  "Common room & scouts": { title: "কমনরুম ও স্কাউট", text: "ছাত্রীদের কমনরুম, স্কাউট কক্ষ এবং ছাউনিযুক্ত সমাবেশ স্থান।" },
 };
 
 export const downloadsBn: Record<string, { title: string; description: string }> = {
