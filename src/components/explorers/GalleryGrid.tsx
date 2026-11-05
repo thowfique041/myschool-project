@@ -173,7 +173,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
                   fill
                   sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
                   unoptimized={item.image.src.endsWith(".svg")}
-                  className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                  className="object-cover"
                 />
               </span>
               <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/85 to-transparent px-3 pt-8 pb-2.5 text-[0.82rem] leading-snug font-medium text-white">

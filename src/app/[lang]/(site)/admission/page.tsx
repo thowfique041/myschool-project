@@ -4,7 +4,6 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Badge, ButtonLink, buttonClasses, Card, DemoNote, SectionHeading } from "@/components/ui/primitives";
 import { SampleTag } from "@/components/ui/SampleTag";
 import { Picture } from "@/components/ui/Picture";
-import { Reveal } from "@/components/ui/Reveal";
 import { Accordion } from "@/components/ui/Accordion";
 import { AdmissionForm } from "@/components/forms/AdmissionForm";
 import { formatDate, toBnDigits } from "@/lib/utils";
@@ -127,7 +126,7 @@ export default async function AdmissionPage() {
       {/* Announcement */}
       <section aria-labelledby="announce" className="py-16">
         <div className="container-page grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-          <Reveal>
+          <div>
             {a.noticeDate && (
               <Badge tone="signal">
                 {c.notice} · {formatDate(a.noticeDate, lang)}
@@ -144,10 +143,10 @@ export default async function AdmissionPage() {
                 {a.noticeBody} {c.office} {site.officePhone || site.phone}.
               </p>
             )}
-          </Reveal>
-          <Reveal delay={0.06}>
+          </div>
+          <div>
             {a.image && <Picture image={{ src: a.image, alt: c.photoAlt, width: 1600, height: 1000 }} className="rounded-2xl" sizes="(min-width: 1024px) 45vw, 100vw" />}
-          </Reveal>
+          </div>
         </div>
       </section>
 
@@ -156,14 +155,14 @@ export default async function AdmissionPage() {
         <div className="container-page">
           <SectionHeading id="dates" kicker={c.datesK} title={c.dates} />
           <ol className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {a.dates.map((d, i) => (
-              <Reveal as="li" key={d.label} delay={i * 0.03} className="flex gap-3 rounded-xl border border-line bg-paper p-4">
+            {a.dates.map((d) => (
+              <li key={d.label} className="flex gap-3 rounded-xl border border-line bg-paper p-4">
                 <CalendarClock aria-hidden className="mt-0.5 size-5 shrink-0 text-accent" />
                 <div>
                   <p className="font-semibold text-heading">{formatDate(d.date, lang)}</p>
                   <p className="text-sm text-muted">{d.label}</p>
                 </div>
-              </Reveal>
+              </li>
             ))}
           </ol>
         </div>
@@ -207,11 +206,11 @@ export default async function AdmissionPage() {
             <SectionHeading id="proc" kicker={c.procK} title={c.proc} />
             <ol className="mt-8 grid gap-4 sm:grid-cols-2">
               {a.steps.map((s, i) => (
-                <Reveal as="li" key={s.title} delay={i * 0.03} className="rounded-xl border border-line p-5">
+                <li key={s.title} className="rounded-xl border border-line p-5">
                   <span className="flex size-8 items-center justify-center rounded-full bg-brand text-sm font-semibold text-white">{n(i + 1)}</span>
                   <h3 className="mt-3 font-semibold text-heading">{s.title}</h3>
                   <p className="mt-1 text-sm text-muted">{s.text}</p>
-                </Reveal>
+                </li>
               ))}
             </ol>
           </div>

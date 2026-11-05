@@ -4,7 +4,6 @@ import { Compass, Eye, HeartHandshake } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ButtonLink, Card, DemoNote, SectionHeading } from "@/components/ui/primitives";
 import { Picture } from "@/components/ui/Picture";
-import { Reveal } from "@/components/ui/Reveal";
 import { TeacherAvatar } from "@/components/shared/cards";
 import { getFacilities, getPeople, getSetting, getSite } from "@/content/site-content";
 import type { PrincipalContent } from "@/components/home/types";
@@ -120,7 +119,7 @@ export default async function AboutPage() {
       {/* Overview */}
       <section aria-labelledby="overview" className="py-16 sm:py-20">
         <div className="container-page grid items-center gap-12 lg:grid-cols-2">
-          <Reveal>
+          <div>
             <SectionHeading id="overview" kicker={c.overviewK} title={c.overview} />
             <div className="mt-5 space-y-4 text-[0.98rem] leading-relaxed text-muted">
               {about.overview.map((p) => (
@@ -141,12 +140,12 @@ export default async function AboutPage() {
                 <dd className="font-serif text-2xl font-semibold text-heading">{n(staff)}</dd>
               </div>
             </dl>
-          </Reveal>
-          <Reveal delay={0.06}>
+          </div>
+          <div>
             {about.overviewImage && (
               <Picture image={{ src: about.overviewImage, alt: c.photoAlt(lang === "bn" ? site.nameBn : site.name), width: 1600, height: 1000 }} className="rounded-2xl" sizes="(min-width: 1024px) 50vw, 100vw" />
             )}
-          </Reveal>
+          </div>
         </div>
       </section>
 
@@ -155,28 +154,28 @@ export default async function AboutPage() {
         <div className="container-page">
           <SectionHeading id="mission" kicker={c.missionK} title={c.missionTitle} align="center" />
           <div className="mt-10 grid gap-6 md:grid-cols-2">
-            <Reveal>
+            <div>
               <Card className="h-full p-7">
                 <Compass aria-hidden className="size-7 text-accent" />
                 <h3 className="mt-4 font-serif text-xl font-semibold text-heading">{c.mission}</h3>
                 <p className="mt-2 leading-relaxed text-muted">{mission.mission}</p>
               </Card>
-            </Reveal>
-            <Reveal delay={0.06}>
+            </div>
+            <div>
               <Card className="h-full p-7">
                 <Eye aria-hidden className="size-7 text-accent" />
                 <h3 className="mt-4 font-serif text-xl font-semibold text-heading">{c.vision}</h3>
                 <p className="mt-2 leading-relaxed text-muted">{mission.vision}</p>
               </Card>
-            </Reveal>
+            </div>
           </div>
           <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((v, i) => (
-              <Reveal as="li" key={v.title} delay={i * 0.04} className="rounded-xl border border-line bg-paper p-5">
+            {values.map((v) => (
+              <li key={v.title} className="rounded-xl border border-line bg-paper p-5">
                 <HeartHandshake aria-hidden className="size-5 text-accent" />
                 <h3 className="mt-3 font-semibold text-heading">{v.title}</h3>
                 <p className="mt-1 text-sm text-muted">{v.text}</p>
-              </Reveal>
+              </li>
             ))}
           </ul>
         </div>
@@ -194,12 +193,12 @@ export default async function AboutPage() {
             />
           </div>
           <ol className="relative border-l-2 border-leaf-200 pl-6">
-            {milestones.map((m, i) => (
-              <Reveal as="li" key={m.year + m.text} delay={i * 0.03} className="relative pb-7 last:pb-0">
+            {milestones.map((m) => (
+              <li key={m.year + m.text} className="relative pb-7 last:pb-0">
                 <span aria-hidden className="absolute top-1.5 -left-[1.95rem] size-3.5 rounded-full border-2 border-white bg-leaf-600 ring-2 ring-leaf-200" />
                 <p className="font-serif text-lg font-semibold text-heading">{m.year}</p>
                 <p className="mt-0.5 text-muted">{m.text}</p>
-              </Reveal>
+              </li>
             ))}
           </ol>
         </div>
@@ -237,8 +236,8 @@ export default async function AboutPage() {
         <div className="container-page">
           <SectionHeading id="campus" kicker={c.campusK} title={c.campus} />
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {facilities.map((f, i) => (
-              <Reveal as="li" key={f.title} delay={(i % 3) * 0.05}>
+            {facilities.map((f) => (
+              <li key={f.title}>
                 <Card className="h-full overflow-hidden">
                   {f.image && <Picture image={{ src: f.image, alt: f.imageAlt, width: 1600, height: 1000 }} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" />}
                   <div className="p-5">
@@ -246,7 +245,7 @@ export default async function AboutPage() {
                     <p className="mt-1 text-sm text-muted">{f.text}</p>
                   </div>
                 </Card>
-              </Reveal>
+              </li>
             ))}
           </ul>
         </div>

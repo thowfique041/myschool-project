@@ -11,11 +11,9 @@ import {
 import { Badge, ButtonLink, Card, SectionHeading } from "@/components/ui/primitives";
 import { SampleTag } from "@/components/ui/SampleTag";
 import { Picture } from "@/components/ui/Picture";
-import { Reveal } from "@/components/ui/Reveal";
 import { Accordion } from "@/components/ui/Accordion";
 import { ArrowLink, NoticeRow, TeacherCard } from "@/components/shared/cards";
 import { ContactForm } from "@/components/forms/ContactForm";
-import { StatCounter } from "./motion-bits";
 import type { HomeData, HomeContent, SectionCopy } from "./types";
 import { cn, formatDate, num } from "@/lib/utils";
 
@@ -26,7 +24,7 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
   return (
     <section aria-labelledby="welcome-title" className="py-16 sm:py-20">
       <div className="container-page grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
-        <Reveal>
+        <div>
           <SectionHeading
             id="welcome-title"
             kicker={copy.kicker}
@@ -48,9 +46,9 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
           <ArrowLink href="/about" className="mt-7">
             {data.t.home.readHistory}
           </ArrowLink>
-        </Reveal>
+        </div>
 
-        <Reveal delay={0.08}>
+        <div>
           <figure id="principal" className="relative h-full rounded-2xl bg-navy-900 p-7 text-white sm:p-9">
             <Quote aria-hidden className="size-9 text-leaf-200/60" />
             <p className="mt-2 text-sm font-medium text-leaf-200">
@@ -75,7 +73,7 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
               {data.t.home.readFull}
             </Link>
           </figure>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
@@ -98,7 +96,7 @@ export function LevelsSection({ copy, data }: { copy: SectionCopy; data: HomeDat
         </div>
         <ol className={cn("mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line", data.levels.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2")}>
           {data.levels.map((level, i) => (
-            <Reveal as="li" key={level.id} delay={i * 0.06} className="flex flex-col bg-surface p-7">
+            <li key={level.id} className="flex flex-col bg-surface p-7">
               <div className="flex items-baseline justify-between">
                 <span className="font-serif text-4xl font-semibold text-navy-100 dark:text-navy-700">{num(String(i + 1).padStart(2, "0"), data.lang)}</span>
                 <span className="text-xs font-medium text-muted">{level.ages}</span>
@@ -125,7 +123,7 @@ export function LevelsSection({ copy, data }: { copy: SectionCopy; data: HomeDat
                   ))}
                 </div>
               )}
-            </Reveal>
+            </li>
           ))}
         </ol>
       </div>
@@ -140,7 +138,7 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
   return (
     <section aria-label={data.t.home.noticesAdmission} className="py-16 sm:py-20">
       <div className="container-page grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
-        <Reveal>
+        <div>
           <div className="flex items-end justify-between gap-4">
             <SectionHeading kicker={copy.kicker} title={copy.title} description={copy.description || undefined} />
             <ArrowLink href="/notices">{data.t.home.allNotices}</ArrowLink>
@@ -150,9 +148,9 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
               <NoticeRow key={n.slug} notice={n} compact />
             ))}
           </Card>
-        </Reveal>
+        </div>
 
-        <Reveal delay={0.08}>
+        <div>
           <div id="admission" className="h-full rounded-2xl border border-leaf-200 bg-leaf-50 p-6 sm:p-8">
             <Badge tone={adm.open ? "leaf" : "neutral"}>{adm.open ? data.t.home.admissionOpen : data.t.home.admissionClosed}</Badge>
             <h2 className="mt-3 font-serif text-2xl font-semibold text-heading">
@@ -193,7 +191,7 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
               </ButtonLink>
             </div>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
@@ -209,7 +207,7 @@ export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: 
     <section aria-labelledby="why-title" className="bg-navy-950 py-16 text-white sm:py-20">
       <div className="container-page">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-          <Reveal>
+          <div>
             <SectionHeading
               id="why-title"
               tone="dark"
@@ -233,14 +231,14 @@ export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: 
                 );
               })}
             </ul>
-          </Reveal>
+          </div>
           <div>
-            <Reveal>
+            <div>
               <h3 className="flex items-center gap-2 text-sm font-semibold tracking-wide text-leaf-200 uppercase">{data.t.home.facilities}</h3>
-            </Reveal>
+            </div>
             <ul className="mt-4 grid gap-4 sm:grid-cols-2">
-              {data.facilities.map(({ title, text, image, imageAlt }, i) => (
-                <Reveal as="li" key={title} delay={i * 0.05} className="overflow-hidden rounded-xl bg-white/[0.04] ring-1 ring-white/10">
+              {data.facilities.map(({ title, text, image, imageAlt }) => (
+                <li key={title} className="overflow-hidden rounded-xl bg-white/[0.04] ring-1 ring-white/10">
                   {image && (
                     <Picture image={{ src: image, alt: imageAlt, width: 1600, height: 900 }} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" ratio="aspect-[16/9]" />
                   )}
@@ -250,7 +248,7 @@ export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: 
                     </h4>
                     <p className="mt-1 text-sm text-navy-200">{text}</p>
                   </div>
-                </Reveal>
+                </li>
               ))}
             </ul>
             <p className="mt-4 text-sm text-navy-200">
@@ -294,7 +292,7 @@ export function ResultsSection({ copy, data }: { copy: SectionCopy; data: HomeDa
             <div key={s.label} className="bg-surface p-6">
               <dt className="text-sm text-muted">{s.label}</dt>
               <dd className="mt-1 font-serif text-4xl font-semibold text-heading">
-                <StatCounter value={s.value} suffix={s.suffix} decimals={s.decimals} bn={data.lang === "bn"} />
+                {num(s.value.toFixed(s.decimals), data.lang)}{s.suffix}
               </dd>
             </div>
           ))}
@@ -318,9 +316,9 @@ export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData 
           <ArrowLink href="/news">{data.t.home.allNews}</ArrowLink>
         </div>
         <div className="mt-10 grid gap-6 lg:grid-cols-[1.25fr_1fr]">
-          <Reveal>
+          <div>
             <article className="group relative h-full overflow-hidden rounded-2xl border border-line bg-paper">
-              <Picture image={featured.image} sizes="(min-width: 1024px) 55vw, 100vw" imgClassName="transition-transform duration-500 group-hover:scale-[1.02]" />
+              <Picture image={featured.image} sizes="(min-width: 1024px) 55vw, 100vw" />
               <div className="p-6">
                 <div className="flex items-center gap-3 text-xs text-muted">
                   <Badge tone="leaf">{data.t.common.featured}</Badge>
@@ -334,7 +332,7 @@ export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData 
                 <p className="mt-2 text-[0.95rem] leading-relaxed text-muted">{featured.excerpt}</p>
               </div>
             </article>
-          </Reveal>
+          </div>
           <ul className="flex flex-col divide-y divide-line">
             {rest.slice(0, 4).map((a) => (
               <li key={a.slug} className="group relative flex gap-4 py-4 first:pt-0">
@@ -371,19 +369,17 @@ export function GalleryPreview({ copy, data }: { copy: SectionCopy; data: HomeDa
         </div>
         <ul className="mt-10 grid auto-rows-[9rem] grid-cols-2 gap-3 sm:auto-rows-[11rem] md:grid-cols-4">
           {picks.map((g, i) => (
-            <Reveal
-              as="li"
+            <li
               key={g.id}
-              delay={i * 0.04}
               className={cn("group relative overflow-hidden rounded-xl", i === 0 && "col-span-2 row-span-2", i === 3 && "md:col-span-2")}
             >
               <Link href="/gallery" className="block h-full" aria-label={data.t.home.galleryOpen(g.caption)}>
-                <Picture image={g.image} ratio="h-full" sizes="(min-width: 768px) 50vw, 100vw" imgClassName="transition-transform duration-500 group-hover:scale-[1.04]" />
+                <Picture image={g.image} ratio="h-full" sizes="(min-width: 768px) 50vw, 100vw" />
                 <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/80 to-transparent px-3 pt-8 pb-2.5 text-sm font-medium text-white">
                   {g.caption}
                 </span>
               </Link>
-            </Reveal>
+            </li>
           ))}
         </ul>
       </div>
@@ -408,10 +404,10 @@ export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeDat
           <ArrowLink href="/teachers">{data.t.home.allTeachers}</ArrowLink>
         </div>
         <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {picks.map((t, i) => (
-            <Reveal as="li" key={t.id} delay={i * 0.05}>
+          {picks.map((t) => (
+            <li key={t.id}>
               <TeacherCard teacher={t} />
-            </Reveal>
+            </li>
           ))}
         </ul>
 
@@ -422,7 +418,7 @@ export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeDat
           </div>
           <ul className="mt-6 grid gap-5 md:grid-cols-3">
             {data.testimonials.map((t, i) => (
-              <Reveal as="li" key={i} delay={i * 0.05}>
+              <li key={i}>
                 <figure className="flex h-full flex-col rounded-xl border border-line bg-paper p-6">
                   <Quote aria-hidden className="size-6 text-leaf-500" />
                   <blockquote className="mt-3 flex-1 text-[0.97rem] leading-relaxed text-ink">
@@ -433,7 +429,7 @@ export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeDat
                     <span className="block text-muted">{t.role}</span>
                   </figcaption>
                 </figure>
-              </Reveal>
+              </li>
             ))}
           </ul>
         </div>}
@@ -449,19 +445,19 @@ export function FaqContactSection({ copy, data }: { copy: SectionCopy; data: Hom
   return (
     <section aria-label={data.t.home.faqContact} className="py-16 sm:py-20">
       <div className="container-page grid gap-12 lg:grid-cols-2">
-        <Reveal>
+        <div>
           <SectionHeading kicker={copy.kicker} title={copy.title} description={copy.description || undefined} />
           <Accordion className="mt-6" items={data.faqs.slice(0, 6)} />
           <ArrowLink href="/faq" className="mt-5">
             {data.t.home.moreQuestions}
           </ArrowLink>
-        </Reveal>
-        <Reveal delay={0.08}>
+        </div>
+        <div>
           <SectionHeading kicker={data.t.home.contactKicker} title={data.t.home.writeOffice} description={data.t.home.officeCall(site.officeHours, site.phone)} />
           <Card className="mt-6 p-5 sm:p-7">
             <ContactForm to={site.email} />
           </Card>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
