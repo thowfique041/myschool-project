@@ -180,7 +180,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
     name: "Dr. Nasrin Akhter",
     title: "Principal",
     gender: "female",
-    photo: "",
+    photo: "/images/principal.jpg",
     quote:
       "Good results matter, but they are not the only thing we measure. I want every student to leave this school honest, curious and confident to speak in front of others, and every guardian to feel they can walk into our office and be heard.",
     message: [
@@ -279,7 +279,7 @@ export function seedCollections(): Record<string, Record<string, unknown>[]> {
       joined: t.joined,
       phone: t.phone,
       email: t.email,
-      photo: "",
+      photo: t.id === "t01" ? "/images/principal.jpg" : "",
       order: i,
     })),
     gallery: gallery.map((g, i) => ({ ...published, image: g.image.src, alt: g.image.alt, caption: g.caption, captionBn: g.captionBn, category: g.category, order: i })),
