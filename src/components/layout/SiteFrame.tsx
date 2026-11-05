@@ -4,6 +4,7 @@ import { SiteHeader } from "./SiteHeader";
 import { Footer, type FooterContent } from "./Footer";
 import { BackToTop } from "./BackToTop";
 import { TextReveal } from "./TextReveal";
+import { ScrollTopOnNav } from "./ScrollTopOnNav";
 import { LogoMark } from "@/components/brand/Logo";
 import { getCurrentYear, getFooter, getNavigation, getSetting, getSite } from "@/content/site-content";
 import { getI18n } from "@/i18n/server";
@@ -77,6 +78,7 @@ export async function SiteFrame({ children }: { children: ReactNode }) {
         {children}
       </main>
       <TextReveal />
+      <ScrollTopOnNav />
       <Footer site={site} footer={footer} year={year} />
       <BackToTop />
     </>
