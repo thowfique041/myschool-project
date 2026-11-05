@@ -57,7 +57,7 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
         if (!e.currentTarget.contains(e.relatedTarget as Node)) setHold(false);
       }}
     >
-      <div className="relative h-[24rem] sm:h-[28rem] lg:h-[32rem]">
+      <div className="relative h-[30rem] sm:h-[36rem] lg:h-[42rem]">
         {slides.map((s, i) => {
           const active = i === index;
           const Heading = i === 0 ? "h1" : "h2";
@@ -72,14 +72,15 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
               className={cn("absolute inset-0 transition-opacity duration-700 motion-reduce:transition-none", active ? "opacity-100" : "pointer-events-none opacity-0")}
             >
               <Image src={s.image} alt={s.imageAlt} fill priority={i === 0} sizes="100vw" className="-z-20 object-cover object-[70%_center]" />
-              <div aria-hidden className="absolute inset-0 -z-10 bg-navy-950/60 md:bg-gradient-to-r md:from-navy-950/85 md:via-navy-950/55 md:to-navy-950/15" />
+              <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950/70 via-navy-950/25 to-navy-950/10 md:bg-gradient-to-r md:from-navy-950/75 md:via-navy-950/25 md:to-transparent" />
+              <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-navy-950/50 to-transparent" />
               <div className="container-page flex h-full flex-col justify-center pb-10">
-                <div className="max-w-2xl">
+                <div className="max-w-2xl [text-shadow:0_1px_3px_rgb(0_0_0/0.55),0_2px_14px_rgb(0_0_0/0.35)]">
                   <Heading id={i === 0 ? "hero-title" : undefined} className="font-serif text-4xl leading-tight font-semibold sm:text-5xl lg:text-6xl">
                     {s.title}
                   </Heading>
-                  {s.lines[0] && <p className="mt-3 text-lg text-navy-100 sm:text-xl">{s.lines[0]}</p>}
-                  {s.motto && <p className="mt-1 text-sm text-navy-200 italic">{s.motto}</p>}
+                  {s.lines[0] && <p className="mt-3 text-lg font-medium text-white sm:text-xl">{s.lines[0]}</p>}
+                  {s.motto && <p className="mt-1 text-sm text-white/90 italic">{s.motto}</p>}
                   {s.lines.slice(1).map((l) => (
                     <p key={l} className="mt-4 text-base font-semibold sm:text-lg">{l}</p>
                   ))}
