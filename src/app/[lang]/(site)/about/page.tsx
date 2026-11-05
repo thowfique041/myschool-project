@@ -209,7 +209,7 @@ export default async function AboutPage() {
           <div className="flex flex-col items-start gap-4">
             {principal.photo ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={principal.photo} alt={principal.name} className="size-28 rounded-full object-cover" />
+              <img src={principal.photo} alt={principal.name} className="size-28 rounded-full border-4 border-navy-950 object-cover ring-2 ring-white/80" />
             ) : (
               <DefaultAvatar gender={principal.gender === "male" ? "male" : "female"} className="size-28" />
             )}
