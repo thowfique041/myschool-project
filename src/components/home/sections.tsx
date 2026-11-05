@@ -30,14 +30,14 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
             kicker={copy.kicker}
             title={copy.title || home.welcomeTitle}
           />
-          <div className="mt-5 space-y-4 text-[0.98rem] leading-relaxed text-muted">
+          <div className="mt-5 space-y-4 text-base leading-relaxed text-muted">
             {home.welcomeText.map((t) => (
               <p key={t}>{t}</p>
             ))}
           </div>
           <ul className="mt-7 grid gap-3 sm:grid-cols-2">
             {home.welcomePoints.map((t) => (
-              <li key={t} className="flex gap-2.5 text-[0.95rem] text-ink">
+              <li key={t} className="flex gap-2.5 text-base text-ink">
                 <CheckCircle2 aria-hidden className="mt-0.5 size-5 shrink-0 text-accent" />
                 {t}
               </li>
@@ -54,7 +54,7 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
             <p className="mt-2 text-sm font-medium text-leaf-200">
               {data.t.home.principalMessage}
             </p>
-            <blockquote className="mt-3 font-serif text-[1.2rem] leading-relaxed sm:text-[1.3rem]">
+            <blockquote className="mt-3 font-serif text-lg leading-relaxed sm:text-xl">
               “{p.quote}”
             </blockquote>
             <figcaption className="mt-7 flex items-center gap-4 border-t border-white/15 pt-5">
@@ -105,7 +105,7 @@ export function LevelsSection({ copy, data }: { copy: SectionCopy; data: HomeDat
                 {level.name}
               </h3>
               <p className="text-sm font-semibold text-accent">{level.classes}</p>
-              <p className="mt-3 text-[0.95rem] leading-relaxed text-muted">{level.summary}</p>
+              <p className="mt-3 text-base leading-relaxed text-muted">{level.summary}</p>
               <ul className="mt-4 space-y-1.5 text-sm text-ink">
                 {level.highlights.map((h) => (
                   <li key={h} className="flex gap-2">
@@ -225,7 +225,7 @@ export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: 
                   </span>
                   <div>
                     <h3 className="font-semibold">{title}</h3>
-                    <p className="mt-1 text-[0.95rem] leading-relaxed text-navy-200">{text}</p>
+                    <p className="mt-1 text-base leading-relaxed text-navy-200">{text}</p>
                   </div>
                 </li>
                 );
@@ -329,7 +329,7 @@ export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData 
                     {featured.title}
                   </Link>
                 </h3>
-                <p className="mt-2 text-[0.95rem] leading-relaxed text-muted">{featured.excerpt}</p>
+                <p className="mt-2 text-base leading-relaxed text-muted">{featured.excerpt}</p>
               </div>
             </article>
           </div>
@@ -421,7 +421,7 @@ export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeDat
               <li key={i}>
                 <figure className="flex h-full flex-col rounded-xl border border-line bg-paper p-6">
                   <Quote aria-hidden className="size-6 text-leaf-500" />
-                  <blockquote className="mt-3 flex-1 text-[0.97rem] leading-relaxed text-ink">
+                  <blockquote className="mt-3 flex-1 text-base leading-relaxed text-ink">
                     {t.quote}
                   </blockquote>
                   <figcaption className="mt-5 border-t border-line pt-4 text-sm">

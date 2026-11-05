@@ -69,7 +69,7 @@ export function Logo({ className, tone = "light", compact = false, name = "Webni
       <span className="flex flex-col leading-none">
         <span
           className={cn(
-            "font-serif text-[1.02rem] font-semibold tracking-tight whitespace-nowrap min-[400px]:text-[1.12rem] sm:text-[1.35rem] lg:text-[1.15rem] xl:text-[1.35rem]",
+            "font-serif text-[1.02rem] font-semibold whitespace-nowrap min-[400px]:text-[1.12rem] sm:text-[1.35rem] lg:text-[1.15rem] xl:text-[1.35rem]",
             /[\u0980-\u09FF]/.test(name) && "sm:text-[1.3rem]",
             isLight ? "text-heading" : "text-white",
           )}

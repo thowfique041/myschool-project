@@ -39,13 +39,13 @@ export function Hero({ home, notices }: { home: HomeContent; notices: Notice[] }
                   </p>
                   <h1
                     id="hero-title"
-                    className="mt-2 font-serif text-[2.3rem] leading-[1.08] font-semibold tracking-tight text-white sm:text-[3.4rem]"
+                    className="mt-2 font-serif text-[2.3rem] leading-[1.08] font-semibold text-white sm:text-[3.4rem]"
                   >
                     {home.heroTitle}
                   </h1>
                 </div>
                 <div>
-                  <p className="mt-5 max-w-xl text-[1.02rem] leading-relaxed text-navy-100 sm:text-lg">
+                  <p className="mt-5 max-w-xl text-base leading-relaxed text-navy-100 sm:text-lg">
                     {home.heroSubtitle}
                   </p>
                 </div>
@@ -56,7 +56,7 @@ export function Hero({ home, notices }: { home: HomeContent; notices: Notice[] }
                   </ButtonLink>
                   {home.secondaryLabel && <Link
                     href={home.secondaryHref || "/about"}
-                    className="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/60 px-5 text-[0.95rem] font-semibold whitespace-nowrap text-white transition-colors hover:border-white hover:bg-white/10"
+                    className="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/60 px-5 text-base font-semibold whitespace-nowrap text-white transition-colors hover:border-white hover:bg-white/10"
                   >
                     {home.secondaryLabel}
                   </Link>}
@@ -65,7 +65,7 @@ export function Hero({ home, notices }: { home: HomeContent; notices: Notice[] }
             </div>
 
             {home.heroCaption && (
-              <p className="absolute right-3 bottom-2 rounded bg-navy-950/60 px-2 py-0.5 text-[0.7rem] text-white/85 sm:right-5">
+              <p className="absolute right-3 bottom-2 rounded bg-navy-950/60 px-2 py-0.5 text-xs text-white/85 sm:right-5">
                 {home.heroCaption}
               </p>
             )}
@@ -81,7 +81,7 @@ export function Hero({ home, notices }: { home: HomeContent; notices: Notice[] }
                     className={i === 0 ? "pr-3 sm:pr-8" : "px-3 sm:px-8"}
                   >
                     <dt className="text-xs text-muted">{f.label}</dt>
-                    <dd className="mt-0.5 text-[0.95rem] font-semibold text-heading sm:text-xl">
+                    <dd className="mt-0.5 text-base font-semibold text-heading sm:text-xl">
                       {f.value}
                     </dd>
                   </div>

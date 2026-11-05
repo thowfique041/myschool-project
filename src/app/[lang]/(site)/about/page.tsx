@@ -121,7 +121,7 @@ export default async function AboutPage() {
         <div className="container-page grid items-center gap-12 lg:grid-cols-2">
           <div>
             <SectionHeading id="overview" kicker={c.overviewK} title={c.overview} />
-            <div className="mt-5 space-y-4 text-[0.98rem] leading-relaxed text-muted">
+            <div className="mt-5 space-y-4 text-base leading-relaxed text-muted">
               {about.overview.map((p) => (
                 <p key={p}>{p}</p>
               ))}

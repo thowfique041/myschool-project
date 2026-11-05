@@ -7,7 +7,7 @@ import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 export async function TopBar({ site }: { site: SiteInfo }) {
   const { t, lang } = await getI18n();
   return (
-    <div className="bg-navy-950 text-[0.8rem] text-navy-100">
+    <div className="bg-navy-950 text-sm text-navy-100">
       <div className="container-page flex min-h-9 flex-wrap items-center justify-between gap-x-6 gap-y-1 py-1.5">
         <ul className="flex flex-wrap items-center gap-x-5 gap-y-1">
           <li>

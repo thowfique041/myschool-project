@@ -24,7 +24,7 @@ function FooterColumn({ title, links }: { title: string; links: { label: string;
       <ul className="mt-4 space-y-2.5">
         {links.map((l) => (
           <li key={l.href + l.label}>
-            <Link href={l.href} className="text-[0.92rem] text-navy-200 hover:text-white hover:underline underline-offset-4">
+            <Link href={l.href} className="text-base text-navy-200 hover:text-white hover:underline underline-offset-4">
               {l.label}
             </Link>
           </li>
@@ -57,10 +57,10 @@ export async function Footer({ site, footer, year }: { site: SiteInfo; footer: F
       <div className="container-page grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <Logo tone="dark" name={lang === "bn" ? site.nameBn : site.name} nameBn={lang === "bn" ? `স্থাপিত ${String(site.established).replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[Number(d)])}` : `Established ${site.established}`} src={site.logo} />
-          <p className="mt-5 max-w-sm text-[0.92rem] leading-relaxed text-navy-200">
+          <p className="mt-5 max-w-sm text-base leading-relaxed text-navy-200">
             {footer.about}
           </p>
-          <ul className="mt-6 space-y-3 text-[0.92rem]">
+          <ul className="mt-6 space-y-3 text-base">
             <li className="flex gap-3">
               <MapPin aria-hidden className="mt-0.5 size-4 shrink-0 text-leaf-200" />
               <span>{site.address}</span>

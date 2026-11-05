@@ -22,9 +22,9 @@ export function DateBlock({ iso, className }: { iso: string; className?: string 
         className,
       )}
     >
-      <span className="w-full bg-brand py-0.5 text-[0.65rem] font-semibold tracking-wider text-white uppercase">{month}</span>
+      <span className="w-full bg-brand py-0.5 text-xs font-semibold tracking-wider text-white uppercase">{month}</span>
       <span className="pt-1 font-serif text-xl leading-none font-semibold text-heading">{day}</span>
-      <span className="pb-1 text-[0.65rem] text-muted">{year}</span>
+      <span className="pb-1 text-xs text-muted">{year}</span>
     </time>
   );
 }

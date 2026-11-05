@@ -40,7 +40,7 @@ export default async function PoliciesPage() {
                 <h2 id={`${p.id}-h`} className="font-serif text-xl font-semibold text-heading">
                   {lang === "bn" ? toBnDigits(i + 1) : i + 1}. {p.title}
                 </h2>
-                <ol className="mt-3 list-decimal space-y-2 pl-5 lang-bn-list text-[0.97rem] text-ink marker:text-muted">
+                <ol className="mt-3 list-decimal space-y-2 pl-5 lang-bn-list text-base text-ink marker:text-muted">
                   {p.points.map((pt) => (
                     <li key={pt}>{pt}</li>
                   ))}

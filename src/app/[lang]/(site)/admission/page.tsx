@@ -219,7 +219,7 @@ export default async function AdmissionPage() {
             <Card className="mt-8 p-6">
               <ul className="space-y-3">
                 {a.documents.map((d) => (
-                  <li key={d} className="flex gap-3 text-[0.95rem] text-ink">
+                  <li key={d} className="flex gap-3 text-base text-ink">
                     <CheckCircle2 aria-hidden className="mt-0.5 size-5 shrink-0 text-accent" />
                     {d}
                   </li>
