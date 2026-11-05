@@ -7,7 +7,8 @@ import { Accordion } from "@/components/ui/Accordion";
 import { ArrowLink, NoticeRow, TeacherCard } from "@/components/shared/cards";
 import { ContactForm } from "@/components/forms/ContactForm";
 import type { HomeData, HomeContent, SectionCopy } from "./types";
-import { formatDate, num } from "@/lib/utils";
+import { cn, formatDate, num } from "@/lib/utils";
+import { FlaskConical, HeartPulse, Library, Monitor, Trophy, Users } from "lucide-react";
 import { images } from "@/data/images";
 
 const STATS_IMAGE = images.campus;
@@ -267,35 +268,34 @@ export function ResultsSection({ copy, data }: { copy: SectionCopy; data: HomeDa
 
 /* ------------------------------------------------------- Facilities */
 
+const FACILITY_ICONS = [FlaskConical, Monitor, Library, Trophy, HeartPulse, Users];
+
 export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
+  // Checkerboard of filled cards, like a printed prospectus page.
+  const filled: Record<number, string> = { 1: "bg-leaf-700 text-white border-leaf-700", 3: "bg-navy-800 text-white border-navy-800", 5: "bg-navy-800 text-white border-navy-800" };
+  const iconTone = ["bg-leaf-700", "bg-navy-800"];
   return (
     <section aria-labelledby="why-title" className="border-t border-line py-14 sm:py-16">
-      <div className="container-page grid gap-10 lg:grid-cols-2 lg:gap-16">
-        <div>
-          <SectionHeading id="why-title" variant="small" title={copy.title} />
-          <dl className="mt-5 divide-y divide-line border-y border-line">
-            {data.facilities.map(({ title, text }) => (
-              <div key={title} className="grid gap-1 py-3 sm:grid-cols-[11rem_1fr] sm:gap-4">
-                <dt className="font-semibold text-heading">{title}</dt>
-                <dd className="text-ink">{text}</dd>
-              </div>
-            ))}
-          </dl>
-          <p className="mt-3 text-sm text-muted">{data.t.home.alsoFacilities}</p>
-        </div>
-        <div>
-          <dl className="divide-y divide-line border-y border-line lg:mt-[3.25rem]">
-            {data.t.home.reasons.map(({ title, text }) => (
-              <div key={title} className="grid gap-1 py-3 sm:grid-cols-[9rem_1fr] sm:gap-4">
-                <dt className="font-semibold text-heading">{title}</dt>
-                <dd className="text-ink">{text}</dd>
-              </div>
-            ))}
-          </dl>
-          <p className="mt-3">
-            <TextLink href="/about">{data.t.home.allFacilities}</TextLink>
-          </p>
-        </div>
+      <div className="container-page">
+        <SectionHeading id="why-title" align="center" title={copy.title} />
+        <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {data.facilities.map(({ title, text }, i) => {
+            const Icon = FACILITY_ICONS[i % FACILITY_ICONS.length];
+            const fill = filled[i];
+            return (
+              <li key={title} className={cn("rounded-md border p-6", fill ?? "border-line bg-surface")}>
+                <span className={cn("flex size-11 items-center justify-center rounded-md", fill ? "bg-white/15" : iconTone[i % 2], "text-white")}>
+                  <Icon aria-hidden className="size-5" />
+                </span>
+                <h3 className={cn("mt-4 text-lg font-semibold", fill ? "text-white" : "text-heading")}>{title}</h3>
+                <p className={cn("mt-1.5 text-sm leading-relaxed", fill ? "text-white/85" : "text-muted")}>{text}</p>
+              </li>
+            );
+          })}
+        </ul>
+        <p className="mt-6 text-center">
+          <TextLink href="/about#campus">{data.t.home.allFacilities}</TextLink>
+        </p>
       </div>
     </section>
   );
