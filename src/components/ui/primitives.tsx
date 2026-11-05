@@ -32,7 +32,7 @@ export function SectionHeading({
           lang={/[\u0980-\u09FF]/.test(kicker) ? "bn" : "en"}
           className={cn(
             "mb-2 inline-flex items-center gap-2 text-sm font-semibold",
-            dark ? "text-leaf-200" : "text-accent",
+            dark ? "text-navy-200" : "text-accent",
           )}
           style={{ lineHeight: 1.4 }}
         >
@@ -89,7 +89,7 @@ type BadgeTone = "navy" | "leaf" | "signal" | "gold" | "neutral";
 
 const badgeTones: Record<BadgeTone, string> = {
   navy: "bg-tint text-subheading ring-line-strong",
-  leaf: "bg-leaf-50 text-accent ring-leaf-100",
+  leaf: "bg-leaf-50 text-accent ring-line",
   signal: "bg-signal-50 text-danger ring-signal-100",
   gold: "bg-[#faf3e3] text-[#7d5c17] ring-[#efe0bb] dark:bg-[#2e2410] dark:text-[#f4cf7f] dark:ring-[#6b5420]",
   neutral: "bg-paper-dark text-muted ring-line",

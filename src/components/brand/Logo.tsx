@@ -81,7 +81,7 @@ export function Logo({ className, tone = "light", compact = false, name = "Webni
             lang={/[\u0980-\u09FF]/.test(nameBn) ? "bn" : "en"}
             className={cn(
               "mt-1 text-[0.74rem] font-medium whitespace-nowrap sm:text-sm",
-              isLight ? "text-accent" : "text-leaf-200",
+              isLight ? "text-accent" : "text-navy-200",
             )}
             style={{ lineHeight: 1.3 }}
           >

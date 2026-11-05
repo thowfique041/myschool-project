@@ -68,7 +68,7 @@ export async function PageHeader({ title, description, crumbs = [], children, he
         {description && <p className="mt-3 max-w-2xl text-base leading-relaxed text-navy-100">{description}</p>}
         {children}
       </div>
-      <div aria-hidden className="h-1 bg-gradient-to-r from-leaf-600 via-leaf-500 to-navy-700" />
+      <div aria-hidden className="h-1 bg-navy-700" />
     </section>
   );
 }

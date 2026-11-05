@@ -12,22 +12,22 @@ export async function TopBar({ site }: { site: SiteInfo }) {
         <ul className="flex flex-wrap items-center gap-x-5 gap-y-1">
           <li>
             <a href={site.phoneHref} className="inline-flex items-center gap-1.5 hover:text-white">
-              <Phone aria-hidden className="size-3.5 text-leaf-200" />
+              <Phone aria-hidden className="size-3.5 text-navy-200" />
               {site.phone}
             </a>
           </li>
           <li className="hidden sm:block">
             <a href={`mailto:${site.email}`} className="inline-flex items-center gap-1.5 hover:text-white">
-              <Mail aria-hidden className="size-3.5 text-leaf-200" />
+              <Mail aria-hidden className="size-3.5 text-navy-200" />
               {site.email}
             </a>
           </li>
           <li className="hidden md:inline-flex items-center gap-1.5">
-            <MapPin aria-hidden className="size-3.5 text-leaf-200" />
+            <MapPin aria-hidden className="size-3.5 text-navy-200" />
             {site.area}
           </li>
           <li className="hidden xl:inline-flex items-center gap-1.5">
-            <Clock aria-hidden className="size-3.5 text-leaf-200" />
+            <Clock aria-hidden className="size-3.5 text-navy-200" />
             {site.officeHours}
           </li>
         </ul>

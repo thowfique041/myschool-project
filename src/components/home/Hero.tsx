@@ -12,7 +12,7 @@ export function Hero({ home, notices }: { home: HomeContent; notices: Notice[] }
   return (
     <section aria-labelledby="hero-title" className="relative bg-paper">
       <div className="container-page pt-5 sm:pt-8">
-        <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-[var(--shadow-card)]">
+        <div className="overflow-hidden rounded-lg border border-line bg-surface shadow-[var(--shadow-card)]">
           {/* Photo with a dark gradient on the text side, contained to the page width */}
           <div className="relative isolate overflow-hidden bg-navy-950">
             <Image
@@ -32,7 +32,7 @@ export function Hero({ home, notices }: { home: HomeContent; notices: Notice[] }
               <div className="max-w-2xl">
                 <div>
                   <p
-                    className="font-serif text-xl font-semibold text-leaf-200 sm:text-2xl"
+                    className="font-serif text-xl font-semibold text-navy-200 sm:text-2xl"
                     style={{ lineHeight: 1.5 }}
                   >
                     {home.heroTagline}

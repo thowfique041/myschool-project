@@ -143,7 +143,7 @@ export default async function AboutPage() {
           </div>
           <div>
             {about.overviewImage && (
-              <Picture image={{ src: about.overviewImage, alt: c.photoAlt(lang === "bn" ? site.nameBn : site.name), width: 1600, height: 1000 }} className="rounded-2xl" sizes="(min-width: 1024px) 50vw, 100vw" />
+              <Picture image={{ src: about.overviewImage, alt: c.photoAlt(lang === "bn" ? site.nameBn : site.name), width: 1600, height: 1000 }} className="rounded-lg" sizes="(min-width: 1024px) 50vw, 100vw" />
             )}
           </div>
         </div>
@@ -171,7 +171,7 @@ export default async function AboutPage() {
           </div>
           <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {values.map((v) => (
-              <li key={v.title} className="rounded-xl border border-line bg-paper p-5">
+              <li key={v.title} className="rounded-md border border-line bg-paper p-5">
                 <HeartHandshake aria-hidden className="size-5 text-accent" />
                 <h3 className="mt-3 font-semibold text-heading">{v.title}</h3>
                 <p className="mt-1 text-sm text-muted">{v.text}</p>
@@ -192,10 +192,10 @@ export default async function AboutPage() {
               description={site.demoNote ? c.historySample : undefined}
             />
           </div>
-          <ol className="relative border-l-2 border-leaf-200 pl-6">
+          <ol className="relative border-l-2 border-line-strong pl-6">
             {milestones.map((m) => (
               <li key={m.year + m.text} className="relative pb-7 last:pb-0">
-                <span aria-hidden className="absolute top-1.5 -left-[1.95rem] size-3.5 rounded-full border-2 border-white bg-leaf-600 ring-2 ring-leaf-200" />
+                <span aria-hidden className="absolute top-1.5 -left-[1.95rem] size-3.5 rounded-full border-2 border-white bg-leaf-600 ring-2 ring-line" />
                 <p className="font-serif text-lg font-semibold text-heading">{m.year}</p>
                 <p className="mt-0.5 text-muted">{m.text}</p>
               </li>
@@ -256,7 +256,7 @@ export default async function AboutPage() {
         <div className="container-page grid gap-12 lg:grid-cols-2">
           <div className="min-w-0">
             <SectionHeading id="committee-title" kicker={c.committeeK} title={c.committee} description={site.demoNote ? c.committeeSample : undefined} />
-            <div className="mt-6 overflow-x-auto rounded-xl border border-line">
+            <div className="mt-6 overflow-x-auto rounded-md border border-line">
               <table className="w-full min-w-[28rem] text-left text-sm">
                 <thead className="bg-paper text-xs text-muted uppercase">
                   <tr>

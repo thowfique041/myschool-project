@@ -158,7 +158,7 @@ function MobileMenu({ onClose, pathname, items, ctaLabel, ctaHref }: { onClose: 
                     >
                       {item.children.map((child) => (
                         <li key={child.href}>
-                          <Link href={child.href} onClick={onClose} className="flex min-h-11 items-center border-l-2 border-leaf-200 pl-4 text-[0.95rem] text-muted hover:text-heading">
+                          <Link href={child.href} onClick={onClose} className="flex min-h-11 items-center border-l-2 border-line-strong pl-4 text-[0.95rem] text-muted hover:text-heading">
                             {child.label}
                           </Link>
                         </li>
@@ -209,7 +209,7 @@ export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 bg-surface/95 backdrop-blur supports-[backdrop-filter]:bg-surface/90 transition-shadow",
+        "sticky top-0 z-40 bg-surface transition-shadow",
         scrolled ? "shadow-[0_1px_0_var(--color-line),0_6px_20px_-12px_rgb(15_31_54/0.25)]" : "border-b border-line",
       )}
     >

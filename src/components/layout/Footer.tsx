@@ -62,23 +62,23 @@ export async function Footer({ site, footer, year }: { site: SiteInfo; footer: F
           </p>
           <ul className="mt-6 space-y-3 text-base">
             <li className="flex gap-3">
-              <MapPin aria-hidden className="mt-0.5 size-4 shrink-0 text-leaf-200" />
+              <MapPin aria-hidden className="mt-0.5 size-4 shrink-0 text-navy-200" />
               <span>{site.address}</span>
             </li>
             <li className="flex gap-3">
-              <Phone aria-hidden className="mt-0.5 size-4 shrink-0 text-leaf-200" />
+              <Phone aria-hidden className="mt-0.5 size-4 shrink-0 text-navy-200" />
               <a href={site.phoneHref} className="hover:text-white">
                 {site.phone}
               </a>
             </li>
             <li className="flex gap-3">
-              <Mail aria-hidden className="mt-0.5 size-4 shrink-0 text-leaf-200" />
+              <Mail aria-hidden className="mt-0.5 size-4 shrink-0 text-navy-200" />
               <a href={`mailto:${site.email}`} className="hover:text-white">
                 {site.email}
               </a>
             </li>
             <li className="flex gap-3">
-              <Clock aria-hidden className="mt-0.5 size-4 shrink-0 text-leaf-200" />
+              <Clock aria-hidden className="mt-0.5 size-4 shrink-0 text-navy-200" />
               <span>{site.officeHours}</span>
             </li>
           </ul>

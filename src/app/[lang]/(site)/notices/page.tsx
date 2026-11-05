@@ -57,7 +57,7 @@ export default async function NoticesPage() {
         <div className="container-page grid gap-10 lg:grid-cols-[1fr_18rem]">
           <NoticeExplorer notices={notices} />
           <aside aria-label={c.upcoming} className="space-y-6">
-            <div className="rounded-xl border border-line bg-surface p-5">
+            <div className="rounded-md border border-line bg-surface p-5">
               <h2 className="font-semibold text-heading">{c.comingUp}</h2>
               <ul className="mt-3 space-y-3 text-sm">
                 {upcoming.length === 0 && <li className="text-muted">{t.common.upcomingNone}</li>}
@@ -76,7 +76,7 @@ export default async function NoticesPage() {
             </div>
             <a
               href="#downloads"
-              className="flex items-center gap-3 rounded-xl border border-leaf-200 bg-leaf-50 p-4 text-sm font-semibold text-heading hover:border-leaf-500"
+              className="flex items-center gap-3 rounded-md border border-line-strong bg-leaf-50 p-4 text-sm font-semibold text-heading hover:border-leaf-500"
             >
               <FileDown aria-hidden className="size-5 text-accent" />
               {c.downloads}
