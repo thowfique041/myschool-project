@@ -10,7 +10,7 @@ import { admissionDates, admissionSteps, admissionYear, classOptions, eligibilit
 import { calendarEvents, calendarTypeLabel } from "@/data/calendar";
 import { boardSummary, examSchedule, mockResults } from "@/data/results";
 import { images } from "@/data/images";
-import { slugify } from "@/cms/fields";
+import { slugify } from "@/lib/utils";
 
 const extraPolicies = [
   {

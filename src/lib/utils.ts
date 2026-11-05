@@ -75,3 +75,15 @@ export function datePartsL(iso: string, lang: "en" | "bn") {
 
 /** Number in the visitor's language. */
 export const num = (v: string | number, lang: "en" | "bn") => (lang === "bn" ? toBnDigits(v) : String(v));
+
+/** URL-safe slug from a title. */
+export function slugify(input: string): string {
+  return input
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[^\w\s-]/g, "")
+    .trim()
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+}

@@ -20,6 +20,6 @@ export default function proxy(req: NextRequest) {
 }
 
 export const config = {
-  // Skip Next internals, the admin panel, metadata routes and any file with an extension.
-  matcher: ["/((?!_next/|admin|api/|sitemap\\.xml|robots\\.txt|.*\\.[a-zA-Z0-9]{2,5}$).*)"],
+  // Skip Next internals, metadata routes and any file with an extension.
+  matcher: ["/((?!_next/|api/|sitemap\\.xml|robots\\.txt|.*\\.[a-zA-Z0-9]{2,5}$).*)"],
 };

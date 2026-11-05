@@ -3,7 +3,7 @@ import "@/app/globals.css";
 import { bangla, banglaSerif, inter, serifEn } from "@/lib/fonts";
 import { themeScript } from "./ThemeToggle";
 
-/** <html>/<body> shell shared by the website and the admin panel root layouts. */
+/** <html>/<body> shell used by the website root layout. */
 export function Document({ lang, children }: { lang: string; children: ReactNode }) {
   return (
     <html lang={lang} suppressHydrationWarning className={`${inter.variable} ${serifEn.variable} ${bangla.variable} ${banglaSerif.variable} antialiased`}>

@@ -7,7 +7,7 @@ export const hasLocale = (v: string | undefined | null): v is Locale => v === "e
 /** English lives at the site root, Bangla under /bn. */
 export function localizePath(path: string, lang: Locale): string {
   if (!path.startsWith("/") || path.startsWith("//")) return path;
-  if (/^\/(admin|api|_next|downloads|images|uploads)(\/|$)/.test(path) || /\.[a-z0-9]{2,5}($|[?#])/i.test(path.split("#")[0].split("?")[0])) return path;
+  if (/^\/(api|_next|downloads|images|uploads)(\/|$)/.test(path) || /\.[a-z0-9]{2,5}($|[?#])/i.test(path.split("#")[0].split("?")[0])) return path;
   const clean = stripLocale(path);
   if (lang === "en") return clean;
   return clean === "/" ? "/bn" : clean.startsWith("/#") || clean.startsWith("/?") ? `/bn${clean.slice(1)}` : `/bn${clean}`;
