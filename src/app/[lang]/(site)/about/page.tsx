@@ -120,7 +120,7 @@ export default async function AboutPage() {
       <section aria-labelledby="overview" className="py-16 sm:py-20">
         <div className="container-page grid items-center gap-12 lg:grid-cols-2">
           <div>
-            <SectionHeading id="overview" kicker={c.overviewK} title={c.overview} />
+            <SectionHeading id="overview" title={c.overview} />
             <div className="mt-5 space-y-4 text-base leading-relaxed text-muted">
               {about.overview.map((p) => (
                 <p key={p}>{p}</p>
@@ -152,7 +152,7 @@ export default async function AboutPage() {
       {/* Mission & vision */}
       <section aria-labelledby="mission" className="border-y border-line bg-surface py-16 sm:py-20">
         <div className="container-page">
-          <SectionHeading id="mission" kicker={c.missionK} title={c.missionTitle} align="center" />
+          <SectionHeading id="mission" title={c.missionTitle} align="center" />
           <div className="mt-10 grid gap-6 md:grid-cols-2">
             <div>
               <Card className="h-full p-7">
@@ -187,7 +187,6 @@ export default async function AboutPage() {
           <div>
             <SectionHeading
               id="history"
-              kicker={c.historyK}
               title={c.history}
               description={site.demoNote ? c.historySample : undefined}
             />
@@ -220,7 +219,7 @@ export default async function AboutPage() {
             </div>
           </div>
           <div>
-            <SectionHeading id="principal-title" tone="dark" kicker={c.principalK} title={c.principal} />
+            <SectionHeading id="principal-title" tone="dark" title={c.principal} />
             <div className="mt-6 space-y-4 leading-relaxed text-navy-100">
               {principal.message.map((p) => (
                 <p key={p}>{p}</p>
@@ -234,7 +233,7 @@ export default async function AboutPage() {
       {/* Campus */}
       <section aria-labelledby="campus" className="py-16 sm:py-20">
         <div className="container-page">
-          <SectionHeading id="campus" kicker={c.campusK} title={c.campus} />
+          <SectionHeading id="campus" title={c.campus} />
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {facilities.map((f) => (
               <li key={f.title}>
@@ -255,7 +254,7 @@ export default async function AboutPage() {
       <section id="committee" aria-labelledby="committee-title" className="scroll-mt-24 border-t border-line bg-surface py-16 sm:py-20">
         <div className="container-page grid gap-12 lg:grid-cols-2">
           <div className="min-w-0">
-            <SectionHeading id="committee-title" kicker={c.committeeK} title={c.committee} description={site.demoNote ? c.committeeSample : undefined} />
+            <SectionHeading id="committee-title" title={c.committee} description={site.demoNote ? c.committeeSample : undefined} />
             <div className="mt-6 overflow-x-auto rounded-md border border-line">
               <table className="w-full min-w-[28rem] text-left text-sm">
                 <thead className="bg-paper text-xs text-muted uppercase">
@@ -279,7 +278,7 @@ export default async function AboutPage() {
             </div>
           </div>
           <div>
-            <SectionHeading kicker={c.staffK} title={c.staff} />
+            <SectionHeading title={c.staff} />
             <p className="mt-4 leading-relaxed text-muted">{about.staffText}</p>
             <ul className="mt-6 flex -space-x-3" aria-label={c.someTeachers}>
               {teachers.slice(0, 5).map((t) => (

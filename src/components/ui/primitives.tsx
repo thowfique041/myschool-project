@@ -6,53 +6,32 @@ import { cn } from "@/lib/utils";
 /* ----------------------------------------------------------- Section heading */
 
 type SectionHeadingProps = {
-  kicker?: string;
   title: string;
   description?: ReactNode;
   align?: "left" | "center";
   tone?: "light" | "dark";
+  /** "rule": heavy top rule, like a notice-board header. "small": compact h2. */
+  variant?: "default" | "rule" | "small";
   className?: string;
   id?: string;
 };
 
-export function SectionHeading({
-  kicker,
-  title,
-  description,
-  align = "left",
-  tone = "light",
-  className,
-  id,
-}: SectionHeadingProps) {
+export function SectionHeading({ title, description, align = "left", tone = "light", variant = "default", className, id }: SectionHeadingProps) {
   const dark = tone === "dark";
   return (
-    <div className={cn(align === "center" && "mx-auto text-center", "max-w-2xl", className)}>
-      {kicker && (
-        <p
-          lang={/[\u0980-\u09FF]/.test(kicker) ? "bn" : "en"}
-          className={cn(
-            "mb-2 inline-flex items-center gap-2 text-sm font-semibold",
-            dark ? "text-navy-200" : "text-accent",
-          )}
-          style={{ lineHeight: 1.4 }}
-        >
-          {kicker}
-        </p>
-      )}
+    <div className={cn(align === "center" && "mx-auto text-center", "max-w-2xl", variant === "rule" && "max-w-none border-t-4 border-navy-800 pt-3 dark:border-navy-300", className)}>
       <h2
         id={id}
         className={cn(
-          "font-serif text-[1.75rem] leading-tight font-semibold sm:text-[2.1rem]",
+          variant === "default" && "font-serif text-3xl leading-tight font-semibold sm:text-4xl",
+          variant === "rule" && "text-2xl font-bold uppercase sm:text-[1.65rem]",
+          variant === "small" && "font-serif text-2xl font-semibold",
           dark ? "text-white" : "text-heading",
         )}
       >
         {title}
       </h2>
-      {description && (
-        <p className={cn("mt-3 text-base leading-relaxed", dark ? "text-navy-100" : "text-muted")}>
-          {description}
-        </p>
-      )}
+      {description && <p className={cn("mt-2 text-base leading-relaxed", dark ? "text-navy-100" : "text-muted")}>{description}</p>}
     </div>
   );
 }

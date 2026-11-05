@@ -17,20 +17,14 @@ export const faqs: FaqItem[] = [
 export const testimonials: Testimonial[] = [
   {
     quote:
-      "আমার মেয়ে প্রথম শ্রেণি থেকে এখানে পড়ছে। শ্রেণি শিক্ষক নিয়মিত খোঁজ নেন, কোনো সমস্যা হলে ফোন করে জানান, এটা আমাদের কাছে সবচেয়ে বড় ভরসা।",
-    name: "A guardian",
-    role: "Guardian of a Class 5 student",
-  },
-  {
-    quote:
-      "The science teachers let us actually do the practicals instead of only reading about them. Building our project for the science fair was the best part of Class 9.",
-    name: "A student",
-    role: "Class 10, Science group",
+      "আমার মেয়ে প্রথম শ্রেণি থেকে এখানে পড়ছে। শ্রেণি শিক্ষক নিয়মিত খোঁজ নেন, কোনো সমস্যা হলে ফোন করে জানান। এটা আমাদের কাছে সবচেয়ে বড় ভরসা।",
+    name: "Farhana Begum",
+    role: "Guardian, Class 5, Morning shift",
   },
   {
     quote:
       "HSC-তে টিউটোরিয়াল ক্লাসগুলো খুব কাজে এসেছে। স্যারদের কাছে ক্লাসের পরেও প্রশ্ন নিয়ে যাওয়া যেত।",
-    name: "A former student",
-    role: "HSC 2025, Business Studies",
+    name: "Tanzil Ahmed",
+    role: "Former student, HSC 2025, Business Studies",
   },
 ];

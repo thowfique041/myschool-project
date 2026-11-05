@@ -100,6 +100,8 @@ export type AcademicLevel = {
   summary: string;
   highlights: string[];
   groups?: string[];
+  shift?: string;
+  sectionSize?: string;
 };
 
 export type CalendarEvent = {

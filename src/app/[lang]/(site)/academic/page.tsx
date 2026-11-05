@@ -158,7 +158,7 @@ export default async function AcademicPage() {
 
       <section id="levels" aria-labelledby="levels-h" className="scroll-mt-36 py-16">
         <div className="container-page">
-          <SectionHeading id="levels-h" kicker={c.levelsK} title={c.levels} />
+          <SectionHeading id="levels-h" title={c.levels} />
           <div className="mt-8 grid gap-6 lg:grid-cols-3">
             {academicLevels.map((l) => (
               <div key={l.id}>
@@ -189,7 +189,6 @@ export default async function AcademicPage() {
         <div className="container-page">
           <SectionHeading
             id="curr-h"
-            kicker={c.currK}
             title={c.curr}
             description={c.currText}
           />
@@ -229,7 +228,7 @@ export default async function AcademicPage() {
       <section id="calendar" aria-labelledby="cal-h" className="scroll-mt-36 py-16">
         <div className="container-page grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
-            <SectionHeading id="cal-h" kicker={c.calK} title={c.cal} description={c.calText} />
+            <SectionHeading id="cal-h" title={c.cal} description={c.calText} />
             <ButtonLink href="/calendar" variant="outline" className="mt-6">
               {c.fullCal}
             </ButtonLink>
@@ -254,7 +253,7 @@ export default async function AcademicPage() {
       <section id="routine" aria-labelledby="routine-h" className="scroll-mt-36 border-y border-line bg-surface py-16">
         <div className="container-page">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <SectionHeading id="routine-h" kicker={c.routineK} title={c.routine} description={c.routineText} />
+            <SectionHeading id="routine-h" title={c.routine} description={c.routineText} />
             {site.demoNote && <SampleTag />}
           </div>
           {routines.map((routine) => (
@@ -309,7 +308,7 @@ export default async function AcademicPage() {
       <section id="exams" aria-labelledby="exams-h" className="scroll-mt-36 py-16">
         <div className="container-page grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="min-w-0">
-            <SectionHeading id="exams-h" kicker={c.examsK} title={c.exams} />
+            <SectionHeading id="exams-h" title={c.exams} />
             <ol className="mt-6 space-y-4">
               {examSystem.map((e, i) => (
                 <li key={e.title} className="flex gap-4 rounded-md border border-line bg-surface p-5">
@@ -352,7 +351,7 @@ export default async function AcademicPage() {
 
       <section id="resources" aria-labelledby="res-h" className="scroll-mt-36 border-y border-line bg-surface py-16">
         <div className="container-page">
-          <SectionHeading id="res-h" kicker={c.resK} title={c.res} description={site.demoNote ? c.resSample : undefined} />
+          <SectionHeading id="res-h" title={c.res} description={site.demoNote ? c.resSample : undefined} />
           <ul className="mt-6 grid gap-4 md:grid-cols-3">
             {resources.length === 0 && <li className="text-muted">{c.resNone}</li>}
             {resources.map((r) => (
@@ -376,7 +375,7 @@ export default async function AcademicPage() {
 
       <section id="policies" aria-labelledby="pol-h" className="scroll-mt-36 py-16">
         <div className="container-page">
-          <SectionHeading id="pol-h" kicker={c.polK} title={c.pol} />
+          <SectionHeading id="pol-h" title={c.pol} />
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             {policies.map((p) => (
               <div key={p.id} className="rounded-md border border-line bg-surface p-6">

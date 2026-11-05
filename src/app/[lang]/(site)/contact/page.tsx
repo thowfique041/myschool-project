@@ -168,13 +168,13 @@ export default async function ContactPage() {
 
           <div className="mt-12 grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
             <div>
-              <SectionHeading kicker={c.sendK} title={c.send} />
+              <SectionHeading title={c.send} />
               <Card className="mt-6 p-5 sm:p-7">
                 <ContactForm to={site.email} />
               </Card>
             </div>
             <div>
-              <SectionHeading kicker={c.findK} title={c.find} />
+              <SectionHeading title={c.find} />
               <div className="mt-6">
                 {mapOk ? <MapEmbed url={site.mapUrl} title={`${c.map} ${site.name}`} /> : <MapPlaceholder c={c} />}
               </div>

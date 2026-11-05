@@ -10,6 +10,8 @@ export const academicLevels: AcademicLevel[] = [
     summary:
       "A caring start with small sections, class-teacher follow-up and plenty of reading, drawing and play alongside the national curriculum.",
     highlights: ["Maximum 35 students per section", "Daily reading hour", "Art, music & handwriting classes", "Morning shift only"],
+    shift: "Morning",
+    sectionSize: "Up to 35",
   },
   {
     id: "secondary",
@@ -20,6 +22,7 @@ export const academicLevels: AcademicLevel[] = [
     summary:
       "NCTB curriculum with continuous assessment, practical science and ICT classes, and focused preparation for the SSC examination.",
     highlights: ["Morning & day shifts", "Science lab & ICT practicals", "Weekly class tests", "SSC model tests in Class 10"],
+    shift: "Morning and day",
     groups: ["Science", "Business Studies", "Humanities"],
   },
   {
@@ -31,6 +34,7 @@ export const academicLevels: AcademicLevel[] = [
     summary:
       "Two-year HSC programme taught by subject lecturers, with tutorial classes, lab work and guidance for university admission.",
     highlights: ["Subject-specialist lecturers", "Tutorial & lab sessions", "Career and admission guidance", "Separate study hall"],
+    shift: "Single shift, 9:00 AM to 2:30 PM",
     groups: ["Science", "Business Studies", "Humanities"],
   },
 ];

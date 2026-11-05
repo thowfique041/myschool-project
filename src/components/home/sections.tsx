@@ -1,195 +1,66 @@
 import { DefaultAvatar } from "@/components/ui/DefaultAvatar";
 import Link from "@/components/i18n/Link";
-import {
-  CheckCircle2,
-  ClipboardList,
-  Music4,
-  Quote,
-  ShieldCheck,
-  Users,
-} from "lucide-react";
 import { Badge, ButtonLink, Card, SectionHeading } from "@/components/ui/primitives";
-import { SampleTag } from "@/components/ui/SampleTag";
 import { Picture } from "@/components/ui/Picture";
 import { Accordion } from "@/components/ui/Accordion";
 import { ArrowLink, NoticeRow, TeacherCard } from "@/components/shared/cards";
 import { ContactForm } from "@/components/forms/ContactForm";
 import type { HomeData, HomeContent, SectionCopy } from "./types";
-import { cn, formatDate, num } from "@/lib/utils";
+import { formatDate, num } from "@/lib/utils";
 
-/* ------------------------------------------------- About + principal */
-
-export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: SectionCopy; data: HomeData }) {
-  const p = data.principal;
+/** Plain underlined text link, used where an arrow link would be one too many. */
+function TextLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <section aria-labelledby="welcome-title" className="py-16 sm:py-20">
-      <div className="container-page grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
-        <div>
-          <SectionHeading
-            id="welcome-title"
-            kicker={copy.kicker}
-            title={copy.title || home.welcomeTitle}
-          />
-          <div className="mt-5 space-y-4 text-base leading-relaxed text-muted">
-            {home.welcomeText.map((t) => (
-              <p key={t}>{t}</p>
-            ))}
-          </div>
-          <ul className="mt-7 grid gap-3 sm:grid-cols-2">
-            {home.welcomePoints.map((t) => (
-              <li key={t} className="flex gap-2.5 text-base text-ink">
-                <CheckCircle2 aria-hidden className="mt-0.5 size-5 shrink-0 text-accent" />
-                {t}
-              </li>
-            ))}
-          </ul>
-          <ArrowLink href="/about" className="mt-7">
-            {data.t.home.readHistory}
-          </ArrowLink>
-        </div>
-
-        <div>
-          <figure id="principal" className="relative h-full rounded-lg bg-navy-900 p-7 text-white sm:p-9">
-            <Quote aria-hidden className="size-9 text-navy-200/60" />
-            <p className="mt-2 text-sm font-medium text-navy-200">
-              {data.t.home.principalMessage}
-            </p>
-            <blockquote className="mt-3 font-serif text-lg leading-relaxed sm:text-xl">
-              “{p.quote}”
-            </blockquote>
-            <figcaption className="mt-7 flex items-center gap-4 border-t border-white/15 pt-5">
-              {p.photo ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={p.photo} alt="" className="size-14 rounded-full object-cover" />
-              ) : (
-                <DefaultAvatar gender={p.gender === "male" ? "male" : "female"} className="size-14" />
-              )}
-              <span>
-                <span className="block font-semibold">{p.name}</span>
-                <span className="block text-sm text-navy-200">{p.title}</span>
-              </span>
-            </figcaption>
-            <Link href="/about#principal" className="mt-5 inline-block text-sm font-semibold text-navy-200 hover:text-white hover:underline underline-offset-4">
-              {data.t.home.readFull}
-            </Link>
-          </figure>
-        </div>
-      </div>
-    </section>
+    <Link href={href} className="text-sm font-semibold text-accent underline underline-offset-4 hover:text-heading">
+      {children}
+    </Link>
   );
 }
 
-/* --------------------------------------------------------- Levels */
-
-export function LevelsSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
-  return (
-    <section aria-labelledby="levels-title" className="border-y border-line bg-surface py-16 sm:py-20">
-      <div className="container-page">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <SectionHeading
-            id="levels-title"
-            kicker={copy.kicker}
-            title={copy.title}
-            description={copy.description || undefined}
-          />
-          <ArrowLink href="/academic">{data.t.home.curriculum}</ArrowLink>
-        </div>
-        <ol className={cn("mt-10 grid gap-px overflow-hidden rounded-lg border border-line bg-line", data.levels.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2")}>
-          {data.levels.map((level, i) => (
-            <li key={level.id} className="flex flex-col bg-surface p-7">
-              <div className="flex items-baseline justify-between">
-                <span className="font-serif text-4xl font-semibold text-navy-100 dark:text-navy-700">{num(String(i + 1).padStart(2, "0"), data.lang)}</span>
-                <span className="text-xs font-medium text-muted">{level.ages}</span>
-              </div>
-              <h3 className="mt-3 font-serif text-xl font-semibold text-heading">
-                {level.name}
-              </h3>
-              <p className="text-sm font-semibold text-accent">{level.classes}</p>
-              <p className="mt-3 text-base leading-relaxed text-muted">{level.summary}</p>
-              <ul className="mt-4 space-y-1.5 text-sm text-ink">
-                {level.highlights.map((h) => (
-                  <li key={h} className="flex gap-2">
-                    <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-navy-400" />
-                    {h}
-                  </li>
-                ))}
-              </ul>
-              {level.groups && level.groups.length > 0 && (
-                <div className="mt-auto flex flex-wrap gap-1.5 pt-5">
-                  {level.groups.map((g) => (
-                    <Badge key={g} tone="navy">
-                      {g}
-                    </Badge>
-                  ))}
-                </div>
-              )}
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------- Notices + admission */
+/* ------------------------------------------- Notice board + admission */
 
 export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
   const adm = data.admission;
   return (
-    <section aria-label={data.t.home.noticesAdmission} className="py-16 sm:py-20">
+    <section aria-label={data.t.home.noticesAdmission} className="pt-4 pb-14 sm:pb-16">
       <div className="container-page grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
-          <div className="flex items-end justify-between gap-4">
-            <SectionHeading kicker={copy.kicker} title={copy.title} description={copy.description || undefined} />
-            <ArrowLink href="/notices">{data.t.home.allNotices}</ArrowLink>
-          </div>
-          <Card className="mt-6 divide-y divide-line px-5">
+          <SectionHeading id="notices-title" variant="rule" title={copy.title} />
+          <div className="divide-y divide-line border-b border-line">
             {data.notices.slice(0, 5).map((n) => (
               <NoticeRow key={n.slug} notice={n} compact />
             ))}
-          </Card>
+          </div>
+          <p className="mt-4">
+            <ArrowLink href="/notices">{data.t.home.allNotices}</ArrowLink>
+          </p>
         </div>
 
-        <div>
-          <div id="admission" className="h-full rounded-lg border border-line-strong bg-leaf-50 p-6 sm:p-8">
+        <div id="admission" className="self-start rounded-md border border-line-strong bg-surface">
+          <div className="border-b border-line bg-leaf-50 px-5 py-4 sm:px-6">
             <Badge tone={adm.open ? "leaf" : "neutral"}>{adm.open ? data.t.home.admissionOpen : data.t.home.admissionClosed}</Badge>
-            <h2 className="mt-3 font-serif text-2xl font-semibold text-heading">
+            <h2 className="mt-2 font-serif text-2xl font-semibold text-heading">
               {data.t.home.admission} {num(adm.year, data.lang)}
             </h2>
             {(data.lang === "bn" ? adm.noticeTitleBn : adm.noticeTitle) && (
-              <p className="text-sm text-accent">
-                {data.lang === "bn" ? adm.noticeTitleBn : adm.noticeTitle}
-              </p>
+              <p className="text-sm text-muted">{data.lang === "bn" ? adm.noticeTitleBn : adm.noticeTitle}</p>
             )}
-            <ol className="mt-6 space-y-4">
-              {adm.steps.slice(0, 4).map((step, i) => (
-                <li key={step.title} className="flex gap-3">
-                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-leaf-600 text-sm font-semibold text-white">
-                    {num(i + 1, data.lang)}
-                  </span>
-                  <div>
-                    <p className="font-semibold text-heading">{step.title}</p>
-                    <p className="text-sm text-muted">{step.text}</p>
-                  </div>
-                </li>
+          </div>
+          <table className="w-full text-sm">
+            <tbody className="divide-y divide-line">
+              {adm.dates.slice(0, 5).map((d) => (
+                <tr key={d.label}>
+                  <th scope="row" className="px-5 py-2.5 text-left font-normal text-ink sm:px-6">{d.label}</th>
+                  <td className="px-5 py-2.5 text-right font-semibold whitespace-nowrap text-heading tabular-nums sm:px-6">{formatDate(d.date, data.lang)}</td>
+                </tr>
               ))}
-            </ol>
-            <dl className="mt-6 space-y-2 border-t border-line-strong pt-5 text-sm">
-              {adm.dates.slice(0, 4).map((d) => (
-                <div key={d.label} className="flex justify-between gap-4">
-                  <dt className="text-muted">{d.label}</dt>
-                  <dd className="shrink-0 font-semibold text-heading">{formatDate(d.date, data.lang)}</dd>
-                </div>
-              ))}
-            </dl>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <ButtonLink href="/admission#apply" variant="secondary">
-                {data.t.home.applyInquire}
-              </ButtonLink>
-              <ButtonLink href="/notices#downloads" variant="outline">
-                {data.t.home.downloadForm}
-              </ButtonLink>
-            </div>
+            </tbody>
+          </table>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-line px-5 py-4 sm:px-6">
+            <ButtonLink href="/admission#apply" variant="secondary">
+              {data.t.home.applyInquire}
+            </ButtonLink>
+            <TextLink href="/notices#downloads">{data.t.home.downloadForm}</TextLink>
           </div>
         </div>
       </div>
@@ -197,62 +68,231 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
   );
 }
 
-/* -------------------------------------------- Why us + facilities */
+/* --------------------------------------- About + principal's letter */
 
-const reasonIcons = [Users, ShieldCheck, ClipboardList, Music4];
+export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: SectionCopy; data: HomeData }) {
+  const p = data.principal;
+  return (
+    <section aria-labelledby="welcome-title" className="border-t border-line bg-surface py-14 sm:py-16">
+      <div className="container-page grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+        <div>
+          <SectionHeading id="welcome-title" variant="small" title={copy.title || home.welcomeTitle} />
+          <div className="mt-4 space-y-3 leading-relaxed text-ink">
+            {home.welcomeText.map((t) => (
+              <p key={t}>{t}</p>
+            ))}
+          </div>
+          {home.welcomePoints.length > 0 && (
+            <ul className="mt-5 list-disc space-y-1.5 pl-5 text-ink marker:text-navy-400">
+              {home.welcomePoints.map((t) => (
+                <li key={t}>{t}</li>
+              ))}
+            </ul>
+          )}
+          <p className="mt-5">
+            <TextLink href="/about">{data.t.home.readHistory}</TextLink>
+          </p>
+        </div>
 
+        <figure id="principal" className="grid gap-5 border-l-4 border-navy-700 pl-5 sm:grid-cols-[auto_1fr] sm:pl-7 dark:border-navy-300">
+          {p.photo ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={p.photo} alt="" className="size-24 rounded-md object-cover" />
+          ) : (
+            <DefaultAvatar gender={p.gender === "male" ? "male" : "female"} className="size-24 rounded-md" />
+          )}
+          <div>
+            <h2 className="font-serif text-2xl font-semibold text-heading">{data.t.home.principalMessage}</h2>
+            <blockquote className="mt-3 leading-relaxed text-ink">
+              <p>{p.quote}</p>
+            </blockquote>
+            <figcaption className="mt-4 text-sm">
+              <span className="block font-semibold text-heading">{p.name}</span>
+              <span className="block text-muted">{p.title}</span>
+            </figcaption>
+            <p className="mt-4">
+              <TextLink href="/about#principal">{data.t.home.readFull}</TextLink>
+            </p>
+          </div>
+        </figure>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------ Classes and sections */
+
+export function LevelsSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
+  const L = data.levels;
+  const r = data.t.home.levelRows;
+  const dash = "–";
+  const rows: { label: string; cell: (l: (typeof L)[number]) => string }[] = [
+    { label: r.classes, cell: (l) => l.classes },
+    { label: r.ages, cell: (l) => l.ages.replace(/^(Ages|বয়স)\s*/, "") },
+    { label: r.shift, cell: (l) => l.shift ?? dash },
+    { label: r.groups, cell: (l) => (l.groups?.length ? l.groups.join(", ") : dash) },
+    { label: r.size, cell: (l) => l.sectionSize ?? dash },
+  ];
+  return (
+    <section aria-labelledby="levels-title" className="border-t border-line py-14 sm:py-16">
+      <div className="container-page">
+        <SectionHeading id="levels-title" title={copy.title} />
+        <div className="mt-6 overflow-x-auto border-y border-line-strong" tabIndex={0} aria-labelledby="levels-title">
+          <table className="w-full min-w-[40rem] text-left">
+            <thead>
+              <tr className="border-b border-line-strong">
+                <td className="w-40 py-3 pr-4" />
+                {L.map((l) => (
+                  <th key={l.id} scope="col" className="py-3 pr-4 font-serif text-xl font-semibold text-heading">
+                    {l.name}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-line">
+              {rows.map((row) => (
+                <tr key={row.label}>
+                  <th scope="row" className="py-2.5 pr-4 text-sm font-semibold text-muted">{row.label}</th>
+                  {L.map((l) => (
+                    <td key={l.id} className="py-2.5 pr-4 text-ink">{row.cell(l)}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-4">
+          <ArrowLink href="/academic">{data.t.home.curriculum}</ArrowLink>
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------- Public examination results */
+
+export function ResultsSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
+  const T = data.t.home.table;
+  const n = (v: number | string) => num(v, data.lang);
+  const rows = [...data.board.rows]
+    .filter((r) => r.examinees > 0)
+    .sort((a, b) => a.exam.localeCompare(b.exam) || b.year.localeCompare(a.year));
+  return (
+    <section aria-labelledby="results-title" className="border-t border-line bg-surface py-14 sm:py-16">
+      <div className="container-page">
+        <div className="max-w-4xl overflow-x-auto" tabIndex={0} aria-labelledby="results-title">
+          <table className="w-full min-w-[36rem] text-left">
+            <caption id="results-title" className="pb-4 text-left font-serif text-3xl font-semibold text-heading">
+              {copy.title}
+            </caption>
+            <thead className="border-y-2 border-navy-800 text-sm dark:border-navy-300">
+              <tr>
+                <th scope="col" className="py-2.5 pr-4 font-semibold">{T.exam}</th>
+                <th scope="col" className="py-2.5 pr-4 font-semibold">{T.year}</th>
+                <th scope="col" className="py-2.5 pr-4 text-right font-semibold">{T.examinees}</th>
+                <th scope="col" className="py-2.5 pr-4 text-right font-semibold">{T.passed}</th>
+                <th scope="col" className="py-2.5 pr-4 text-right font-semibold">{T.rate}</th>
+                <th scope="col" className="py-2.5 text-right font-semibold">{T.gpa5}</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-line tabular-nums">
+              {rows.map((r) => (
+                <tr key={`${r.exam}-${r.year}`}>
+                  <th scope="row" className="py-2.5 pr-4 font-semibold text-heading">{r.exam}</th>
+                  <td className="py-2.5 pr-4">{r.year}</td>
+                  <td className="py-2.5 pr-4 text-right">{n(r.examinees)}</td>
+                  <td className="py-2.5 pr-4 text-right">{n(r.passed)}</td>
+                  <td className="py-2.5 pr-4 text-right font-semibold text-heading">{n(((r.passed / r.examinees) * 100).toFixed(1))}%</td>
+                  <td className="py-2.5 text-right">{n(r.aPlus)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-4 max-w-4xl border-t border-line pt-3">
+          <TextLink href="/results">{data.t.home.resultSearch}</TextLink>
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------- Facilities */
 
 export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
   return (
-    <section aria-labelledby="why-title" className="bg-navy-950 py-16 text-white sm:py-20">
+    <section aria-labelledby="why-title" className="border-t border-line py-14 sm:py-16">
+      <div className="container-page grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <SectionHeading id="why-title" variant="small" title={copy.title} />
+          <dl className="mt-5 divide-y divide-line border-y border-line">
+            {data.facilities.map(({ title, text }) => (
+              <div key={title} className="grid gap-1 py-3 sm:grid-cols-[11rem_1fr] sm:gap-4">
+                <dt className="font-semibold text-heading">{title}</dt>
+                <dd className="text-ink">{text}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-3 text-sm text-muted">{data.t.home.alsoFacilities}</p>
+        </div>
+        <div>
+          <dl className="divide-y divide-line border-y border-line lg:mt-[3.25rem]">
+            {data.t.home.reasons.map(({ title, text }) => (
+              <div key={title} className="grid gap-1 py-3 sm:grid-cols-[9rem_1fr] sm:gap-4">
+                <dt className="font-semibold text-heading">{title}</dt>
+                <dd className="text-ink">{text}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-3">
+            <TextLink href="/about">{data.t.home.allFacilities}</TextLink>
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------ News */
+
+export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
+  const featured = data.news.find((n) => n.featured) ?? data.news[0];
+  const rest = data.news.filter((n) => n !== featured).slice(0, 4);
+  if (!featured) return null;
+  return (
+    <section aria-labelledby="news-title" className="border-t border-line bg-surface py-14 sm:py-16">
       <div className="container-page">
-        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+        <SectionHeading id="news-title" variant="small" title={copy.title} />
+        <div className="mt-6 grid gap-8 lg:grid-cols-[1.3fr_1fr]">
+          <article>
+            <Picture image={featured.image} className="rounded-md" sizes="(min-width: 1024px) 55vw, 100vw" />
+            <time dateTime={featured.date} className="mt-4 block text-sm text-muted">
+              {formatDate(featured.date, data.lang)}
+            </time>
+            <h3 className="mt-1 font-serif text-2xl leading-snug font-semibold text-heading">
+              <Link href={`/news/${featured.slug}`} className="hover:underline underline-offset-4">
+                {featured.title}
+              </Link>
+            </h3>
+            <p className="mt-2 leading-relaxed text-muted">{featured.excerpt}</p>
+          </article>
           <div>
-            <SectionHeading
-              id="why-title"
-              tone="dark"
-              kicker={copy.kicker}
-              title={copy.title}
-              description={copy.description || undefined}
-            />
-            <ul className="mt-8 space-y-6">
-              {data.t.home.reasons.map(({ title, text }, i) => {
-                const Icon = reasonIcons[i % reasonIcons.length];
-                return (
-                <li key={title} className="flex gap-4">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white/10">
-                    <Icon aria-hidden className="size-5 text-navy-200" />
-                  </span>
-                  <div>
-                    <h3 className="font-semibold">{title}</h3>
-                    <p className="mt-1 text-base leading-relaxed text-navy-200">{text}</p>
-                  </div>
-                </li>
-                );
-              })}
-            </ul>
-          </div>
-          <div>
-            <div>
-              <h3 className="flex items-center gap-2 text-sm font-semibold tracking-wide text-navy-200 uppercase">{data.t.home.facilities}</h3>
-            </div>
-            <ul className="mt-4 grid gap-4 sm:grid-cols-2">
-              {data.facilities.map(({ title, text, image, imageAlt }) => (
-                <li key={title} className="overflow-hidden rounded-md bg-white/[0.04] ring-1 ring-white/10">
-                  {image && (
-                    <Picture image={{ src: image, alt: imageAlt, width: 1600, height: 900 }} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" ratio="aspect-[16/9]" />
-                  )}
-                  <div className="p-4">
-                    <h4 className="font-semibold">
-                      {title}
-                    </h4>
-                    <p className="mt-1 text-sm text-navy-200">{text}</p>
-                  </div>
+            <ul className="divide-y divide-line border-y border-line">
+              {rest.map((a) => (
+                <li key={a.slug} className="py-3">
+                  <time dateTime={a.date} className="text-sm text-muted">
+                    {formatDate(a.date, data.lang)}
+                  </time>
+                  <h3 className="mt-0.5 leading-snug font-semibold text-heading">
+                    <Link href={`/news/${a.slug}`} className="hover:underline underline-offset-4">
+                      {a.title}
+                    </Link>
+                  </h3>
                 </li>
               ))}
             </ul>
-            <p className="mt-4 text-sm text-navy-200">
-              {data.t.home.alsoFacilities}
+            <p className="mt-4">
+              <ArrowLink href="/news">{data.t.home.allNews}</ArrowLink>
             </p>
           </div>
         </div>
@@ -261,124 +301,30 @@ export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: 
   );
 }
 
-/* --------------------------------------------------- Results */
-
-export function ResultsSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
-  const rows = data.board.rows;
-  const latest = (exam: string) => rows.filter((r) => r.exam === exam).sort((a, b) => b.year.localeCompare(a.year))[0];
-  const stats = [latest("SSC"), latest("HSC")]
-    .filter((r): r is NonNullable<typeof r> => Boolean(r && r.examinees))
-    .flatMap((r) => [
-      { label: data.t.home.passRate(r.exam, r.year), value: (r.passed / r.examinees) * 100, suffix: "%", decimals: 1 },
-      { label: data.t.home.gpa5(r.exam, r.year), value: r.aPlus, suffix: "", decimals: 0 },
-    ]);
-  return (
-    <section aria-labelledby="results-title" className="py-16 sm:py-20">
-      <div className="container-page">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <SectionHeading
-            id="results-title"
-            kicker={copy.kicker}
-            title={copy.title}
-            description={copy.description || undefined}
-          />
-          <div className="flex items-center gap-3">
-            {data.board.isSample && <SampleTag />}
-            <ArrowLink href="/results">{data.t.home.resultSearch}</ArrowLink>
-          </div>
-        </div>
-        <dl className={cn("mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-line bg-line", stats.length >= 4 && "lg:grid-cols-4")}>
-          {stats.map((s) => (
-            <div key={s.label} className="bg-surface p-6">
-              <dt className="text-sm text-muted">{s.label}</dt>
-              <dd className="mt-1 font-serif text-4xl font-semibold text-heading">
-                {num(s.value.toFixed(s.decimals), data.lang)}{s.suffix}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-    </section>
-  );
-}
-
-/* ----------------------------------------------------- News */
-
-export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
-  const featured = data.news.find((n) => n.featured) ?? data.news[0];
-  const rest = data.news.filter((n) => n !== featured);
-  if (!featured) return null;
-  return (
-    <section aria-labelledby="news-title" className="border-y border-line bg-surface py-16 sm:py-20">
-      <div className="container-page">
-        <div className="flex items-end justify-between gap-6">
-          <SectionHeading id="news-title" kicker={copy.kicker} title={copy.title} description={copy.description || undefined} />
-          <ArrowLink href="/news">{data.t.home.allNews}</ArrowLink>
-        </div>
-        <div className="mt-10 grid gap-6 lg:grid-cols-[1.25fr_1fr]">
-          <div>
-            <article className="group relative h-full overflow-hidden rounded-lg border border-line bg-paper">
-              <Picture image={featured.image} sizes="(min-width: 1024px) 55vw, 100vw" />
-              <div className="p-6">
-                <div className="flex items-center gap-3 text-xs text-muted">
-                  <Badge tone="leaf">{data.t.common.featured}</Badge>
-                  <time dateTime={featured.date}>{formatDate(featured.date, data.lang)}</time>
-                </div>
-                <h3 className="mt-3 font-serif text-2xl leading-snug font-semibold text-heading group-hover:text-accent">
-                  <Link href={`/news/${featured.slug}`} className="after:absolute after:inset-0">
-                    {featured.title}
-                  </Link>
-                </h3>
-                <p className="mt-2 text-base leading-relaxed text-muted">{featured.excerpt}</p>
-              </div>
-            </article>
-          </div>
-          <ul className="flex flex-col divide-y divide-line">
-            {rest.slice(0, 4).map((a) => (
-              <li key={a.slug} className="group relative flex gap-4 py-4 first:pt-0">
-                <Picture image={a.image} ratio="aspect-[4/3]" className="w-28 shrink-0 rounded-lg sm:w-36" sizes="144px" />
-                <div className="min-w-0">
-                  <time dateTime={a.date} className="text-xs text-muted">
-                    {formatDate(a.date, data.lang)}
-                  </time>
-                  <h3 className="mt-1 leading-snug font-semibold text-heading group-hover:text-accent">
-                    <Link href={`/news/${a.slug}`} className="after:absolute after:inset-0">
-                      {a.title}
-                    </Link>
-                  </h3>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------- Gallery */
+/* --------------------------------------------------------- Gallery */
 
 export function GalleryPreview({ copy, data }: { copy: SectionCopy; data: HomeData }) {
-  const picks = data.gallery.slice(0, 8);
+  // The featured news photo is already on this page; don't show it twice.
+  const featured = data.news.find((n) => n.featured) ?? data.news[0];
+  const used = new Set([featured?.image.src].filter(Boolean));
+  const picks = data.gallery.filter((g) => !used.has(g.image.src)).slice(0, 8);
+  if (picks.length === 0) return null;
   return (
-    <section aria-labelledby="gallery-title" className="py-16 sm:py-20">
+    <section aria-labelledby="gallery-title" className="border-t border-line py-14 sm:py-16">
       <div className="container-page">
-        <div className="flex items-end justify-between gap-6">
-          <SectionHeading id="gallery-title" kicker={copy.kicker} title={copy.title} description={copy.description || undefined} />
-          <ArrowLink href="/gallery">{data.t.home.openGallery}</ArrowLink>
+        <div className="flex flex-wrap items-baseline justify-between gap-4">
+          <SectionHeading id="gallery-title" variant="small" title={copy.title} />
+          <TextLink href="/gallery">{data.t.home.openGallery}</TextLink>
         </div>
-        <ul className="mt-10 grid auto-rows-[9rem] grid-cols-2 gap-3 sm:auto-rows-[11rem] md:grid-cols-4">
-          {picks.map((g, i) => (
-            <li
-              key={g.id}
-              className={cn("group relative overflow-hidden rounded-md", i === 0 && "col-span-2 row-span-2", i === 3 && "md:col-span-2")}
-            >
-              <Link href="/gallery" className="block h-full" aria-label={data.t.home.galleryOpen(g.caption)}>
-                <Picture image={g.image} ratio="h-full" sizes="(min-width: 768px) 50vw, 100vw" />
-                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/80 to-transparent px-3 pt-8 pb-2.5 text-sm font-medium text-white">
-                  {g.caption}
-                </span>
-              </Link>
+        <ul className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
+          {picks.map((g) => (
+            <li key={g.id}>
+              <figure>
+                <Link href="/gallery" className="block" aria-label={data.t.home.galleryOpen(g.caption)}>
+                  <Picture image={g.image} ratio="aspect-[4/3]" className="rounded-md" sizes="(min-width: 768px) 25vw, 50vw" />
+                </Link>
+                <figcaption className="mt-1.5 text-sm text-muted">{g.caption}</figcaption>
+              </figure>
             </li>
           ))}
         </ul>
@@ -387,74 +333,67 @@ export function GalleryPreview({ copy, data }: { copy: SectionCopy; data: HomeDa
   );
 }
 
-/* --------------------------------------- Teachers + testimonials */
+/* ------------------------------------------------ Teachers + quotes */
 
 export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
   const picks = data.people.filter((t) => t.kind !== "staff").slice(0, 4);
+  const quotes = data.testimonials.slice(0, 2);
   return (
-    <section aria-labelledby="faculty-title" className="border-y border-line bg-surface py-16 sm:py-20">
+    <section aria-labelledby="faculty-title" className="border-t border-line bg-surface py-14 sm:py-16">
       <div className="container-page">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <SectionHeading
-            id="faculty-title"
-            kicker={copy.kicker}
-            title={copy.title}
-            description={copy.description || undefined}
-          />
-          <ArrowLink href="/teachers">{data.t.home.allTeachers}</ArrowLink>
-        </div>
-        <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <SectionHeading id="faculty-title" variant="small" title={copy.title} />
+        <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {picks.map((t) => (
             <li key={t.id}>
               <TeacherCard teacher={t} />
             </li>
           ))}
         </ul>
+        <p className="mt-4">
+          <ArrowLink href="/teachers">{data.t.home.allTeachers}</ArrowLink>
+        </p>
 
-        {data.testimonials.length > 0 && <div className="mt-16">
-          <div className="flex flex-wrap items-center gap-3">
+        {quotes.length > 0 && (
+          <div className="mt-12 max-w-3xl">
             <h3 className="font-serif text-xl font-semibold text-heading">{data.t.home.testimonials}</h3>
-            {data.site.demoNote && <SampleTag />}
+            <ul className="mt-4 space-y-6">
+              {quotes.map((q) => (
+                <li key={q.name}>
+                  <figure className="border-l-4 border-line-strong pl-4">
+                    <blockquote className="leading-relaxed text-ink">
+                      <p>“{q.quote}”</p>
+                    </blockquote>
+                    <figcaption className="mt-2 text-sm text-muted">
+                      <span className="font-semibold text-heading">{q.name}</span>, {q.role}
+                    </figcaption>
+                  </figure>
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="mt-6 grid gap-5 md:grid-cols-3">
-            {data.testimonials.map((t, i) => (
-              <li key={i}>
-                <figure className="flex h-full flex-col rounded-md border border-line bg-paper p-6">
-                  <Quote aria-hidden className="size-6 text-navy-500" />
-                  <blockquote className="mt-3 flex-1 text-base leading-relaxed text-ink">
-                    {t.quote}
-                  </blockquote>
-                  <figcaption className="mt-5 border-t border-line pt-4 text-sm">
-                    <span className="font-semibold text-heading">{t.name}</span>
-                    <span className="block text-muted">{t.role}</span>
-                  </figcaption>
-                </figure>
-              </li>
-            ))}
-          </ul>
-        </div>}
+        )}
       </div>
     </section>
   );
 }
 
-/* ------------------------------------------------- FAQ + contact */
+/* ---------------------------------------------------- FAQ + contact */
 
 export function FaqContactSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
   const site = data.site;
   return (
-    <section aria-label={data.t.home.faqContact} className="py-16 sm:py-20">
+    <section aria-label={data.t.home.faqContact} className="border-t border-line py-14 sm:py-16">
       <div className="container-page grid gap-12 lg:grid-cols-2">
         <div>
-          <SectionHeading kicker={copy.kicker} title={copy.title} description={copy.description || undefined} />
-          <Accordion className="mt-6" items={data.faqs.slice(0, 6)} />
-          <ArrowLink href="/faq" className="mt-5">
-            {data.t.home.moreQuestions}
-          </ArrowLink>
+          <SectionHeading variant="small" title={copy.title} />
+          <Accordion className="mt-5" items={data.faqs.slice(0, 6)} />
+          <p className="mt-4">
+            <TextLink href="/faq">{data.t.home.moreQuestions}</TextLink>
+          </p>
         </div>
         <div>
-          <SectionHeading kicker={data.t.home.contactKicker} title={data.t.home.writeOffice} description={data.t.home.officeCall(site.officeHours, site.phone)} />
-          <Card className="mt-6 p-5 sm:p-7">
+          <SectionHeading variant="small" title={data.t.home.writeOffice} description={data.t.home.officeCall(site.officeHours, site.phone)} />
+          <Card className="mt-5 p-5 sm:p-6">
             <ContactForm to={site.email} />
           </Card>
         </div>

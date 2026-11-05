@@ -406,10 +406,10 @@ export async function getFaqs(): Promise<FaqItem[]> {
 
 /** English versions of quotes that were written in Bangla. */
 const testimonialsEn: Record<string, { quote?: string; name?: string; role?: string }> = {
-  "Guardian of a Class 5 student": {
+  "Guardian, Class 5, Morning shift": {
     quote: "My daughter has studied here since Class 1. Her class teacher checks in regularly and calls us if there is ever a problem. That gives us the most confidence.",
   },
-  "HSC 2025, Business Studies": {
+  "Former student, HSC 2025, Business Studies": {
     quote: "The tutorial classes helped a lot in HSC. We could take our questions to the teachers even after class.",
   },
 };
@@ -466,6 +466,8 @@ export async function getAcademic(): Promise<AcademicContent> {
         summary: t?.summary ?? str(d.summary),
         highlights: t?.highlights ?? arr(d.highlights),
         groups: (t?.groups ?? arr(d.groups)).length ? (t?.groups ?? arr(d.groups)) : undefined,
+        shift: t?.shift ?? (str(d.shift) || undefined),
+        sectionSize: t?.sectionSize ?? (str(d.sectionSize) || undefined),
       };
     }),
     subjects: subjects.map((d) => {
