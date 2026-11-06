@@ -390,22 +390,20 @@ export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeDat
     <section aria-labelledby="faculty-title" className="border-t border-line bg-surface py-14 sm:py-16">
       <div className="container-page">
         <SectionHeading id="faculty-title" variant="small" title={copy.title} />
-      </div>
-      {/* Endless left-to-right strip. The second copy only fills the loop and is hidden from assistive tech. */}
+        {/* Endless left-to-right strip, kept to the same width as the sections above. The second copy only fills the loop and is hidden from assistive tech. */}
       <div className="marquee no-reveal mt-6" style={{ "--marquee-duration": `${Math.max(picks.length, 4) * 4.5}s` } as React.CSSProperties}>
         <div className="marquee-track">
           {[0, 1].map((copyNo) => (
             <ul key={copyNo} className={cn("flex gap-4 pr-4", copyNo === 1 && "marquee-dup")} aria-hidden={copyNo === 1 || undefined} inert={copyNo === 1 || undefined}>
-              {picks.map((t, i) => (
+              {picks.map((t) => (
                 <li key={t.id} className="w-52 shrink-0">
-                  <TeacherCard teacher={t} size="sm" tone={TEACHER_TONES[i % TEACHER_TONES.length]} />
+                  <TeacherCard teacher={t} size="sm" tone={TEACHER_TONES[0]} />
                 </li>
               ))}
             </ul>
           ))}
         </div>
       </div>
-      <div className="container-page">
         <p className="mt-4">
           <ArrowLink href="/teachers">{data.t.home.allTeachers}</ArrowLink>
         </p>

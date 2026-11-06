@@ -1,5 +1,6 @@
 /** Colour accents for teacher cards: card border + avatar ring (light / dark). */
 export const TEACHER_TONES = [
+  { card: "border-navy-700 dark:border-navy-300", ring: "ring-navy-700 dark:ring-navy-300", text: "text-navy-700 dark:text-navy-200" },
   { card: "border-blue-500 dark:border-blue-400", ring: "ring-blue-500 dark:ring-blue-400", text: "text-blue-700 dark:text-blue-300" },
   { card: "border-emerald-500 dark:border-emerald-400", ring: "ring-emerald-500 dark:ring-emerald-400", text: "text-emerald-700 dark:text-emerald-300" },
   { card: "border-amber-500 dark:border-amber-400", ring: "ring-amber-500 dark:ring-amber-400", text: "text-amber-700 dark:text-amber-300" },
