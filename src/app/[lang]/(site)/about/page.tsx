@@ -1,5 +1,7 @@
 import { DefaultAvatar } from "@/components/ui/DefaultAvatar";
 import type { Metadata } from "next";
+import Image from "next/image";
+import { images } from "@/data/images";
 import { ChartNoAxesColumn, Compass, Eye, Heart, ShieldCheck, Users } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ButtonLink, Card, DemoNote, SectionHeading } from "@/components/ui/primitives";
@@ -31,6 +33,8 @@ const copy = {
     missionIntro: "Three ideas guide every classroom, every exam and every conversation with families at Webnion.",
     valuesK: "Our four values",
     historyK: "History",
+    campusPhotos: "Around the campus",
+    circles: ["Main building", "Science lab", "Library", "Playground"],
     history: "History and milestones",
     historySample: "An illustrative timeline for this demonstration institution.",
     principalK: "Principal's message",
@@ -67,6 +71,8 @@ const copy = {
     missionIntro: "এই তিনটি ভাবনা ওয়েবনিয়নের প্রতিটি ক্লাস, প্রতিটি পরীক্ষা এবং অভিভাবকদের সঙ্গে প্রতিটি আলাপে পথ দেখায়।",
     valuesK: "আমাদের চারটি মূল্যবোধ",
     historyK: "ইতিহাস",
+    campusPhotos: "ক্যাম্পাসের কিছু ছবি",
+    circles: ["মূল ভবন", "বিজ্ঞানাগার", "গ্রন্থাগার", "খেলার মাঠ"],
     history: "ইতিহাস ও মাইলফলক",
     historySample: "এই ডেমো প্রতিষ্ঠানের জন্য একটি প্রতীকী সময়রেখা।",
     principalK: "অধ্যক্ষের বাণী",
@@ -107,6 +113,15 @@ function splitLead(text: string, bangla: boolean): [string, string] {
 }
 
 const valueIcons = [ShieldCheck, Users, ChartNoAxesColumn, Heart];
+
+/** Positions in the circle cluster: top-left, top-centre (front), right, bottom-centre (behind). */
+const CIRCLE_POS = [
+  "left-0 top-[15%] z-10 w-[45%] aspect-square",
+  "left-[27%] top-0 z-30 w-[47%] aspect-square",
+  "right-0 top-[13%] z-20 w-[45%] aspect-square",
+  "left-[26%] bottom-0 z-0 w-[44%] aspect-square",
+];
+const circlePhotos = [images.heroCampus, images.scienceLab, images.library, { src: "/images/sports-day.jpg", alt: "Students in sports kit with a football on a grass pitch in front of a goal" }];
 
 type Mission = { mission: string; vision: string; values: { title: string; text: string }[] };
 
@@ -250,6 +265,17 @@ export default async function AboutPage() {
               title={c.history}
               description={site.demoNote ? c.historySample : undefined}
             />
+            {/* Four overlapping round photos of the campus */}
+            <ul aria-label={c.campusPhotos} className="relative mx-auto mt-10 aspect-[100/86] w-full max-w-md">
+              {circlePhotos.map((ph, i) => (
+                <li key={ph.src} className={`absolute overflow-hidden rounded-full border-[6px] border-surface bg-paper-dark shadow-[0_10px_30px_-8px_rgb(15_31_54/0.45)] ${CIRCLE_POS[i]}`}>
+                  <Image src={ph.src} alt={ph.alt} fill sizes="(min-width: 1024px) 220px, 45vw" className="object-cover" />
+                  <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/85 to-transparent pt-8 pb-3 text-center text-sm font-semibold text-white sm:text-base">
+                    {c.circles[i]}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
           <ol className="relative border-l-2 border-line-strong pl-6">
             {milestones.map((m) => (
