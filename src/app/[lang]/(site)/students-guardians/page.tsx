@@ -153,7 +153,7 @@ export default async function StudentsGuardiansPage() {
                   const Icon = infoIcons[i];
                   return (
                     <li key={item.title} className="rounded-lg border border-line bg-surface p-6">
-                      <span className="flex size-12 items-center justify-center rounded-lg bg-amber-100 text-amber-800 dark:bg-amber-300/15 dark:text-amber-200">
+                      <span className="flex size-12 items-center justify-center rounded-lg bg-amber-100 text-amber-800 dark:bg-white/10">
                         <Icon aria-hidden className="size-6" />
                       </span>
                       <h3 className="mt-5 text-xl font-bold text-heading">{item.title}</h3>
