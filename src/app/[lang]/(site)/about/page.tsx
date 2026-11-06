@@ -195,46 +195,27 @@ export default async function AboutPage() {
             <p className="text-base leading-relaxed text-muted sm:text-lg">{c.missionIntro}</p>
           </div>
 
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            {/* Mission: navy card */}
-            <article className="relative isolate overflow-hidden rounded-xl bg-navy-900 p-7 text-white sm:p-10 dark:bg-navy-950 dark:ring-1 dark:ring-white/10">
-              <Compass aria-hidden strokeWidth={1.25} className="absolute -right-10 -bottom-12 -z-10 size-56 text-white/[0.06]" />
-              <div className="flex items-center gap-4">
-                <span className="flex size-12 items-center justify-center rounded-lg bg-white/10 text-[#e8b84a]">
-                  <Compass aria-hidden className="size-6" />
-                </span>
-                <h3 className={`text-sm font-bold text-[#e8b84a] ${cap}`}>{c.mission}</h3>
-              </div>
-              {(() => {
-                const [lead, rest] = splitLead(mission.mission, lang === "bn");
-                return (
-                  <>
-                    <p className="mt-6 font-serif text-2xl leading-snug font-semibold sm:text-[1.75rem]">{lead}</p>
-                    {rest && <p className="mt-5 max-w-lg leading-relaxed text-navy-100">{rest}</p>}
-                  </>
-                );
-              })()}
-            </article>
-
-            {/* Vision: warm cream card */}
-            <article className="relative isolate overflow-hidden rounded-xl border border-amber-200/70 bg-amber-50 p-7 sm:p-10 dark:border-amber-300/20">
-              <Eye aria-hidden strokeWidth={1.25} className="absolute -right-8 -bottom-10 -z-10 size-52 text-amber-700/[0.08] dark:text-white/[0.05]" />
-              <div className="flex items-center gap-4">
-                <span className="flex size-12 items-center justify-center rounded-lg bg-amber-100 text-amber-800 dark:bg-white/10">
-                  <Eye aria-hidden className="size-6" />
-                </span>
-                <h3 className={`text-sm font-bold text-amber-800 ${cap}`}>{c.vision}</h3>
-              </div>
-              {(() => {
-                const [lead, rest] = splitLead(mission.vision, lang === "bn");
-                return (
-                  <>
-                    <p className="mt-6 font-serif text-2xl leading-snug font-semibold text-heading sm:text-[1.75rem]">{lead}</p>
-                    {rest && <p className="mt-5 max-w-lg leading-relaxed text-ink">{rest}</p>}
-                  </>
-                );
-              })()}
-            </article>
+          <div className="mt-8 grid gap-5 md:grid-cols-2">
+            {/* Mission and vision: matching navy cards */}
+            {[
+              { Icon: Compass, label: c.mission, text: mission.mission },
+              { Icon: Eye, label: c.vision, text: mission.vision },
+            ].map(({ Icon, label, text }) => {
+              const [lead, rest] = splitLead(text, lang === "bn");
+              return (
+                <article key={label} className="relative isolate overflow-hidden rounded-xl bg-navy-900 p-6 text-white sm:p-7 dark:bg-navy-950 dark:ring-1 dark:ring-white/10">
+                  <Icon aria-hidden strokeWidth={1.25} className="absolute -right-8 -bottom-10 -z-10 size-40 text-white/[0.06]" />
+                  <div className="flex items-center gap-3">
+                    <span className="flex size-10 items-center justify-center rounded-lg bg-white/10 text-[#e8b84a]">
+                      <Icon aria-hidden className="size-5" />
+                    </span>
+                    <h3 className={`text-sm font-bold text-[#e8b84a] ${cap}`}>{label}</h3>
+                  </div>
+                  <p className="mt-4 font-serif text-xl leading-snug font-semibold">{lead}</p>
+                  {rest && <p className="mt-3 max-w-lg text-sm leading-relaxed text-navy-100">{rest}</p>}
+                </article>
+              );
+            })}
           </div>
 
           <h3 className={`mt-14 text-xs font-bold text-subheading ${cap}`}>{c.valuesK}</h3>
