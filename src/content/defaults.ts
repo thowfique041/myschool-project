@@ -48,7 +48,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
     slides: [
       { image: images.students.src, imageAlt: images.students.alt, title: "Admission 2027", text: "Applications for Play to Class 9 are open until 3 December 2026.", label: "Admission details", href: "/admission" },
       { image: images.classroom.src, imageAlt: images.classroom.alt, title: "Annual examination 2026", text: "Examinations for Class 1 to Class 9 begin on 22 November. The routine is on the notice board.", label: "View the routine", href: "/notices/annual-exam-routine-2026" },
-      { image: images.sports.src, imageAlt: images.sports.alt, title: "Annual Sports Day 2027", text: "Sports day will be held on the school field in January.", label: "Read more", href: "/news/annual-sports-2026-dates" },
+      { image: "/images/sports-day.jpg", imageAlt: "Students in sports kit with a football on a grass pitch in front of a goal", title: "Annual Sports Day 2027", text: "Sports day will be held on the school field in January.", label: "Read more", href: "/news/annual-sports-2026-dates" },
     ],
     statsText: "Play to Class 12 under the national curriculum, in Upashahar, Sylhet, since 1998.",
     stats: [
