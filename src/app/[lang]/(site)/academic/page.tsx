@@ -3,6 +3,7 @@ import { Download, FileText } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Badge, ButtonLink, Card, SectionHeading } from "@/components/ui/primitives";
 import { SampleTag } from "@/components/ui/SampleTag";
+import { RoutineGrid } from "@/components/explorers/RoutineGrid";
 import { ArrowLink } from "@/components/shared/cards";
 import { getAcademic, getDownloads, getEvents, getSetting, getSite, getToday } from "@/content/site-content";
 import { formatDate, toBnDigits } from "@/lib/utils";
@@ -33,6 +34,12 @@ const copy = {
     routineText: "School week: Saturday to Thursday. Friday is the weekly holiday.",
     routineLabel: "Class routine table, scroll horizontally on small screens",
     weekly: "Weekly class routine:",
+    today: "Today",
+    now: "Now",
+    lab: "Lab",
+    periodTpl: "Period {n}",
+    periodsTpl: "{n} periods",
+    minutesTpl: "{n} min",
     time: "Time",
     days: ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
     examsK: "Examination system",
@@ -76,6 +83,12 @@ const copy = {
     routineText: "শনিবার থেকে বৃহস্পতিবার ক্লাস হয়। শুক্রবার সাপ্তাহিক ছুটি।",
     routineLabel: "ক্লাস রুটিনের সারণি, ছোট পর্দায় পাশে স্ক্রল করুন",
     weekly: "সাপ্তাহিক ক্লাস রুটিন:",
+    today: "আজ",
+    now: "এখন",
+    lab: "ল্যাব",
+    periodTpl: "পিরিয়ড {n}",
+    periodsTpl: "{n} পিরিয়ড",
+    minutesTpl: "{n} মিনিট",
     time: "সময়",
     days: ["শনিবার", "রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার"],
     examsK: "পরীক্ষা পদ্ধতি",
@@ -259,46 +272,24 @@ export default async function AcademicPage() {
           {routines.map((routine) => (
           <div key={routine.title} className="mt-6 rounded-md border border-line">
             <p className="border-b border-line bg-paper px-4 py-3 text-sm font-semibold text-heading">{routine.title}</p>
-            <div className="overflow-x-auto" tabIndex={0} aria-label={c.routineLabel}>
-              <table className="w-full min-w-[52rem] text-left text-sm">
-                <caption className="sr-only">
-                  {c.weekly} {routine.title}
-                </caption>
-                <thead>
-                  <tr className="border-b border-line text-xs text-muted uppercase">
-                    <th scope="col" className="px-4 py-3 font-semibold">{c.time}</th>
-                    {days.map(([k, label]) => (
-                      <th key={k} scope="col" className="px-4 py-3 font-semibold">
-                        {label}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-line">
-                  {routine.rows.map((row) => {
-                    const isBreak = ["Break", "Assembly", "বিরতি", "সমাবেশ"].includes(row.sat);
-                    return (
-                      <tr key={row.time + row.sat} className={isBreak ? "bg-leaf-50/60" : undefined}>
-                        <th scope="row" className="px-4 py-3 font-semibold whitespace-nowrap text-heading">
-                          {row.time}
-                        </th>
-                        {isBreak ? (
-                          <td colSpan={6} className="px-4 py-3 text-center font-medium text-accent">
-                            {row.sat}
-                          </td>
-                        ) : (
-                          days.map(([k]) => (
-                            <td key={k} className="px-4 py-3 text-ink">
-                              {row[k]}
-                            </td>
-                          ))
-                        )}
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+            <RoutineGrid
+              rows={routine.rows}
+              rowsEn={routine.rowsEn}
+              labels={{
+                title: routine.title,
+                time: c.time,
+                days: days.map(([, label]) => label),
+                today: c.today,
+                now: c.now,
+                lab: c.lab,
+                period: c.periodTpl,
+                periods: c.periodsTpl,
+                minutes: c.minutesTpl,
+                caption: `${c.weekly} ${routine.title}`,
+                scrollHint: c.routineLabel,
+                bangla: lang === "bn",
+              }}
+            />
           </div>
           ))}
           {settings.timings && <p className="mt-3 text-sm text-muted">{settings.timings}</p>}

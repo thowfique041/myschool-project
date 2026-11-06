@@ -439,7 +439,7 @@ export async function getFacilities(): Promise<{ title: string; text: string; im
 export type AcademicContent = {
   levels: AcademicLevel[];
   subjects: { level: string; compulsory: string[]; optional: string[] }[];
-  routines: { title: string; rows: Record<string, string>[] }[];
+  routines: { title: string; rows: Record<string, string>[]; rowsEn: Record<string, string>[] }[];
   policies: { id: string; title: string; points: string[] }[];
 };
 
@@ -477,6 +477,8 @@ export async function getAcademic(): Promise<AcademicContent> {
     routines: routines.map((d) => ({
       title: bn ? (routineTitlesBn[str(d.title)] ?? str(d.title)) : str(d.title),
       rows: arr<Record<string, string>>(d.rows).map((r) => (bn ? Object.fromEntries(Object.entries(r).map(([k, v]) => [k, k === "time" ? bnNum(v) : term(v)])) : r)),
+      /** Untranslated rows: used for subject colours, lab detection and timing. */
+      rowsEn: arr<Record<string, string>>(d.rows),
     })),
     policies: policies.map((d, i) => {
       const t = bn ? policiesBn[str(d.title)] : undefined;
