@@ -77,7 +77,7 @@ export default async function NoticesPage() {
             </div>
             <a
               href="#downloads"
-              className="flex items-center gap-3 rounded-md border border-line-strong bg-leaf-50 p-4 text-sm font-semibold text-heading hover:border-leaf-500"
+              className="flex items-center gap-3 rounded-md border border-line-strong bg-tint p-4 text-sm font-semibold text-heading hover:border-navy-400"
             >
               <FileDown aria-hidden className="size-5 text-accent" />
               {c.downloads}

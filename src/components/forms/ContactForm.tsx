@@ -25,7 +25,7 @@ function validate(v: Values, t: Dictionary): Errors {
   return e;
 }
 
-export function ContactForm({ compact = false, to = "" }: { compact?: boolean; to?: string }) {
+export function ContactForm({ compact = false, wide = false, to = "" }: { compact?: boolean; wide?: boolean; to?: string }) {
   const { t } = useI18n();
   const [values, setValues] = useState<Values>(empty);
   const [errors, setErrors] = useState<Errors>({});
@@ -93,7 +93,7 @@ export function ContactForm({ compact = false, to = "" }: { compact?: boolean; t
           {t.form.fixFields}
         </p>
       )}
-      <div className={cn("grid gap-4", !compact && "sm:grid-cols-2 xl:grid-cols-3")}>
+      <div className={cn("grid gap-4", !compact && "sm:grid-cols-2", wide && "xl:grid-cols-3")}>
         <Field label={t.contactForm.name} name="name" required error={errors.name}>
           {({ id, describedBy, invalid }) => (
             <TextInput id={id} name="name" autoComplete="name" placeholder={t.contactForm.namePh} value={values.name} onChange={set("name")} aria-describedby={describedBy} invalid={invalid} />

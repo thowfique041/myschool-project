@@ -38,7 +38,7 @@ export function FilterChips<T extends string>({
             )}
           >
             {o.label}
-            {o.count !== undefined && <span className={cn("text-xs", active ? "text-navy-200" : "text-muted")}>{num(o.count, lang)}</span>}
+            {o.count !== undefined && <span className={cn("text-xs", active ? "text-white/85" : "text-muted")}>{num(o.count, lang)}</span>}
           </button>
         );
       })}
