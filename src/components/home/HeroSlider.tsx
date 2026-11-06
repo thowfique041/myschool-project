@@ -22,7 +22,7 @@ export type Slide = {
   secondary?: { href: string; label: string };
 };
 
-const INTERVAL = 6500;
+const INTERVAL = 2000;
 
 /**
  * Full-width photo slideshow. Auto-advances unless the visitor prefers reduced
