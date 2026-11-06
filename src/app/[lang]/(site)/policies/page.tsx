@@ -37,7 +37,7 @@ export default async function PoliciesPage() {
           <div className="space-y-6">
             {all.map((p, i) => (
               <section key={p.id} id={p.id} aria-labelledby={`${p.id}-h`} className="scroll-mt-28 rounded-md border border-line bg-surface p-6">
-                <h2 id={`${p.id}-h`} className="font-serif text-xl font-semibold text-heading">
+                <h2 id={`${p.id}-h`} className="font-serif text-2xl leading-tight font-semibold text-heading">
                   {lang === "bn" ? toBnDigits(i + 1) : i + 1}. {p.title}
                 </h2>
                 <ol className="mt-3 list-decimal space-y-2 pl-5 lang-bn-list text-base text-ink marker:text-muted">

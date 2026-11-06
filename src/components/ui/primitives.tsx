@@ -23,7 +23,7 @@ export function SectionHeading({ title, description, align = "left", tone = "lig
       <h2
         id={id}
         className={cn(
-          variant === "default" && "font-serif text-3xl leading-tight font-semibold sm:text-4xl",
+          variant === "default" && "font-serif text-2xl leading-tight font-semibold",
           variant === "rule" && "text-2xl font-bold uppercase sm:text-[1.65rem]",
           variant === "small" && "font-serif text-2xl font-semibold",
           dark ? "text-white" : "text-heading",

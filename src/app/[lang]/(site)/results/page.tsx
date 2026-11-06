@@ -140,7 +140,7 @@ export default async function ResultsPage() {
             <SectionHeading id="sched-h" title={c.schedNone} description={c.schedNoneText} />
           </div>}
           <div>
-            <h2 className="font-serif text-xl font-semibold text-heading">{c.notices}</h2>
+            <h2 className="font-serif text-2xl leading-tight font-semibold text-heading">{c.notices}</h2>
             <div className="mt-3 divide-y divide-line">
               {examNotices.length === 0 && <p className="py-4 text-sm text-muted">{c.noNotices}</p>}
               {examNotices.map((n) => (

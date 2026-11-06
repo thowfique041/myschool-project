@@ -82,7 +82,7 @@ export default async function CalendarPage() {
               const [y, m] = key.split("-").map(Number);
               return (
                 <section key={key} aria-labelledby={`m-${key}`}>
-                  <h2 id={`m-${key}`} className="font-serif text-xl font-semibold text-heading">
+                  <h2 id={`m-${key}`} className="font-serif text-2xl leading-tight font-semibold text-heading">
                     {monthNames[lang][m - 1]} {lang === "bn" ? toBnDigits(y) : y}
                   </h2>
                   <ul className="mt-3 divide-y divide-line rounded-md border border-line bg-surface">
