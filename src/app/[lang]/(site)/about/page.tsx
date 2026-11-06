@@ -270,21 +270,9 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* Principal */}
+      {/* Principal: message on the left, photo on the right */}
       <section id="principal" aria-labelledby="principal-title" className="scroll-mt-24 bg-navy-950 py-16 text-white sm:py-20">
-        <div className="container-page grid gap-10 lg:grid-cols-[0.6fr_1.4fr]">
-          <div className="flex flex-col items-start gap-4">
-            {principal.photo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={principal.photo} alt={principal.name} className="size-28 rounded-full border-4 border-navy-950 object-cover ring-2 ring-white/80" />
-            ) : (
-              <DefaultAvatar gender={principal.gender === "male" ? "male" : "female"} className="size-28" />
-            )}
-            <div>
-              <p className="text-lg font-semibold">{principal.name}</p>
-              <p className="text-sm text-navy-200">{principal.title}</p>
-            </div>
-          </div>
+        <div className="container-page grid items-center gap-10 lg:grid-cols-[1.4fr_0.6fr] lg:gap-16">
           <div>
             <SectionHeading id="principal-title" tone="dark" title={c.principal} />
             <div className="mt-6 space-y-4 leading-relaxed text-navy-100">
@@ -292,6 +280,18 @@ export default async function AboutPage() {
                 <p key={p}>{p}</p>
               ))}
               {lang === "bn" && principal.messageBn && <p>{principal.messageBn}</p>}
+            </div>
+          </div>
+          <div className="order-first flex flex-col items-center gap-4 text-center lg:order-none">
+            {principal.photo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={principal.photo} alt={principal.name} className="size-48 rounded-full border-[6px] border-navy-950 object-cover ring-2 ring-white/80 sm:size-56" />
+            ) : (
+              <DefaultAvatar gender={principal.gender === "male" ? "male" : "female"} className="size-48 sm:size-56" />
+            )}
+            <div>
+              <p className="text-xl font-semibold">{principal.name}</p>
+              <p className="text-sm text-navy-200">{principal.title}</p>
             </div>
           </div>
         </div>
