@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ArrowRight, Clock, Mail, MapPin, MessageCircle, Navigation, Phone } from "lucide-react";
 import { OpenNowBadge } from "@/components/shared/OpenNowBadge";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { DemoNote, SectionHeading } from "@/components/ui/primitives";
+import { DemoNote, SectionHeading, buttonClasses } from "@/components/ui/primitives";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { getSite } from "@/content/site-content";
 import { getI18n } from "@/i18n/server";
@@ -278,7 +278,7 @@ export default async function ContactPage() {
             <div>
               <SectionHeading title={c.send} description={c.sendNote} />
               <div className="mt-6 rounded-lg border border-line bg-surface p-5 sm:p-7">
-                <ContactForm to={site.email} />
+                <ContactForm wide to={site.email} />
               </div>
             </div>
 
@@ -316,7 +316,7 @@ export default async function ContactPage() {
                 <div className="border-t border-line p-5">
                   <p className="font-bold text-heading">{bn ? site.nameBn : site.name}</p>
                   <p className="text-sm text-muted">{site.address}</p>
-                  <a href={mapsHref} {...ext} className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-lg bg-navy-900 px-4 text-sm font-bold text-white hover:bg-navy-800 dark:bg-navy-200 dark:text-navy-950">
+                  <a href={mapsHref} {...ext} className={`mt-4 ${buttonClasses("primary", "sm")}`}>
                     <Navigation aria-hidden className="size-4" />
                     {c.openMaps}
                     {newTab}

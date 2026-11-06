@@ -230,7 +230,7 @@ export default async function AboutPage() {
                 <li key={v.title} className="border-line p-7 not-first:border-t sm:[&:nth-child(2)]:border-t-0 sm:[&:nth-child(even)]:border-l lg:not-first:border-t-0 lg:not-first:border-l">
                   <div className="flex items-start justify-between">
                     <Icon aria-hidden className="size-7 text-heading" />
-                    <span aria-hidden className="font-serif text-3xl font-semibold text-[#c9a227] dark:text-[#e8b84a]">{n(String(i + 1).padStart(2, "0"))}</span>
+                    <span aria-hidden className="font-serif text-3xl font-semibold text-[#9a7414] dark:text-[#e8b84a]">{n(String(i + 1).padStart(2, "0"))}</span>
                   </div>
                   <h4 className="mt-5 text-xl font-bold text-heading">{v.title}</h4>
                   <p className="mt-3 leading-relaxed text-muted">{v.text}</p>

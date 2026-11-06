@@ -80,7 +80,7 @@ export function NewsCard({ article, headingLevel = "h3" }: { article: NewsArticl
       <Picture image={article.image} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" />
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-center gap-3 text-xs text-muted">
-          <Badge tone="leaf">{article.categoryLabel ?? article.category}</Badge>
+          <Badge tone="navy">{article.categoryLabel ?? article.category}</Badge>
           <time dateTime={article.date}>{formatDate(article.date, lang)}</time>
         </div>
         <H className="mt-3 text-lg leading-snug font-semibold text-heading group-hover:text-accent">

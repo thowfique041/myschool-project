@@ -3,7 +3,7 @@ import Link from "@/components/i18n/Link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Download, FileText, Printer } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { Badge, DemoNote } from "@/components/ui/primitives";
+import { DemoNote } from "@/components/ui/primitives";
 import { NoticeRow } from "@/components/shared/cards";
 import { PrintButton } from "@/components/shared/PrintButton";
 import { getNotice, getNotices, getSite } from "@/content/site-content";
@@ -38,9 +38,15 @@ export default async function NoticeDetailPage({ params }: PageProps<"/[lang]/no
       <section className="py-12 sm:py-16">
         <div className="container-page grid gap-10 lg:grid-cols-[1fr_20rem]">
           <article className="rounded-lg border border-line bg-surface p-6 shadow-[var(--shadow-card)] sm:p-10">
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge tone="navy">{cat.label}</Badge>
-              {notice.important && <Badge tone="signal">{t.common.important}</Badge>}
+            {/* Same printed-notice meta line as the notice board */}
+            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm">
+              <span className="font-semibold tracking-wider text-subheading uppercase">{cat.label}</span>
+              {notice.important && (
+                <>
+                  <span aria-hidden className="text-line-strong">|</span>
+                  <span className="bg-signal-600 px-1.5 py-px text-xs font-bold tracking-wider text-white uppercase">{t.common.important}</span>
+                </>
+              )}
             </div>
             <h1 className="mt-4 font-serif text-2xl font-semibold text-heading sm:text-3xl" style={{ lineHeight: 1.45 }}>
               {notice.title}

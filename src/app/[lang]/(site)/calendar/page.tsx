@@ -64,7 +64,7 @@ export default async function CalendarPage() {
   return (
     <>
       <PageHeader title={c.title} titleBn={c.alt} crumbs={[{ label: c.crumb, href: "/academic" }]} description={c.intro}>
-        {calendarFile && <a href={calendarFile.href} target="_blank" rel="noopener" className="mt-6 inline-flex min-h-11 items-center rounded-lg bg-surface px-5 text-sm font-semibold text-heading hover:bg-tint">
+        {calendarFile && <a href={calendarFile.href} target="_blank" rel="noopener" className="mt-6 inline-flex min-h-11 items-center rounded-lg bg-white px-5 text-sm font-semibold text-navy-900 hover:bg-navy-50">
           {c.download}
         </a>}
       </PageHeader>

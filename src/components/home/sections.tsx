@@ -43,7 +43,7 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
         </div>
 
         <div id="admission" className="self-start rounded-md border border-line-strong bg-surface">
-          <div className="border-b border-line bg-leaf-50 px-5 py-4 sm:px-6">
+          <div className="border-b border-line bg-tint px-5 py-4 sm:px-6">
             <Badge tone={adm.open ? "leaf" : "neutral"}>{adm.open ? data.t.home.admissionOpen : data.t.home.admissionClosed}</Badge>
             <h2 className="mt-2 font-serif text-2xl font-semibold text-heading">
               {data.t.home.admission} {num(adm.year, data.lang)}
@@ -273,7 +273,6 @@ const FACILITY_ICONS = [FlaskConical, Monitor, Library, Trophy, HeartPulse, User
 export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
   // Checkerboard of filled cards, like a printed prospectus page.
   const filled: Record<number, string> = { 1: "bg-navy-800 text-white border-navy-800", 3: "bg-navy-800 text-white border-navy-800", 5: "bg-navy-800 text-white border-navy-800" };
-  const iconTone = ["bg-leaf-700", "bg-navy-800"];
   return (
     <section aria-labelledby="why-title" className="border-t border-line py-14 sm:py-16">
       <div className="container-page">
@@ -284,7 +283,7 @@ export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: 
             const fill = filled[i];
             return (
               <li key={title} className={cn("rounded-md border p-6", fill ?? "border-line bg-surface")}>
-                <span className={cn("flex size-11 items-center justify-center rounded-md", fill ? "bg-white/15" : iconTone[i % 2], "text-white")}>
+                <span className={cn("flex size-11 items-center justify-center rounded-md", fill ? "bg-white/10 text-[#e8b84a]" : "bg-tint text-heading")}>
                   <Icon aria-hidden className="size-5" />
                 </span>
                 <h3 className={cn("mt-4 text-lg font-semibold", fill ? "text-white" : "text-heading")}>{title}</h3>
