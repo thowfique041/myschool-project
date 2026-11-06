@@ -35,15 +35,23 @@ export function NoticeRow({ notice, compact = false }: { notice: Notice; compact
     <article className="group relative flex gap-4 py-4">
       <DateBlock iso={notice.date} />
       <div className="min-w-0 flex-1">
-        <div className="flex flex-wrap items-center gap-2">
-          <Badge tone={notice.category === "admission" ? "leaf" : notice.category === "exam" ? "navy" : "neutral"}>
-            {notice.categoryLabel ?? notice.category}
-          </Badge>
-          {notice.important && <Badge tone="signal">{t.common.important}</Badge>}
+        {/* Printed-notice style meta line: CATEGORY · stamp · attachment */}
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs">
+          <span className="font-semibold tracking-wider text-subheading uppercase">{notice.categoryLabel ?? notice.category}</span>
+          {notice.important && (
+            <>
+              <span aria-hidden className="text-line-strong">|</span>
+              <span className="bg-signal-600 px-1.5 py-px font-bold tracking-wider text-white uppercase">{t.common.important}</span>
+            </>
+          )}
           {notice.attachment && (
-            <span className="inline-flex items-center gap-1 text-xs text-muted">
-              <Paperclip aria-hidden className="size-3" /> {t.common.attachment}
-            </span>
+            <>
+              <span aria-hidden className="text-line-strong">|</span>
+              <span className="inline-flex items-center gap-1 text-muted">
+                <Paperclip aria-hidden className="size-3" />
+                {t.common.attachment}
+              </span>
+            </>
           )}
         </div>
         <h3 className="mt-1.5 font-semibold text-heading group-hover:text-accent" style={{ lineHeight: 1.55 }}>
