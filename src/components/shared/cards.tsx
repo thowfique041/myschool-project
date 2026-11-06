@@ -128,32 +128,41 @@ export function TeacherAvatar({ teacher, size = "md", ring }: { teacher: Teacher
   return <DefaultAvatar gender={teacher.gender} className={cn(ring ? cn("border-4 border-surface ring-2", ring) : "ring-4 ring-surface", size === "lg" ? "size-24" : "size-16")} />;
 }
 
-export function TeacherCard({ teacher, tone }: { teacher: Teacher; tone?: TeacherTone }) {
+export function TeacherCard({ teacher, tone, size = "md" }: { teacher: Teacher; tone?: TeacherTone; size?: "md" | "sm" }) {
   const { t } = useI18n();
+  const sm = size === "sm";
   return (
-    <article className={cn("flex h-full flex-col items-center rounded-[var(--radius-card)] bg-surface p-6 text-center shadow-[var(--shadow-card)]", tone ? cn("border-2 border-t-[6px]", tone.card) : "border border-line")}>
-      <TeacherAvatar teacher={teacher} size="lg" ring={tone?.ring} />
-      <h3 className="mt-4 font-semibold text-heading">{teacher.name}</h3>
-      <p className={cn("mt-2 text-sm font-semibold", tone ? tone.text : "text-accent")}>{teacher.designation}</p>
-      <p className="mt-1 text-sm text-muted">{teacher.subjects.join(", ")}</p>
-      <dl className="mt-auto w-full border-t border-line pt-3 text-xs text-muted">
-        <div className="flex justify-between gap-2 pt-1">
-          <dt>{t.cards.qualification}</dt>
-          <dd className="text-right text-ink">{teacher.qualification}</dd>
-        </div>
-        <div className="flex justify-between gap-2 pt-1">
-          <dt>{t.cards.section}</dt>
-          <dd className="text-ink">{t.sections[teacher.section] ?? teacher.section}</dd>
-        </div>
-      </dl>
-      <div className="mt-3 w-full space-y-1.5 border-t border-line pt-3 text-left text-sm">
+    <article
+      className={cn(
+        "flex h-full flex-col items-center rounded-[var(--radius-card)] bg-surface text-center shadow-[var(--shadow-card)]",
+        sm ? "p-4" : "p-6",
+        tone ? cn("border-2", sm ? "border-t-4" : "border-t-[6px]", tone.card) : "border border-line",
+      )}
+    >
+      <TeacherAvatar teacher={teacher} size={sm ? "md" : "lg"} ring={tone?.ring} />
+      <h3 className={cn("font-semibold text-heading", sm ? "mt-3 text-sm" : "mt-4")}>{teacher.name}</h3>
+      <p className={cn("font-semibold", sm ? "mt-1 text-xs" : "mt-2 text-sm", tone ? tone.text : "text-accent")}>{teacher.designation}</p>
+      <p className={cn("text-muted", sm ? "mt-0.5 line-clamp-1 text-xs" : "mt-1 text-sm")}>{teacher.subjects.join(", ")}</p>
+      {!sm && (
+        <dl className="mt-auto w-full border-t border-line pt-3 text-xs text-muted">
+          <div className="flex justify-between gap-2 pt-1">
+            <dt>{t.cards.qualification}</dt>
+            <dd className="text-right text-ink">{teacher.qualification}</dd>
+          </div>
+          <div className="flex justify-between gap-2 pt-1">
+            <dt>{t.cards.section}</dt>
+            <dd className="text-ink">{t.sections[teacher.section] ?? teacher.section}</dd>
+          </div>
+        </dl>
+      )}
+      <div className={cn("w-full border-t border-line text-left", sm ? "mt-auto space-y-1 pt-2.5 text-xs" : "mt-3 space-y-1.5 pt-3 text-sm")}>
         <a href={`tel:${teacher.phone.replace(/[\s-]/g, "")}`} className="flex items-center gap-2 text-heading hover:text-accent">
-          <Phone aria-hidden className="size-4 shrink-0 text-accent" />
+          <Phone aria-hidden className={cn("shrink-0 text-accent", sm ? "size-3.5" : "size-4")} />
           <span className="sr-only">{t.common.phone}: </span>
           {teacher.phone}
         </a>
         <a href={`mailto:${teacher.email}`} className="flex min-w-0 items-center gap-2 text-heading hover:text-accent">
-          <Mail aria-hidden className="size-4 shrink-0 text-accent" />
+          <Mail aria-hidden className={cn("shrink-0 text-accent", sm ? "size-3.5" : "size-4")} />
           <span className="sr-only">{t.common.email}: </span>
           <span className="truncate">{teacher.email}</span>
         </a>
