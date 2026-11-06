@@ -1,6 +1,6 @@
 import { DefaultAvatar } from "@/components/ui/DefaultAvatar";
 import type { Metadata } from "next";
-import { Compass, Eye, HeartHandshake } from "lucide-react";
+import { ChartNoAxesColumn, Compass, Eye, Heart, ShieldCheck, Users } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ButtonLink, Card, DemoNote, SectionHeading } from "@/components/ui/primitives";
 import { Picture } from "@/components/ui/Picture";
@@ -25,8 +25,11 @@ const copy = {
     photoAlt: (name: string) => `Students at ${name}`,
     missionK: "Mission & vision",
     missionTitle: "Mission, vision and values",
-    mission: "Mission",
-    vision: "Vision",
+    mission: "Our mission",
+    vision: "Our vision",
+    missionKicker: "What we stand for",
+    missionIntro: "Three ideas guide every classroom, every exam and every conversation with families at Webnion.",
+    valuesK: "Our four values",
     historyK: "History",
     history: "History and milestones",
     historySample: "An illustrative timeline for this demonstration institution.",
@@ -58,8 +61,11 @@ const copy = {
     photoAlt: (name: string) => `${name}-এর শিক্ষার্থীরা`,
     missionK: "লক্ষ্য ও উদ্দেশ্য",
     missionTitle: "লক্ষ্য, উদ্দেশ্য ও মূল্যবোধ",
-    mission: "লক্ষ্য",
-    vision: "উদ্দেশ্য",
+    mission: "আমাদের লক্ষ্য",
+    vision: "আমাদের উদ্দেশ্য",
+    missionKicker: "আমরা যা মেনে চলি",
+    missionIntro: "এই তিনটি ভাবনা ওয়েবনিয়নের প্রতিটি ক্লাস, প্রতিটি পরীক্ষা এবং অভিভাবকদের সঙ্গে প্রতিটি আলাপে পথ দেখায়।",
+    valuesK: "আমাদের চারটি মূল্যবোধ",
     historyK: "ইতিহাস",
     history: "ইতিহাস ও মাইলফলক",
     historySample: "এই ডেমো প্রতিষ্ঠানের জন্য একটি প্রতীকী সময়রেখা।",
@@ -91,6 +97,17 @@ type About = {
   committee: { role: string; name: string; note: string }[];
   staffText: string;
 };
+/** Splits "Main idea, so that more…" into a lead sentence and a follow-up line. */
+function splitLead(text: string, bangla: boolean): [string, string] {
+  const m = text.match(/^(.+?),\s+((?:so that|where|যাতে|যেখান).+)$/);
+  if (!m) return [text, ""];
+  const end = bangla ? "।" : ".";
+  const rest = m[2].charAt(0).toUpperCase() + m[2].slice(1);
+  return [m[1] + end, rest];
+}
+
+const valueIcons = [ShieldCheck, Users, ChartNoAxesColumn, Heart];
+
 type Mission = { mission: string; vision: string; values: { title: string; text: string }[] };
 
 export default async function AboutPage() {
@@ -107,6 +124,7 @@ export default async function AboutPage() {
   const n = (v: string | number) => (lang === "bn" ? toBnDigits(v) : String(v));
   const { milestones, committee } = about;
   const values = mission.values;
+  const cap = lang === "bn" ? "" : "uppercase tracking-[0.16em]";
   const staff = teachers.length;
   return (
     <>
@@ -152,31 +170,73 @@ export default async function AboutPage() {
       {/* Mission & vision */}
       <section aria-labelledby="mission" className="border-y border-line bg-surface py-16 sm:py-20">
         <div className="container-page">
-          <SectionHeading id="mission" title={c.missionTitle} align="center" />
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
+          <div className="grid gap-4 lg:grid-cols-[1fr_minmax(0,28rem)] lg:items-end lg:gap-12">
             <div>
-              <Card className="h-full p-7">
-                <Compass aria-hidden className="size-7 text-accent" />
-                <h3 className="mt-4 font-serif text-xl font-semibold text-heading">{c.mission}</h3>
-                <p className="mt-2 leading-relaxed text-muted">{mission.mission}</p>
-              </Card>
+              <p className={`text-xs font-bold text-amber-700 dark:text-amber-300 ${cap}`}>{c.missionKicker}</p>
+              <h2 id="mission" className="mt-2 font-serif text-3xl leading-tight font-semibold text-heading sm:text-4xl lg:text-5xl">
+                {c.missionTitle}
+              </h2>
             </div>
-            <div>
-              <Card className="h-full p-7">
-                <Eye aria-hidden className="size-7 text-accent" />
-                <h3 className="mt-4 font-serif text-xl font-semibold text-heading">{c.vision}</h3>
-                <p className="mt-2 leading-relaxed text-muted">{mission.vision}</p>
-              </Card>
-            </div>
+            <p className="text-base leading-relaxed text-muted sm:text-lg">{c.missionIntro}</p>
           </div>
-          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((v) => (
-              <li key={v.title} className="rounded-md border border-line bg-paper p-5">
-                <HeartHandshake aria-hidden className="size-5 text-accent" />
-                <h3 className="mt-3 font-semibold text-heading">{v.title}</h3>
-                <p className="mt-1 text-sm text-muted">{v.text}</p>
-              </li>
-            ))}
+
+          <div className="mt-10 grid gap-6 md:grid-cols-2">
+            {/* Mission: navy card */}
+            <article className="relative isolate overflow-hidden rounded-xl bg-navy-900 p-7 text-white sm:p-10 dark:bg-navy-950 dark:ring-1 dark:ring-white/10">
+              <Compass aria-hidden strokeWidth={1.25} className="absolute -right-10 -bottom-12 -z-10 size-56 text-white/[0.06]" />
+              <div className="flex items-center gap-4">
+                <span className="flex size-12 items-center justify-center rounded-lg bg-white/10 text-[#e8b84a]">
+                  <Compass aria-hidden className="size-6" />
+                </span>
+                <h3 className={`text-sm font-bold text-[#e8b84a] ${cap}`}>{c.mission}</h3>
+              </div>
+              {(() => {
+                const [lead, rest] = splitLead(mission.mission, lang === "bn");
+                return (
+                  <>
+                    <p className="mt-6 font-serif text-2xl leading-snug font-semibold sm:text-[1.75rem]">{lead}</p>
+                    {rest && <p className="mt-5 max-w-lg leading-relaxed text-navy-100">{rest}</p>}
+                  </>
+                );
+              })()}
+            </article>
+
+            {/* Vision: warm cream card */}
+            <article className="relative isolate overflow-hidden rounded-xl border border-amber-200/70 bg-amber-50 p-7 sm:p-10 dark:border-amber-300/20">
+              <Eye aria-hidden strokeWidth={1.25} className="absolute -right-8 -bottom-10 -z-10 size-52 text-amber-700/[0.08] dark:text-white/[0.05]" />
+              <div className="flex items-center gap-4">
+                <span className="flex size-12 items-center justify-center rounded-lg bg-amber-100 text-amber-800 dark:bg-white/10">
+                  <Eye aria-hidden className="size-6" />
+                </span>
+                <h3 className={`text-sm font-bold text-amber-800 ${cap}`}>{c.vision}</h3>
+              </div>
+              {(() => {
+                const [lead, rest] = splitLead(mission.vision, lang === "bn");
+                return (
+                  <>
+                    <p className="mt-6 font-serif text-2xl leading-snug font-semibold text-heading sm:text-[1.75rem]">{lead}</p>
+                    {rest && <p className="mt-5 max-w-lg leading-relaxed text-ink">{rest}</p>}
+                  </>
+                );
+              })()}
+            </article>
+          </div>
+
+          <h3 className={`mt-14 text-xs font-bold text-subheading ${cap}`}>{c.valuesK}</h3>
+          <ul className="mt-5 grid overflow-hidden rounded-xl border border-line sm:grid-cols-2 lg:grid-cols-4">
+            {values.map((v, i) => {
+              const Icon = valueIcons[i % valueIcons.length];
+              return (
+                <li key={v.title} className="border-line p-7 not-first:border-t sm:[&:nth-child(2)]:border-t-0 sm:[&:nth-child(even)]:border-l lg:not-first:border-t-0 lg:not-first:border-l">
+                  <div className="flex items-start justify-between">
+                    <Icon aria-hidden className="size-7 text-heading" />
+                    <span aria-hidden className="font-serif text-3xl font-semibold text-[#c9a227] dark:text-[#e8b84a]">{n(String(i + 1).padStart(2, "0"))}</span>
+                  </div>
+                  <h4 className="mt-5 text-xl font-bold text-heading">{v.title}</h4>
+                  <p className="mt-3 leading-relaxed text-muted">{v.text}</p>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </section>
