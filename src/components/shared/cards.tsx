@@ -1,4 +1,5 @@
 "use client";
+import type { TeacherTone } from "./teacher-tones";
 import { DefaultAvatar } from "@/components/ui/DefaultAvatar";
 
 import Link from "@/components/i18n/Link";
@@ -112,27 +113,28 @@ export function NewsCard({ article, headingLevel = "h3" }: { article: NewsArticl
 
 /* ------------------------------------------------------------ Teacher card */
 
-export function TeacherAvatar({ teacher, size = "md" }: { teacher: Teacher; size?: "md" | "lg" }) {
+
+export function TeacherAvatar({ teacher, size = "md", ring }: { teacher: Teacher; size?: "md" | "lg"; ring?: string }) {
   if (teacher.photo) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
         src={teacher.photo}
         alt=""
-        className={cn("shrink-0 rounded-full border-4 border-surface object-cover ring-2 ring-navy-700 dark:ring-navy-300", size === "lg" ? "size-24" : "size-16")}
+        className={cn("shrink-0 rounded-full border-4 border-surface object-cover ring-2", ring ?? "ring-navy-700 dark:ring-navy-300", size === "lg" ? "size-24" : "size-16")}
       />
     );
   }
-  return <DefaultAvatar gender={teacher.gender} className={cn("ring-4 ring-surface", size === "lg" ? "size-24" : "size-16")} />;
+  return <DefaultAvatar gender={teacher.gender} className={cn(ring ? cn("border-4 border-surface ring-2", ring) : "ring-4 ring-surface", size === "lg" ? "size-24" : "size-16")} />;
 }
 
-export function TeacherCard({ teacher }: { teacher: Teacher }) {
+export function TeacherCard({ teacher, tone }: { teacher: Teacher; tone?: TeacherTone }) {
   const { t } = useI18n();
   return (
-    <article className="flex h-full flex-col items-center rounded-[var(--radius-card)] border border-line bg-surface p-6 text-center shadow-[var(--shadow-card)]">
-      <TeacherAvatar teacher={teacher} size="lg" />
+    <article className={cn("flex h-full flex-col items-center rounded-[var(--radius-card)] bg-surface p-6 text-center shadow-[var(--shadow-card)]", tone ? cn("border-2 border-t-[6px]", tone.card) : "border border-line")}>
+      <TeacherAvatar teacher={teacher} size="lg" ring={tone?.ring} />
       <h3 className="mt-4 font-semibold text-heading">{teacher.name}</h3>
-      <p className="mt-2 text-sm font-medium text-accent">{teacher.designation}</p>
+      <p className={cn("mt-2 text-sm font-semibold", tone ? tone.text : "text-accent")}>{teacher.designation}</p>
       <p className="mt-1 text-sm text-muted">{teacher.subjects.join(", ")}</p>
       <dl className="mt-auto w-full border-t border-line pt-3 text-xs text-muted">
         <div className="flex justify-between gap-2 pt-1">

@@ -208,3 +208,28 @@ html[lang="bn"] [lang="en"]:not(.font-serif) {
     transform: none;
   }
 }
+
+/* Endless teacher strip on the home page: moves left to right, pauses on hover or keyboard focus. */
+@keyframes marquee-ltr {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+.marquee {
+  overflow: hidden;
+  padding-block: 0.5rem;
+  mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-ltr var(--marquee-duration, 120s) linear infinite;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee { overflow-x: auto; mask-image: none; }
+  .marquee-track { animation: none; padding-inline: 1rem; }
+  .marquee-dup { display: none; }
+}
