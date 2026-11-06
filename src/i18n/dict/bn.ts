@@ -59,6 +59,7 @@ export const bn: Dictionary = {
   notices: {
     search: "নোটিশ খুঁজুন",
     searchPlaceholder: "বাংলা বা ইংরেজিতে নোটিশ খুঁজুন…",
+    listLabel: "নোটিশ তালিকা, আরও দেখতে স্ক্রল করুন",
     showing: (n, total) => `${toBnDigits(total)}টির মধ্যে ${toBnDigits(n)}টি নোটিশ দেখানো হচ্ছে`,
     none: "আপনার খোঁজার সঙ্গে মেলে এমন কোনো নোটিশ নেই।",
     noneHint: "অন্য শব্দ লিখে দেখুন অথবা “সব” বিভাগ বেছে নিন।",

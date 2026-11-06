@@ -56,6 +56,7 @@ export const en = {
   notices: {
     search: "Search notices",
     searchPlaceholder: "Search notices in Bangla or English…",
+    listLabel: "Notice list, scroll for more",
     showing: (n: number, total: number) => `Showing ${n} of ${total} notices`,
     none: "No notices match your search.",
     noneHint: "Try a different word or choose “All” categories.",

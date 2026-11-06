@@ -2,13 +2,35 @@
 
 import { useI18n } from "@/i18n/client";
 
-import { useDeferredValue, useMemo, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { Search, X } from "lucide-react";
 import { NoticeRow } from "@/components/shared/cards";
 import type { Notice, NoticeCategory } from "@/types";
 import { num, cn, normalize } from "@/lib/utils";
 
 type Filter = NoticeCategory | "all";
+
+/** How many notices fit in the list before it scrolls. */
+const VISIBLE = 5;
+
+/** Caps a list's height at its first `count` children; the rest scroll inside it. */
+function useCapHeight(count: number, deps: unknown[]) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const fit = () => {
+      const next = el.children[count] as HTMLElement | undefined;
+      el.style.maxHeight = next ? `${next.offsetTop}px` : "";
+    };
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(el);
+    return () => ro.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
+  return ref;
+}
 
 export function FilterChips<T extends string>({
   options,
@@ -85,6 +107,10 @@ export function NoticeExplorer({ notices }: { notices: Notice[] }) {
       .filter((n) => !q || normalize(`${n.title} ${n.titleEn ?? ""} ${n.summary}`).includes(q))
       .sort((a, b) => (sort === "new" ? b.date.localeCompare(a.date) : a.date.localeCompare(b.date)));
   }, [notices, deferred, category, sort]);
+  const listRef = useCapHeight(VISIBLE, [results]);
+  useEffect(() => {
+    if (listRef.current) listRef.current.scrollTop = 0;
+  }, [results, listRef]);
 
   const options: { value: Filter; label: string; count: number }[] = [
     { value: "all", label: t.common.all, count: notices.length },
@@ -112,7 +138,13 @@ export function NoticeExplorer({ notices }: { notices: Notice[] }) {
         {t.notices.showing(results.length, notices.length)}
       </p>
       {results.length > 0 ? (
-        <div className="mt-2 divide-y divide-line rounded-[var(--radius-card)] border border-line bg-surface px-5 shadow-[var(--shadow-card)]">
+        <div
+          ref={listRef}
+          tabIndex={results.length > VISIBLE ? 0 : undefined}
+          aria-label={results.length > VISIBLE ? t.notices.listLabel : undefined}
+          role={results.length > VISIBLE ? "region" : undefined}
+          className="relative mt-2 divide-y divide-line overflow-y-auto overscroll-contain rounded-[var(--radius-card)] border border-line bg-surface px-5 shadow-[var(--shadow-card)] [scrollbar-color:var(--color-line-strong)_transparent] [scrollbar-width:thin]"
+        >
           {results.map((n) => (
             <NoticeRow key={n.slug} notice={n} />
           ))}
