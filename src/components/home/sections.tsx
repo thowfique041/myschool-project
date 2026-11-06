@@ -32,8 +32,8 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
     <section aria-label={data.t.home.noticesAdmission} className="border-t border-line py-14 sm:py-16">
       <div className="container-page grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
-          <SectionHeading id="notices-title" variant="rule" title={copy.title} />
-          <div className="divide-y divide-line border-b border-line">
+          <SectionHeading id="notices-title" variant="small" title={copy.title} />
+          <div className="mt-4 divide-y divide-line border-y border-line">
             {data.notices.slice(0, 3).map((n) => (
               <NoticeRow key={n.slug} notice={n} compact />
             ))}
@@ -277,8 +277,8 @@ export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: 
   return (
     <section aria-labelledby="why-title" className="border-t border-line py-14 sm:py-16">
       <div className="container-page">
-        <SectionHeading id="why-title" align="center" title={copy.title} />
-        <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <SectionHeading id="why-title" variant="small" title={copy.title} />
+        <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {data.facilities.map(({ title, text }, i) => {
             const Icon = FACILITY_ICONS[i % FACILITY_ICONS.length];
             const fill = filled[i];

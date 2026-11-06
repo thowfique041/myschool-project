@@ -216,6 +216,7 @@ html[lang="bn"] [lang="en"]:not(.font-serif) {
 }
 .marquee {
   overflow: hidden;
+  contain: paint;
   padding-block: 0.5rem;
   mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
 }
