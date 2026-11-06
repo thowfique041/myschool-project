@@ -85,7 +85,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
       { key: "news", enabled: true, kicker: "", title: "News & events", description: "" },
       { key: "gallery", enabled: true, kicker: "", title: "Photo gallery", description: "" },
       { key: "people", enabled: true, kicker: "", title: "Teachers", description: "" },
-      { key: "faq", enabled: true, kicker: "", title: "Frequently asked questions", description: "" },
+      { key: "faq", enabled: false, kicker: "", title: "Frequently asked questions", description: "" },
     ],
   },
   site: {
