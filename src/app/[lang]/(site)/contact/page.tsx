@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowRight, Clock, Mail, MapPin, MessageCircle, Navigation, Phone } from "lucide-react";
+import { OpenNowBadge } from "@/components/shared/OpenNowBadge";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { Card, DemoNote, SectionHeading } from "@/components/ui/primitives";
+import { DemoNote, SectionHeading } from "@/components/ui/primitives";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { getSite } from "@/content/site-content";
 import { getI18n } from "@/i18n/server";
@@ -11,7 +12,28 @@ const copy = {
     title: "Contact Us",
     alt: "যোগাযোগ",
     meta: "Address, phone, email, office hours and a contact form for Webnion School & College, Sylhet.",
-    intro: "Visit the office, call during office hours or send a message using the form.",
+    intro: "Call during office hours, message us on WhatsApp, or visit the school office.",
+    callOffice: "Call office",
+    whatsapp: "WhatsApp",
+    directions: "Directions",
+    getDirections: "Get directions",
+    callNow: "Call now",
+    writeEmail: "Write an email",
+    landline: "Landline:",
+    general: "For general questions",
+    closedFri: "Closed on Friday",
+    openNow: "Open now",
+    closedNow: "Closed now",
+    sendNote: "Fields marked * are required. The office replies during working hours.",
+    who: "Who to contact",
+    whoAdmission: "Admission",
+    whoOffice: "School office",
+    whoOfficeSub: "Fees, certificates and documents",
+    whoPrincipal: "Principal's office",
+    byAppt: "By appointment",
+    openMaps: "Open in Maps",
+    callLabel: (who: string) => `Call ${who}`,
+    mailLabel: (who: string) => `Email ${who}`,
     address: "Address",
     phone: "Phone",
     email: "Email",
@@ -35,7 +57,28 @@ const copy = {
     title: "যোগাযোগ",
     alt: "Contact Us",
     meta: "ওয়েবনিয়ন স্কুল এন্ড কলেজ, সিলেটের ঠিকানা, ফোন, ইমেইল, অফিস সময় ও যোগাযোগ ফর্ম।",
-    intro: "অফিসে আসুন, অফিস সময়ে ফোন করুন অথবা ফর্মের মাধ্যমে বার্তা পাঠান।",
+    intro: "অফিস সময়ে ফোন করুন, হোয়াটসঅ্যাপে বার্তা পাঠান অথবা সরাসরি বিদ্যালয়ের অফিসে আসুন।",
+    callOffice: "অফিসে ফোন",
+    whatsapp: "হোয়াটসঅ্যাপ",
+    directions: "পথনির্দেশ",
+    getDirections: "পথনির্দেশ দেখুন",
+    callNow: "এখনই ফোন করুন",
+    writeEmail: "ইমেইল লিখুন",
+    landline: "ল্যান্ডলাইন:",
+    general: "সাধারণ জিজ্ঞাসার জন্য",
+    closedFri: "শুক্রবার বন্ধ",
+    openNow: "এখন খোলা",
+    closedNow: "এখন বন্ধ",
+    sendNote: "* চিহ্নিত ঘরগুলো পূরণ করা আবশ্যক। অফিস সময়ে উত্তর দেওয়া হয়।",
+    who: "কার সঙ্গে যোগাযোগ করবেন",
+    whoAdmission: "ভর্তি",
+    whoOffice: "বিদ্যালয়ের অফিস",
+    whoOfficeSub: "ফি, সনদ ও কাগজপত্র",
+    whoPrincipal: "অধ্যক্ষের কার্যালয়",
+    byAppt: "সময় নিয়ে সাক্ষাৎ",
+    openMaps: "ম্যাপে খুলুন",
+    callLabel: (who: string) => `${who}: ফোন করুন`,
+    mailLabel: (who: string) => `${who}: ইমেইল করুন`,
     address: "ঠিকানা",
     phone: "ফোন",
     email: "ইমেইল",
@@ -62,9 +105,9 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: copy[lang].title, description: copy[lang].meta };
 }
 
-function MapPlaceholder({ c }: { c: (typeof copy)["en"] }) {
+function MapPlaceholder({ c }: { c: (typeof copy)["en"] | (typeof copy)["bn"] }) {
   return (
-    <figure className="overflow-hidden rounded-lg border border-line bg-surface">
+    <figure className="overflow-hidden">
       <svg viewBox="0 0 640 380" role="img" aria-labelledby="map-title map-desc" className="h-auto w-full">
         <title id="map-title">{c.map1}</title>
         <desc id="map-desc">{c.map2}</desc>
@@ -105,16 +148,14 @@ function MapPlaceholder({ c }: { c: (typeof copy)["en"] }) {
           {c.river}
         </text>
       </svg>
-      <figcaption className="flex flex-wrap items-center justify-between gap-2 border-t border-line px-4 py-3 text-xs text-muted">
-        <span>{c.mapNote}</span>
-      </figcaption>
+      <figcaption className="sr-only">{c.mapNote}</figcaption>
     </figure>
   );
 }
 
 function MapEmbed({ url, title }: { url: string; title: string }) {
   return (
-    <div className="overflow-hidden rounded-lg border border-line bg-surface">
+    <div className="overflow-hidden">
       <iframe
         src={url}
         title={title}
@@ -127,69 +168,160 @@ function MapEmbed({ url, title }: { url: string; title: string }) {
   );
 }
 
+const cardCls = "h-full rounded-lg border border-line bg-surface p-6 shadow-[0_6px_24px_-10px_rgb(15_31_54/0.25)]";
+const labelCls = "mt-5 text-xs font-bold text-subheading";
+const actionCls = "mt-4 inline-flex items-center gap-1 text-sm font-bold text-heading hover:underline";
+const iconBox = "flex size-11 items-center justify-center rounded-lg bg-tint text-heading";
+
 export default async function ContactPage() {
   const [site, { lang }] = await Promise.all([getSite(), getI18n()]);
   const c = copy[lang];
+  const bn = lang === "bn";
+  const cap = bn ? "" : "uppercase tracking-[0.14em]";
   const mapOk = /^https:\/\/(www\.)?google\.com\/maps\/embed\?/.test(site.mapUrl);
-  const items = [
-    { icon: MapPin, label: c.address, value: site.address, sub: undefined },
-    { icon: Phone, label: c.phone, value: site.phone, href: site.phoneHref, sub: site.officePhone ? `${c.office} ${site.officePhone}` : "" },
-    { icon: Mail, label: c.email, value: site.email, href: `mailto:${site.email}`, sub: site.admissionEmail ? `${c.admission} ${site.admissionEmail}` : "" },
-    { icon: Clock, label: c.hours, value: site.officeHours, sub: undefined },
+  const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.name}, ${bn ? site.addressBn : site.address}`)}`;
+  const waHref = `https://wa.me/${site.phoneHref.replace(/\D/g, "")}`;
+  const [days, hours] = site.officeHours.split(/,\s*/);
+  const ext = { target: "_blank", rel: "noopener noreferrer" } as const;
+  const newTab = <span className="sr-only"> {bn ? "(নতুন ট্যাবে খুলবে)" : "(opens in a new tab)"}</span>;
+
+  const whoRows = [
+    { title: c.whoAdmission, sub: site.admissionEmail, subHref: `mailto:${site.admissionEmail}`, href: `mailto:${site.admissionEmail}`, icon: Mail, aria: c.mailLabel(c.whoAdmission) },
+    { title: c.whoOffice, sub: c.whoOfficeSub, href: site.officePhoneHref, icon: Phone, aria: c.callLabel(c.whoOffice) },
+    { title: c.whoPrincipal, sub: c.byAppt, extra: site.officePhone, subHref: site.officePhoneHref, href: site.officePhoneHref, icon: Phone, aria: c.callLabel(c.whoPrincipal) },
   ];
 
   return (
     <>
-      <PageHeader title={c.title} titleBn={c.alt} description={c.intro} />
-      <section className="py-12 sm:py-16">
+      <PageHeader
+        title={c.title}
+        description={c.intro}
+        overlap
+        aside={
+          <div className="flex flex-wrap gap-3 lg:justify-end">
+            <a href={site.phoneHref} className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-[#e8b84a] px-5 font-bold text-navy-950 hover:bg-[#f3cc6e]">
+              <Phone aria-hidden className="size-4" />
+              {c.callOffice}
+            </a>
+            <a href={waHref} {...ext} className="inline-flex min-h-12 items-center gap-2 rounded-lg border border-white/25 bg-white/5 px-5 font-bold text-white hover:bg-white/10">
+              <MessageCircle aria-hidden className="size-4" />
+              {c.whatsapp}
+              {newTab}
+            </a>
+            <a href={mapsHref} {...ext} className="inline-flex min-h-12 items-center gap-2 rounded-lg border border-white/25 bg-white/5 px-5 font-bold text-white hover:bg-white/10">
+              <Navigation aria-hidden className="size-4" />
+              {c.directions}
+              {newTab}
+            </a>
+          </div>
+        }
+      />
+
+      <section className="pb-16 sm:pb-20">
         <div className="container-page">
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {items.map(({ icon: Icon, label, value, href, sub }) => (
-              <li key={label}>
-                <Card className="h-full p-5">
-                  <Icon aria-hidden className="size-6 text-accent" />
-                  <h2 className="mt-3 text-sm font-semibold text-muted">{label}</h2>
-                  {href ? (
-                    <a href={href} className="mt-0.5 block font-semibold break-words text-heading hover:text-accent">
-                      {value}
-                    </a>
-                  ) : (
-                    <p className="mt-0.5 font-semibold text-heading">{value}</p>
-                  )}
-                  {sub && (
-                    <p lang={/[ঀ-৿]/.test(sub) ? "bn" : undefined} className="mt-1 text-sm text-muted">
-                      {sub}
-                    </p>
-                  )}
-                </Card>
-              </li>
-            ))}
+          <ul className="relative z-10 -mt-16 grid gap-4 sm:-mt-20 sm:grid-cols-2 lg:grid-cols-4">
+            <li>
+              <div className={cardCls}>
+                <span className={iconBox}><MapPin aria-hidden className="size-5" /></span>
+                <h2 className={`${labelCls} ${cap}`}>{c.address}</h2>
+                <p className="mt-1.5 text-lg leading-snug font-semibold text-heading">{site.address}</p>
+                <a href={mapsHref} {...ext} className={actionCls}>
+                  {c.getDirections} <ArrowRight aria-hidden className="size-4" />
+                  {newTab}
+                </a>
+              </div>
+            </li>
+            <li>
+              <div className={cardCls}>
+                <span className={iconBox}><Phone aria-hidden className="size-5" /></span>
+                <h2 className={`${labelCls} ${cap}`}>{c.phone}</h2>
+                <p className="mt-1.5 text-lg font-semibold text-heading">{site.phone}</p>
+                {site.officePhone && (
+                  <p className="text-sm text-muted">
+                    {c.landline}{" "}
+                    <a href={site.officePhoneHref} className="underline underline-offset-2 hover:text-heading">{site.officePhone}</a>
+                  </p>
+                )}
+                <a href={site.phoneHref} className={actionCls}>
+                  {c.callNow} <ArrowRight aria-hidden className="size-4" />
+                </a>
+              </div>
+            </li>
+            <li>
+              <div className={cardCls}>
+                <span className={iconBox}><Mail aria-hidden className="size-5" /></span>
+                <h2 className={`${labelCls} ${cap}`}>{c.email}</h2>
+                <p className="mt-1.5 text-lg font-semibold break-words text-heading">{site.email}</p>
+                <p className="text-sm text-muted">{c.general}</p>
+                <a href={`mailto:${site.email}`} className={actionCls}>
+                  {c.writeEmail} <ArrowRight aria-hidden className="size-4" />
+                </a>
+              </div>
+            </li>
+            <li>
+              <div className={cardCls}>
+                <div className="flex items-start justify-between gap-2">
+                  <span className={iconBox}><Clock aria-hidden className="size-5" /></span>
+                  <OpenNowBadge open={c.openNow} closed={c.closedNow} />
+                </div>
+                <h2 className={`${labelCls} ${cap}`}>{c.hours}</h2>
+                <p className="mt-1.5 text-lg leading-snug font-semibold text-heading">
+                  {days}
+                  {hours && <span className="block">{hours}</span>}
+                </p>
+                <p className="mt-4 text-sm text-muted">{c.closedFri}</p>
+              </div>
+            </li>
           </ul>
 
-          <div className="mt-12 grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="mt-16 grid gap-10 lg:grid-cols-[1fr_24rem] lg:gap-8">
             <div>
-              <SectionHeading title={c.send} />
-              <Card className="mt-6 p-5 sm:p-7">
+              <SectionHeading title={c.send} description={c.sendNote} />
+              <div className="mt-6 rounded-lg border border-line bg-surface p-5 sm:p-7">
                 <ContactForm to={site.email} />
-              </Card>
-            </div>
-            <div>
-              <SectionHeading title={c.find} />
-              <div className="mt-6">
-                {mapOk ? <MapEmbed url={site.mapUrl} title={`${c.map} ${site.name}`} /> : <MapPlaceholder c={c} />}
               </div>
-              <div className="mt-6 rounded-md border border-line bg-surface p-5">
-                <h3 className="font-semibold text-heading">{c.follow}</h3>
-                <ul className="mt-3 flex flex-wrap gap-3">
-                  {site.social.map((s) => (
-                    <li key={s.label}>
-                      <a href={s.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center rounded-lg border border-line px-4 text-sm font-semibold text-heading hover:border-line-strong">
-                        {s.label}
-                        <span className="sr-only"> {lang === "bn" ? "(নতুন ট্যাবে খুলবে)" : "(opens in a new tab)"}</span>
+            </div>
+
+            <div>
+              <SectionHeading title={c.who} />
+              <ul className="mt-6 divide-y divide-line overflow-hidden rounded-lg border border-line bg-surface">
+                {whoRows.map((r) => {
+                  const Icon = r.icon;
+                  return (
+                    <li key={r.title} className="flex items-center justify-between gap-4 px-5 py-4">
+                      <div className="min-w-0">
+                        <p className="font-bold text-heading">{r.title}</p>
+                        <p className="text-sm break-words text-muted">
+                          {r.extra ? (
+                            <>
+                              {r.sub} · <a href={r.subHref} className="underline underline-offset-2 hover:text-heading">{r.extra}</a>
+                            </>
+                          ) : r.subHref ? (
+                            <a href={r.subHref} className="underline underline-offset-2 hover:text-heading">{r.sub}</a>
+                          ) : (
+                            r.sub
+                          )}
+                        </p>
+                      </div>
+                      <a href={r.href} aria-label={r.aria} className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-tint text-heading hover:bg-navy-800 hover:text-white">
+                        <Icon aria-hidden className="size-5" />
                       </a>
                     </li>
-                  ))}
-                </ul>
+                  );
+                })}
+              </ul>
+
+              <div className="mt-6 overflow-hidden rounded-lg border border-line bg-surface">
+                {mapOk ? <MapEmbed url={site.mapUrl} title={`${c.map} ${site.name}`} /> : <MapPlaceholder c={c} />}
+                <div className="border-t border-line p-5">
+                  <p className="font-bold text-heading">{bn ? site.nameBn : site.name}</p>
+                  <p className="text-sm text-muted">{site.address}</p>
+                  <a href={mapsHref} {...ext} className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-lg bg-navy-900 px-4 text-sm font-bold text-white hover:bg-navy-800 dark:bg-navy-200 dark:text-navy-950">
+                    <Navigation aria-hidden className="size-4" />
+                    {c.openMaps}
+                    {newTab}
+                  </a>
+                </div>
               </div>
               {site.demoNote && <DemoNote className="mt-6">{site.demoNote}</DemoNote>}
             </div>

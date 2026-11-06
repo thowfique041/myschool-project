@@ -93,20 +93,20 @@ export function ContactForm({ compact = false, to = "" }: { compact?: boolean; t
           {t.form.fixFields}
         </p>
       )}
-      <div className={cn("grid gap-4", !compact && "sm:grid-cols-2")}>
+      <div className={cn("grid gap-4", !compact && "sm:grid-cols-2 xl:grid-cols-3")}>
         <Field label={t.contactForm.name} name="name" required error={errors.name}>
           {({ id, describedBy, invalid }) => (
-            <TextInput id={id} name="name" autoComplete="name" value={values.name} onChange={set("name")} aria-describedby={describedBy} invalid={invalid} />
+            <TextInput id={id} name="name" autoComplete="name" placeholder={t.contactForm.namePh} value={values.name} onChange={set("name")} aria-describedby={describedBy} invalid={invalid} />
           )}
         </Field>
-        <Field label={t.contactForm.phone} name="phone" required error={errors.phone}>
+        <Field label={t.contactForm.phone} name="phone" required error={errors.phone} hint={compact ? undefined : t.contactForm.phoneHint}>
           {({ id, describedBy, invalid }) => (
             <TextInput id={id} name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="01XXXXXXXXX" value={values.phone} onChange={set("phone")} aria-describedby={describedBy} invalid={invalid} />
           )}
         </Field>
         <Field label={t.contactForm.email} name="email" error={errors.email}>
           {({ id, describedBy, invalid }) => (
-            <TextInput id={id} name="email" type="email" autoComplete="email" value={values.email} onChange={set("email")} aria-describedby={describedBy} invalid={invalid} />
+            <TextInput id={id} name="email" type="email" autoComplete="email" placeholder={t.contactForm.emailPh} value={values.email} onChange={set("email")} aria-describedby={describedBy} invalid={invalid} />
           )}
         </Field>
         <Field label={t.contactForm.topic} name="topic" required error={errors.topic}>
@@ -122,7 +122,7 @@ export function ContactForm({ compact = false, to = "" }: { compact?: boolean; t
       </div>
       <Field label={t.contactForm.message} name="message" required error={errors.message}>
         {({ id, describedBy, invalid }) => (
-          <TextArea id={id} name="message" rows={compact ? 4 : 5} value={values.message} onChange={set("message")} aria-describedby={describedBy} invalid={invalid} />
+          <TextArea id={id} name="message" rows={compact ? 4 : 6} placeholder={t.contactForm.messagePh} value={values.message} onChange={set("message")} aria-describedby={describedBy} invalid={invalid} />
         )}
       </Field>
       {formError && (
