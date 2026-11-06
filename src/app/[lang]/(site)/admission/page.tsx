@@ -133,7 +133,7 @@ export default async function AdmissionPage() {
               </Badge>
             )}
             {(lang === "bn" ? a.noticeTitleBn : a.noticeTitle) && (
-              <h2 id="announce" className="mt-3 font-serif text-2xl font-semibold text-heading sm:text-3xl" style={{ lineHeight: 1.45 }}>
+              <h2 id="announce" className="mt-3 font-serif text-2xl font-semibold text-heading" style={{ lineHeight: 1.45 }}>
                 {lang === "bn" ? a.noticeTitleBn : a.noticeTitle}
               </h2>
             )}

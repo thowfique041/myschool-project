@@ -61,7 +61,7 @@ export default async function FaqPage() {
           <div className="space-y-10">
             {shown.map((t) => (
               <section key={t.id} id={t.id} aria-labelledby={`${t.id}-h`} className="scroll-mt-28">
-                <h2 id={`${t.id}-h`} className="font-serif text-xl font-semibold text-heading">
+                <h2 id={`${t.id}-h`} className="font-serif text-2xl leading-tight font-semibold text-heading">
                   {t.label}
                 </h2>
                 <Accordion className="mt-4" items={faqs.filter((f) => f.topic === t.id)} />

@@ -173,7 +173,7 @@ export default async function AboutPage() {
           <div className="grid gap-4 lg:grid-cols-[1fr_minmax(0,28rem)] lg:items-end lg:gap-12">
             <div>
               <p className={`text-xs font-bold text-amber-700 dark:text-amber-300 ${cap}`}>{c.missionKicker}</p>
-              <h2 id="mission" className="mt-2 font-serif text-3xl leading-tight font-semibold text-heading sm:text-4xl lg:text-5xl">
+              <h2 id="mission" className="mt-2 font-serif text-2xl leading-tight font-semibold text-heading">
                 {c.missionTitle}
               </h2>
             </div>
