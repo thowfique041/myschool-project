@@ -67,7 +67,7 @@ export default async function FaqPage() {
                 <Accordion className="mt-4" items={faqs.filter((f) => f.topic === t.id)} />
               </section>
             ))}
-            <div className="rounded-md border border-line bg-surface p-6">
+            <div className="border border-line bg-surface p-6">
               <p className="font-semibold text-heading">{c.still}</p>
               <p className="mt-1 text-sm text-muted">{c.stillText}</p>
               <ButtonLink href="/contact" className="mt-4" variant="primary">

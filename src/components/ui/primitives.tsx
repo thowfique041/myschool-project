@@ -127,7 +127,7 @@ export function Card({
   as?: "div" | "article" | "li" | "section";
 }) {
   return (
-    <As className={cn("rounded-[var(--radius-card)] border border-line bg-surface shadow-[var(--shadow-card)]", className)}>
+    <As className={cn("border border-line bg-surface", className)}>
       {children}
     </As>
   );

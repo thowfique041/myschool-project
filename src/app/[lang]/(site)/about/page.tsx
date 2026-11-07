@@ -176,7 +176,7 @@ export default async function AboutPage() {
           </div>
           <div>
             {about.overviewImage && (
-              <Picture image={{ src: about.overviewImage, alt: c.photoAlt(lang === "bn" ? site.nameBn : site.name), width: 1600, height: 1000 }} className="rounded-lg" sizes="(min-width: 1024px) 50vw, 100vw" />
+              <Picture image={{ src: about.overviewImage, alt: c.photoAlt(lang === "bn" ? site.nameBn : site.name), width: 1600, height: 1000 }}  sizes="(min-width: 1024px) 50vw, 100vw" />
             )}
           </div>
         </div>
@@ -203,7 +203,7 @@ export default async function AboutPage() {
             ].map(({ Icon, label, text }) => {
               const [lead, rest] = splitLead(text, lang === "bn");
               return (
-                <article key={label} className="lift relative isolate overflow-hidden rounded-xl bg-navy-900 p-6 text-white sm:p-7 dark:bg-navy-950 dark:ring-1 dark:ring-white/10">
+                <article key={label} className="lift relative isolate overflow-hidden bg-navy-900 p-6 text-white sm:p-7 dark:bg-navy-950 dark:ring-1 dark:ring-white/10">
                   <Icon aria-hidden strokeWidth={1.25} className="absolute -right-8 -bottom-10 -z-10 size-40 text-white/[0.06]" />
                   <div className="flex items-center gap-3">
                     <span className="flex size-10 items-center justify-center rounded-lg bg-white/10 text-on-navy-accent">
@@ -219,11 +219,11 @@ export default async function AboutPage() {
           </div>
 
           <h3 className={`mt-14 text-xs font-bold text-subheading ${cap}`}>{c.valuesK}</h3>
-          <ul className="mt-5 grid rounded-xl border border-line sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-5 grid border border-line sm:grid-cols-2 lg:grid-cols-4">
             {values.map((v, i) => {
               const Icon = valueIcons[i % valueIcons.length];
               return (
-                <li key={v.title} className="lift border-line p-7 hover:rounded-xl hover:bg-surface not-first:border-t sm:[&:nth-child(2)]:border-t-0 sm:[&:nth-child(even)]:border-l lg:not-first:border-t-0 lg:not-first:border-l">
+                <li key={v.title} className="lift border-line p-7 hover:bg-surface not-first:border-t sm:[&:nth-child(2)]:border-t-0 sm:[&:nth-child(even)]:border-l lg:not-first:border-t-0 lg:not-first:border-l">
                   <div className="flex items-start justify-between">
                     <Icon aria-hidden className="size-7 text-heading" />
                     <span aria-hidden className="font-serif text-3xl font-semibold text-leaf-600 dark:text-accent">{n(String(i + 1).padStart(2, "0"))}</span>
@@ -322,7 +322,7 @@ export default async function AboutPage() {
         <div className="container-page grid gap-12 lg:grid-cols-2">
           <div className="min-w-0">
             <SectionHeading id="committee-title" title={c.committee} description={site.demoNote ? c.committeeSample : undefined} />
-            <div className="mt-6 overflow-x-auto rounded-md border border-line">
+            <div className="mt-6 overflow-x-auto border border-line">
               <table className="w-full min-w-[28rem] text-left text-sm">
                 <thead className="bg-paper text-xs text-muted uppercase">
                   <tr>

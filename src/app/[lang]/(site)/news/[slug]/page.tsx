@@ -48,7 +48,7 @@ export default async function NewsDetailPage({ params }: PageProps<"/[lang]/news
           <h1 className="mt-4 font-serif text-3xl leading-tight font-semibold text-heading sm:text-4xl">{article.title}</h1>
           <p className="mt-4 text-lg leading-relaxed text-muted">{article.excerpt}</p>
           {(article.eventDate || article.venue) && (
-            <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-2 rounded-md border border-line bg-surface px-5 py-4 text-sm">
+            <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-2 border border-line bg-surface px-5 py-4 text-sm">
               {article.eventDate && (
                 <div className="flex items-center gap-2">
                   <CalendarDays aria-hidden className="size-4 text-accent" />
@@ -67,7 +67,7 @@ export default async function NewsDetailPage({ params }: PageProps<"/[lang]/news
           )}
         </div>
         <div className="container-page mt-8 max-w-4xl">
-          <Picture image={article.image} priority className="rounded-lg" sizes="(min-width: 1024px) 56rem, 100vw" />
+          <Picture image={article.image} priority  sizes="(min-width: 1024px) 56rem, 100vw" />
           <PhotoCredit image={article.image} className="mt-2" />
         </div>
         <div className="container-page mt-8 max-w-3xl space-y-5 text-base leading-relaxed text-ink">

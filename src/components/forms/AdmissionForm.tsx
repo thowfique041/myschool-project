@@ -112,14 +112,14 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
         role="status"
         initial={reduce ? false : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-lg border border-line-strong bg-surface p-6 sm:p-8"
+        className="border border-line-strong bg-surface p-6 sm:p-8"
       >
         <CheckCircle2 aria-hidden className="size-10 text-accent" />
         <h3 className="mt-4 font-serif text-2xl font-semibold text-heading">{a.doneTitle}</h3>
         <p className="mt-2 text-muted">
           {a.doneText}
         </p>
-        <dl className="mt-6 grid gap-x-8 gap-y-3 rounded-md bg-paper p-5 text-sm sm:grid-cols-2">
+        <dl className="mt-6 grid gap-x-8 gap-y-3 bg-paper p-5 text-sm sm:grid-cols-2">
           <div>
             <dt className="text-muted">{a.reference}</dt>
             <dd className="font-mono font-semibold text-heading">{reference}</dd>
@@ -165,12 +165,12 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
 
   return (
     !open ? (
-      <div className="rounded-lg border border-line bg-surface p-6 text-muted">
+      <div className="border border-line bg-surface p-6 text-muted">
         {a.closed}
       </div>
     ) : <form noValidate onSubmit={onSubmit} className="space-y-8">
       {errorCount > 0 && (
-        <p role="alert" className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-danger">
+        <p role="alert" className="border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-danger">
           {t.form.fixFields}
         </p>
       )}
@@ -294,7 +294,7 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
       </div>
 
       {formError && (
-        <p role="alert" className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-danger">
+        <p role="alert" className="border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-danger">
           {formError}
         </p>
       )}

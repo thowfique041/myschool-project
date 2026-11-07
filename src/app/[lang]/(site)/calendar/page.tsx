@@ -85,14 +85,14 @@ export default async function CalendarPage() {
                   <h2 id={`m-${key}`} className="font-serif text-2xl leading-tight font-semibold text-heading">
                     {monthNames[lang][m - 1]} {lang === "bn" ? toBnDigits(y) : y}
                   </h2>
-                  <ul className="mt-3 divide-y divide-line rounded-md border border-line bg-surface">
+                  <ul className="mt-3 divide-y divide-line border-t-2 border-b border-t-navy-800 border-b-line bg-surface dark:border-t-navy-300">
                     {events.map((e) => {
                       const d = datePartsL(e.date, lang);
                       return (
                         <li key={e.date + e.title} className="flex items-start gap-4 p-4 sm:px-5">
-                          <span className="flex w-12 shrink-0 flex-col items-center rounded-md border border-line py-1 text-center">
-                            <span className="text-xs text-muted uppercase">{d.month}</span>
-                            <span className="font-serif text-lg leading-none font-semibold text-heading">{d.day}</span>
+                          <span className="flex w-14 shrink-0 flex-col items-center border-r border-line pr-3 text-center">
+                            <span className="eyebrow text-leaf-600 dark:text-accent">{d.month}</span>
+                            <span className="mt-1 font-serif text-[1.7rem] leading-none font-semibold text-heading">{d.day}</span>
                           </span>
                           <div className="min-w-0 flex-1">
                             <p className="font-semibold text-heading">{e.title}</p>

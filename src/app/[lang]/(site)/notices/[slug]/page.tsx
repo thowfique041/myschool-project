@@ -37,7 +37,7 @@ export default async function NoticeDetailPage({ params }: PageProps<"/[lang]/no
       <PageHeader title={t.notices.notice} headingAs="p" crumbs={[{ label: lang === "bn" ? "নোটিশ বোর্ড" : "Notice Board", href: "/notices" }]} />
       <section className="py-12 sm:py-16">
         <div className="container-page grid gap-10 lg:grid-cols-[1fr_20rem]">
-          <article className="rounded-lg border border-line bg-surface p-6 shadow-[var(--shadow-card)] sm:p-10">
+          <article className="border border-line bg-surface p-6 sm:p-10">
             {/* Same printed-notice meta line as the notice board */}
             <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm">
               <span className="font-semibold tracking-wider text-subheading uppercase">{cat.label}</span>
@@ -76,7 +76,7 @@ export default async function NoticeDetailPage({ params }: PageProps<"/[lang]/no
                 href={notice.attachment.href}
                 target="_blank"
                 rel="noopener"
-                className="mt-8 flex items-center gap-4 rounded-md border border-line bg-paper p-4 transition-colors hover:border-line-strong"
+                className="mt-8 flex items-center gap-4 border border-line bg-paper p-4 transition-colors hover:border-line-strong"
               >
                 <FileText aria-hidden className="size-8 shrink-0 text-danger" />
                 <span className="min-w-0 flex-1">
@@ -98,7 +98,7 @@ export default async function NoticeDetailPage({ params }: PageProps<"/[lang]/no
           </article>
 
           <aside aria-labelledby="related-notices" className="space-y-6">
-            <div className="rounded-md border border-line bg-surface px-5">
+            <div className="border border-line bg-surface px-5">
               <h2 id="related-notices" className="pt-5 font-semibold text-heading">
                 {related.length ? t.notices.more(cat.label) : t.notices.recent}
               </h2>

@@ -89,7 +89,7 @@ export function ContactForm({ compact = false, wide = false, to = "" }: { compac
   return (
     <form noValidate onSubmit={onSubmit} className="space-y-4" aria-describedby="contact-form-note">
       {Object.keys(errors).some((k) => errors[k as keyof Values]) && (
-        <p role="alert" className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-2.5 text-sm text-danger">
+        <p role="alert" className="border border-signal-100 bg-signal-50 px-4 py-2.5 text-sm text-danger">
           {t.form.fixFields}
         </p>
       )}
@@ -126,7 +126,7 @@ export function ContactForm({ compact = false, wide = false, to = "" }: { compac
         )}
       </Field>
       {formError && (
-        <p role="alert" className="rounded-lg border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-danger">
+        <p role="alert" className="border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-danger">
           {formError}
         </p>
       )}

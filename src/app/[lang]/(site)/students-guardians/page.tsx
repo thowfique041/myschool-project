@@ -106,7 +106,7 @@ export default async function StudentsGuardiansPage() {
         aside={c.facts.map((f, i) => {
           const Icon = factIcons[i];
           return (
-            <div key={f.label} className="flex items-center gap-3 rounded-lg border border-white/15 bg-white/[0.06] px-4 py-3.5">
+            <div key={f.label} className="flex items-center gap-3 border border-white/15 bg-white/[0.06] px-4 py-3.5">
               <Icon aria-hidden className="size-6 shrink-0 text-navy-200" />
               <div>
                 <p className="text-sm text-navy-200">{f.label}</p>
@@ -127,7 +127,7 @@ export default async function StudentsGuardiansPage() {
                 <li key={hrefs[i]}>
                   <Link
                     href={hrefs[i]}
-                    className="group flex h-full flex-col rounded-lg border border-line bg-surface p-6 shadow-[0_1px_2px_rgb(20_43_73/0.06)] transition-transform hover:-translate-y-0.5"
+                    className="group flex h-full flex-col border border-line bg-surface p-6 transition-transform hover:-translate-y-0.5"
                   >
                     <span className="flex items-start justify-between">
                       <span className="flex size-12 items-center justify-center rounded-lg bg-tint text-heading">
@@ -152,8 +152,8 @@ export default async function StudentsGuardiansPage() {
                 {c.info.map((item, i) => {
                   const Icon = infoIcons[i];
                   return (
-                    <li key={item.title} className="rounded-lg border border-line bg-surface p-6">
-                      <span className="flex size-12 items-center justify-center rounded-lg bg-amber-100 text-amber-800 dark:bg-white/10">
+                    <li key={item.title} className="border border-line bg-surface p-6">
+                      <span className="flex size-12 items-center justify-center rounded-lg bg-tint text-leaf-600 dark:text-accent">
                         <Icon aria-hidden className="size-6" />
                       </span>
                       <h3 className="mt-5 text-xl font-bold text-heading">{item.title}</h3>
@@ -174,7 +174,7 @@ export default async function StudentsGuardiansPage() {
 
             <div>
               <SectionHeading title={c.times} />
-              <div className="mt-6 overflow-hidden rounded-lg border border-line bg-surface">
+              <div className="mt-6 overflow-hidden border border-line bg-surface">
                 {c.timings.map((g) => (
                   <div key={g.group}>
                     <p className="border-y border-line bg-paper px-5 py-2.5 text-xs font-bold tracking-wider text-subheading uppercase first:border-t-0">{g.group}</p>
