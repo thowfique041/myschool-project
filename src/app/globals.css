@@ -332,3 +332,9 @@ html[lang="bn"] [lang="en"]:not(.font-serif) {
   body:has([data-print-page="calendar"]) main * { color: #000 !important; background: transparent !important; }
   body:has([data-print-page="calendar"]) main svg[aria-hidden="true"] { display: none !important; }
 }
+
+/* Printing the admission application summary: only the summary. */
+@media print {
+  body[data-printing="admission"] *:not(:has(#admission-summary)):not(#admission-summary):not(#admission-summary *) { display: none !important; }
+  body[data-printing="admission"] #admission-summary * { color: #000 !important; }
+}

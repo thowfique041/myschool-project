@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import { DateBlock } from "@/components/shared/cards";
-import { CheckCircle2, FileText } from "lucide-react";
-import { PageHeader } from "@/components/ui/PageHeader";
-import { Badge, ButtonLink, buttonClasses, Card, DemoNote, SectionHeading } from "@/components/ui/primitives";
+import Image from "next/image";
+import Link from "@/components/i18n/Link";
+import { CheckCircle2, Download, FileText } from "lucide-react";
+import { ButtonLink, buttonClasses, DemoNote, SectionHeading } from "@/components/ui/primitives";
 import { SampleTag } from "@/components/ui/SampleTag";
-import { Picture } from "@/components/ui/Picture";
 import { Accordion } from "@/components/ui/Accordion";
 import { AdmissionForm } from "@/components/forms/AdmissionForm";
 import { formatDate, toBnDigits } from "@/lib/utils";
 import { getI18n } from "@/i18n/server";
-import { getFaqs, getSetting, getSite } from "@/content/site-content";
+import { getFaqs, getSetting, getSite, getToday } from "@/content/site-content";
 import type { AdmissionContent } from "@/components/home/types";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -57,6 +57,16 @@ const copy = {
     applyText: "Fill in the form, then print the summary and submit it at the school office with the required documents.",
     faqK: "Admission FAQ",
     faq: "Admission FAQ",
+    deadline: "Last date of form submission",
+    circularBtn: "Download admission circular",
+    open: "Admission open",
+    closed: "Admission closed",
+    next: "Next",
+    done: "Completed",
+    forStudent: "For the student",
+    forGuardian: "From the guardian",
+    perYear: "BDT",
+    home: "Home",
   },
   bn: {
     title: (y: string) => `ভর্তি ${toBnDigits(y)}`,
@@ -95,74 +105,131 @@ const copy = {
     applyText: "ফর্মটি পূরণ করে সারাংশ প্রিন্ট করুন, তারপর প্রয়োজনীয় কাগজপত্রসহ বিদ্যালয়ের অফিসে জমা দিন।",
     faqK: "ভর্তি সংক্রান্ত প্রশ্ন",
     faq: "ভর্তি সংক্রান্ত প্রশ্নোত্তর",
+    deadline: "ফরম জমার শেষ তারিখ",
+    circularBtn: "ভর্তি বিজ্ঞপ্তি ডাউনলোড",
+    open: "ভর্তি চলছে",
+    closed: "ভর্তি বন্ধ",
+    next: "পরবর্তী",
+    done: "সম্পন্ন",
+    forStudent: "শিক্ষার্থীর জন্য",
+    forGuardian: "অভিভাবকের কাছ থেকে",
+    perYear: "টাকা",
+    home: "হোম",
   },
 };
 
 export default async function AdmissionPage() {
-  const [a, faqs, site, { lang }] = await Promise.all([getSetting<AdmissionContent>("admission"), getFaqs(), getSite(), getI18n()]);
+  const [a, faqs, site, today, { lang }] = await Promise.all([getSetting<AdmissionContent>("admission"), getFaqs(), getSite(), getToday(), getI18n()]);
   const admissionYear = String(a.year);
   const c = copy[lang];
   const n = (v: string | number) => (lang === "bn" ? toBnDigits(v) : String(v));
+  const dates = [...a.dates].sort((x, y) => x.date.localeCompare(y.date));
+  const nextDate = dates.find((d) => d.date >= today);
+  // The submission deadline is the date entry whose label says so; nothing is assumed if none does.
+  const deadline = dates.find((d) => /last date|শেষ তারিখ/i.test(d.label));
+  const isGuardianDoc = (d: string) => /guardian|father|mother|অভিভাবক|পিতা|মাতা|বাবা|মা[য়েরর]/i.test(d);
+  const docGroups: [string, string[]][] = [
+    [c.forStudent, a.documents.filter((d) => !isGuardianDoc(d))],
+    [c.forGuardian, a.documents.filter(isGuardianDoc)],
+  ];
+  // BDT with the taka sign when the value is a number ("5,000" → "৳ 5,000"); text such as "N/A" is shown as is.
+  const taka = (v: string | number) => (/^[\d,.\s]+$/.test(String(v)) ? `৳ ${n(v)}` : n(v));
   return (
     <>
-      <PageHeader
-        title={c.title(admissionYear)}
-        titleBn={c.alt(admissionYear)}
-        description={a.intro || undefined}
-      >
-        <div className="mt-6 flex flex-wrap gap-3">
-          {a.open && (
-            <ButtonLink href="#apply" variant="secondary">
-              {c.apply}
-            </ButtonLink>
-          )}
-          {a.formFile && (
-            <a href={a.formFile} target="_blank" rel="noopener" className={buttonClasses("light")}>
-              {c.form}
-            </a>
-          )}
-        </div>
-      </PageHeader>
-
-      {/* Announcement */}
-      <section aria-labelledby="announce" className="py-16">
-        <div className="container-page grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-          <div>
-            {a.noticeDate && (
-              <Badge tone="signal">
-                {c.notice} · {formatDate(a.noticeDate, lang)}
-              </Badge>
-            )}
-            {(lang === "bn" ? a.noticeTitleBn : a.noticeTitle) && (
-              <h2 id="announce" className="mt-3 font-serif text-2xl font-semibold text-heading" style={{ lineHeight: 1.45 }}>
-                {lang === "bn" ? a.noticeTitleBn : a.noticeTitle}
-              </h2>
-            )}
-            {lang === "bn" && a.noticeBodyBn && <p className="mt-4 text-muted">{a.noticeBodyBn}</p>}
-            {a.noticeBody && (
-              <p className="mt-4 text-muted">
-                {a.noticeBody} {c.office} {site.officePhone || site.phone}.
+      {/* Hero in the homepage manner: full-width photograph with a navy text panel. */}
+      <section aria-labelledby="adm-title" className="relative isolate overflow-hidden bg-navy-950 text-white">
+        {a.image && <Image src={a.image} alt={c.photoAlt} fill priority sizes="100vw" className="-z-20 object-cover object-[70%_center]" />}
+        <div className="container-page flex min-h-[30rem] flex-col justify-center py-10 sm:min-h-[34rem]">
+          <div className="max-w-2xl rounded-md border-l-4 border-[#e8b84a] bg-navy-950/80 p-6 sm:p-8">
+            <nav aria-label={lang === "bn" ? "ব্রেডক্রাম্ব" : "Breadcrumb"}>
+              <ol className="flex items-center gap-1 text-sm text-navy-200">
+                <li>
+                  <Link href="/" className="hover:text-white hover:underline underline-offset-4">{c.home}</Link>
+                </li>
+                <li aria-hidden>›</li>
+                <li aria-current="page" className="text-white">{lang === "bn" ? "ভর্তি" : "Admission"}</li>
+              </ol>
+            </nav>
+            <p className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[#e8b84a]">
+              <span aria-hidden className={a.open ? "size-2 rounded-full bg-[#e8b84a]" : "size-2 rounded-full bg-navy-300"} />
+              {a.open ? c.open : c.closed}
+            </p>
+            <h1 id="adm-title" className="mt-1 font-serif text-4xl leading-tight font-semibold sm:text-5xl lg:text-6xl">
+              {lang === "bn" ? c.alt(admissionYear) : c.title(admissionYear)}
+            </h1>
+            {a.intro && <p className="mt-3 text-lg text-white">{a.intro}</p>}
+            {deadline && (
+              <p className="mt-4 text-base font-semibold text-[#f3cc6e] sm:text-lg">
+                {c.deadline}: <time dateTime={deadline.date}>{formatDate(deadline.date, lang)}</time>
               </p>
             )}
-          </div>
-          <div>
-            {a.image && <Picture image={{ src: a.image, alt: c.photoAlt, width: 1600, height: 1000 }}  sizes="(min-width: 1024px) 45vw, 100vw" />}
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              {a.open && (
+                <ButtonLink href="#apply" variant="secondary">
+                  {c.apply}
+                </ButtonLink>
+              )}
+              {a.circularFile && (
+                <a href={a.circularFile} target="_blank" rel="noopener" download className={buttonClasses("light")}>
+                  <Download aria-hidden className="size-4" />
+                  {c.circularBtn}
+                </a>
+              )}
+              {a.formFile && (
+                <a href={a.formFile} target="_blank" rel="noopener" download className="text-sm font-semibold underline underline-offset-4 hover:text-navy-100">
+                  {c.form}
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </section>
+
+      {/* Announcement: the official notice text */}
+      {(lang === "bn" ? a.noticeTitleBn : a.noticeTitle) && (
+        <section aria-labelledby="announce" className="border-b border-line py-12">
+          <div className="container-page grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-12">
+            <div>
+              {a.noticeDate && (
+                <p className="eyebrow text-leaf-600 dark:text-accent">
+                  {c.notice} · <time dateTime={a.noticeDate}>{formatDate(a.noticeDate, lang)}</time>
+                </p>
+              )}
+              <h2 id="announce" className="mt-2 font-serif text-2xl leading-snug font-semibold text-heading">
+                {lang === "bn" ? a.noticeTitleBn : a.noticeTitle}
+              </h2>
+            </div>
+            <div className="space-y-3 border-l-2 border-leaf-600 pl-5 leading-relaxed text-ink dark:border-accent">
+              {lang === "bn" && a.noticeBodyBn && <p>{a.noticeBodyBn}</p>}
+              {a.noticeBody && (
+                <p>
+                  {a.noticeBody} {c.office} {site.officePhone || site.phone}.
+                </p>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Dates */}
       <section aria-labelledby="dates" className="border-y border-line bg-surface py-16">
         <div className="container-page">
           <SectionHeading id="dates" title={c.dates} />
-          {/* Same ruled, date-blocked list as the home page news and notices. */}
+          {/* Chronological timeline: completed dates muted, the next one highlighted. */}
           <ol className="mt-8 grid border-t-2 border-navy-800 sm:grid-cols-2 lg:grid-cols-4 dark:border-navy-300">
-            {a.dates.map((d) => (
-              <li key={d.label} className="lift flex gap-4 border-b border-line py-4 hover:bg-paper sm:pr-4">
-                <DateBlock iso={d.date} />
-                <p className="self-center text-sm font-medium text-heading">{d.label}</p>
-              </li>
-            ))}
+            {dates.map((d) => {
+              const past = d.date < today;
+              const isNext = d === nextDate;
+              return (
+                <li key={d.label} className={`lift flex gap-4 border-b border-line py-4 hover:bg-paper sm:pr-4 ${isNext ? "border-b-2 border-b-leaf-600 dark:border-b-accent" : ""}`}>
+                  <DateBlock iso={d.date} className={past ? "opacity-70" : undefined} />
+                  <div className="self-center">
+                    <p className={`text-sm font-medium ${past ? "text-muted" : "text-heading"}`}>{d.label}</p>
+                    {(isNext || past) && <p className={`eyebrow mt-1 ${isNext ? "text-leaf-600 dark:text-accent" : "text-muted"}`}>{isNext ? c.next : c.done}</p>}
+                  </div>
+                </li>
+              );
+            })}
           </ol>
         </div>
       </section>
@@ -171,30 +238,44 @@ export default async function AdmissionPage() {
       <section id="eligibility" aria-labelledby="elig" className="scroll-mt-24 py-16">
         <div className="container-page">
           <SectionHeading id="elig" title={c.elig} description={site.demoNote ? c.eligSample : undefined} />
-          <div className="mt-8 overflow-x-auto border border-line bg-surface" tabIndex={0} aria-label={c.eligLabel}>
-            <table className="w-full min-w-[44rem] text-left text-sm">
-              <thead className="bg-brand text-xs text-white uppercase">
+          {/* Table on wider screens; one ruled entry per class on phones. */}
+          <div className="mt-8 hidden md:block">
+            <table className="w-full text-left">
+              <caption className="sr-only">{c.eligLabel}</caption>
+              <thead className="border-y-2 border-navy-800 dark:border-navy-300">
                 <tr>
-                  <th scope="col" className="px-4 py-3 font-semibold">{c.cls}</th>
-                  <th scope="col" className="px-4 py-3 font-semibold">{c.req}</th>
-                  <th scope="col" className="px-4 py-3 font-semibold">{c.sel}</th>
-                  <th scope="col" className="px-4 py-3 text-right font-semibold">{c.seats}</th>
+                  <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.cls}</th>
+                  <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.req}</th>
+                  <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.sel}</th>
+                  <th scope="col" className="eyebrow py-3 text-right text-subheading">{c.seats}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-line">
+              <tbody className="divide-y divide-line border-b border-line">
                 {a.eligibility.map((e) => (
-                  <tr key={e.cls}>
-                    <th scope="row" className="px-4 py-3 font-semibold whitespace-nowrap text-heading">
-                      {e.cls}
-                    </th>
-                    <td className="px-4 py-3 text-ink">{e.requirement}</td>
-                    <td className="px-4 py-3 text-muted">{e.selection}</td>
-                    <td className="px-4 py-3 text-right tabular-nums">{n(e.seats)}</td>
+                  <tr key={e.cls} className="hover:bg-surface">
+                    <th scope="row" className="py-4 pr-4 font-serif text-lg font-semibold whitespace-nowrap text-heading">{e.cls}</th>
+                    <td className="py-4 pr-4 text-ink">{e.requirement}</td>
+                    <td className="py-4 pr-4 text-muted">{e.selection}</td>
+                    <td className="py-4 text-right font-serif text-xl font-semibold text-leaf-600 tabular-nums dark:text-accent">{n(e.seats)}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+          <ul className="mt-8 border-t-2 border-navy-800 md:hidden dark:border-navy-300">
+            {a.eligibility.map((e) => (
+              <li key={e.cls} className="border-b border-line py-4">
+                <p className="flex items-baseline justify-between gap-4">
+                  <span className="font-serif text-lg font-semibold text-heading">{e.cls}</span>
+                  <span className="text-sm text-muted">
+                    {c.seats}: <span className="font-serif text-lg font-semibold text-leaf-600 dark:text-accent">{n(e.seats)}</span>
+                  </span>
+                </p>
+                <p className="mt-1 text-ink">{e.requirement}</p>
+                <p className="mt-1 text-sm text-muted">{c.sel}: {e.selection}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -215,25 +296,27 @@ export default async function AdmissionPage() {
           </div>
           <div>
             <SectionHeading title={c.docs} />
-            <Card className="mt-8 p-6">
-              <ul className="space-y-3">
-                {a.documents.map((d) => (
-                  <li key={d} className="flex gap-3 text-base text-ink">
-                    <CheckCircle2 aria-hidden className="mt-0.5 size-5 shrink-0 text-accent" />
-                    {d}
-                  </li>
-                ))}
-              </ul>
-              {a.circularFile && <a
-                href={a.circularFile}
-                target="_blank"
-                rel="noopener"
-                className="mt-6 flex items-center gap-3 border border-line bg-paper p-3 text-sm font-semibold text-heading hover:border-line-strong"
-              >
-                <FileText aria-hidden className="size-5 text-danger" />
-                {c.circular(admissionYear)}
-              </a>}
-            </Card>
+            <div className="mt-8 space-y-6">
+              {docGroups.filter(([, list]) => list.length > 0).map(([label, list]) => (
+                <div key={label}>
+                  <h3 className="eyebrow text-subheading">{label}</h3>
+                  <ul className="mt-2 border-t-2 border-navy-800 dark:border-navy-300">
+                    {list.map((d) => (
+                      <li key={d} className="flex gap-3 border-b border-line py-3 text-ink">
+                        <CheckCircle2 aria-hidden className="mt-0.5 size-5 shrink-0 text-leaf-600 dark:text-accent" />
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+              {a.circularFile && (
+                <a href={a.circularFile} target="_blank" rel="noopener" download className={buttonClasses("outline", "sm")}>
+                  <FileText aria-hidden className="size-4" />
+                  {c.circular(admissionYear)}
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </section>
@@ -245,26 +328,24 @@ export default async function AdmissionPage() {
             <SectionHeading id="fees-h" title={c.fees} description={c.feesText} />
             {site.demoNote && <SampleTag />}
           </div>
-          <div className="mt-8 overflow-x-auto border border-line bg-surface" tabIndex={0} aria-label={c.feeLabel}>
-            <table className="w-full min-w-[36rem] text-left text-sm">
+          <div className="mt-8 overflow-x-auto" tabIndex={0} aria-label={c.feeLabel}>
+            <table className="w-full min-w-[36rem] text-left">
               <caption className="sr-only">{c.feeCaption(admissionYear)}</caption>
-              <thead className="border-b border-line bg-paper text-xs text-muted uppercase">
+              <thead className="border-y-2 border-navy-800 dark:border-navy-300">
                 <tr>
-                  <th scope="col" className="px-4 py-3 font-semibold">{c.item}</th>
-                  <th scope="col" className="px-4 py-3 text-right font-semibold">{c.primary}</th>
-                  <th scope="col" className="px-4 py-3 text-right font-semibold">{c.secondary}</th>
-                  <th scope="col" className="px-4 py-3 text-right font-semibold">{c.higher}</th>
+                  <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.item}</th>
+                  {[c.primary, c.secondary, c.higher].map((h) => (
+                    <th key={h} scope="col" className="w-[18%] py-3 pr-4 text-right font-serif text-lg font-semibold text-heading last:pr-0">{h}</th>
+                  ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-line">
+              <tbody className="divide-y divide-line border-b border-line tabular-nums">
                 {a.fees.map((f) => (
-                  <tr key={f.item}>
-                    <th scope="row" className="px-4 py-3 font-medium text-heading">
-                      {f.item}
-                    </th>
-                    <td className="px-4 py-3 text-right tabular-nums">{n(f.primary)}</td>
-                    <td className="px-4 py-3 text-right tabular-nums">{n(f.secondary)}</td>
-                    <td className="px-4 py-3 text-right tabular-nums">{n(f.higher)}</td>
+                  <tr key={f.item} className="hover:bg-surface">
+                    <th scope="row" className="py-3.5 pr-4 font-medium text-heading">{f.item}</th>
+                    <td className="py-3.5 pr-4 text-right text-ink">{taka(f.primary)}</td>
+                    <td className="bg-tint/40 py-3.5 pr-4 text-right text-ink">{taka(f.secondary)}</td>
+                    <td className="py-3.5 text-right text-ink">{taka(f.higher)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -283,7 +364,7 @@ export default async function AdmissionPage() {
               title={c.applyTitle}
               description={c.applyText}
             />
-            <div className="mt-8 border border-line bg-paper p-5 sm:p-8">
+            <div className="mt-8 border-t-4 border-leaf-600 bg-paper p-5 sm:p-8 dark:border-accent">
               <AdmissionForm classOptions={a.classOptions} open={a.open} />
             </div>
           </div>

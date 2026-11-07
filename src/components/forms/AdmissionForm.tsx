@@ -76,7 +76,7 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
   const T = (v: string) => (lang === "bn" ? term(v) : v);
   const [values, setValues] = useState<Values>(empty);
   const [errors, setErrors] = useState<Errors>({});
-  const [status, setStatus] = useState<"idle" | "submitting" | "done">("idle");
+  const [status, setStatus] = useState<"idle" | "review" | "submitting" | "done">("idle");
   const [reference, setReference] = useState("");
   const [formError, setFormError] = useState("");
   const reduce = useReducedMotion();
@@ -98,12 +98,72 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
       document.getElementById(`f-${first}`)?.focus();
       return;
     }
-    setStatus("submitting");
     setFormError("");
+    setStatus("review");
+    requestAnimationFrame(() => document.getElementById("admission-review")?.focus());
+  }
+
+  async function confirm() {
+    setStatus("submitting");
     // Frontend-only: nothing is sent to a server.
     await new Promise((r) => setTimeout(r, 900));
     setReference(`WSC-27-${Math.floor(100000 + Math.random() * 900000)}`);
     setStatus("done");
+  }
+
+  const shiftLabel = a.shifts[["Morning", "Day", "No preference"].indexOf(values.shift)] ?? values.shift;
+  const rows: [string, string][] = [
+    [a.studentName, values.studentName],
+    [a.dob, values.dob],
+    [a.gender, a.genders[["Male", "Female"].indexOf(values.gender)] ?? values.gender],
+    [a.classApplied, T(values.classApplied)],
+    [a.shift, shiftLabel],
+    [a.previousSchool, values.previousSchool],
+    [a.guardianName, values.guardianName],
+    [a.relation, a.relations[["Father", "Mother", "Legal guardian"].indexOf(values.relation)] ?? values.relation],
+    [a.phone, values.phone],
+    [a.email, values.email],
+    [a.address, values.address],
+    [a.notes, values.notes],
+  ];
+  const summary = (
+    <dl className="mt-6 grid border-t-2 border-navy-800 sm:grid-cols-2 dark:border-navy-300">
+      {rows.map(([k, v]) => (
+        <div key={k} className="border-b border-line py-3 sm:odd:pr-6 sm:even:pl-6">
+          <dt className="text-xs text-muted">{k}</dt>
+          <dd className={cn("mt-0.5 font-medium break-words", v ? "text-heading" : "text-muted italic")}>{v || a.none}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+  const print = () => {
+    document.body.dataset.printing = "admission";
+    const done = () => {
+      delete document.body.dataset.printing;
+      window.removeEventListener("afterprint", done);
+    };
+    window.addEventListener("afterprint", done);
+    window.print();
+  };
+
+  if (status === "review" || status === "submitting") {
+    return (
+      <div id="admission-review" tabIndex={-1} className="border-t-4 border-leaf-600 bg-surface p-6 outline-none sm:p-8 dark:border-accent">
+        <p className="eyebrow text-leaf-600 dark:text-accent">{a.review}</p>
+        <h3 className="mt-2 font-serif text-2xl font-semibold text-heading">{a.reviewTitle}</h3>
+        <p className="mt-1 text-muted">{a.reviewText}</p>
+        {summary}
+        <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-between">
+          <button type="button" onClick={() => setStatus("idle")} className={buttonClasses("outline")} disabled={status === "submitting"}>
+            {a.edit}
+          </button>
+          <button type="button" onClick={confirm} className={buttonClasses("secondary")} disabled={status === "submitting"}>
+            {status === "submitting" && <Loader2 aria-hidden className="size-4 animate-spin" />}
+            {status === "submitting" ? t.form.submitting : a.confirm}
+          </button>
+        </div>
+      </div>
+    );
   }
 
   if (status === "done") {
@@ -112,47 +172,39 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
         role="status"
         initial={reduce ? false : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="border border-line-strong bg-surface p-6 sm:p-8"
+        id="admission-summary"
+        className="border-t-4 border-leaf-600 bg-surface p-6 sm:p-8 dark:border-accent"
       >
-        <CheckCircle2 aria-hidden className="size-10 text-accent" />
-        <h3 className="mt-4 font-serif text-2xl font-semibold text-heading">{a.doneTitle}</h3>
+        <p className="eyebrow flex items-center gap-2 text-leaf-600 dark:text-accent">
+          <CheckCircle2 aria-hidden className="size-4" />
+          {a.summaryTitle}
+        </p>
+        <h3 className="mt-2 font-serif text-2xl font-semibold text-heading">{a.doneTitle}</h3>
         <p className="mt-2 text-muted">
           {a.doneText}
         </p>
-        <dl className="mt-6 grid gap-x-8 gap-y-3 bg-paper p-5 text-sm sm:grid-cols-2">
-          <div>
-            <dt className="text-muted">{a.reference}</dt>
-            <dd className="font-mono font-semibold text-heading">{reference}</dd>
-          </div>
-          <div>
-            <dt className="text-muted">{a.studentLabel}</dt>
-            <dd className="font-semibold text-heading">{values.studentName}</dd>
-          </div>
-          <div>
-            <dt className="text-muted">{a.classLabel}</dt>
-            <dd className="font-semibold text-heading">
-              {T(values.classApplied)} · {a.shifts[["Morning", "Day", "No preference"].indexOf(values.shift)] ?? values.shift}
-            </dd>
-          </div>
-          <div>
-            <dt className="text-muted">{a.guardianContact}</dt>
-            <dd className="font-semibold text-heading">{values.phone}</dd>
-          </div>
-        </dl>
+        <p className="mt-5 text-sm">
+          <span className="text-muted">{a.reference}: </span>
+          <span className="font-mono font-semibold text-heading">{reference}</span>
+          <span className="text-muted"> · {a.dateLabel}: </span>
+          <span className="font-semibold text-heading">{new Date().toLocaleDateString(lang === "bn" ? "bn-BD" : "en-GB", { day: "numeric", month: "short", year: "numeric" })}</span>
+        </p>
+        {summary}
         <p className="mt-5 text-sm text-muted">
           {a.nextStep}
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <button type="button" onClick={() => window.print()} className={buttonClasses("outline")}>
+          <button type="button" onClick={print} className={cn(buttonClasses("outline"), "print-hide")}>
             <Printer aria-hidden className="size-4" /> {a.printSummary}
           </button>
           <button
             type="button"
             onClick={() => {
               setValues(empty);
+              setErrors({});
               setStatus("idle");
             }}
-            className={buttonClasses("ghost")}
+            className={cn(buttonClasses("ghost"), "print-hide")}
           >
             <RotateCcw aria-hidden className="size-4" /> {a.newApplication}
           </button>
@@ -162,6 +214,8 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
   }
 
   const errorCount = Object.values(errors).filter(Boolean).length;
+  // Numbered group headings with a ruled line, as in the rest of the site.
+  const legend = "mb-5 w-full border-b-2 border-navy-800 pb-2 font-serif text-xl font-semibold text-heading dark:border-navy-300";
 
   return (
     !open ? (
@@ -170,13 +224,13 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
       </div>
     ) : <form noValidate onSubmit={onSubmit} className="space-y-8">
       {errorCount > 0 && (
-        <p role="alert" className="border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-danger">
-          {t.form.fixFields}
+        <p role="alert" className="border-l-4 border-signal-600 bg-signal-50 px-4 py-3 text-sm text-danger">
+          {t.form.fixFields} ({lang === "bn" ? errorCount.toLocaleString("bn-BD") : errorCount})
         </p>
       )}
 
       <fieldset>
-        <legend className="mb-4 font-serif text-lg font-semibold text-heading">{a.student}</legend>
+        <legend className={legend}>{a.student}</legend>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label={a.studentName} name="studentName" required error={errors.studentName} className="sm:col-span-2">
             {({ id, describedBy, invalid }) => (
@@ -235,7 +289,7 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
       </fieldset>
 
       <fieldset>
-        <legend className="mb-4 font-serif text-lg font-semibold text-heading">{a.guardian}</legend>
+        <legend className={legend}>{a.guardian}</legend>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label={a.guardianName} name="guardianName" required error={errors.guardianName}>
             {({ id, describedBy, invalid }) => (
@@ -267,13 +321,15 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
               <TextInput id={id} autoComplete="street-address" value={values.address} onChange={set("address")} aria-describedby={describedBy} invalid={invalid} />
             )}
           </Field>
-          <Field label={a.notes} name="notes" className="sm:col-span-2">
-            {({ id, describedBy }) => <TextArea id={id} rows={3} value={values.notes} onChange={set("notes")} aria-describedby={describedBy} />}
-          </Field>
         </div>
       </fieldset>
 
-      <div>
+      <fieldset>
+        <legend className={legend}>{a.additional}</legend>
+        <Field label={a.notes} name="notes">
+          {({ id, describedBy }) => <TextArea id={id} rows={3} value={values.notes} onChange={set("notes")} aria-describedby={describedBy} />}
+        </Field>
+      <div className="mt-5">
         <label className={cn("flex items-start gap-3 text-sm", errors.consent ? "text-danger" : "text-ink")}>
           <input
             id="f-consent"
@@ -292,6 +348,7 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
           </p>
         )}
       </div>
+      </fieldset>
 
       {formError && (
         <p role="alert" className="border border-signal-100 bg-signal-50 px-4 py-3 text-sm text-danger">
@@ -300,9 +357,8 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
       )}
       <div className="flex flex-col-reverse gap-3 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs text-muted">{a.requiredNote}</p>
-        <button type="submit" disabled={status === "submitting"} className={buttonClasses("secondary")}>
-          {status === "submitting" && <Loader2 aria-hidden className="size-4 animate-spin" />}
-          {status === "submitting" ? t.form.submitting : a.submit}
+        <button type="submit" className={buttonClasses("secondary")}>
+          {a.review}
         </button>
       </div>
     </form>
