@@ -2,15 +2,13 @@ import { DefaultAvatar } from "@/components/ui/DefaultAvatar";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { images } from "@/data/images";
-import { ChartNoAxesColumn, Compass, Eye, Heart, ShieldCheck, Users } from "lucide-react";
+import { Compass, Eye } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { ButtonLink, Card, DemoNote, SectionHeading } from "@/components/ui/primitives";
-import { Picture } from "@/components/ui/Picture";
-import { TeacherAvatar } from "@/components/shared/cards";
+import { ButtonLink, DemoNote, SectionHeading } from "@/components/ui/primitives";
 import { getFacilities, getPeople, getSetting, getSite } from "@/content/site-content";
 import type { PrincipalContent } from "@/components/home/types";
 import { getI18n } from "@/i18n/server";
-import { toBnDigits } from "@/lib/utils";
+import { cn, toBnDigits } from "@/lib/utils";
 
 const copy = {
   en: {
@@ -112,8 +110,6 @@ function splitLead(text: string, bangla: boolean): [string, string] {
   return [m[1] + end, rest];
 }
 
-const valueIcons = [ShieldCheck, Users, ChartNoAxesColumn, Heart];
-
 /** Positions in the circle cluster: top-left, top-centre (front), right, bottom-centre (behind). */
 const CIRCLE_POS = [
   "left-0 top-[15%] z-10 w-[45%] aspect-square",
@@ -141,6 +137,7 @@ export default async function AboutPage() {
   const values = mission.values;
   const cap = lang === "bn" ? "" : "uppercase tracking-[0.16em]";
   const staff = teachers.length;
+  const departments = [...teachers.reduce((m, t) => m.set(t.department, (m.get(t.department) ?? 0) + 1), new Map<string, number>())];
   return (
     <>
       <PageHeader
@@ -149,35 +146,33 @@ export default async function AboutPage() {
         description={c.since(site.tagline, n(site.established))}
       />
 
-      {/* Overview */}
-      <section aria-labelledby="overview" className="py-16 sm:py-20">
-        <div className="container-page grid items-center gap-12 lg:grid-cols-2">
-          <div>
+      {/* Overview: large photograph bleeding to the left edge, text on the page grid, figures on a ruled strip. */}
+      <section aria-labelledby="overview" className="border-b border-line">
+        <div className="grid lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)]">
+          <div className="relative aspect-[4/3] bg-paper-dark sm:aspect-[16/9] lg:aspect-auto lg:min-h-[32rem]">
+            {about.overviewImage && (
+              <Image src={about.overviewImage} alt={c.photoAlt(lang === "bn" ? site.nameBn : site.name)} fill sizes="(min-width: 1024px) 55vw, 100vw" className="object-cover" />
+            )}
+          </div>
+          <div className="flex flex-col justify-center px-4 py-12 sm:px-6 lg:py-16 lg:pr-[max(2rem,calc((100vw-80rem)/2+2rem))] lg:pl-12">
             <SectionHeading id="overview" title={c.overview} />
-            <div className="mt-5 space-y-4 text-base leading-relaxed text-muted">
+            <div className="mt-5 space-y-4 leading-relaxed text-ink">
               {about.overview.map((p) => (
                 <p key={p}>{p}</p>
               ))}
             </div>
-            <dl className="mt-8 grid grid-cols-3 gap-4 border-t border-line pt-6">
-              <div>
-                <dt className="text-xs text-muted">{c.established}</dt>
-                <dd className="font-serif text-2xl font-semibold text-heading">{n(site.established)}</dd>
-              </div>
-              <div>
-                <dt className="text-xs text-muted">{c.classes}</dt>
-                <dd className="font-serif text-2xl font-semibold text-heading">{c.classesVal}</dd>
-              </div>
-              <div>
-                <dt className="text-xs text-muted">{c.faculty}</dt>
-                <dd className="font-serif text-2xl font-semibold text-heading">{n(staff)}</dd>
-              </div>
+            <dl className="mt-8 grid grid-cols-3 border-t-2 border-navy-800 dark:border-navy-300">
+              {[
+                [c.established, n(site.established)],
+                [c.classes, c.classesVal],
+                [c.faculty, n(staff)],
+              ].map(([k, v]) => (
+                <div key={k} className="pt-4 pr-3 not-first:border-l not-first:border-line not-first:pl-4">
+                  <dd className="font-serif text-3xl font-semibold text-heading">{v}</dd>
+                  <dt className="mt-1 text-sm text-muted">{k}</dt>
+                </div>
+              ))}
             </dl>
-          </div>
-          <div>
-            {about.overviewImage && (
-              <Picture image={{ src: about.overviewImage, alt: c.photoAlt(lang === "bn" ? site.nameBn : site.name), width: 1600, height: 1000 }}  sizes="(min-width: 1024px) 50vw, 100vw" />
-            )}
           </div>
         </div>
       </section>
@@ -219,16 +214,12 @@ export default async function AboutPage() {
           </div>
 
           <h3 className={`mt-14 text-xs font-bold text-subheading ${cap}`}>{c.valuesK}</h3>
-          <ul className="mt-5 grid border border-line sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-5 grid border-t-2 border-b border-t-navy-800 border-b-line sm:grid-cols-2 lg:grid-cols-4 dark:border-t-navy-300">
             {values.map((v, i) => {
-              const Icon = valueIcons[i % valueIcons.length];
               return (
-                <li key={v.title} className="lift border-line p-7 hover:bg-surface not-first:border-t sm:[&:nth-child(2)]:border-t-0 sm:[&:nth-child(even)]:border-l lg:not-first:border-t-0 lg:not-first:border-l">
-                  <div className="flex items-start justify-between">
-                    <Icon aria-hidden className="size-7 text-heading" />
-                    <span aria-hidden className="font-serif text-3xl font-semibold text-leaf-600 dark:text-accent">{n(String(i + 1).padStart(2, "0"))}</span>
-                  </div>
-                  <h4 className="mt-5 text-xl font-bold text-heading">{v.title}</h4>
+                <li key={v.title} className="lift border-line px-1 py-7 hover:bg-paper sm:px-7 not-first:border-t sm:[&:nth-child(2)]:border-t-0 sm:[&:nth-child(even)]:border-l lg:not-first:border-t-0 lg:not-first:border-l">
+                  <span aria-hidden className="font-serif text-3xl font-semibold text-leaf-600 dark:text-accent">{n(String(i + 1).padStart(2, "0"))}</span>
+                  <h4 className="mt-4 font-serif text-xl font-semibold text-heading">{v.title}</h4>
                   <p className="mt-3 leading-relaxed text-muted">{v.text}</p>
                 </li>
               );
@@ -251,19 +242,19 @@ export default async function AboutPage() {
               {circlePhotos.map((ph, i) => (
                 <li key={ph.src} className={`absolute overflow-hidden rounded-full border-[6px] border-surface bg-paper-dark ${CIRCLE_POS[i]}`}>
                   <Image src={ph.src} alt={ph.alt} fill sizes="(min-width: 1024px) 220px, 45vw" className="object-cover" />
-                  <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/85 to-transparent pt-8 pb-3 text-center text-sm font-semibold text-white sm:text-base">
+                  <span className="absolute inset-x-0 bottom-0 bg-navy-950/85 pt-1.5 pb-3 text-center text-sm font-semibold text-white sm:text-base">
                     {c.circles[i]}
                   </span>
                 </li>
               ))}
             </ul>
           </div>
-          <ol className="relative border-l-2 border-line-strong pl-6">
+          {/* Timeline: year in the margin, ruled entries, a burgundy marker on the spine. */}
+          <ol className="border-t-2 border-navy-800 dark:border-navy-300">
             {milestones.map((m) => (
-              <li key={m.year + m.text} className="relative pb-7 last:pb-0">
-                <span aria-hidden className="absolute top-1.5 -left-[1.95rem] size-3.5 rounded-full border-2 border-white bg-leaf-600 ring-2 ring-line" />
-                <p className="font-serif text-lg font-semibold text-heading">{m.year}</p>
-                <p className="mt-0.5 text-muted">{m.text}</p>
+              <li key={m.year + m.text} className="grid grid-cols-[5.5rem_1fr] gap-x-6 border-b border-line py-5 sm:grid-cols-[7rem_1fr]">
+                <p className="font-serif text-3xl leading-none font-semibold text-leaf-600 tabular-nums sm:text-4xl dark:text-accent">{lang === "bn" ? toBnDigits(m.year) : m.year}</p>
+                <p className="self-center leading-relaxed text-ink">{m.text}</p>
               </li>
             ))}
           </ol>
@@ -271,11 +262,11 @@ export default async function AboutPage() {
       </section>
 
       {/* Principal: message on the left, photo on the right */}
-      <section id="principal" aria-labelledby="principal-title" className="scroll-mt-24 bg-navy-950 py-16 text-white sm:py-20">
+      <section id="principal" aria-labelledby="principal-title" className="scroll-mt-24 border-t-4 border-leaf-600 bg-navy-950 py-16 text-white sm:py-20">
         <div className="container-page grid items-center gap-10 lg:grid-cols-[1.4fr_0.6fr] lg:gap-16">
           <div>
             <SectionHeading id="principal-title" tone="dark" title={c.principal} />
-            <div className="mt-6 space-y-4 leading-relaxed text-navy-100">
+            <div className="mt-6 space-y-4 border-l-2 border-leaf-500 pl-5 leading-relaxed text-navy-100">
               {principal.message.map((p) => (
                 <p key={p}>{p}</p>
               ))}
@@ -290,8 +281,8 @@ export default async function AboutPage() {
               <DefaultAvatar gender={principal.gender === "male" ? "male" : "female"} className="size-48 sm:size-56" />
             )}
             <div>
-              <p className="text-xl font-semibold">{principal.name}</p>
-              <p className="text-sm text-navy-200">{principal.title}</p>
+              <p className="font-serif text-2xl font-semibold">{principal.name}</p>
+              <p className="eyebrow mt-1 text-on-navy-accent">{principal.title}</p>
             </div>
           </div>
         </div>
@@ -301,16 +292,17 @@ export default async function AboutPage() {
       <section aria-labelledby="campus" className="py-16 sm:py-20">
         <div className="container-page">
           <SectionHeading id="campus" title={c.campus} />
-          <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {facilities.map((f) => (
-              <li key={f.title}>
-                <Card className="h-full overflow-hidden">
-                  {f.image && <Picture image={{ src: f.image, alt: f.imageAlt, width: 1600, height: 1000 }} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" />}
-                  <div className="p-5">
-                    <h3 className="font-semibold text-heading">{f.title}</h3>
-                    <p className="mt-1 text-sm text-muted">{f.text}</p>
-                  </div>
-                </Card>
+          {/* Asymmetric grid: the first facility leads at double size; text sits under each photo. */}
+          <ul className="mt-8 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {facilities.map((f, i) => (
+              <li key={f.title} className={i === 0 ? "sm:col-span-2 lg:row-span-2" : i >= 3 ? "sm:col-span-2" : ""}>
+                <div className={cn("relative bg-paper-dark", i === 0 ? "aspect-[4/3] lg:aspect-[5/4]" : i >= 3 ? "aspect-[16/7]" : "aspect-[4/3]")}>
+                  {f.image && <Image src={f.image} alt={f.imageAlt} fill sizes={i === 0 ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"} className="object-cover" />}
+                </div>
+                <div className="mt-4 border-l-2 border-leaf-600 pl-4 dark:border-accent">
+                  <h3 className={cn("font-serif font-semibold text-heading", i === 0 ? "text-2xl" : "text-lg")}>{f.title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-muted">{f.text}</p>
+                </div>
               </li>
             ))}
           </ul>
@@ -322,22 +314,22 @@ export default async function AboutPage() {
         <div className="container-page grid gap-12 lg:grid-cols-2">
           <div className="min-w-0">
             <SectionHeading id="committee-title" title={c.committee} description={site.demoNote ? c.committeeSample : undefined} />
-            <div className="mt-6 overflow-x-auto border border-line">
-              <table className="w-full min-w-[28rem] text-left text-sm">
-                <thead className="bg-paper text-xs text-muted uppercase">
+            <div className="mt-6 overflow-x-auto">
+              <table className="w-full min-w-[26rem] text-left">
+                <thead className="border-y-2 border-navy-800 dark:border-navy-300">
                   <tr>
-                    <th scope="col" className="px-4 py-3 font-semibold">{c.name}</th>
-                    <th scope="col" className="px-4 py-3 font-semibold">{c.position}</th>
+                    <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.name}</th>
+                    <th scope="col" className="eyebrow py-3 text-subheading">{c.position}</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-line">
+                <tbody className="divide-y divide-line border-b border-line">
                   {committee.map((c) => (
-                    <tr key={c.name + c.role}>
-                      <td className="px-4 py-3">
-                        <span className="font-semibold text-heading">{c.name}</span>
-                        <span className="block text-xs text-muted">{c.note}</span>
+                    <tr key={c.name + c.role} className="hover:bg-paper">
+                      <td className="py-4 pr-4">
+                        <span className="block font-serif text-lg font-semibold text-heading">{c.name}</span>
+                        <span className="block text-sm text-muted">{c.note}</span>
                       </td>
-                      <td className="px-4 py-3 text-ink">{c.role}</td>
+                      <td className="py-4 align-top font-medium whitespace-nowrap text-leaf-600 dark:text-accent">{c.role}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -347,10 +339,12 @@ export default async function AboutPage() {
           <div>
             <SectionHeading title={c.staff} />
             <p className="mt-4 leading-relaxed text-muted">{about.staffText}</p>
-            <ul className="mt-6 flex -space-x-3" aria-label={c.someTeachers}>
-              {teachers.slice(0, 5).map((t) => (
-                <li key={t.id} title={t.name}>
-                  <TeacherAvatar teacher={t} />
+            {/* Departments with the number of people listed in the directory. */}
+            <ul className="mt-6 grid grid-cols-2 border-t-2 border-navy-800 sm:grid-cols-3 dark:border-navy-300">
+              {departments.map(([d, count]) => (
+                <li key={d} className="flex items-baseline justify-between gap-3 border-b border-line py-3 pr-4">
+                  <span className="text-sm text-ink">{d}</span>
+                  <span className="font-serif text-lg font-semibold text-heading tabular-nums">{n(count)}</span>
                 </li>
               ))}
             </ul>
