@@ -296,3 +296,22 @@ html[lang="bn"] [lang="en"]:not(.font-serif) {
 @media (prefers-reduced-motion: reduce) {
   .lift:hover { translate: none; }
 }
+
+/* Small uppercase label above a heading or block. Bangla is not letter-spaced: it breaks conjuncts. */
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+:lang(bn) .eyebrow,
+.eyebrow:lang(bn) {
+  letter-spacing: 0;
+  font-size: 0.85rem;
+}
+
+/* Bangla has no true italic; a synthesised slant looks broken, so keep it upright. */
+:lang(bn) .italic,
+.italic:lang(bn) {
+  font-style: normal;
+}

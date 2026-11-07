@@ -18,14 +18,11 @@ export function DateBlock({ iso, className }: { iso: string; className?: string 
   return (
     <time
       dateTime={iso}
-      className={cn(
-        "flex w-14 shrink-0 flex-col items-center overflow-hidden rounded-md border border-line bg-surface text-center",
-        className,
-      )}
+      className={cn("flex w-16 shrink-0 flex-col items-center border-r border-line pr-3 text-center", className)}
     >
-      <span className="w-full bg-brand py-0.5 text-xs font-semibold tracking-wider text-white uppercase">{month}</span>
-      <span className="pt-1 font-serif text-xl leading-none font-semibold text-heading">{day}</span>
-      <span className="pb-1 text-xs text-muted">{year}</span>
+      <span className="eyebrow text-leaf-600 dark:text-accent">{month}</span>
+      <span className="mt-1 font-serif text-[1.7rem] leading-none font-semibold text-heading">{day}</span>
+      <span className="mt-1 text-xs text-muted">{year}</span>
     </time>
   );
 }
@@ -136,11 +133,11 @@ export function TeacherCard({ teacher, tone, size = "md" }: { teacher: Teacher; 
       className={cn(
         "flex h-full flex-col items-center rounded-[var(--radius-card)] bg-surface text-center shadow-[var(--shadow-card)]",
         sm ? "p-4" : "p-6",
-        tone ? cn("border-2", sm ? "border-t-4" : "border-t-[6px]", tone.card) : "border border-line",
+        tone ? cn("border border-line border-t-[3px]", tone.card) : "border border-line",
       )}
     >
       <TeacherAvatar teacher={teacher} size={sm ? "md" : "lg"} ring={tone?.ring} />
-      <h3 className={cn("font-semibold text-heading", sm ? "mt-3 text-sm" : "mt-4")}>{teacher.name}</h3>
+      <h3 className={cn("font-serif font-semibold text-heading", sm ? "mt-3 text-base" : "mt-4 text-lg")}>{teacher.name}</h3>
       <p className={cn("font-semibold", sm ? "mt-1 text-xs" : "mt-2 text-sm", tone ? tone.text : "text-accent")}>{teacher.designation}</p>
       <p className={cn("text-muted", sm ? "mt-0.5 line-clamp-1 text-xs" : "mt-1 text-sm")}>{teacher.subjects.join(", ")}</p>
       {!sm && (

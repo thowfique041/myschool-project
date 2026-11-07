@@ -20,7 +20,7 @@ export type FooterContent = {
 function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
   return (
     <div>
-      <h2 className="text-sm font-semibold tracking-wide text-white uppercase">{title}</h2>
+      <h2 className="eyebrow text-on-navy-accent">{title}</h2>
       <ul className="mt-4 space-y-2.5">
         {links.map((l) => (
           <li key={l.href + l.label}>
@@ -53,10 +53,10 @@ export async function Footer({ site, footer, year }: { site: SiteInfo; footer: F
   const { t, lang } = await getI18n();
   const n = (v: number) => (lang === "bn" ? toBnDigits(v) : String(v));
   return (
-    <footer className="relative isolate bg-navy-950 text-navy-100 [clip-path:inset(0)]">
+    <footer className="relative isolate border-t-4 border-leaf-600 bg-navy-950 text-navy-100 [clip-path:inset(0)]">
       {/* Fixed photo clipped to the footer: it stays still while the footer scrolls over it. */}
       <div aria-hidden className="fixed inset-0 -z-20 bg-cover bg-center" style={{ backgroundImage: "url(/images/footer-campus.jpg)" }} />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-navy-950/80" />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-navy-950/90" />
       <div className="container-page grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <Logo tone="dark" name={lang === "bn" ? site.nameBn : site.name} nameBn={lang === "bn" ? `স্থাপিত ${String(site.established).replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[Number(d)])}` : `Established ${site.established}`} src={site.logo} />
@@ -110,7 +110,14 @@ export async function Footer({ site, footer, year }: { site: SiteInfo; footer: F
           <p>
             © {n(site.established)}–{n(year)} {lang === "bn" ? site.nameBn : site.name}. {footer.copyright}
           </p>
-          <p style={{ lineHeight: 1.5 }}>{lang === "bn" ? site.taglineBn : site.tagline}</p>
+          <p className="flex flex-wrap gap-x-4 gap-y-1" style={{ lineHeight: 1.5 }}>
+            {site.eiin && site.eiin !== "000000" && (
+              <span>
+                {t.common.eiin} {lang === "bn" ? toBnDigits(site.eiin) : site.eiin}
+              </span>
+            )}
+            <span className="font-serif italic">{lang === "bn" ? site.taglineBn : site.tagline}</span>
+          </p>
         </div>
       </div>
     </footer>

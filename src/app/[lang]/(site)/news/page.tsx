@@ -53,23 +53,21 @@ export default async function NewsPage() {
               )}
             </div>
           </article>
-          <aside aria-labelledby="upcoming" className="rounded-lg border border-line bg-navy-900 p-6 text-white">
+          <aside aria-labelledby="upcoming" className="border-t-4 border-leaf-600 bg-navy-900 p-6 text-white">
             <h2 id="upcoming" className="flex items-center gap-2 font-semibold">
-              <CalendarDays aria-hidden className="size-5 text-navy-200" /> {t.news.upcoming}
+              <CalendarDays aria-hidden className="size-5 text-on-navy-accent" /> {t.news.upcoming}
             </h2>
             <ul className="mt-4 space-y-4">
               {events.length === 0 && <li className="text-sm text-navy-200">{t.news.noUpcoming}</li>}
               {events.map((e) => {
                 const d = datePartsL(e.date, lang);
                 return (
-                  <li key={e.date + e.title} className="flex gap-3">
-                    <span className="flex w-12 shrink-0 flex-col items-center rounded-md bg-white/10 py-1 text-center">
-                      <span className="text-xs text-navy-200 uppercase">{d.month}</span>
-                      <span className="font-serif text-lg leading-none font-semibold">{d.day}</span>
-                    </span>
-                    <span>
-                      <span className="block text-sm font-semibold">{e.title}</span>
-                    </span>
+                  <li key={e.date + e.title} className="flex gap-4 border-t border-white/15 pt-4 first:border-t-0 first:pt-0">
+                    <time dateTime={e.date} className="flex w-12 shrink-0 flex-col items-center border-r border-white/20 pr-3 text-center">
+                      <span className="eyebrow text-on-navy-accent">{d.month}</span>
+                      <span className="mt-1 font-serif text-2xl leading-none font-semibold">{d.day}</span>
+                    </time>
+                    <span className="self-center font-semibold">{e.title}</span>
                   </li>
                 );
               })}

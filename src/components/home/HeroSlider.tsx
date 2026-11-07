@@ -45,11 +45,12 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
     return () => clearTimeout(id);
   }, [running, index, go]);
 
+  const btn = "flex size-10 items-center justify-center border border-line-strong text-heading hover:border-heading hover:bg-surface";
   return (
     <section
       aria-roledescription="carousel"
       aria-label={t.slider.label}
-      className="relative isolate overflow-hidden bg-navy-950 text-white"
+      className="border-b border-line bg-paper"
       onMouseEnter={() => setHold(true)}
       onMouseLeave={() => setHold(false)}
       onFocusCapture={() => setHold(true)}
@@ -57,7 +58,8 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
         if (!e.currentTarget.contains(e.relatedTarget as Node)) setHold(false);
       }}
     >
-      <div className="relative h-[30rem] sm:h-[36rem] lg:h-[42rem]">
+      {/* Every slide sits in the same grid cell, so the hero is as tall as its tallest slide. */}
+      <div className="grid grid-cols-[minmax(0,1fr)]">
         {slides.map((s, i) => {
           const active = i === index;
           const Heading = i === 0 ? "h1" : "h2";
@@ -69,32 +71,35 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
               aria-label={t.slider.slideOf(i + 1, n)}
               aria-hidden={!active}
               inert={!active}
-              className={cn("absolute inset-0 transition-opacity duration-700 motion-reduce:transition-none", active ? "opacity-100" : "pointer-events-none opacity-0")}
+              className={cn(
+                "grid grid-cols-[minmax(0,1fr)] [grid-area:1/1] transition-opacity duration-700 motion-reduce:transition-none lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]",
+                active ? "opacity-100" : "pointer-events-none opacity-0",
+              )}
             >
-              <Image src={s.image} alt={s.imageAlt} fill priority={i === 0} sizes="100vw" className="-z-20 object-cover object-[70%_center]" />
-              {/* Editorial panel: a solid navy block anchored to the lower left of the photograph. */}
-              <div className="container-page flex h-full flex-col justify-end pb-0 sm:pb-12">
-                <div className="max-w-2xl border-t-4 border-leaf-600 bg-navy-900 p-6 sm:p-9">
-                  {s.motto && <p className="font-serif text-base text-on-navy-accent italic">{s.motto}</p>}
-                  <Heading id={i === 0 ? "hero-title" : undefined} className={cn("font-serif text-[2.1rem] leading-[1.1] font-semibold sm:text-5xl lg:text-[3.6rem]", s.motto && "mt-2")}>
-                    {s.title}
-                  </Heading>
-                  {s.lines[0] && <p className="mt-4 text-base text-navy-100 sm:text-lg">{s.lines[0]}</p>}
-                  {s.lines.slice(1).map((l) => (
-                    <p key={l} className="mt-4 border-l-2 border-on-navy-accent pl-3 text-base font-medium text-on-navy-accent">{l}</p>
-                  ))}
-                  <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-                    <ButtonLink href={s.href} variant="secondary">
-                      {s.label}
-                      <ArrowRight aria-hidden className="size-4" />
-                    </ButtonLink>
-                    {s.secondary && (
-                      <Link href={s.secondary.href} className="text-sm font-semibold underline underline-offset-4 hover:text-navy-100">
-                        {s.secondary.label}
-                      </Link>
-                    )}
-                  </div>
+              {/* Text: aligned to the page grid on the left; the photograph bleeds to the right edge. */}
+              <div className="order-2 flex flex-col justify-center px-4 py-9 sm:px-6 sm:py-12 lg:order-1 lg:py-16 lg:pr-12 lg:pl-[max(2rem,calc((100vw-80rem)/2+2rem))]">
+                {s.motto && <p className="font-serif text-lg text-leaf-600 italic dark:text-accent">{s.motto}</p>}
+                <Heading id={i === 0 ? "hero-title" : undefined} className={cn("font-serif text-[2.4rem] leading-[1.05] font-semibold text-heading sm:text-[3.2rem] xl:text-[3.9rem]", s.motto && "mt-3")}>
+                  {s.title}
+                </Heading>
+                {s.lines[0] && <p className="mt-5 max-w-md text-base leading-relaxed text-muted sm:text-lg">{s.lines[0]}</p>}
+                {s.lines.slice(1).map((l) => (
+                  <p key={l} className="mt-5 max-w-md border-t border-line pt-4 text-base font-semibold text-heading">{l}</p>
+                ))}
+                <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
+                  <ButtonLink href={s.href} variant="secondary">
+                    {s.label}
+                    <ArrowRight aria-hidden className="size-4" />
+                  </ButtonLink>
+                  {s.secondary && (
+                    <Link href={s.secondary.href} className="text-sm font-semibold text-heading underline underline-offset-4 hover:text-accent">
+                      {s.secondary.label}
+                    </Link>
+                  )}
                 </div>
+              </div>
+              <div className="relative order-1 aspect-[4/3] bg-paper-dark sm:aspect-[16/9] lg:order-2 lg:aspect-auto lg:min-h-[36rem]">
+                <Image src={s.image} alt={s.imageAlt} fill priority={i === 0} sizes="(min-width: 1024px) 58vw, 100vw" className="object-cover object-[70%_center]" />
               </div>
             </div>
           );
@@ -102,32 +107,37 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
       </div>
 
       {n > 1 && (
-        <div className="border-t border-white/10 bg-navy-950">
+        <div className="border-t border-line">
           <div className="container-page flex items-center justify-between gap-4 py-3">
-            <div className="flex items-center gap-2">
-              {slides.map((s, i) => (
-                <button
-                  key={s.title}
-                  type="button"
-                  onClick={() => go(i)}
-                  aria-label={t.slider.goTo(i + 1)}
-                  aria-current={i === index ? "true" : undefined}
-                  className="flex h-6 items-center"
-                >
-                  <span className={cn("block h-1.5 rounded-full bg-white transition-all", i === index ? "w-8" : "w-4 opacity-50 hover:opacity-80")} />
-                </button>
-              ))}
+            <div className="flex items-center gap-4">
+              <p className="font-serif text-sm text-muted tabular-nums" aria-hidden>
+                {t.slider.slideOf(index + 1, n)}
+              </p>
+              <div className="flex items-center gap-1.5">
+                {slides.map((s, i) => (
+                  <button
+                    key={s.title}
+                    type="button"
+                    onClick={() => go(i)}
+                    aria-label={t.slider.goTo(i + 1)}
+                    aria-current={i === index ? "true" : undefined}
+                    className="flex h-6 items-center"
+                  >
+                    <span className={cn("block h-0.5 transition-all", i === index ? "w-8 bg-leaf-600 dark:bg-accent" : "w-4 bg-line-strong hover:bg-muted")} />
+                  </button>
+                ))}
+              </div>
             </div>
             <div className="flex items-center gap-1.5">
               {!reduce && (
-                <button type="button" onClick={() => setPaused((p) => !p)} aria-label={paused ? t.slider.play : t.slider.pause} className="flex size-9 items-center justify-center rounded border border-white/40 hover:bg-white/10">
+                <button type="button" onClick={() => setPaused((p) => !p)} aria-label={paused ? t.slider.play : t.slider.pause} className={btn}>
                   {paused ? <Play aria-hidden className="size-4" /> : <Pause aria-hidden className="size-4" />}
                 </button>
               )}
-              <button type="button" onClick={() => go(index - 1)} aria-label={t.slider.prev} className="flex size-9 items-center justify-center rounded border border-white/40 hover:bg-white/10">
+              <button type="button" onClick={() => go(index - 1)} aria-label={t.slider.prev} className={btn}>
                 <ChevronLeft aria-hidden className="size-5" />
               </button>
-              <button type="button" onClick={() => go(index + 1)} aria-label={t.slider.next} className="flex size-9 items-center justify-center rounded border border-white/40 hover:bg-white/10">
+              <button type="button" onClick={() => go(index + 1)} aria-label={t.slider.next} className={btn}>
                 <ChevronRight aria-hidden className="size-5" />
               </button>
             </div>
