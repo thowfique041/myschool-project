@@ -256,3 +256,25 @@ html[lang="bn"] [lang="en"]:not(.font-serif) {
   .vmarquee { overflow-y: auto; mask-image: none; }
   .vmarquee-track { animation: none; }
 }
+
+/* Cards that rise a little under the pointer. Uses the separate "translate" property so it
+   does not fight the fade-up reveal, which animates "transform". */
+.lift {
+  transition: translate 0.25s ease, box-shadow 0.25s ease;
+}
+.tr.tr-in.lift {
+  transition:
+    opacity 0.8s ease-out,
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    translate 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.lift:hover {
+  translate: 0 -6px;
+  box-shadow: var(--shadow-lift);
+  position: relative;
+  z-index: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lift:hover { translate: none; }
+}

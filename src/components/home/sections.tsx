@@ -296,7 +296,7 @@ export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: 
             const Icon = FACILITY_ICONS[i % FACILITY_ICONS.length];
             const fill = filled[i];
             return (
-              <li key={title} className={cn("rounded-md border p-6", fill ?? "border-line bg-surface")}>
+              <li key={title} className={cn("lift rounded-md border p-6", fill ?? "border-line bg-surface")}>
                 <span className={cn("flex size-11 items-center justify-center rounded-md", fill ? "bg-white/10 text-[#e8b84a]" : "bg-tint text-heading")}>
                   <Icon aria-hidden className="size-5" />
                 </span>

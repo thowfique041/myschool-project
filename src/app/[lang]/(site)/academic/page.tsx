@@ -175,7 +175,7 @@ export default async function AcademicPage() {
           <div className="mt-8 grid gap-6 lg:grid-cols-3">
             {academicLevels.map((l) => (
               <div key={l.id}>
-                <Card className="h-full p-6">
+                <Card className="lift h-full p-6">
                   <h3 className="font-serif text-xl font-semibold text-heading">{l.name}</h3>
                   <p className="text-sm font-semibold text-subheading">
                     {l.classes} · {l.ages}
@@ -208,7 +208,7 @@ export default async function AcademicPage() {
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             {subjectsByLevel.map((s) => (
               <div key={s.level}>
-                <div className="h-full rounded-md border border-line p-6">
+                <div className="lift h-full rounded-md border border-line bg-surface p-6">
                   <h3 className="font-semibold text-heading">{s.level}</h3>
                   <p className="mt-3 text-xs font-semibold text-muted uppercase">{c.compulsory}</p>
                   <ul className="mt-2 flex flex-wrap gap-1.5">

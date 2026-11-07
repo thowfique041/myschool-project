@@ -156,7 +156,7 @@ export default async function AdmissionPage() {
           <SectionHeading id="dates" title={c.dates} />
           <ol className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {a.dates.map((d) => (
-              <li key={d.label} className="flex gap-3 rounded-md border border-line bg-paper p-4">
+              <li key={d.label} className="lift flex gap-3 rounded-md border border-line bg-paper p-4">
                 <CalendarClock aria-hidden className="mt-0.5 size-5 shrink-0 text-accent" />
                 <div>
                   <p className="font-semibold text-heading">{formatDate(d.date, lang)}</p>
@@ -206,7 +206,7 @@ export default async function AdmissionPage() {
             <SectionHeading id="proc" title={c.proc} />
             <ol className="mt-8 grid gap-4 sm:grid-cols-2">
               {a.steps.map((s, i) => (
-                <li key={s.title} className="rounded-md border border-line p-5">
+                <li key={s.title} className="lift rounded-md border border-line bg-surface p-5">
                   <span className="flex size-8 items-center justify-center rounded-full bg-brand text-sm font-semibold text-white">{n(i + 1)}</span>
                   <h3 className="mt-3 font-semibold text-heading">{s.title}</h3>
                   <p className="mt-1 text-sm text-muted">{s.text}</p>
