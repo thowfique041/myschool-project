@@ -46,7 +46,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
     heroSubtitle: "Play to Class 12 · NCTB curriculum · Upashahar, Sylhet · Est. 1998",
     heroNote: "Admission for 2027 is open until 3 December.",
     slides: [
-      { image: images.students.src, imageAlt: images.students.alt, title: "Admission 2027", text: "Applications for Play to Class 9 are open until 3 December 2026.", label: "Admission details", href: "/admission" },
+      { image: images.students.src, imageAlt: images.students.alt, title: "Admission 2027", text: "Applications for Playgroup to Class 9 are open until 3 December 2026.", label: "Admission details", href: "/admission" },
       { image: images.classroom.src, imageAlt: images.classroom.alt, title: "Annual examination 2026", text: "Examinations for Class 1 to Class 9 begin on 22 November. The routine is on the notice board.", label: "View the routine", href: "/notices/annual-exam-routine-2026" },
       { image: "/images/sports-day.jpg", imageAlt: "Students in sports kit with a football on a grass pitch in front of a goal", title: "Annual Sports Day 2027", text: "Sports day will be held on the school field in January.", label: "Read more", href: "/news/annual-sports-2026-dates" },
     ],
@@ -193,12 +193,12 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
   admission: {
     year: admissionYear,
     open: true,
-    intro: "Applications are open for Play to Class 9. Class 11 admission follows the national online admission schedule.",
+    intro: "Applications are open for Playgroup to Class 9. Class 11 admission follows the national online admission schedule.",
     noticeDate: "2026-11-01",
     formFile: "/downloads/admission-form-2027.pdf",
     circularFile: "/downloads/admission-circular-2027.pdf",
-    noticeTitle: "Admission notice for Play to Class 9, academic year 2027",
-    noticeTitleBn: "২০২৭ শিক্ষাবর্ষে প্লে থেকে নবম শ্রেণিতে ভর্তি বিজ্ঞপ্তি",
+    noticeTitle: "Admission notice for Playgroup to Class 9, academic year 2027",
+    noticeTitleBn: "২০২৭ শিক্ষাবর্ষে প্লে-গ্রুপ থেকে নবম শ্রেণিতে ভর্তি বিজ্ঞপ্তি",
     noticeBodyBn:
       "২০২৭ শিক্ষাবর্ষে প্লে, নার্সারি এবং প্রথম থেকে নবম শ্রেণির শূন্য আসনে ভর্তির জন্য আবেদন গ্রহণ করা হচ্ছে। আবেদন ফরম ১০ নভেম্বর ২০২৬ থেকে ৩ ডিসেম্বর ২০২৬ পর্যন্ত প্রতিষ্ঠানের অফিস ও ওয়েবসাইট থেকে সংগ্রহ করা যাবে।",
     noticeBody:

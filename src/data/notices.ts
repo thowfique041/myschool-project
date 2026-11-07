@@ -14,8 +14,8 @@ const principal = "অধ্যক্ষ, ওয়েবনিয়ন স্�
 export const notices: Notice[] = [
   {
     slug: "admission-circular-2027",
-    title: "২০২৭ শিক্ষাবর্ষে প্লে থেকে নবম শ্রেণিতে ভর্তি বিজ্ঞপ্তি",
-    titleEn: "Admission circular for Play to Class 9, academic year 2027",
+    title: "২০২৭ শিক্ষাবর্ষে প্লে-গ্রুপ থেকে নবম শ্রেণিতে ভর্তি বিজ্ঞপ্তি",
+    titleEn: "Admission circular for Playgroup to Class 9, academic year 2027",
     category: "admission",
     date: "2026-11-01",
     important: true,
