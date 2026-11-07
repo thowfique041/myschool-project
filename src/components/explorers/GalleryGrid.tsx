@@ -6,7 +6,7 @@ import { num } from "@/lib/utils";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { FilterChips } from "./NoticeExplorer";
 import type { GalleryCategory, GalleryItem } from "@/types";
 
@@ -129,6 +129,9 @@ function Lightbox({
   );
 }
 
+/** Repeating mix of portrait, landscape and square crops for the masonry layout. */
+const RATIOS = ["aspect-[4/5]", "aspect-[4/3]", "aspect-[3/4]", "aspect-square", "aspect-[3/4]", "aspect-[4/5]", "aspect-[4/3]", "aspect-[2/3]"];
+
 export function GalleryGrid({ items }: { items: GalleryItem[] }) {
   const { t } = useI18n();
   const [category, setCategory] = useState<GalleryCategory | "all">("all");
@@ -154,9 +157,10 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
   return (
     <div>
       <FilterChips label={t.gallery.filter} options={options} value={category} onChange={setCategory} />
-      <ul className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
+      {/* Masonry: photos of mixed heights flow down the columns, with no frames or boxes. */}
+      <ul className="mt-6 columns-2 gap-2 sm:gap-3 md:columns-3 lg:columns-4">
         {visible.map((item, i) => (
-          <li key={item.id}>
+          <li key={item.id} className="mb-2 break-inside-avoid sm:mb-3">
             <button
               type="button"
               onClick={(e) => {
@@ -166,21 +170,19 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
               className="group relative block w-full overflow-hidden bg-paper-dark text-left"
               aria-label={t.gallery.open(item.caption)}
             >
-              <span className="relative block aspect-[4/3]">
+              <span className={`relative block ${RATIOS[i % RATIOS.length]}`}>
                 <Image
                   src={item.image.src}
                   alt=""
                   fill
                   sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
                   unoptimized={item.image.src.endsWith(".svg")}
-                  className="object-cover"
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                 />
               </span>
-              <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/85 to-transparent px-3 pt-8 pb-2.5 text-sm leading-snug font-medium text-white">
+              {/* Caption appears on hover or keyboard focus; on touch screens it is always shown. */}
+              <span className="absolute inset-x-0 bottom-0 translate-y-full bg-navy-950/85 px-3 py-2 text-xs leading-snug font-medium text-white transition-transform duration-200 group-hover:translate-y-0 group-focus-visible:translate-y-0 motion-reduce:transition-none sm:text-sm [@media(hover:none)]:translate-y-0">
                 {item.caption}
-              </span>
-              <span aria-hidden className="absolute top-2 right-2 flex size-8 items-center justify-center rounded-full bg-surface/90 text-heading opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
-                <Expand className="size-4" />
               </span>
             </button>
           </li>
