@@ -3,12 +3,12 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { DemoNote } from "@/components/ui/primitives";
 import { NoticeExplorer } from "@/components/explorers/NoticeExplorer";
 import { getDownloads, getEvents, getNotices, getSite, getToday } from "@/content/site-content";
-import { ArrowLink } from "@/components/shared/cards";
-import { formatDate } from "@/lib/utils";
+import Link from "@/components/i18n/Link";
+import { formatDate, toBnDigits } from "@/lib/utils";
 import { getI18n } from "@/i18n/server";
 import { DownloadList } from "@/components/shared/DownloadList";
 import { SectionHeading } from "@/components/ui/primitives";
-import { FileDown } from "lucide-react";
+import { ArrowRight, FileDown } from "lucide-react";
 
 const copy = {
   en: {
@@ -24,6 +24,11 @@ const copy = {
     dlKicker: "Downloads",
     dlIntro: "Admission forms, circulars, routines, the academic calendar and other documents.",
     dlSample: "Sample files are short PDFs marked “for website demonstration only”.",
+    total: "Notices",
+    important: "Important",
+    latest: "Latest",
+    next: "Next",
+    fileType: "File",
   },
   bn: {
     title: "নোটিশ বোর্ড",
@@ -38,6 +43,11 @@ const copy = {
     dlKicker: "ডাউনলোড",
     dlIntro: "ভর্তি ফরম, বিজ্ঞপ্তি, রুটিন, একাডেমিক ক্যালেন্ডার ও অন্যান্য কাগজপত্র।",
     dlSample: "নমুনা ফাইলগুলো “শুধু ওয়েবসাইট প্রদর্শনের জন্য” লেখা ছোট পিডিএফ।",
+    total: "নোটিশ",
+    important: "জরুরি",
+    latest: "সর্বশেষ",
+    next: "পরবর্তী",
+    fileType: "ফাইল",
   },
 };
 
@@ -49,45 +59,70 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function NoticesPage() {
   const [notices, events, downloads, site, today, { t, lang }] = await Promise.all([getNotices(), getEvents(), getDownloads(), getSite(), getToday(), getI18n()]);
   const c = copy[lang];
-  const upcoming = events.filter((e) => (e.endDate ?? e.date) >= today).slice(0, 4);
+  const n = (v: number | string) => (lang === "bn" ? toBnDigits(v) : String(v));
+  // Same event source and ordering as the Academic Calendar and Admission pages.
+  const upcoming = [...events].sort((a, b) => a.date.localeCompare(b.date)).filter((e) => (e.endDate ?? e.date) >= today).slice(0, 5);
+  const latest = [...notices].sort((a, b) => b.date.localeCompare(a.date))[0];
+  const facts: [string, string][] = [
+    [c.total, n(notices.length)],
+    [c.important, n(notices.filter((x) => x.important).length)],
+    ...(latest ? ([[c.latest, formatDate(latest.date, lang)]] as [string, string][]) : []),
+  ];
   return (
     <>
-      <PageHeader title={c.title} titleBn={c.alt} description={c.intro} />
+      <PageHeader
+        title={c.title}
+        titleBn={c.alt}
+        description={c.intro}
+        aside={
+          <dl className="grid grid-cols-[auto_auto_1fr] border-t border-white/20 lg:w-96">
+            {facts.map(([k, v]) => (
+              <div key={k} className="pt-3 pr-3 not-first:border-l not-first:border-white/20 not-first:pl-3">
+                <dd className="font-serif text-2xl leading-tight font-semibold whitespace-nowrap text-white">{v}</dd>
+                <dt className="mt-0.5 text-xs text-on-navy-accent">{k}</dt>
+              </div>
+            ))}
+          </dl>
+        }
+      />
       <section className="py-12 sm:py-16">
-        <div className="container-page grid gap-10 lg:grid-cols-[1fr_18rem]">
-          <h2 className="sr-only">{c.title}</h2>
-          <NoticeExplorer notices={notices} />
-          <aside aria-label={c.upcoming} className="space-y-6">
-            <div className="border border-line bg-surface p-5">
-              <h2 className="font-semibold text-heading">{c.comingUp}</h2>
-              <ul className="mt-3 space-y-3 text-sm">
-                {upcoming.length === 0 && <li className="text-muted">{t.common.upcomingNone}</li>}
-                {upcoming.map((e) => (
-                  <li key={e.date + e.title}>
-                    <time dateTime={e.date} className="font-semibold text-accent">
+        <div className="container-page grid gap-12 lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-10">
+          <div className="min-w-0">
+            <h2 className="sr-only">{c.title}</h2>
+            <NoticeExplorer notices={notices} />
+          </div>
+          <aside aria-labelledby="upcoming-title" className="space-y-8 lg:sticky lg:top-28 lg:self-start">
+            <div className="border-t-4 border-leaf-600 bg-navy-900 p-6 text-white dark:border-accent">
+              <h2 id="upcoming-title" className="font-serif text-xl font-semibold">{c.comingUp}</h2>
+              <ol className="mt-4 border-l border-white/25">
+                {upcoming.length === 0 && <li className="pl-4 text-sm text-navy-100">{t.common.upcomingNone}</li>}
+                {upcoming.map((e, i) => (
+                  <li key={e.date + e.title} className="relative pb-4 pl-4 last:pb-0">
+                    <span aria-hidden className={`absolute top-1.5 -left-[5px] size-2.5 rounded-full ${i === 0 ? "bg-on-navy-accent" : "bg-white/40"}`} />
+                    <time dateTime={e.date} className={`text-xs font-semibold ${i === 0 ? "text-on-navy-accent" : "text-navy-200"}`}>
                       {formatDate(e.date, lang)}
+                      {e.endDate && ` – ${formatDate(e.endDate, lang)}`}
+                      {i === 0 && <span className="eyebrow ml-2">{c.next}</span>}
                     </time>
-                    <p className="text-ink">{e.title}</p>
+                    <p className={i === 0 ? "mt-0.5 font-serif text-lg leading-snug font-semibold" : "mt-0.5 text-sm text-navy-50"}>{e.title}</p>
                   </li>
                 ))}
-              </ul>
-              <ArrowLink href="/calendar" className="mt-4">
-                {c.calendar}
-              </ArrowLink>
+              </ol>
+              <Link href="/calendar" className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-white underline underline-offset-4 hover:text-on-navy-accent">
+                {c.calendar} <ArrowRight aria-hidden className="size-4" />
+              </Link>
             </div>
-            <a
-              href="#downloads"
-              className="flex items-center gap-3 border border-line-strong bg-tint p-4 text-sm font-semibold text-heading hover:border-navy-400"
-            >
-              <FileDown aria-hidden className="size-5 text-accent" />
+            <a href="#downloads" className="flex min-h-12 items-center gap-3 border-y border-line py-3 text-sm font-semibold text-heading hover:text-accent">
+              <FileDown aria-hidden className="size-5 text-leaf-600 dark:text-accent" />
               {c.downloads}
+              <ArrowRight aria-hidden className="ml-auto size-4" />
             </a>
             {site.demoNote && <DemoNote>{c.sample}</DemoNote>}
           </aside>
         </div>
       </section>
       <section id="downloads" aria-labelledby="downloads-title" className="scroll-mt-24 border-t border-line bg-surface py-12 sm:py-16">
-        <div className="container-page max-w-5xl">
+        <div className="container-page">
           <SectionHeading
             id="downloads-title"
             title={c.downloads}

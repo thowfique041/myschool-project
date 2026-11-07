@@ -1,34 +1,41 @@
 import { Download, FileText } from "lucide-react";
-import { Badge } from "@/components/ui/primitives";
 import type { DownloadResource } from "@/types";
-import { formatDate } from "@/lib/utils";
+import { formatDate, toBnDigits } from "@/lib/utils";
 import { getI18n } from "@/i18n/server";
 
 /** Grouped list of downloadable forms and documents, in category order. */
+/** Display order for the document library; any other category follows in data order. */
+const ORDER = ["admission", "academic", "forms", "policy"];
+
 export async function DownloadList({ downloads }: { downloads: DownloadResource[] }) {
   const { t, lang } = await getI18n();
-  const order = [...new Set(downloads.map((d) => d.category))];
+  const cats = [...new Set(downloads.map((d) => d.category))];
+  const order = [...cats].sort((a, b) => (ORDER.indexOf(a.toLowerCase()) + 1 || 99) - (ORDER.indexOf(b.toLowerCase()) + 1 || 99));
+  const type = (d: DownloadResource) => (d.href.split("?")[0].split(".").pop() ?? "").toUpperCase() || d.size;
   if (!downloads.length) return <p className="text-muted">{lang === "bn" ? "এখন ডাউনলোডের জন্য কোনো ফাইল নেই।" : "No files are available for download right now."}</p>;
   return (
-    <div className="space-y-8">
+    <div className="grid gap-x-12 gap-y-10 lg:grid-cols-2">
       {order.map((cat) => {
         const list = downloads.filter((d) => d.category === cat);
         return (
           <section key={cat} aria-labelledby={`dl-${cat}`}>
-            <h3 id={`dl-${cat}`} className="text-sm font-semibold tracking-wide text-muted uppercase">
+            <h3 id={`dl-${cat}`} className="flex items-baseline justify-between font-serif text-xl font-semibold text-heading">
               {list[0]?.categoryLabel ?? cat}
+              <span className="text-sm font-normal text-muted tabular-nums">{lang === "bn" ? toBnDigits(list.length) : list.length}</span>
             </h3>
-            <ul className="mt-3 divide-y divide-line border border-line bg-surface">
+            <ul className="mt-3 border-t-2 border-navy-800 dark:border-navy-300">
               {list.map((d) => (
-                <li key={d.id} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:gap-5 sm:px-5">
-                  <FileText aria-hidden className="hidden size-7 shrink-0 text-danger sm:block" />
+                <li key={d.id} className="flex items-start gap-4 border-b border-line py-4">
+                  <span aria-hidden className="mt-0.5 flex w-11 shrink-0 flex-col items-center border border-line-strong py-1.5 text-[0.65rem] font-bold tracking-wider text-leaf-600 dark:text-accent">
+                    <FileText className="mb-0.5 size-4" />
+                    {type(d)}
+                  </span>
                   <div className="min-w-0 flex-1">
-                    <p className="font-semibold text-heading">
-                      {d.title}
-                    </p>
+                    <p className="font-semibold text-heading">{d.title}</p>
                     <p className="text-sm text-muted">{d.description}</p>
-                    <p className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted">
-                      <Badge tone="neutral">{d.size}</Badge> {d.updated && <>{t.common.updated} {formatDate(d.updated, lang)}</>}
+                    <p className="mt-1 text-xs text-muted">
+                      {type(d)}
+                      {d.updated && <> · {t.common.updated} {formatDate(d.updated, lang)}</>}
                     </p>
                   </div>
                   <a
@@ -36,10 +43,11 @@ export async function DownloadList({ downloads }: { downloads: DownloadResource[
                     download
                     target="_blank"
                     rel="noopener"
-                    className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-lg border border-line px-4 text-sm font-semibold text-heading hover:border-line-strong hover:bg-leaf-50"
+                    aria-label={`${t.common.download}: ${d.title} (${type(d)})`}
+                    className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 border border-line-strong px-3 text-sm font-semibold text-heading hover:border-heading hover:bg-surface"
                   >
-                    <Download aria-hidden className="size-4" /> {t.common.download}
-                    <span className="sr-only"> {d.title}</span>
+                    <Download aria-hidden className="size-4" />
+                    <span className="hidden sm:inline">{t.common.download}</span>
                   </a>
                 </li>
               ))}
