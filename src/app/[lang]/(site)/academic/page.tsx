@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { Download, FileText } from "lucide-react";
+import { ChevronDown, Download, FileText } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { ButtonLink, SectionHeading } from "@/components/ui/primitives";
+import { ButtonLink, SectionHeading, buttonClasses } from "@/components/ui/primitives";
 import { SampleTag } from "@/components/ui/SampleTag";
-import { RoutineGrid } from "@/components/explorers/RoutineGrid";
+import { RoutinePicker } from "@/components/academic/RoutinePicker";
+import { SectionNav } from "@/components/academic/SectionNav";
+import { SubjectTabs } from "@/components/academic/SubjectTabs";
+import { DateBlock } from "@/components/shared/cards";
 import { ArrowLink } from "@/components/shared/cards";
 import { getAcademic, getDownloads, getEvents, getSetting, getSite, getToday } from "@/content/site-content";
 import { formatDate, toBnDigits } from "@/lib/utils";
@@ -16,6 +19,13 @@ const copy = {
     meta: "Academic levels, subjects, class routine, examinations, grading and student policies at Webnion School & College.",
     intro: "How teaching, routines and examinations work at each level, following the national curriculum.",
     onPage: "On this page",
+    klass: "Class",
+    sectionL: "Section",
+    shiftL: "Shift",
+    printRoutine: "Print routine",
+    noRoutine: "No routine published yet.",
+    updatedL: "Updated",
+    stepL: "Stage",
     nav: { levels: "Levels", curriculum: "Curriculum", calendar: "Calendar", routine: "Class routine", exams: "Examinations", resources: "Syllabus & resources", policies: "Policies" },
     levelsK: "Academic levels",
     levels: "Academic levels and classes",
@@ -65,6 +75,13 @@ const copy = {
     meta: "ওয়েবনিয়ন স্কুল এন্ড কলেজের শিক্ষা স্তর, বিষয়, ক্লাস রুটিন, পরীক্ষা, গ্রেডিং ও শিক্ষার্থী নীতিমালা।",
     intro: "প্রতিটি স্তরে পাঠদান, রুটিন ও পরীক্ষা কীভাবে চলে, জাতীয় শিক্ষাক্রম অনুযায়ী।",
     onPage: "এই পাতায়",
+    klass: "শ্রেণি",
+    sectionL: "শাখা",
+    shiftL: "শিফট",
+    printRoutine: "রুটিন প্রিন্ট করুন",
+    noRoutine: "এখনো কোনো রুটিন প্রকাশ করা হয়নি।",
+    updatedL: "হালনাগাদ",
+    stepL: "ধাপ",
     nav: { levels: "স্তর", curriculum: "শিক্ষাক্রম", calendar: "ক্যালেন্ডার", routine: "ক্লাস রুটিন", exams: "পরীক্ষা", resources: "সিলেবাস ও রিসোর্স", policies: "নীতিমালা" },
     levelsK: "শিক্ষা স্তর",
     levels: "শিক্ষা স্তর ও শ্রেণি",
@@ -149,25 +166,18 @@ export default async function AcademicPage() {
         description={c.intro}
       />
 
-      <nav aria-label={c.onPage} className="sticky top-[4.5rem] z-20 border-b border-line bg-paper sm:top-20">
-        <ul className="container-page flex gap-1 overflow-x-auto py-2 text-sm whitespace-nowrap">
-          {[
-            ["#levels", c.nav.levels],
-            ["#curriculum", c.nav.curriculum],
-            ["#calendar", c.nav.calendar],
-            ["#routine", c.nav.routine],
-            ["#exams", c.nav.exams],
-            ["#resources", c.nav.resources],
-            ["#policies", c.nav.policies],
-          ].map(([href, label]) => (
-            <li key={href}>
-              <a href={href} className="inline-flex min-h-9 items-center rounded-md px-3 font-medium text-heading hover:bg-surface">
-                {label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <SectionNav
+        label={c.onPage}
+        items={[
+          ["levels", c.nav.levels],
+          ["curriculum", c.nav.curriculum],
+          ["calendar", c.nav.calendar],
+          ["routine", c.nav.routine],
+          ["exams", c.nav.exams],
+          ["resources", c.nav.resources],
+          ["policies", c.nav.policies],
+        ]}
+      />
 
       <section id="levels" aria-labelledby="levels-h" className="scroll-mt-36 py-16">
         <div className="container-page">
@@ -201,36 +211,7 @@ export default async function AcademicPage() {
             title={c.curr}
             description={c.currText}
           />
-          <div className="mt-8 grid gap-5 md:grid-cols-2">
-            {subjectsByLevel.map((s) => (
-              <div key={s.level}>
-                <div className="lift h-full border border-line bg-surface p-6">
-                  <h3 className="font-semibold text-heading">{s.level}</h3>
-                  <p className="mt-3 text-xs font-semibold text-muted uppercase">{c.compulsory}</p>
-                  <ul className="mt-2 flex flex-wrap gap-1.5">
-                    {s.compulsory.map((c) => (
-                      <li key={c} className="rounded-md bg-paper px-2.5 py-1 text-sm text-ink">
-                        {c}
-                      </li>
-                    ))}
-                  </ul>
-                  {s.optional.length > 0 && (
-                    <>
-                      <p className="mt-4 text-xs font-semibold text-muted uppercase">{c.groupSubjects}</p>
-                      <ul className="mt-2 space-y-1.5 text-sm text-ink">
-                        {s.optional.map((o) => (
-                          <li key={o} className="flex gap-2">
-                            <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-navy-400" />
-                            {o}
-                          </li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+          <SubjectTabs levels={subjectsByLevel} label={c.curr} compulsoryLabel={c.compulsory} groupLabel={c.groupSubjects} />
         </div>
       </section>
 
@@ -242,20 +223,24 @@ export default async function AcademicPage() {
               {c.fullCal}
             </ButtonLink>
           </div>
-          <ul className="divide-y divide-line border border-line bg-surface">
-            {upcoming.length === 0 && <li className="px-5 py-4 text-muted">{t.common.upcomingNone}</li>}
-            {upcoming.map((e) => (
-              <li key={e.date + e.title} className="flex flex-col gap-1 px-5 py-4 sm:flex-row sm:items-center sm:gap-6">
-                <time dateTime={e.date} className="w-44 shrink-0 text-sm font-semibold text-heading">
-                  {formatDate(e.date, lang)}
-                  {e.endDate && ` – ${formatDate(e.endDate, lang)}`}
-                </time>
-                <span className="flex-1 text-ink">
-                  {e.title}
-                </span>
+          {/* Chronological timeline: date in the margin, burgundy marker on the spine. */}
+          <ol className="relative border-l-2 border-line-strong pl-0">
+            {upcoming.length === 0 && <li className="py-4 pl-6 text-muted">{t.common.upcomingNone}</li>}
+            {upcoming.map((e, k) => (
+              <li key={e.date + e.title} className="relative flex gap-5 py-4 pl-6">
+                <span aria-hidden className={`absolute top-7 -left-[7px] size-3 rounded-full ring-4 ring-paper ${k === 0 ? "bg-leaf-600 dark:bg-accent" : "bg-line-strong"}`} />
+                <DateBlock iso={e.date} />
+                <div className="self-center">
+                  <p className="font-semibold text-heading">{e.title}</p>
+                  {e.endDate && (
+                    <p className="text-sm text-muted">
+                      {formatDate(e.date, lang)} – {formatDate(e.endDate, lang)}
+                    </p>
+                  )}
+                </div>
               </li>
             ))}
-          </ul>
+          </ol>
         </div>
       </section>
 
@@ -265,29 +250,22 @@ export default async function AcademicPage() {
             <SectionHeading id="routine-h" title={c.routine} description={c.routineText} />
             {site.demoNote && <SampleTag />}
           </div>
-          {routines.map((routine) => (
-          <div key={routine.title} className="mt-6 border border-line">
-            <p className="border-b border-line bg-paper px-4 py-3 text-sm font-semibold text-heading">{routine.title}</p>
-            <RoutineGrid
-              rows={routine.rows}
-              rowsEn={routine.rowsEn}
-              labels={{
-                title: routine.title,
-                time: c.time,
-                days: days.map(([, label]) => label),
-                today: c.today,
-                now: c.now,
-                lab: c.lab,
-                period: c.periodTpl,
-                periods: c.periodsTpl,
-                minutes: c.minutesTpl,
-                caption: `${c.weekly} ${routine.title}`,
-                scrollHint: c.routineLabel,
-                bangla: lang === "bn",
-              }}
-            />
-          </div>
-          ))}
+          <RoutinePicker
+            routines={routines}
+            grid={{
+              time: c.time,
+              days: days.map(([, label]) => label),
+              today: c.today,
+              now: c.now,
+              lab: c.lab,
+              period: c.periodTpl,
+              periods: c.periodsTpl,
+              minutes: c.minutesTpl,
+              scrollHint: c.routineLabel,
+              bangla: lang === "bn",
+            }}
+            labels={{ klass: c.klass, section: c.sectionL, shift: c.shiftL, print: c.printRoutine, none: c.noRoutine, caption: c.weekly }}
+          />
           {settings.timings && <p className="mt-3 text-sm text-muted">{settings.timings}</p>}
         </div>
       </section>
@@ -296,13 +274,17 @@ export default async function AcademicPage() {
         <div className="container-page grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="min-w-0">
             <SectionHeading id="exams-h" title={c.exams} />
-            <ol className="mt-6 space-y-4">
+            {/* Numbered process: one ruled row per stage, stage number in the margin. */}
+            <ol className="mt-6 border-t-2 border-navy-800 dark:border-navy-300">
               {examSystem.map((e, i) => (
-                <li key={e.title} className="flex gap-4 border border-line bg-surface p-5">
-                  <span className="font-serif text-2xl font-semibold text-navy-200 dark:text-navy-600">{n(i + 1)}</span>
+                <li key={e.title} className="grid grid-cols-[3.5rem_1fr] gap-x-4 border-b border-line py-5">
+                  <span className="font-serif text-3xl leading-none font-semibold text-leaf-600 tabular-nums dark:text-accent">
+                    <span className="sr-only">{c.stepL} </span>
+                    {n(String(i + 1).padStart(2, "0"))}
+                  </span>
                   <div>
-                    <h3 className="font-semibold text-heading">{e.title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-muted">{e.text}</p>
+                    <h3 className="font-serif text-xl font-semibold text-heading">{e.title}</h3>
+                    <p className="mt-1 leading-relaxed text-muted">{e.text}</p>
                   </div>
                 </li>
               ))}
@@ -312,22 +294,22 @@ export default async function AcademicPage() {
             </ArrowLink>
           </div>
           <div>
-            <h3 className="font-serif text-xl font-semibold text-heading">{c.grading}</h3>
+            <h3 className="font-serif text-2xl leading-tight font-semibold text-heading">{c.grading}</h3>
             <p className="mt-1 text-sm text-muted">{c.gradingText}</p>
-            <table className="mt-4 w-full overflow-hidden border border-line bg-surface text-sm">
-              <thead className="bg-brand text-left text-xs text-white uppercase">
+            <table className="mt-5 w-full text-left">
+              <thead className="border-y-2 border-navy-800 dark:border-navy-300">
                 <tr>
-                  <th scope="col" className="px-4 py-2.5 font-semibold">{c.marks}</th>
-                  <th scope="col" className="px-4 py-2.5 font-semibold">{c.grade}</th>
-                  <th scope="col" className="px-4 py-2.5 font-semibold">{c.point}</th>
+                  <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.marks}</th>
+                  <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.grade}</th>
+                  <th scope="col" className="eyebrow py-3 text-right text-subheading">{c.point}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-line">
+              <tbody className="divide-y divide-line border-b border-line tabular-nums">
                 {gradingScale.map((g) => (
-                  <tr key={g.grade}>
-                    <td className="px-4 py-2.5">{n(g.range)}</td>
-                    <td className="px-4 py-2.5 font-semibold text-heading">{g.grade}</td>
-                    <td className="px-4 py-2.5 tabular-nums">{n(g.point)}</td>
+                  <tr key={g.grade} className="hover:bg-surface">
+                    <td className="py-3 pr-4 text-ink">{n(g.range)}</td>
+                    <th scope="row" className="py-3 pr-4 text-left font-serif text-xl font-semibold text-heading">{g.grade}</th>
+                    <td className="py-3 text-right font-semibold text-heading">{n(g.point)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -339,18 +321,25 @@ export default async function AcademicPage() {
       <section id="resources" aria-labelledby="res-h" className="scroll-mt-36 border-y border-line bg-surface py-16">
         <div className="container-page">
           <SectionHeading id="res-h" title={c.res} description={site.demoNote ? c.resSample : undefined} />
-          <ul className="mt-6 grid gap-4 md:grid-cols-3">
-            {resources.length === 0 && <li className="text-muted">{c.resNone}</li>}
+          {/* Resource library: ruled rows with file details and a clear download action. */}
+          <ul className="mt-6 border-t-2 border-navy-800 dark:border-navy-300">
+            {resources.length === 0 && <li className="py-4 text-muted">{c.resNone}</li>}
             {resources.map((r) => (
-              <li key={r.id} className="flex items-start gap-4 border border-line p-5">
-                <FileText aria-hidden className="mt-0.5 size-6 shrink-0 text-danger" />
+              <li key={r.id} className="flex flex-col gap-3 border-b border-line py-5 sm:flex-row sm:items-center sm:gap-6">
+                <FileText aria-hidden className="hidden size-7 shrink-0 text-leaf-600 sm:block dark:text-accent" />
                 <div className="min-w-0 flex-1">
-                  <p className="font-semibold text-heading">{r.title}</p>
+                  <p className="font-serif text-lg font-semibold text-heading">{r.title}</p>
                   <p className="text-sm text-muted">{r.description}</p>
-                  <a href={r.href} target="_blank" rel="noopener" className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:underline underline-offset-4">
-                    <Download aria-hidden className="size-4" /> {t.common.downloadPdf}
-                  </a>
+                  <p className="mt-1 text-xs text-muted">
+                    PDF{r.size && !/^pdf$/i.test(r.size) && ` · ${r.size}`}
+                    {r.updated && ` · ${c.updatedL} ${formatDate(r.updated, lang)}`}
+                  </p>
                 </div>
+                <a href={r.href} target="_blank" rel="noopener" download className={`${buttonClasses("outline", "sm")} self-start sm:self-center`}>
+                  <Download aria-hidden className="size-4" />
+                  {t.common.downloadPdf}
+                  <span className="sr-only">: {r.title}</span>
+                </a>
               </li>
             ))}
           </ul>
@@ -363,22 +352,30 @@ export default async function AcademicPage() {
       <section id="policies" aria-labelledby="pol-h" className="scroll-mt-36 py-16">
         <div className="container-page">
           <SectionHeading id="pol-h" title={c.pol} />
-          <div className="mt-8 grid gap-5 md:grid-cols-2">
-            {policies.map((p) => (
-              <div key={p.id} className="border border-line bg-surface p-6">
-                <h3 className="font-semibold text-heading">{p.title}</h3>
-                <ul className="mt-3 space-y-2 text-sm text-muted">
-                  {p.points.map((pt) => (
-                    <li key={pt} className="flex gap-2">
-                      <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-navy-300" />
-                      {pt}
-                    </li>
-                  ))}
-                </ul>
+          {/* Grouped disclosures (native details/summary: keyboard and screen-reader friendly without script). */}
+          <div className="mt-8 grid gap-x-10 border-t-2 border-navy-800 md:grid-cols-2 dark:border-navy-300">
+            {[policies.filter((_, k) => k % 2 === 0), policies.filter((_, k) => k % 2 === 1)].map((col, ci) => (
+              <div key={ci}>
+                {col.map((p, k) => (
+                  <details key={p.id} open={ci === 0 && k === 0} className="group border-b border-line">
+                    <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 font-serif text-lg font-semibold text-heading hover:text-accent [&::-webkit-details-marker]:hidden">
+                      {p.title}
+                      <ChevronDown aria-hidden className="size-5 shrink-0 text-leaf-600 transition-transform group-open:rotate-180 motion-reduce:transition-none dark:text-accent" />
+                    </summary>
+                    <ul className="space-y-2 pb-5 text-muted">
+                      {p.points.map((pt) => (
+                        <li key={pt} className="flex gap-3">
+                          <span aria-hidden className="mt-2.5 h-px w-3 shrink-0 bg-leaf-600 dark:bg-accent" />
+                          {pt}
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                ))}
               </div>
             ))}
           </div>
-          <ArrowLink href="/policies" className="mt-5">
+          <ArrowLink href="/policies" className="mt-6">
             {c.fullPol}
           </ArrowLink>
         </div>
