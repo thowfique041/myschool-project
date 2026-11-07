@@ -325,3 +325,10 @@ html[lang="bn"] [lang="en"]:not(.font-serif) {
   body[data-printing="routine"] #routine .grid { min-width: 0 !important; }
   body[data-printing="routine"] #routine * { color: #000 !important; }
 }
+
+/* Printing the academic calendar: page content only, past entries at full strength. */
+@media print {
+  body:has([data-print-page="calendar"]) *:not(:has(main)):not(main):not(main *) { display: none !important; }
+  body:has([data-print-page="calendar"]) main * { color: #000 !important; background: transparent !important; }
+  body:has([data-print-page="calendar"]) main svg[aria-hidden="true"] { display: none !important; }
+}
