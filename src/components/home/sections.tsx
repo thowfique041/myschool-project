@@ -4,8 +4,7 @@ import Link from "@/components/i18n/Link";
 import { Badge, ButtonLink, Card, SectionHeading } from "@/components/ui/primitives";
 import { Picture } from "@/components/ui/Picture";
 import { Accordion } from "@/components/ui/Accordion";
-import { ArrowLink, DateBlock, NoticeRow, TeacherCard } from "@/components/shared/cards";
-import { TEACHER_TONES } from "@/components/shared/teacher-tones";
+import { ArrowLink, DateBlock, NoticeRow } from "@/components/shared/cards";
 import { ContactForm } from "@/components/forms/ContactForm";
 import type { HomeData, HomeContent, SectionCopy } from "./types";
 import { cn, formatDate, num } from "@/lib/utils";
@@ -410,57 +409,35 @@ export function GalleryPreview({ copy, data }: { copy: SectionCopy; data: HomeDa
 
 /* ------------------------------------------------ Teachers + quotes */
 
-export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
-  const picks = data.people.filter((t) => t.kind !== "staff");
+export function PeopleSection({ data }: { copy: SectionCopy; data: HomeData }) {
+  // The teacher strip was removed from the home page; guardian and student quotes remain here.
   const quotes = data.testimonials.slice(0, 2);
+  if (quotes.length === 0) return null;
   return (
     <section aria-labelledby="faculty-title" className="border-t border-line bg-surface py-14 sm:py-16">
       <div className="container-page">
-        <SectionHeading id="faculty-title" variant="small" title={copy.title} />
-        {/* Endless left-to-right strip, kept to the same width as the sections above. The second copy only fills the loop and is hidden from assistive tech. */}
-      <div className="marquee no-reveal mt-6" style={{ "--marquee-duration": `${Math.max(picks.length, 4) * 4.5}s` } as React.CSSProperties}>
-        <div className="marquee-track">
-          {[0, 1].map((copyNo) => (
-            <ul key={copyNo} className={cn("flex gap-4 pr-4", copyNo === 1 && "marquee-dup")} aria-hidden={copyNo === 1 || undefined} inert={copyNo === 1 || undefined}>
-              {picks.map((t) => (
-                <li key={t.id} className="w-52 shrink-0">
-                  <TeacherCard teacher={t} size="sm" tone={TEACHER_TONES[0]} />
-                </li>
-              ))}
-            </ul>
+        <h2 id="faculty-title" className="font-serif text-2xl leading-tight font-semibold text-heading">{data.t.home.testimonials}</h2>
+        <ul className="mt-6 grid gap-10 md:grid-cols-2 md:gap-12">
+          {quotes.map((q) => (
+            <li key={q.name}>
+              <figure>
+                <blockquote>
+                  <p className="font-serif text-xl leading-relaxed text-heading italic">
+                    <span aria-hidden className="mr-1 text-3xl leading-none text-leaf-600 not-italic dark:text-accent">“</span>
+                    {q.quote}”
+                  </p>
+                </blockquote>
+                <figcaption className="mt-4 flex items-center gap-3 text-sm">
+                  <span aria-hidden className="h-px w-8 bg-leaf-600 dark:bg-accent" />
+                  <span>
+                    <span className="font-semibold text-heading">{q.name}</span>
+                    <span className="text-muted">, {q.role}</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
           ))}
-        </div>
-      </div>
-        <p className="mt-4">
-          <ArrowLink href="/teachers">{data.t.home.allTeachers}</ArrowLink>
-        </p>
-
-        {quotes.length > 0 && (
-          <div className="mt-14 border-t border-line pt-10">
-            <h3 className="font-serif text-2xl leading-tight font-semibold text-heading">{data.t.home.testimonials}</h3>
-            <ul className="mt-6 grid gap-10 md:grid-cols-2 md:gap-12">
-              {quotes.map((q) => (
-                <li key={q.name}>
-                  <figure>
-                    <blockquote>
-                      <p className="font-serif text-xl leading-relaxed text-heading italic">
-                        <span aria-hidden className="mr-1 text-3xl leading-none text-leaf-600 not-italic dark:text-accent">“</span>
-                        {q.quote}”
-                      </p>
-                    </blockquote>
-                    <figcaption className="mt-4 flex items-center gap-3 text-sm">
-                      <span aria-hidden className="h-px w-8 bg-leaf-600 dark:bg-accent" />
-                      <span>
-                        <span className="font-semibold text-heading">{q.name}</span>
-                        <span className="text-muted">, {q.role}</span>
-                      </span>
-                    </figcaption>
-                  </figure>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        </ul>
       </div>
     </section>
   );
