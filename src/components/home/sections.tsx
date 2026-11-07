@@ -33,10 +33,23 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
       <div className="container-page grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
           <SectionHeading id="notices-title" variant="small" title={copy.title} />
-          <div className="mt-4 divide-y divide-line border-y border-line">
-            {data.notices.slice(0, 3).map((n) => (
-              <NoticeRow key={n.slug} notice={n} compact />
-            ))}
+          {/* Endless bottom-to-top list, about three notices tall. Pauses on hover or keyboard focus.
+              The second copy only fills the loop and is hidden from assistive tech. */}
+          <div
+            className="vmarquee no-reveal mt-4 h-[19.5rem] border-y border-line"
+            style={{ "--marquee-duration": `${Math.max(data.notices.length, 3) * 4}s` } as React.CSSProperties}
+          >
+            <div className="vmarquee-track">
+              {[0, 1].map((copyNo) => (
+                <ul key={copyNo} className={cn(copyNo === 1 && "marquee-dup")} aria-hidden={copyNo === 1 || undefined} inert={copyNo === 1 || undefined}>
+                  {data.notices.map((n) => (
+                    <li key={n.slug} className="border-b border-line">
+                      <NoticeRow notice={n} compact />
+                    </li>
+                  ))}
+                </ul>
+              ))}
+            </div>
           </div>
           <p className="mt-4">
             <ArrowLink href="/notices">{data.t.home.allNotices}</ArrowLink>

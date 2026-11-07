@@ -234,3 +234,25 @@ html[lang="bn"] [lang="en"]:not(.font-serif) {
   .marquee-track { animation: none; padding-inline: 1rem; }
   .marquee-dup { display: none; }
 }
+
+/* Endless bottom-to-top notice list on the home page. */
+@keyframes marquee-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+.vmarquee {
+  overflow: hidden;
+  contain: paint;
+  mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+}
+.vmarquee-track {
+  animation: marquee-up var(--marquee-duration, 40s) linear infinite;
+}
+.vmarquee:hover .vmarquee-track,
+.vmarquee:focus-within .vmarquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .vmarquee { overflow-y: auto; mask-image: none; }
+  .vmarquee-track { animation: none; }
+}
