@@ -204,7 +204,7 @@ export default async function AcademicPage() {
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             {subjectsByLevel.map((s) => (
               <div key={s.level}>
-                <div className="lift h-full rounded-md border border-line bg-surface p-6">
+                <div className="lift h-full border border-line bg-surface p-6">
                   <h3 className="font-semibold text-heading">{s.level}</h3>
                   <p className="mt-3 text-xs font-semibold text-muted uppercase">{c.compulsory}</p>
                   <ul className="mt-2 flex flex-wrap gap-1.5">
@@ -242,7 +242,7 @@ export default async function AcademicPage() {
               {c.fullCal}
             </ButtonLink>
           </div>
-          <ul className="divide-y divide-line rounded-md border border-line bg-surface">
+          <ul className="divide-y divide-line border border-line bg-surface">
             {upcoming.length === 0 && <li className="px-5 py-4 text-muted">{t.common.upcomingNone}</li>}
             {upcoming.map((e) => (
               <li key={e.date + e.title} className="flex flex-col gap-1 px-5 py-4 sm:flex-row sm:items-center sm:gap-6">
@@ -266,7 +266,7 @@ export default async function AcademicPage() {
             {site.demoNote && <SampleTag />}
           </div>
           {routines.map((routine) => (
-          <div key={routine.title} className="mt-6 rounded-md border border-line">
+          <div key={routine.title} className="mt-6 border border-line">
             <p className="border-b border-line bg-paper px-4 py-3 text-sm font-semibold text-heading">{routine.title}</p>
             <RoutineGrid
               rows={routine.rows}
@@ -298,7 +298,7 @@ export default async function AcademicPage() {
             <SectionHeading id="exams-h" title={c.exams} />
             <ol className="mt-6 space-y-4">
               {examSystem.map((e, i) => (
-                <li key={e.title} className="flex gap-4 rounded-md border border-line bg-surface p-5">
+                <li key={e.title} className="flex gap-4 border border-line bg-surface p-5">
                   <span className="font-serif text-2xl font-semibold text-navy-200 dark:text-navy-600">{n(i + 1)}</span>
                   <div>
                     <h3 className="font-semibold text-heading">{e.title}</h3>
@@ -314,7 +314,7 @@ export default async function AcademicPage() {
           <div>
             <h3 className="font-serif text-xl font-semibold text-heading">{c.grading}</h3>
             <p className="mt-1 text-sm text-muted">{c.gradingText}</p>
-            <table className="mt-4 w-full overflow-hidden rounded-md border border-line bg-surface text-sm">
+            <table className="mt-4 w-full overflow-hidden border border-line bg-surface text-sm">
               <thead className="bg-brand text-left text-xs text-white uppercase">
                 <tr>
                   <th scope="col" className="px-4 py-2.5 font-semibold">{c.marks}</th>
@@ -342,7 +342,7 @@ export default async function AcademicPage() {
           <ul className="mt-6 grid gap-4 md:grid-cols-3">
             {resources.length === 0 && <li className="text-muted">{c.resNone}</li>}
             {resources.map((r) => (
-              <li key={r.id} className="flex items-start gap-4 rounded-md border border-line p-5">
+              <li key={r.id} className="flex items-start gap-4 border border-line p-5">
                 <FileText aria-hidden className="mt-0.5 size-6 shrink-0 text-danger" />
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold text-heading">{r.title}</p>
@@ -365,7 +365,7 @@ export default async function AcademicPage() {
           <SectionHeading id="pol-h" title={c.pol} />
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             {policies.map((p) => (
-              <div key={p.id} className="rounded-md border border-line bg-surface p-6">
+              <div key={p.id} className="border border-line bg-surface p-6">
                 <h3 className="font-semibold text-heading">{p.title}</h3>
                 <ul className="mt-3 space-y-2 text-sm text-muted">
                   {p.points.map((pt) => (

@@ -58,7 +58,7 @@ export default async function NoticesPage() {
           <h2 className="sr-only">{c.title}</h2>
           <NoticeExplorer notices={notices} />
           <aside aria-label={c.upcoming} className="space-y-6">
-            <div className="rounded-md border border-line bg-surface p-5">
+            <div className="border border-line bg-surface p-5">
               <h2 className="font-semibold text-heading">{c.comingUp}</h2>
               <ul className="mt-3 space-y-3 text-sm">
                 {upcoming.length === 0 && <li className="text-muted">{t.common.upcomingNone}</li>}
@@ -77,7 +77,7 @@ export default async function NoticesPage() {
             </div>
             <a
               href="#downloads"
-              className="flex items-center gap-3 rounded-md border border-line-strong bg-tint p-4 text-sm font-semibold text-heading hover:border-navy-400"
+              className="flex items-center gap-3 border border-line-strong bg-tint p-4 text-sm font-semibold text-heading hover:border-navy-400"
             >
               <FileDown aria-hidden className="size-5 text-accent" />
               {c.downloads}

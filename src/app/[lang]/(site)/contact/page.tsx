@@ -277,14 +277,14 @@ export default async function ContactPage() {
           <div className="mt-16 grid gap-10 lg:grid-cols-[1fr_24rem] lg:gap-8">
             <div>
               <SectionHeading title={c.send} description={c.sendNote} />
-              <div className="mt-6 rounded-lg border border-line bg-surface p-5 sm:p-7">
+              <div className="mt-6 border border-line bg-surface p-5 sm:p-7">
                 <ContactForm wide to={site.email} />
               </div>
             </div>
 
             <div>
               <SectionHeading title={c.who} />
-              <ul className="mt-6 divide-y divide-line overflow-hidden rounded-lg border border-line bg-surface">
+              <ul className="mt-6 divide-y divide-line overflow-hidden border border-line bg-surface">
                 {whoRows.map((r) => {
                   const Icon = r.icon;
                   return (
@@ -311,7 +311,7 @@ export default async function ContactPage() {
                 })}
               </ul>
 
-              <div className="mt-6 overflow-hidden rounded-lg border border-line bg-surface">
+              <div className="mt-6 overflow-hidden border border-line bg-surface">
                 {mapOk ? <MapEmbed url={site.mapUrl} title={`${c.map} ${site.name}`} /> : <MapPlaceholder c={c} />}
                 <div className="border-t border-line p-5">
                   <p className="font-bold text-heading">{bn ? site.nameBn : site.name}</p>

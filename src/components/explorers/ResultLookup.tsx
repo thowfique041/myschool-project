@@ -51,7 +51,7 @@ export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDe
 
   return (
     <div className="grid gap-8 lg:grid-cols-[22rem_1fr]">
-      <form noValidate onSubmit={onSubmit} className="h-fit space-y-4 rounded-lg border border-line bg-surface p-6 shadow-[var(--shadow-card)]">
+      <form noValidate onSubmit={onSubmit} className="h-fit space-y-4 border border-line bg-surface p-6">
         <div className="flex items-center justify-between">
           <h3 className="font-semibold text-heading">{t.results.searchTitle}</h3>
           {isDemo && <Badge tone="gold">{t.common.demoData}</Badge>}
@@ -107,7 +107,7 @@ export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDe
             </motion.div>
           )}
           {state.kind === "loading" && (
-            <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-3 rounded-lg border border-line bg-surface p-6">
+            <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-3 border border-line bg-surface p-6">
               {[0, 1, 2, 3, 4].map((i) => (
                 <div key={i} className="h-5 animate-pulse rounded bg-paper-dark" style={{ width: `${90 - i * 12}%` }} />
               ))}
@@ -115,7 +115,7 @@ export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDe
             </motion.div>
           )}
           {state.kind === "notfound" && (
-            <motion.div key="nf" initial={reduce ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} role="alert" className="flex gap-3 rounded-lg border border-signal-100 bg-signal-50 p-6">
+            <motion.div key="nf" initial={reduce ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} role="alert" className="flex gap-3 border border-signal-100 bg-signal-50 p-6">
               <AlertCircle aria-hidden className="size-6 shrink-0 text-danger" />
               <div>
                 <p className="font-semibold text-danger">{t.results.notFound}</p>
@@ -131,7 +131,7 @@ export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDe
               initial={reduce ? false : { opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="overflow-hidden rounded-lg border border-line bg-surface shadow-[var(--shadow-card)]"
+              className="overflow-hidden border border-line bg-surface"
             >
               <header className="flex flex-wrap items-start justify-between gap-4 bg-navy-900 px-6 py-5 text-white">
                 <div>

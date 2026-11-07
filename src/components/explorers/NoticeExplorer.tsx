@@ -143,7 +143,7 @@ export function NoticeExplorer({ notices }: { notices: Notice[] }) {
           tabIndex={results.length > VISIBLE ? 0 : undefined}
           aria-label={results.length > VISIBLE ? t.notices.listLabel : undefined}
           role={results.length > VISIBLE ? "region" : undefined}
-          className="relative mt-2 divide-y divide-line overflow-y-auto overscroll-contain rounded-[var(--radius-card)] border border-line bg-surface px-5 shadow-[var(--shadow-card)] [scrollbar-color:var(--color-line-strong)_transparent] [scrollbar-width:thin]"
+          className="relative mt-2 divide-y divide-line overflow-y-auto overscroll-contain rounded-[var(--radius-card)] border border-line bg-surface px-5 [scrollbar-color:var(--color-line-strong)_transparent] [scrollbar-width:thin]"
         >
           {results.map((n) => (
             <NoticeRow key={n.slug} notice={n} />

@@ -64,7 +64,7 @@ export function TeacherDirectory({ teachers, departments }: { teachers: Teacher[
           ))}
         </ul>
       ) : (
-        <div className="mt-3 rounded-md border border-dashed border-line bg-surface px-6 py-12 text-center">
+        <div className="mt-3 border border-dashed border-line bg-surface px-6 py-12 text-center">
           <p className="font-semibold text-heading">{t.teachers.none}</p>
           <button
             type="button"

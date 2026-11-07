@@ -31,7 +31,7 @@ export default async function NewsPage() {
 
       {featured && <section aria-labelledby="featured" className="py-12 sm:py-16">
         <div className="container-page grid gap-8 lg:grid-cols-[1.4fr_0.6fr]">
-          <article className="group relative grid overflow-hidden rounded-lg border border-line bg-surface shadow-[var(--shadow-card)] md:grid-cols-2">
+          <article className="group relative grid overflow-hidden border border-line bg-surface md:grid-cols-2">
             <Picture image={featured.image} ratio="aspect-[16/10] md:aspect-auto md:h-full" sizes="(min-width: 768px) 40vw, 100vw" />
             <div className="flex flex-col p-6 sm:p-8">
               <div className="flex items-center gap-3 text-xs text-muted">
