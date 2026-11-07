@@ -4,16 +4,13 @@ import Link from "@/components/i18n/Link";
 import { Badge, ButtonLink, Card, SectionHeading } from "@/components/ui/primitives";
 import { Picture } from "@/components/ui/Picture";
 import { Accordion } from "@/components/ui/Accordion";
-import { ArrowLink, NoticeRow, TeacherCard } from "@/components/shared/cards";
+import { ArrowLink, DateBlock, NoticeRow, TeacherCard } from "@/components/shared/cards";
 import { TEACHER_TONES } from "@/components/shared/teacher-tones";
 import { ContactForm } from "@/components/forms/ContactForm";
 import type { HomeData, HomeContent, SectionCopy } from "./types";
 import { cn, formatDate, num } from "@/lib/utils";
-import { FlaskConical, HeartPulse, Library, Monitor, Trophy, Users } from "lucide-react";
 import { images } from "@/data/images";
 
-const STATS_IMAGE = images.campus;
-const STATS_PHOTO = images.scienceLab;
 
 /** Plain underlined text link, used where an arrow link would be one too many. */
 function TextLink({ href, children }: { href: string; children: React.ReactNode }) {
@@ -33,10 +30,18 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
       <div className="container-page grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
           <SectionHeading id="notices-title" variant="small" title={copy.title} />
-          {/* Endless bottom-to-top list, about three notices tall. Pauses on hover or keyboard focus.
-              The second copy only fills the loop and is hidden from assistive tech. */}
+          {/* A framed announcement board: label bar, then an endless bottom-to-top list about three notices tall.
+              Pauses on hover or keyboard focus; the second copy only fills the loop and is hidden from assistive tech. */}
+          <div className="mt-4 border border-line bg-surface">
+          <div className="flex items-center justify-between gap-4 border-b-2 border-navy-800 px-5 py-3 dark:border-navy-300">
+            <p className="eyebrow flex items-center gap-2 text-heading">
+              <span aria-hidden className="size-2 rounded-full bg-leaf-600 dark:bg-accent" />
+              {data.t.ticker.latestBn}
+            </p>
+            <ArrowLink href="/notices">{data.t.home.allNotices}</ArrowLink>
+          </div>
           <div
-            className="vmarquee no-reveal mt-4 h-[19.5rem] border-y border-line"
+            className="vmarquee no-reveal h-[19.5rem] px-5"
             style={{ "--marquee-duration": `${Math.max(data.notices.length, 3) * 4}s` } as React.CSSProperties}
           >
             <div className="vmarquee-track">
@@ -51,13 +56,11 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
               ))}
             </div>
           </div>
-          <p className="mt-4">
-            <ArrowLink href="/notices">{data.t.home.allNotices}</ArrowLink>
-          </p>
+          </div>
         </div>
 
-        <div id="admission" className="self-start rounded-md border border-line-strong bg-surface">
-          <div className="border-b border-line bg-tint px-5 py-4 sm:px-6">
+        <div id="admission" className="self-start border border-line bg-surface">
+          <div className="border-b-2 border-leaf-600 bg-tint px-5 py-4 sm:px-6 dark:border-accent">
             <Badge tone={adm.open ? "leaf" : "neutral"}>{adm.open ? data.t.home.admissionOpen : data.t.home.admissionClosed}</Badge>
             <h2 className="mt-2 font-serif text-2xl font-semibold text-heading">
               {data.t.home.admission} {num(adm.year, data.lang)}
@@ -114,26 +117,30 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
           </p>
         </div>
 
-        <figure id="principal" className="grid gap-5 border-l-4 border-navy-700 pl-5 sm:grid-cols-[auto_1fr] sm:pl-7 dark:border-navy-300">
-          {p.photo ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={p.photo} alt="" className="size-28 rounded-full border-4 border-surface object-cover ring-2 ring-navy-700 dark:ring-navy-300" />
-          ) : (
-            <DefaultAvatar gender={p.gender === "male" ? "male" : "female"} className="size-28 rounded-full border-4 border-surface ring-2 ring-navy-700 dark:ring-navy-300" />
-          )}
-          <div>
-            <h2 className="font-serif text-2xl font-semibold text-heading">{data.t.home.principalMessage}</h2>
-            <blockquote className="mt-3 leading-relaxed text-ink">
-              <p>{p.quote}</p>
-            </blockquote>
-            <figcaption className="mt-4 text-sm">
-              <span className="block font-semibold text-heading">{p.name}</span>
-              <span className="block text-muted">{p.title}</span>
-            </figcaption>
-            <p className="mt-4">
-              <TextLink href="/about#principal">{data.t.home.readFull}</TextLink>
+        {/* Principal: an editorial pull quote on a beige panel, signed with a small portrait. */}
+        <figure id="principal" className="bg-tint p-7 sm:p-10">
+          <h2 className="font-serif text-2xl leading-tight font-semibold text-heading">{data.t.home.principalMessage}</h2>
+          <blockquote className="mt-5">
+            <p className="font-serif text-[1.35rem] leading-snug text-heading italic sm:text-2xl">
+              <span aria-hidden className="mr-1 font-serif text-4xl leading-none text-leaf-600 not-italic dark:text-accent">“</span>
+              {p.quote}
             </p>
-          </div>
+          </blockquote>
+          <figcaption className="mt-7 flex items-center gap-4 border-t border-line-strong pt-6">
+            {p.photo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={p.photo} alt="" className="size-20 shrink-0 object-cover" />
+            ) : (
+              <DefaultAvatar gender={p.gender === "male" ? "male" : "female"} className="size-20 shrink-0 rounded-none" />
+            )}
+            <div>
+              <span className="block font-serif text-lg font-semibold text-heading">{p.name}</span>
+              <span className="block text-sm text-muted">{p.title}</span>
+              <span className="mt-1.5 block">
+                <TextLink href="/about#principal">{data.t.home.readFull}</TextLink>
+              </span>
+            </div>
+          </figcaption>
         </figure>
       </div>
     </section>
@@ -203,30 +210,24 @@ export function StatsSection({ home, data }: { home: HomeContent; copy?: Section
     .map((s) => ({ label: s.key === "ssc" && ssc ? `${s.label} ${ssc.year}` : s.label, value: s.value || computed[s.key] || "" }))
     .filter((s) => s.value);
   if (items.length === 0) return null;
+  // A quiet information strip: the figures read across one ruled line, with no photo, boxes or icons.
   return (
-    <section aria-labelledby="stats-title" className="relative isolate overflow-hidden bg-navy-950 py-16 text-white sm:py-20">
-      <Image src={STATS_IMAGE.src} alt="" fill sizes="100vw" className="-z-20 object-cover" />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-navy-950/80" />
-      <div className="container-page">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 id="stats-title" className="font-serif text-3xl font-semibold sm:text-4xl">
+    <section aria-labelledby="stats-title" className="bg-navy-900 py-12 text-white sm:py-14">
+      <div className="container-page grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:items-center lg:gap-12">
+        <div>
+          <h2 id="stats-title" className="font-serif text-2xl font-semibold">
             {data.lang === "bn" ? data.site.nameBn : data.site.name}
           </h2>
-          {home.statsText && <p className="mt-3 text-base text-navy-100 sm:text-lg">{home.statsText}</p>}
+          {home.statsText && <p className="mt-2 max-w-sm leading-relaxed text-navy-100">{home.statsText}</p>}
         </div>
-        <div className="mt-10 grid items-stretch gap-6 lg:grid-cols-2 lg:gap-8">
-          <div className="relative min-h-64 overflow-hidden rounded-md sm:min-h-80">
-            <Image src={STATS_PHOTO.src} alt="" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
-          </div>
-          <dl className="grid grid-cols-2 gap-4 sm:gap-6">
-            {items.map((s) => (
-              <div key={s.label} className="flex flex-col items-center justify-center rounded-md border border-white/25 bg-white/[0.04] px-3 py-8 text-center sm:py-10">
-                <dd className="font-serif text-4xl font-semibold tabular-nums sm:text-5xl">{s.value}</dd>
-                <dt className="mt-2 text-sm font-semibold tracking-wide text-navy-100 uppercase sm:text-base">{s.label}</dt>
-              </div>
-            ))}
-          </dl>
-        </div>
+        <dl className="grid grid-cols-2 border-t border-white/20 sm:grid-cols-4 sm:border-t-0 sm:border-l">
+          {items.map((s) => (
+            <div key={s.label} className="border-b border-white/20 py-5 sm:border-b-0 sm:px-6 sm:py-1 sm:not-first:border-l">
+              <dd className="font-serif text-4xl font-semibold tabular-nums sm:text-[2.6rem]">{s.value}</dd>
+              <dt className="mt-1 text-sm text-on-navy-accent">{s.label}</dt>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );
@@ -282,31 +283,22 @@ export function ResultsSection({ copy, data }: { copy: SectionCopy; data: HomeDa
 
 /* ------------------------------------------------------- Facilities */
 
-const FACILITY_ICONS = [FlaskConical, Monitor, Library, Trophy, HeartPulse, Users];
-
 export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
-  // Checkerboard of filled cards, like a printed prospectus page.
-  const filled: Record<number, string> = { 1: "bg-navy-800 text-white border-navy-800", 3: "bg-navy-800 text-white border-navy-800", 5: "bg-navy-800 text-white border-navy-800" };
   return (
     <section aria-labelledby="why-title" className="border-t border-line py-14 sm:py-16">
       <div className="container-page">
         <SectionHeading id="why-title" variant="small" title={copy.title} />
-        <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {data.facilities.map(({ title, text }, i) => {
-            const Icon = FACILITY_ICONS[i % FACILITY_ICONS.length];
-            const fill = filled[i];
-            return (
-              <li key={title} className={cn("lift rounded-md border p-6", fill ?? "border-line bg-surface")}>
-                <span className={cn("flex size-11 items-center justify-center rounded-md", fill ? "bg-white/10 text-on-navy-accent" : "bg-tint text-heading")}>
-                  <Icon aria-hidden className="size-5" />
-                </span>
-                <h3 className={cn("mt-4 text-lg font-semibold", fill ? "text-white" : "text-heading")}>{title}</h3>
-                <p className={cn("mt-1.5 text-sm leading-relaxed", fill ? "text-white/85" : "text-muted")}>{text}</p>
-              </li>
-            );
-          })}
-        </ul>
-        <p className="mt-6 text-center">
+        {/* A numbered prospectus-style list: hairline grid, no icons or boxes. */}
+        <ol className="mt-6 grid border-t-2 border-navy-800 sm:grid-cols-2 lg:grid-cols-3 dark:border-navy-300">
+          {data.facilities.map(({ title, text }, i) => (
+            <li key={title} className="lift border-b border-line py-6 hover:bg-surface sm:px-6 sm:odd:pl-0 lg:odd:pl-6 lg:[&:nth-child(3n+1)]:pl-0">
+              <p aria-hidden className="font-serif text-sm font-semibold text-leaf-600 tabular-nums dark:text-accent">{num(String(i + 1).padStart(2, "0"), data.lang)}</p>
+              <h3 className="mt-2 font-serif text-xl font-semibold text-heading">{title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{text}</p>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-6">
           <TextLink href="/about#campus">{data.t.home.allFacilities}</TextLink>
         </p>
       </div>
@@ -324,28 +316,31 @@ export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData 
     <section aria-labelledby="news-title" className="border-t border-line bg-surface py-14 sm:py-16">
       <div className="container-page">
         <SectionHeading id="news-title" variant="small" title={copy.title} />
-        <div className="mt-6 grid gap-8 lg:grid-cols-[1.3fr_1fr]">
+        <div className="mt-6 grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:gap-12">
+          {/* Lead story: photo, then a dated kicker, headline and standfirst. */}
           <article>
-            <Picture image={featured.image} className="rounded-md" sizes="(min-width: 1024px) 55vw, 100vw" />
-            <time dateTime={featured.date} className="mt-4 block text-sm text-muted">
-              {formatDate(featured.date, data.lang)}
-            </time>
-            <h3 className="mt-1 font-serif text-2xl leading-snug font-semibold text-heading">
-              <Link href={`/news/${featured.slug}`} className="hover:underline underline-offset-4">
+            <Link href={`/news/${featured.slug}`} tabIndex={-1} aria-hidden className="block">
+              <Picture image={featured.image} sizes="(min-width: 1024px) 55vw, 100vw" />
+            </Link>
+            <p className="eyebrow mt-5 text-leaf-600 dark:text-accent">
+              <time dateTime={featured.date}>{formatDate(featured.date, data.lang)}</time>
+              {featured.categoryLabel && <span className="text-muted"> · {featured.categoryLabel}</span>}
+            </p>
+            <h3 className="mt-2 font-serif text-[1.7rem] leading-tight font-semibold text-heading">
+              <Link href={`/news/${featured.slug}`} className="hover:text-accent">
                 {featured.title}
               </Link>
             </h3>
-            <p className="mt-2 leading-relaxed text-muted">{featured.excerpt}</p>
+            <p className="mt-3 max-w-xl leading-relaxed text-muted">{featured.excerpt}</p>
           </article>
+          {/* Other stories: date block, headline. */}
           <div>
-            <ul className="divide-y divide-line border-y border-line">
+            <ul className="divide-y divide-line border-y-2 border-y-navy-800 dark:border-y-navy-300">
               {rest.map((a) => (
-                <li key={a.slug} className="py-3">
-                  <time dateTime={a.date} className="text-sm text-muted">
-                    {formatDate(a.date, data.lang)}
-                  </time>
-                  <h3 className="mt-0.5 leading-snug font-semibold text-heading">
-                    <Link href={`/news/${a.slug}`} className="hover:underline underline-offset-4">
+                <li key={a.slug} className="flex gap-4 py-4">
+                  <DateBlock iso={a.date} />
+                  <h3 className="self-center leading-snug font-semibold text-heading">
+                    <Link href={`/news/${a.slug}`} className="hover:text-accent">
                       {a.title}
                     </Link>
                   </h3>
@@ -364,11 +359,23 @@ export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData 
 
 /* --------------------------------------------------------- Gallery */
 
+/** Cell spans for the 4-column gallery: lead 2×2, a tall photo, a wide one, then singles (12 cells). */
+const GALLERY_SPANS = [
+  "col-span-2 row-span-2",
+  "",
+  "md:row-span-2",
+  "",
+  "col-span-2",
+  "",
+  "",
+];
+
 export function GalleryPreview({ copy, data }: { copy: SectionCopy; data: HomeData }) {
   // The featured news photo is already on this page; don't show it twice.
   const featured = data.news.find((n) => n.featured) ?? data.news[0];
-  const used = new Set([featured?.image.src, STATS_IMAGE.src, STATS_PHOTO.src, ...(data.slideImages ?? [])].filter(Boolean));
-  const picks = data.gallery.filter((g) => !used.has(g.image.src)).slice(0, 8);
+  // The campus photo in the library shows another institution's building, so it is not used as a lead image here.
+  const used = new Set([featured?.image.src, images.campus.src, ...(data.slideImages ?? [])].filter(Boolean));
+  const picks = data.gallery.filter((g) => !used.has(g.image.src)).slice(0, GALLERY_SPANS.length);
   if (picks.length === 0) return null;
   return (
     <section aria-labelledby="gallery-title" className="border-t border-line py-14 sm:py-16">
@@ -377,14 +384,21 @@ export function GalleryPreview({ copy, data }: { copy: SectionCopy; data: HomeDa
           <SectionHeading id="gallery-title" variant="small" title={copy.title} />
           <TextLink href="/gallery">{data.t.home.openGallery}</TextLink>
         </div>
-        <ul className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
-          {picks.map((g) => (
-            <li key={g.id}>
-              <figure>
-                <Link href="/gallery" className="block" aria-label={data.t.home.galleryOpen(g.caption)}>
-                  <Picture image={g.image} ratio="aspect-[4/3]" className="rounded-md" sizes="(min-width: 768px) 25vw, 50vw" />
+        {/* Asymmetric editorial grid: one lead photograph, the rest arranged around it. */}
+        <ul className="mt-6 grid grid-flow-dense auto-rows-[9rem] grid-cols-2 gap-2 sm:auto-rows-[11rem] md:grid-cols-4 md:gap-3">
+          {picks.map((g, i) => (
+            <li key={g.id} className={GALLERY_SPANS[i] ?? ""}>
+              <figure className="group relative h-full overflow-hidden bg-paper-dark">
+                <Link href="/gallery" className="block h-full" aria-label={data.t.home.galleryOpen(g.caption)}>
+                  <Image
+                    src={g.image.src}
+                    alt={g.image.alt}
+                    fill
+                    sizes={i === 0 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 50vw"}
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                  />
                 </Link>
-                <figcaption className="mt-1.5 text-sm text-muted">{g.caption}</figcaption>
+                <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 bg-navy-950/80 px-3 py-1.5 text-xs text-white sm:text-sm">{g.caption}</figcaption>
               </figure>
             </li>
           ))}
@@ -422,17 +436,24 @@ export function PeopleSection({ copy, data }: { copy: SectionCopy; data: HomeDat
         </p>
 
         {quotes.length > 0 && (
-          <div className="mt-12 max-w-3xl">
-            <h3 className="font-serif text-xl font-semibold text-heading">{data.t.home.testimonials}</h3>
-            <ul className="mt-4 space-y-6">
+          <div className="mt-14 border-t border-line pt-10">
+            <h3 className="font-serif text-2xl leading-tight font-semibold text-heading">{data.t.home.testimonials}</h3>
+            <ul className="mt-6 grid gap-10 md:grid-cols-2 md:gap-12">
               {quotes.map((q) => (
                 <li key={q.name}>
-                  <figure className="border-l-4 border-line-strong pl-4">
-                    <blockquote className="leading-relaxed text-ink">
-                      <p>“{q.quote}”</p>
+                  <figure>
+                    <blockquote>
+                      <p className="font-serif text-xl leading-relaxed text-heading italic">
+                        <span aria-hidden className="mr-1 text-3xl leading-none text-leaf-600 not-italic dark:text-accent">“</span>
+                        {q.quote}”
+                      </p>
                     </blockquote>
-                    <figcaption className="mt-2 text-sm text-muted">
-                      <span className="font-semibold text-heading">{q.name}</span>, {q.role}
+                    <figcaption className="mt-4 flex items-center gap-3 text-sm">
+                      <span aria-hidden className="h-px w-8 bg-leaf-600 dark:bg-accent" />
+                      <span>
+                        <span className="font-semibold text-heading">{q.name}</span>
+                        <span className="text-muted">, {q.role}</span>
+                      </span>
                     </figcaption>
                   </figure>
                 </li>
