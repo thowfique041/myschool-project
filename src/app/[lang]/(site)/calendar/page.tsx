@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { Badge, DemoNote } from "@/components/ui/primitives";
-import { getCategories, getDownloads, getEvents, getSite } from "@/content/site-content";
-import type { CalendarEvent } from "@/types";
-import { datePartsL, formatDate, toBnDigits } from "@/lib/utils";
+import { Download } from "lucide-react";
+import { DemoNote } from "@/components/ui/primitives";
+import { CalendarExplorer } from "@/components/calendar/CalendarExplorer";
+import { PrintButton } from "@/components/calendar/PrintButton";
+import { getCategories, getDownloads, getEvents, getSite, getToday } from "@/content/site-content";
 import { getI18n } from "@/i18n/server";
 
 const copy = {
@@ -18,6 +19,13 @@ const copy = {
     until: "Until",
     empty: "No calendar entries have been published yet.",
     sample: "This calendar is sample content. Always confirm dates from the official notice board.",
+    print: "Print calendar",
+    all: "All events",
+    filter: "Filter by type",
+    months: "Jump to month",
+    nextUp: "Next up",
+    past: "Past",
+    shown: "Showing {n} of {total} entries",
   },
   bn: {
     title: "একাডেমিক ক্যালেন্ডার",
@@ -30,6 +38,13 @@ const copy = {
     until: "চলবে",
     empty: "এখনো ক্যালেন্ডারে কিছু প্রকাশ করা হয়নি।",
     sample: "এই ক্যালেন্ডারটি নমুনা। তারিখ সব সময় দাপ্তরিক নোটিশ বোর্ড থেকে মিলিয়ে নিন।",
+    print: "ক্যালেন্ডার প্রিন্ট",
+    all: "সব অনুষ্ঠান",
+    filter: "ধরন অনুযায়ী বাছাই",
+    months: "মাসে যান",
+    nextUp: "পরবর্তী",
+    past: "অতীত",
+    shown: "{total}টির মধ্যে {n}টি দেখানো হচ্ছে",
   },
 };
 
@@ -38,85 +53,45 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: copy[lang].title, description: copy[lang].meta };
 }
 
-const tone: Record<string, "navy" | "leaf" | "signal" | "gold" | "neutral"> = {
-  exam: "navy",
-  holiday: "signal",
-  event: "leaf",
-  academic: "neutral",
-  admission: "gold",
-};
-
 const monthNames = {
   en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
   bn: ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"],
 };
 
 export default async function CalendarPage() {
-  const [calendarEvents, types, downloads, site, { lang }] = await Promise.all([getEvents(), getCategories("event"), getDownloads(), getSite(), getI18n()]);
+  const [calendarEvents, types, downloads, site, today, { lang }] = await Promise.all([getEvents(), getCategories("event"), getDownloads(), getSite(), getToday(), getI18n()]);
   const c = copy[lang];
   const calendarFile = downloads.find((d) => /calendar|ক্যালেন্ডার/i.test(d.title));
-  const groups = new Map<string, CalendarEvent[]>();
-  for (const e of [...calendarEvents].sort((a, b) => a.date.localeCompare(b.date))) {
-    const key = e.date.slice(0, 7);
-    groups.set(key, [...(groups.get(key) ?? []), e]);
-  }
 
   return (
     <>
-      <PageHeader title={c.title} titleBn={c.alt} crumbs={[{ label: c.crumb, href: "/academic" }]} description={c.intro}>
-        {calendarFile && <a href={calendarFile.href} target="_blank" rel="noopener" className="mt-6 inline-flex min-h-11 items-center rounded-lg bg-white px-5 text-sm font-semibold text-navy-900 hover:bg-navy-50">
-          {c.download}
-        </a>}
-      </PageHeader>
-      <section className="py-12 sm:py-16">
-        <div className="container-page max-w-4xl">
-          <ul className="mb-8 flex flex-wrap gap-2" aria-label={c.legend}>
-            {Object.entries(types).map(([t, v]) => (
-              <li key={t}>
-                <Badge tone={tone[t] ?? "neutral"}>{v.label}</Badge>
-              </li>
-            ))}
-          </ul>
-          <div className="space-y-10">
-            {[...groups.entries()].map(([key, events]) => {
-              const [y, m] = key.split("-").map(Number);
-              return (
-                <section key={key} aria-labelledby={`m-${key}`}>
-                  <h2 id={`m-${key}`} className="font-serif text-2xl leading-tight font-semibold text-heading">
-                    {monthNames[lang][m - 1]} {lang === "bn" ? toBnDigits(y) : y}
-                  </h2>
-                  <ul className="mt-3 divide-y divide-line border-t-2 border-b border-t-navy-800 border-b-line bg-surface dark:border-t-navy-300">
-                    {events.map((e) => {
-                      const d = datePartsL(e.date, lang);
-                      return (
-                        <li key={e.date + e.title} className="flex items-start gap-4 p-4 sm:px-5">
-                          <span className="flex w-14 shrink-0 flex-col items-center border-r border-line pr-3 text-center">
-                            <span className="eyebrow text-leaf-600 dark:text-accent">{d.month}</span>
-                            <span className="mt-1 font-serif text-[1.7rem] leading-none font-semibold text-heading">{d.day}</span>
-                          </span>
-                          <div className="min-w-0 flex-1">
-                            <p className="font-semibold text-heading">{e.title}</p>
-                            {e.endDate && <p className="mt-0.5 text-xs text-muted">{lang === "bn" ? `${formatDate(e.endDate, lang)} পর্যন্ত` : `${c.until} ${formatDate(e.endDate, lang)}`}</p>}
-                            {(e.venue || e.description) && (
-                              <p className="mt-1 text-sm text-ink">
-                                {e.venue && <span className="font-medium">{e.venue}. </span>}
-                                {e.description}
-                              </p>
-                            )}
-                          </div>
-                          <Badge tone={tone[e.type] ?? "neutral"} className="shrink-0">
-                            {e.typeLabel ?? e.type}
-                          </Badge>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </section>
-              );
-            })}
+      <PageHeader
+        title={c.title}
+        titleBn={c.alt}
+        crumbs={[{ label: c.crumb, href: "/academic" }]}
+        description={c.intro}
+        aside={
+          <div className="print-hide flex flex-wrap gap-3 lg:justify-end">
+            {calendarFile && (
+              <a href={calendarFile.href} target="_blank" rel="noopener" download className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-beige px-5 font-bold text-navy-900 hover:bg-white">
+                <Download aria-hidden className="size-4" />
+                {c.download}
+              </a>
+            )}
+            <PrintButton label={c.print} />
           </div>
-          {groups.size === 0 && <p className="text-muted">{c.empty}</p>}
-          {site.demoNote && <DemoNote className="mt-10">{c.sample}</DemoNote>}
+        }
+      />
+      <section data-print-page="calendar" className="py-12 sm:py-16">
+        <div className="container-page">
+          <CalendarExplorer
+            events={calendarEvents}
+            types={Object.entries(types).map(([k, v]) => [k, v.label])}
+            today={today}
+            lang={lang}
+            labels={{ all: c.all, filter: c.filter, months: c.months, nextUp: c.nextUp, past: c.past, until: c.until, empty: c.empty, shown: c.shown, monthNames: monthNames[lang] }}
+          />
+          {site.demoNote && <DemoNote className="print-hide mt-10">{c.sample}</DemoNote>}
         </div>
       </section>
     </>
