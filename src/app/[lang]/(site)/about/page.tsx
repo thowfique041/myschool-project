@@ -206,10 +206,10 @@ export default async function AboutPage() {
                 <article key={label} className="lift relative isolate overflow-hidden rounded-xl bg-navy-900 p-6 text-white sm:p-7 dark:bg-navy-950 dark:ring-1 dark:ring-white/10">
                   <Icon aria-hidden strokeWidth={1.25} className="absolute -right-8 -bottom-10 -z-10 size-40 text-white/[0.06]" />
                   <div className="flex items-center gap-3">
-                    <span className="flex size-10 items-center justify-center rounded-lg bg-white/10 text-[#e8b84a]">
+                    <span className="flex size-10 items-center justify-center rounded-lg bg-white/10 text-on-navy-accent">
                       <Icon aria-hidden className="size-5" />
                     </span>
-                    <h3 className={`text-sm font-bold text-[#e8b84a] ${cap}`}>{label}</h3>
+                    <h3 className={`text-sm font-bold text-on-navy-accent ${cap}`}>{label}</h3>
                   </div>
                   <p className="mt-4 font-serif text-xl leading-snug font-semibold">{lead}</p>
                   {rest && <p className="mt-3 max-w-lg text-sm leading-relaxed text-navy-100">{rest}</p>}
@@ -226,7 +226,7 @@ export default async function AboutPage() {
                 <li key={v.title} className="lift border-line p-7 hover:rounded-xl hover:bg-surface not-first:border-t sm:[&:nth-child(2)]:border-t-0 sm:[&:nth-child(even)]:border-l lg:not-first:border-t-0 lg:not-first:border-l">
                   <div className="flex items-start justify-between">
                     <Icon aria-hidden className="size-7 text-heading" />
-                    <span aria-hidden className="font-serif text-3xl font-semibold text-[#9a7414] dark:text-[#e8b84a]">{n(String(i + 1).padStart(2, "0"))}</span>
+                    <span aria-hidden className="font-serif text-3xl font-semibold text-leaf-600 dark:text-accent">{n(String(i + 1).padStart(2, "0"))}</span>
                   </div>
                   <h4 className="mt-5 text-xl font-bold text-heading">{v.title}</h4>
                   <p className="mt-3 leading-relaxed text-muted">{v.text}</p>
@@ -249,7 +249,7 @@ export default async function AboutPage() {
             {/* Four overlapping round photos of the campus */}
             <ul aria-label={c.campusPhotos} className="relative mx-auto mt-10 aspect-[100/86] w-full max-w-md">
               {circlePhotos.map((ph, i) => (
-                <li key={ph.src} className={`absolute overflow-hidden rounded-full border-[6px] border-surface bg-paper-dark shadow-[0_10px_30px_-8px_rgb(15_31_54/0.45)] ${CIRCLE_POS[i]}`}>
+                <li key={ph.src} className={`absolute overflow-hidden rounded-full border-[6px] border-surface bg-paper-dark ${CIRCLE_POS[i]}`}>
                   <Image src={ph.src} alt={ph.alt} fill sizes="(min-width: 1024px) 220px, 45vw" className="object-cover" />
                   <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/85 to-transparent pt-8 pb-3 text-center text-sm font-semibold text-white sm:text-base">
                     {c.circles[i]}

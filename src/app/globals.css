@@ -9,49 +9,56 @@
  * signal-*: urgent / important notices only.
  */
 @theme {
-  --color-navy-50: #f1f5fa;
-  --color-navy-100: #dfe8f2;
-  --color-navy-200: #bdcde2;
-  --color-navy-300: #8fa9cb;
-  --color-navy-400: #5d7ea9;
-  --color-navy-500: #3c5f8e;
-  --color-navy-600: #2a4a76;
-  --color-navy-700: #1f3a60;
-  --color-navy-800: #172c4a;
-  --color-navy-900: #0f1f36;
-  --color-navy-950: #0a1526;
+  /* Deep navy #142B49 is navy-800. */
+  --color-navy-50: #f2f5f9;
+  --color-navy-100: #e1e7f0;
+  --color-navy-200: #c3cfdf;
+  --color-navy-300: #95a8c3;
+  --color-navy-400: #6681a5;
+  --color-navy-500: #426084;
+  --color-navy-600: #2d4a6f;
+  --color-navy-700: #1f3a5c;
+  --color-navy-800: #142b49;
+  --color-navy-900: #0f2139;
+  --color-navy-950: #0a1729;
 
-  --color-leaf-50: #eef8f3;
-  --color-leaf-100: #d5efe2;
-  --color-leaf-200: #a9dec4;
-  --color-leaf-500: #13895f;
-  --color-leaf-600: #0c7351;
-  --color-leaf-700: #0a5c42;
-  --color-leaf-800: #094a36;
+  /* "leaf" is the call-to-action colour: burgundy #7A2638 is leaf-600. */
+  --color-leaf-50: #fbf2f3;
+  --color-leaf-100: #f5e1e4;
+  --color-leaf-200: #e9bfc6;
+  --color-leaf-500: #95364b;
+  --color-leaf-600: #7a2638;
+  --color-leaf-700: #64202f;
+  --color-leaf-800: #4f1925;
 
   --color-signal-50: #fdf0f1;
   --color-signal-100: #fbdde0;
-  --color-signal-600: #c8283a;
-  --color-signal-700: #a51f30;
+  --color-signal-600: #b3243a;
+  --color-signal-700: #95192d;
 
-  --color-paper: #f4f5f7;
-  --color-paper-dark: #e8eaee;
-  --color-ink: #1a2433;
-  --color-muted: #5a6577;
-  --color-line: #dde1e7;
-  --color-gold: #b88a2e;
+  /* Warm ivory page, soft beige panels. */
+  --color-paper: #faf7f1;
+  --color-paper-dark: #f1e7d9;
+  --color-ink: #1c2330;
+  --color-muted: #5d6371;
+  --color-line: #e7dfd2;
+  --color-gold: #7a2638;
+  --color-beige: #f1e7d9;
+  --color-ivory: #faf7f1;
 
   /* Semantic tokens (overridden in html.dark) */
   --color-surface: #ffffff;
-  --color-heading: #0f1f36;
-  --color-subheading: #1f3a60;
-  --color-accent: #1f3a60;
-  --color-danger: #a51f30;
-  --color-tint: #f1f5fa;
-  --color-line-strong: #bdcde2;
-  --color-crest: #172c4a;
-  --color-brand: #172c4a;
-  --color-brand-hover: #1f3a60;
+  --color-heading: #142b49;
+  --color-subheading: #1f3a5c;
+  --color-accent: #7a2638;
+  --color-danger: #95192d;
+  --color-tint: #f1e7d9;
+  --color-line-strong: #d6c9b4;
+  --color-crest: #142b49;
+  --color-brand: #142b49;
+  --color-brand-hover: #1f3a5c;
+  /* Text and icons that sit on navy bands. */
+  --color-on-navy-accent: #e9d8bd;
 
   --font-sans: var(--font-sans-en), var(--font-bangla), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-serif-en), var(--font-bangla-serif), ui-serif, Georgia, serif;
@@ -60,29 +67,32 @@
   --radius-card: 0.375rem;
   /* Cards use borders; shadow-lift is only for floating elements (menus, back-to-top). */
   --shadow-card: none;
-  --shadow-lift: 0 2px 4px rgb(15 31 54 / 0.06), 0 14px 32px -12px rgb(15 31 54 / 0.22);
+  --shadow-lift: 0 1px 2px rgb(20 43 73 / 0.06), 0 8px 20px -12px rgb(20 43 73 / 0.22);
 }
 
 /* Dark theme overrides. */
 html.dark {
   color-scheme: dark;
-  --color-surface: #131d2e;
-  --color-paper: #0b1320;
-  --color-paper-dark: #1a2639;
-  --color-ink: #dfe6ef;
-  --color-muted: #9eabbd;
-  --color-line: #263449;
-  --color-line-strong: #3a4c66;
-  --color-heading: #f1f5fa;
-  --color-subheading: #c3d1e4;
-  --color-accent: #a9c2e6;
+  --color-surface: #13213a;
+  --color-paper: #0c1626;
+  --color-paper-dark: #1a2b45;
+  --color-ink: #e8e3d9;
+  --color-muted: #a7afbb;
+  --color-line: #243753;
+  --color-line-strong: #3a4f6e;
+  --color-heading: #f7f2e9;
+  --color-subheading: #d9cdb9;
+  --color-accent: #e7aab6;
   --color-danger: #f28b97;
-  --color-tint: #1b2840;
-  --color-crest: #2a4a76;
-  --color-brand: #2f5d96;
-  --color-brand-hover: #3a6eaf;
-  --color-leaf-50: #10291f;
-  --color-leaf-100: #15382a;
+  --color-tint: #1b2c46;
+  --color-crest: #2d4a6f;
+  --color-brand: #2d4a6f;
+  --color-brand-hover: #3a5c86;
+  --color-leaf-50: #2a1219;
+  --color-leaf-100: #3a1922;
+  --color-leaf-500: #b4506a;
+  --color-leaf-600: #9b3349;
+  --color-leaf-700: #85293d;
   --color-signal-50: #33161b;
   --color-signal-100: #5a2129;
   --color-amber-50: #2e2410;
@@ -90,7 +100,7 @@ html.dark {
   --color-amber-800: #f4cf7f;
   --color-amber-900: #f8dc9c;
   --shadow-card: none;
-  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.3), 0 14px 32px -12px rgb(0 0 0 / 0.6);
+  --shadow-lift: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 20px -10px rgb(0 0 0 / 0.55);
 }
 
 @layer base {
@@ -116,6 +126,14 @@ html.dark {
   h2,
   h3 {
     text-wrap: balance;
+  }
+
+  /* Playfair defaults to old-style figures; dates and figures read better lining. */
+  .font-serif,
+  h1,
+  h2,
+  h3 {
+    font-variant-numeric: lining-nums proportional-nums;
   }
 
   p {
@@ -193,14 +211,14 @@ html[lang="bn"] [lang="en"]:not(.font-serif) {
 /* Fade-up on scroll (classes are added by TextReveal, so no-JS shows everything). */
 .tr {
   opacity: 0;
-  transform: translateY(48px);
+  transform: translateY(16px);
 }
 .tr.tr-in {
   opacity: 1;
   transform: none;
   transition:
-    opacity 0.8s ease-out,
-    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 0.6s ease-out,
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 @media (prefers-reduced-motion: reduce) {
   .tr {
@@ -264,13 +282,13 @@ html[lang="bn"] [lang="en"]:not(.font-serif) {
 }
 .tr.tr-in.lift {
   transition:
-    opacity 0.8s ease-out,
-    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.6s ease-out,
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
     translate 0.25s ease,
     box-shadow 0.25s ease;
 }
 .lift:hover {
-  translate: 0 -6px;
+  translate: 0 -3px;
   box-shadow: var(--shadow-lift);
   position: relative;
   z-index: 1;

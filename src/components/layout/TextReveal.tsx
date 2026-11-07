@@ -13,9 +13,9 @@ const SELECTOR = `main ${BLOCK}, footer ${BLOCK}`;
 /** Places where movement would get in the way. */
 const SKIP = "[aria-roledescription='carousel'], nav, [role='status'], [role='dialog'], .no-reveal";
 /** Delay between neighbours that appear together, so a row of cards ripples in. */
-const STAGGER_MS = 90;
+const STAGGER_MS = 70;
 /** Must match the translateY in globals.css (.tr). Elements are measured while shifted down by this much. */
-const OFFSET_PX = 48;
+const OFFSET_PX = 16;
 
 /**
  * Fades page components up as they scroll into view. Classes are added by

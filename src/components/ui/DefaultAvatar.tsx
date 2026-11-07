@@ -11,7 +11,7 @@ export function DefaultAvatar({ gender = "male", className }: { gender?: Gender;
     <svg
       viewBox="0 0 100 100"
       aria-hidden
-      className={cn("shrink-0 overflow-hidden rounded-full bg-[#c9ced4] text-[#f4f5f7] dark:bg-[#3a3d42] dark:text-[#7c8088]", className)}
+      className={cn("shrink-0 overflow-hidden rounded-full bg-[#e3d8c6] text-[#faf7f1] dark:bg-[#3a3d42] dark:text-[#7c8088]", className)}
     >
       {gender === "female" ? (
         <g fill="currentColor">

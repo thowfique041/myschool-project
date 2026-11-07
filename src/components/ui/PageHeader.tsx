@@ -76,7 +76,7 @@ export async function PageHeader({ title, description, crumbs = [], children, he
         </div>
         {aside && <div className="grid w-full gap-3 sm:grid-cols-2 lg:w-80 lg:grid-cols-1">{aside}</div>}
       </div>
-      <div aria-hidden className={"h-1 bg-[#e8b84a]"} />
+      <div aria-hidden className="h-1 bg-leaf-600" />
     </section>
   );
 }

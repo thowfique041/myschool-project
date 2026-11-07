@@ -109,7 +109,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
     demoNote: staticSite.demoNote,
   },
   social: { links: staticSite.social.map((s) => ({ ...s })) },
-  branding: { logo: "", favicon: "", primary: "#172c4a", accent: "#0c7351" },
+  branding: { logo: "", favicon: "", primary: "#142b49", accent: "#7a2638" },
   seo: {
     title: `${staticSite.name} | Sylhet`,
     description:

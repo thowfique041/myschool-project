@@ -131,7 +131,7 @@ function MapPlaceholder({ c }: { c: (typeof copy)["en"] | (typeof copy)["bn"] })
           <rect x="30" y="215" width="70" height="25" rx="4" />
           <rect x="440" y="205" width="120" height="30" rx="4" />
         </g>
-        <rect x="190" y="110" width="110" height="64" rx="6" fill="#172c4a" />
+        <rect x="190" y="110" width="110" height="64" rx="6" fill="#142b49" />
         <circle cx="245" cy="104" r="20" fill="#c8283a" />
         <path d="M245 132 l-12 -22 a14 14 0 1 1 24 0Z" fill="#c8283a" />
         <circle cx="245" cy="102" r="6" fill="#fff" />
@@ -168,7 +168,7 @@ function MapEmbed({ url, title }: { url: string; title: string }) {
   );
 }
 
-const cardCls = "h-full rounded-lg border border-line bg-surface p-6 shadow-[0_6px_24px_-10px_rgb(15_31_54/0.25)]";
+const cardCls = "h-full rounded-lg border border-line bg-surface p-6 shadow-[0_1px_2px_rgb(20_43_73/0.06)]";
 const labelCls = "mt-5 text-xs font-bold text-subheading";
 const actionCls = "mt-4 inline-flex items-center gap-1 text-sm font-bold text-heading hover:underline";
 const iconBox = "flex size-11 items-center justify-center rounded-lg bg-tint text-heading";
@@ -199,7 +199,7 @@ export default async function ContactPage() {
         overlap
         aside={
           <div className="flex flex-wrap gap-3 lg:justify-end">
-            <a href={site.phoneHref} className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-[#e8b84a] px-5 font-bold text-navy-950 hover:bg-[#f3cc6e]">
+            <a href={site.phoneHref} className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-beige px-5 font-bold text-navy-900 hover:bg-white">
               <Phone aria-hidden className="size-4" />
               {c.callOffice}
             </a>

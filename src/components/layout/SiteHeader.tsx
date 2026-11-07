@@ -67,7 +67,7 @@ function DesktopDropdown({ item, active, alignRight = false }: { item: NavItem; 
         aria-controls={menuId}
         onClick={() => setOpen((o) => !o)}
         className={cn(
-          "flex items-center gap-0.5 rounded-md px-1.5 py-2 text-[0.86rem] font-medium whitespace-nowrap transition-colors xl:gap-1 xl:px-2 xl:text-[0.92rem] 2xl:px-3",
+          "flex items-center gap-0.5 rounded-md px-1 py-2 text-[0.8rem] font-medium whitespace-nowrap transition-colors xl:gap-1 xl:px-1.5 xl:text-[0.86rem] 2xl:px-3 2xl:text-[0.92rem]",
           active ? "text-accent" : "text-heading hover:text-accent",
         )}
       >
@@ -194,15 +194,6 @@ export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
   const pathname = usePathname();
   const { t } = useI18n();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   useEffect(() => {
     if (!mobileOpen) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMobileOpen(false);
@@ -212,10 +203,7 @@ export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
 
   return (
     <header
-      className={cn(
-        "sticky top-0 z-40 bg-surface transition-shadow",
-        scrolled ? "shadow-[0_1px_0_var(--color-line),0_6px_20px_-12px_rgb(15_31_54/0.25)]" : "border-b border-line",
-      )}
+      className="sticky top-0 z-40 border-b border-line bg-surface"
     >
       <div className="container-page flex h-[4.5rem] items-center justify-between gap-3 sm:h-20 xl:gap-4">
         <Link href="/" aria-label={`${brand.name}, ${t.common.home}`} className="rounded-md">
@@ -234,7 +222,7 @@ export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "rounded-md px-1.5 py-2 text-[0.86rem] font-medium whitespace-nowrap transition-colors xl:px-2 xl:text-[0.92rem] 2xl:px-3",
+                      "rounded-md px-1 py-2 text-[0.8rem] font-medium whitespace-nowrap transition-colors xl:px-1.5 xl:text-[0.86rem] 2xl:px-3 2xl:text-[0.92rem]",
                       active ? "text-accent" : "text-heading hover:text-accent",
                     )}
                   >

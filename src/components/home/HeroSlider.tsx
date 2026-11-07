@@ -22,7 +22,7 @@ export type Slide = {
   secondary?: { href: string; label: string };
 };
 
-const INTERVAL = 2000;
+const INTERVAL = 5000;
 
 /**
  * Full-width photo slideshow. Auto-advances unless the visitor prefers reduced
@@ -72,17 +72,16 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
               className={cn("absolute inset-0 transition-opacity duration-700 motion-reduce:transition-none", active ? "opacity-100" : "pointer-events-none opacity-0")}
             >
               <Image src={s.image} alt={s.imageAlt} fill priority={i === 0} sizes="100vw" className="-z-20 object-cover object-[70%_center]" />
-              <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950/70 via-navy-950/25 to-navy-950/10 md:bg-gradient-to-r md:from-navy-950/75 md:via-navy-950/25 md:to-transparent" />
-              <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-navy-950/50 to-transparent" />
-              <div className="container-page flex h-full flex-col justify-center pb-10">
-                <div className="max-w-2xl rounded-md border-l-4 border-[#e8b84a] bg-navy-950/75 p-6 shadow-[0_8px_30px_rgb(0_0_0/0.35)] sm:p-8">
-                  <Heading id={i === 0 ? "hero-title" : undefined} className="font-serif text-4xl leading-tight font-semibold sm:text-5xl lg:text-6xl">
+              {/* Editorial panel: a solid navy block anchored to the lower left of the photograph. */}
+              <div className="container-page flex h-full flex-col justify-end pb-0 sm:pb-12">
+                <div className="max-w-2xl border-t-4 border-leaf-600 bg-navy-900 p-6 sm:p-9">
+                  {s.motto && <p className="font-serif text-base text-on-navy-accent italic">{s.motto}</p>}
+                  <Heading id={i === 0 ? "hero-title" : undefined} className={cn("font-serif text-[2.1rem] leading-[1.1] font-semibold sm:text-5xl lg:text-[3.6rem]", s.motto && "mt-2")}>
                     {s.title}
                   </Heading>
-                  {s.lines[0] && <p className="mt-3 text-lg text-white sm:text-xl">{s.lines[0]}</p>}
-                  {s.motto && <p className="mt-1 text-sm text-[#e8b84a] italic">{s.motto}</p>}
+                  {s.lines[0] && <p className="mt-4 text-base text-navy-100 sm:text-lg">{s.lines[0]}</p>}
                   {s.lines.slice(1).map((l) => (
-                    <p key={l} className="mt-4 text-base font-semibold text-[#f3cc6e] sm:text-lg">{l}</p>
+                    <p key={l} className="mt-4 border-l-2 border-on-navy-accent pl-3 text-base font-medium text-on-navy-accent">{l}</p>
                   ))}
                   <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
                     <ButtonLink href={s.href} variant="secondary">
@@ -103,8 +102,8 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
       </div>
 
       {n > 1 && (
-        <div className="absolute inset-x-0 bottom-0">
-          <div className="container-page flex items-center justify-between gap-4 pb-4">
+        <div className="border-t border-white/10 bg-navy-950">
+          <div className="container-page flex items-center justify-between gap-4 py-3">
             <div className="flex items-center gap-2">
               {slides.map((s, i) => (
                 <button
