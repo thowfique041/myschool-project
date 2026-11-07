@@ -147,7 +147,9 @@ export function RoutineGrid({ rows, rowsEn, labels }: { rows: Row[]; rowsEn: Row
   return (
     <>
       {/* Plain table for screen readers; the visual grid below is hidden from them. */}
-      <table className="sr-only">
+      {/* Tables ignore the 1px width of sr-only, so the wrapper carries it. */}
+      <div className="sr-only">
+      <table>
         <caption>{labels.caption}</caption>
         <thead>
           <tr>
@@ -168,6 +170,7 @@ export function RoutineGrid({ rows, rowsEn, labels }: { rows: Row[]; rowsEn: Row
           ))}
         </tbody>
       </table>
+      </div>
 
       <div className="overflow-x-auto" tabIndex={0} aria-label={labels.scrollHint}>
         <div aria-hidden className="grid min-w-[52rem] gap-2 p-3 sm:p-4" style={{ gridTemplateColumns: "7rem repeat(6, minmax(7rem, 1fr))" }}>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Download, FileText } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { Badge, ButtonLink, Card, SectionHeading } from "@/components/ui/primitives";
+import { ButtonLink, SectionHeading } from "@/components/ui/primitives";
 import { SampleTag } from "@/components/ui/SampleTag";
 import { RoutineGrid } from "@/components/explorers/RoutineGrid";
 import { ArrowLink } from "@/components/shared/cards";
@@ -172,29 +172,25 @@ export default async function AcademicPage() {
       <section id="levels" aria-labelledby="levels-h" className="scroll-mt-36 py-16">
         <div className="container-page">
           <SectionHeading id="levels-h" title={c.levels} />
-          <div className="mt-8 grid gap-6 lg:grid-cols-3">
-            {academicLevels.map((l) => (
-              <div key={l.id}>
-                <Card className="lift h-full p-6">
-                  <h3 className="font-serif text-xl font-semibold text-heading">{l.name}</h3>
-                  <p className="text-sm font-semibold text-subheading">
-                    {l.classes} · {l.ages}
+          {/* Programmes as an editorial three-column spread, divided by hairlines rather than boxed. */}
+          <ol className="mt-8 grid border-t-2 border-navy-800 lg:grid-cols-3 dark:border-navy-300">
+            {academicLevels.map((l, i) => (
+              <li key={l.id} className="lift border-b border-line px-1 py-7 hover:bg-surface sm:px-6 lg:border-b-0 lg:not-first:border-l">
+                <p aria-hidden className="font-serif text-4xl font-semibold text-leaf-600 dark:text-accent">{n(String(i + 1).padStart(2, "0"))}</p>
+                <h3 className="mt-3 font-serif text-2xl font-semibold text-heading">{l.name}</h3>
+                <p className="mt-1 text-xs font-semibold tracking-wide text-subheading uppercase">
+                  {l.classes} · {l.ages}
+                </p>
+                <p className="mt-4 leading-relaxed text-muted">{l.summary}</p>
+                {l.groups && l.groups.length > 0 && (
+                  <p className="mt-5 border-t border-line pt-4 text-sm">
+                    <span className="font-semibold text-heading">{c.groups}: </span>
+                    <span className="text-ink">{l.groups.join(" · ")}</span>
                   </p>
-                  <p className="mt-3 text-sm leading-relaxed text-muted">{l.summary}</p>
-                  {l.groups && l.groups.length > 0 && (
-                    <div className="mt-4">
-                      <p className="text-xs font-semibold text-muted uppercase">{c.groups}</p>
-                      <div className="mt-1.5 flex flex-wrap gap-1.5">
-                        {l.groups.map((g) => (
-                          <Badge key={g}>{g}</Badge>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </Card>
-              </div>
+                )}
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 

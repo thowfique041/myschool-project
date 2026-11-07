@@ -127,7 +127,7 @@ export default async function StudentsGuardiansPage() {
                 <li key={hrefs[i]}>
                   <Link
                     href={hrefs[i]}
-                    className="group flex h-full flex-col rounded-lg border border-line bg-surface p-6 shadow-[0_6px_24px_-10px_rgb(15_31_54/0.25)] transition-transform hover:-translate-y-0.5"
+                    className="group flex h-full flex-col rounded-lg border border-line bg-surface p-6 shadow-[0_1px_2px_rgb(20_43_73/0.06)] transition-transform hover:-translate-y-0.5"
                   >
                     <span className="flex items-start justify-between">
                       <span className="flex size-12 items-center justify-center rounded-lg bg-tint text-heading">

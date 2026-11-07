@@ -9,8 +9,8 @@ type LogoMarkProps = {
 
 /** School crest: shield with an open book and a two-leaf sprout. */
 export function LogoMark({ className, tone = "light", title }: LogoMarkProps) {
-  const shield = tone === "light" ? "#172c4a" : "#ffffff";
-  const book = tone === "light" ? "#ffffff" : "#172c4a";
+  const shield = tone === "light" ? "#142b49" : "#ffffff";
+  const book = tone === "light" ? "#ffffff" : "#142b49";
   const rim = "#b88a2e";
 
   return (
