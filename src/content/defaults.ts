@@ -155,7 +155,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
     ],
     committee: [
       { role: "Chairman", name: "Alhaj Md. Shamsul Haque", note: "Guardian representative" },
-      { role: "Member Secretary", name: "Dr. Nasrin Akhter", note: "Principal" },
+      { role: "Member Secretary", name: "Dr. Jafor Chowdhury", note: "Principal" },
       { role: "Guardian member", name: "Shirin Sultana", note: "Elected guardian representative" },
       { role: "Guardian member", name: "Abdul Matin Chowdhury", note: "Elected guardian representative" },
       { role: "Teacher member", name: "Md. Abdul Kader", note: "Teachers' representative" },
@@ -177,9 +177,9 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
     ],
   },
   principal: {
-    name: "Dr. Nasrin Akhter",
+    name: "Dr. Jafor Chowdhury",
     title: "Principal",
-    gender: "female",
+    gender: "male",
     photo: "/images/principal.jpg",
     quote:
       "Good results matter, but they are not the only thing we measure. I want every student to leave this school honest, curious and confident to speak in front of others, and every guardian to feel they can walk into our office and be heard.",
