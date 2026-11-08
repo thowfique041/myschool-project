@@ -8,6 +8,7 @@ import { ArrowLink, DateBlock, NoticeRow } from "@/components/shared/cards";
 import { ContactForm } from "@/components/forms/ContactForm";
 import type { HomeData, HomeContent, SectionCopy } from "./types";
 import { cn, formatDate, num } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
 import { images } from "@/data/images";
 import { FacilitiesCarousel } from "./FacilitiesCarousel";
 
@@ -95,55 +96,66 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
 
 export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: SectionCopy; data: HomeData }) {
   const p = data.principal;
+  const bn = data.lang === "bn";
   return (
-    <section aria-labelledby="welcome-title" className="border-t border-line bg-surface py-14 sm:py-16">
-      <div className="container-page grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-        <div>
-          <SectionHeading id="welcome-title" variant="small" title={copy.title || home.welcomeTitle} />
-          <div className="mt-4 space-y-3 leading-relaxed text-ink">
-            {home.welcomeText.map((t) => (
-              <p key={t}>{t}</p>
-            ))}
+    <>
+      {/* About: campus photograph on the left, the school's introduction on the right. */}
+      <section aria-labelledby="welcome-title" className="border-t border-line bg-surface py-14 sm:py-16">
+        <div className="container-page grid items-center gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-paper-dark sm:aspect-[4/3] lg:aspect-[4/5]">
+            <Image src="/images/hero-campus.jpg" alt={bn ? "বিদ্যালয়ের ক্যাম্পাস ভবন" : "The school's campus building"} fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
           </div>
-          {home.welcomePoints.length > 0 && (
-            <ul className="mt-5 list-disc space-y-1.5 pl-5 text-ink marker:text-navy-400">
-              {home.welcomePoints.map((t) => (
-                <li key={t}>{t}</li>
+          <div>
+            <SectionHeading id="welcome-title" variant="small" title={copy.title || home.welcomeTitle} />
+            <div className="mt-4 space-y-3 leading-relaxed text-ink">
+              {home.welcomeText.map((t) => (
+                <p key={t}>{t}</p>
               ))}
-            </ul>
-          )}
-          <p className="mt-5">
-            <TextLink href="/about">{data.t.home.readHistory}</TextLink>
-          </p>
-        </div>
-
-        {/* Principal: an editorial pull quote on a beige panel, signed with a small portrait. */}
-        <figure id="principal" className="bg-tint p-7 sm:p-10">
-          <h2 className="font-serif text-2xl leading-tight font-semibold text-heading">{data.t.home.principalMessage}</h2>
-          <blockquote className="mt-5">
-            <p className="font-serif text-[1.35rem] leading-snug text-heading italic sm:text-2xl">
-              <span aria-hidden className="mr-1 font-serif text-4xl leading-none text-leaf-600 not-italic dark:text-accent">“</span>
-              {p.quote}
-            </p>
-          </blockquote>
-          <figcaption className="mt-7 flex items-center gap-4 border-t border-line-strong pt-6">
-            {p.photo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={p.photo} alt="" className="size-20 shrink-0 object-cover" />
-            ) : (
-              <DefaultAvatar gender={p.gender === "male" ? "male" : "female"} className="size-20 shrink-0 rounded-none" />
+            </div>
+            {home.welcomePoints.length > 0 && (
+              <ul className="mt-5 list-disc space-y-1.5 pl-5 text-ink marker:text-navy-400">
+                {home.welcomePoints.map((t) => (
+                  <li key={t}>{t}</li>
+                ))}
+              </ul>
             )}
-            <div>
+            <ButtonLink href="/about" variant="primary" className="mt-7">
+              {data.t.home.readHistory}
+              <ArrowRight aria-hidden className="size-4" />
+            </ButtonLink>
+          </div>
+        </div>
+      </section>
+
+      {/* Principal: the full message on the left, portrait on the right. */}
+      <section id="principal" aria-labelledby="principal-home-title" className="border-t border-line py-14 sm:py-16">
+        <div className="container-page grid items-center gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16">
+          <div className="order-2 lg:order-1">
+            <h2 id="principal-home-title" className="font-serif text-2xl leading-tight font-semibold text-heading">{data.t.home.principalMessage}</h2>
+            <div className="mt-4 space-y-3 leading-relaxed text-ink">
+              {p.message.map((m) => (
+                <p key={m}>{m}</p>
+              ))}
+              {bn && p.messageBn && <p>{p.messageBn}</p>}
+            </div>
+            <p className="mt-6 border-t border-line pt-4">
               <span className="block font-serif text-lg font-semibold text-heading">{p.name}</span>
               <span className="block text-sm text-muted">{p.title}</span>
-              <span className="mt-1.5 block">
-                <TextLink href="/about#principal">{data.t.home.readFull}</TextLink>
-              </span>
+            </p>
+          </div>
+          <div className="order-1 lg:order-2">
+            <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-md bg-paper-dark">
+              {p.photo ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={p.photo} alt={p.name} className="size-full object-cover" />
+              ) : (
+                <DefaultAvatar gender={p.gender === "male" ? "male" : "female"} className="size-full rounded-none" />
+              )}
             </div>
-          </figcaption>
-        </figure>
-      </div>
-    </section>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
 
