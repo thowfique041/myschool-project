@@ -9,6 +9,7 @@ import { ContactForm } from "@/components/forms/ContactForm";
 import type { HomeData, HomeContent, SectionCopy } from "./types";
 import { cn, formatDate, num } from "@/lib/utils";
 import { images } from "@/data/images";
+import { FacilitiesCarousel } from "./FacilitiesCarousel";
 
 
 /** Plain underlined text link, used where an arrow link would be one too many. */
@@ -283,22 +284,29 @@ export function ResultsSection({ copy, data }: { copy: SectionCopy; data: HomeDa
 /* ------------------------------------------------------- Facilities */
 
 export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
+  const bn = data.lang === "bn";
   return (
-    <section aria-labelledby="why-title" className="border-t border-line py-14 sm:py-16">
+    <section aria-labelledby="why-title" className="relative isolate overflow-hidden bg-navy-950 py-16 text-white sm:py-20">
+      {/* Owner-supplied campus photograph under a dark overlay. */}
+      <Image src="/images/footer-campus.jpg" alt="" fill sizes="100vw" className="-z-20 object-cover" />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-navy-950/75" />
       <div className="container-page">
-        <SectionHeading id="why-title" variant="small" title={copy.title} />
-        {/* A numbered prospectus-style list: hairline grid, no icons or boxes. */}
-        <ol className="mt-6 grid border-t-2 border-navy-800 sm:grid-cols-2 lg:grid-cols-3 dark:border-navy-300">
-          {data.facilities.map(({ title, text }, i) => (
-            <li key={title} className="lift border-b border-line py-6 hover:bg-surface sm:px-6 sm:odd:pl-0 lg:odd:pl-6 lg:[&:nth-child(3n+1)]:pl-0">
-              <p aria-hidden className="font-serif text-sm font-semibold text-leaf-600 tabular-nums dark:text-accent">{num(String(i + 1).padStart(2, "0"), data.lang)}</p>
-              <h3 className="mt-2 font-serif text-xl font-semibold text-heading">{title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{text}</p>
-            </li>
-          ))}
-        </ol>
-        <p className="mt-6">
-          <TextLink href="/about#campus">{data.t.home.allFacilities}</TextLink>
+        <h2 id="why-title" className="text-center font-serif text-3xl font-semibold sm:text-4xl">{copy.title}</h2>
+        <div className="mt-10">
+          <FacilitiesCarousel
+            items={data.facilities.map(({ title, text }) => ({ title, text }))}
+            labels={{
+              region: copy.title,
+              prev: bn ? "আগের সুবিধা" : "Previous facility",
+              next: bn ? "পরের সুবিধা" : "Next facility",
+              position: bn ? "{total}টির মধ্যে {from}–{to} দেখানো হচ্ছে" : "Showing {from}–{to} of {total}",
+            }}
+          />
+        </div>
+        <p className="mt-6 text-center">
+          <Link href="/about#campus" className="text-sm font-semibold text-white underline underline-offset-4 hover:text-on-navy-accent">
+            {data.t.home.allFacilities}
+          </Link>
         </p>
       </div>
     </section>
