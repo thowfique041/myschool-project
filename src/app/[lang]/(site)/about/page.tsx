@@ -1,7 +1,7 @@
 import { DefaultAvatar } from "@/components/ui/DefaultAvatar";
 import type { Metadata } from "next";
 import Image from "next/image";
-import { images } from "@/data/images";
+import { CampusCircles } from "@/components/shared/CampusCircles";
 import { Compass, Eye } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ButtonLink, DemoNote, SectionHeading } from "@/components/ui/primitives";
@@ -109,15 +109,6 @@ function splitLead(text: string, bangla: boolean): [string, string] {
   const rest = m[2].charAt(0).toUpperCase() + m[2].slice(1);
   return [m[1] + end, rest];
 }
-
-/** Positions in the circle cluster: top-left, top-centre (front), right, bottom-centre (behind). */
-const CIRCLE_POS = [
-  "left-0 top-[15%] z-10 w-[45%] aspect-square",
-  "left-[27%] top-0 z-30 w-[47%] aspect-square",
-  "right-0 top-[13%] z-20 w-[45%] aspect-square",
-  "left-[26%] bottom-0 z-0 w-[44%] aspect-square",
-];
-const circlePhotos = [images.heroCampus, images.scienceLab, images.library, { src: "/images/sports-day.jpg", alt: "Students in sports kit with a football on a grass pitch in front of a goal" }];
 
 type Mission = { mission: string; vision: string; values: { title: string; text: string }[] };
 
@@ -238,16 +229,7 @@ export default async function AboutPage() {
               description={site.demoNote ? c.historySample : undefined}
             />
             {/* Four overlapping round photos of the campus */}
-            <ul aria-label={c.campusPhotos} className="relative mx-auto mt-10 aspect-[100/86] w-full max-w-md">
-              {circlePhotos.map((ph, i) => (
-                <li key={ph.src} className={`absolute overflow-hidden rounded-full border-[6px] border-surface bg-paper-dark ${CIRCLE_POS[i]}`}>
-                  <Image src={ph.src} alt={ph.alt} fill sizes="(min-width: 1024px) 220px, 45vw" className="object-cover" />
-                  <span className="absolute inset-x-0 bottom-0 bg-navy-950/85 pt-1.5 pb-3 text-center text-sm font-semibold text-white sm:text-base">
-                    {c.circles[i]}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <CampusCircles labels={c.circles} listLabel={c.campusPhotos} className="mt-10" />
           </div>
           {/* Timeline: year in the margin, ruled entries, a burgundy marker on the spine. */}
           <ol className="border-t-2 border-navy-800 dark:border-navy-300">
