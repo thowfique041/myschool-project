@@ -258,7 +258,7 @@ export default async function AboutPage() {
           <div className="order-first flex flex-col items-center gap-4 text-center lg:order-none">
             {principal.photo ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={principal.photo} alt={principal.name} className="size-48 rounded-full border-[6px] border-navy-950 object-cover ring-2 ring-white/80 sm:size-56" />
+              <img src={principal.photo} alt={principal.name} className="size-48 rounded-full border-[6px] border-navy-950 object-cover object-top ring-2 ring-white/80 sm:size-56" />
             ) : (
               <DefaultAvatar gender={principal.gender === "male" ? "male" : "female"} className="size-48 sm:size-56" />
             )}
