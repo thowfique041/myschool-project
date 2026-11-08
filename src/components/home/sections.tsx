@@ -11,6 +11,7 @@ import { cn, formatDate, num } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 import { images } from "@/data/images";
 import { FacilitiesCarousel } from "./FacilitiesCarousel";
+import { CampusCircles } from "@/components/shared/CampusCircles";
 
 
 /** Plain underlined text link, used where an arrow link would be one too many. */
@@ -102,9 +103,10 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
       {/* About: campus photograph on the left, the school's introduction on the right. */}
       <section aria-labelledby="welcome-title" className="border-t border-line bg-surface py-14 sm:py-16">
         <div className="container-page grid items-center gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-paper-dark sm:aspect-[4/3] lg:aspect-[4/5]">
-            <Image src="/images/hero-campus.jpg" alt={bn ? "বিদ্যালয়ের ক্যাম্পাস ভবন" : "The school's campus building"} fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
-          </div>
+          <CampusCircles
+            labels={bn ? ["মূল ভবন", "বিজ্ঞানাগার", "গ্রন্থাগার", "খেলার মাঠ"] : ["Main building", "Science lab", "Library", "Playground"]}
+            listLabel={bn ? "ক্যাম্পাসের কিছু ছবি" : "Around the campus"}
+          />
           <div>
             <SectionHeading id="welcome-title" variant="small" title={copy.title || home.welcomeTitle} />
             <div className="mt-4 space-y-3 leading-relaxed text-ink">
