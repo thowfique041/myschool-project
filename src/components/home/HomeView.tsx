@@ -66,7 +66,7 @@ export async function HomeView({ home }: { home: HomeContent }) {
         <NoticeTicker notices={sortedNotices} />
       </div>
       <TeaWave className="container-page mt-3" />
-      <div className="container-page grid gap-6 py-5 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+      <div className="container-page grid grid-cols-1 gap-6 py-5 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <div className="min-w-0 space-y-6">
           <HeroSlider slides={slides} />
 

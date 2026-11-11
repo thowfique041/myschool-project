@@ -150,7 +150,7 @@ export function RoutineGrid({ rows, rowsEn, labels }: { rows: Row[]; rowsEn: Row
       </table>
       </div>
 
-      <div className="overflow-x-auto" tabIndex={0} aria-label={labels.scrollHint}>
+      <div className="overflow-x-auto" tabIndex={0} role="region" aria-label={labels.scrollHint}>
         <div aria-hidden className="grid min-w-[52rem] gap-2 p-3 sm:p-4" style={{ gridTemplateColumns: "7rem repeat(6, minmax(7rem, 1fr))" }}>
           <div style={{ gridRow: 1, gridColumn: 1 }} className="flex items-center px-0 text-sm font-semibold text-heading">
             {labels.time}

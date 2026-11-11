@@ -67,7 +67,7 @@ export function NoticeTicker({ notices }: { notices: Notice[] }) {
           type="button"
           onClick={() => setUserPaused((p) => !p)}
           aria-label={userPaused ? t.ticker.resume : t.ticker.pause}
-          className="flex w-11 shrink-0 items-center justify-center border-l border-line text-subheading hover:bg-paper"
+          className="relative z-10 flex min-h-11 w-11 shrink-0 items-center justify-center border-l border-line bg-surface text-subheading hover:bg-tint"
         >
           {userPaused ? <Play aria-hidden className="size-4" /> : <Pause aria-hidden className="size-4" />}
         </button>

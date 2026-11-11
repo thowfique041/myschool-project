@@ -132,7 +132,7 @@ function MapPlaceholder({ c }: { c: (typeof copy)["en"] | (typeof copy)["bn"] })
           <rect x="30" y="215" width="70" height="25" rx="4" />
           <rect x="440" y="205" width="120" height="30" rx="4" />
         </g>
-        <rect x="190" y="110" width="110" height="64" rx="6" fill="#142b49" />
+        <rect x="190" y="110" width="110" height="64" rx="6" fill="#17482f" />
         <circle cx="245" cy="104" r="20" fill="#c8283a" />
         <path d="M245 132 l-12 -22 a14 14 0 1 1 24 0Z" fill="#c8283a" />
         <circle cx="245" cy="102" r="6" fill="#fff" />
@@ -248,17 +248,17 @@ export default async function ContactPage() {
     <>
       <PageHeader path="/contact" title={c.title} />
       <FullWidth>
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
           <div className="space-y-6">
             <Box id="contact-info" title={bn ? site.nameBn : site.name} bodyClassName="p-0">
               <dl className="divide-y divide-line">
                 {rows.map(({ Icon, label, value }) => (
-                  <div key={label} className="flex gap-3 px-4 py-3">
-                    <Icon aria-hidden className="mt-1 size-4 shrink-0 text-accent" />
-                    <div>
-                      <dt className="text-sm font-semibold text-heading">{label}</dt>
-                      <dd className="text-ink">{value}</dd>
-                    </div>
+                  <div key={label} className="px-4 py-3">
+                    <dt className="flex items-center gap-2 text-sm font-semibold text-heading">
+                      <Icon aria-hidden className="size-4 shrink-0 text-accent" />
+                      {label}
+                    </dt>
+                    <dd className="mt-0.5 pl-6 text-ink">{value}</dd>
                   </div>
                 ))}
               </dl>
