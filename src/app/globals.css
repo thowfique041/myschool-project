@@ -9,90 +9,94 @@
  * signal-*: urgent / important notices only.
  */
 @theme {
-  /* Deep navy #142B49 is navy-800. */
-  --color-navy-50: #f2f5f9;
-  --color-navy-100: #e1e7f0;
-  --color-navy-200: #c3cfdf;
-  --color-navy-300: #95a8c3;
-  --color-navy-400: #6681a5;
-  --color-navy-500: #426084;
-  --color-navy-600: #2d4a6f;
-  --color-navy-700: #1f3a5c;
-  --color-navy-800: #142b49;
-  --color-navy-900: #0f2139;
-  --color-navy-950: #0a1729;
+  /* Primary green, taken from the crest's sapling. The scale keeps the old
+     "navy" name so every component picks it up; navy-800 is #17482f. */
+  --color-navy-50: #f1f7f3;
+  --color-navy-100: #dcebe1;
+  --color-navy-200: #b8d6c3;
+  --color-navy-300: #8bbb9e;
+  --color-navy-400: #5c9b76;
+  --color-navy-500: #3b7d58;
+  --color-navy-600: #276645;
+  --color-navy-700: #1d5638;
+  --color-navy-800: #17482f;
+  --color-navy-900: #113823;
+  --color-navy-950: #0b2618;
 
-  /* "leaf" is the call-to-action colour: burgundy #7A2638 is leaf-600. */
-  --color-leaf-50: #fbf2f3;
-  --color-leaf-100: #f5e1e4;
-  --color-leaf-200: #e9bfc6;
-  --color-leaf-500: #95364b;
-  --color-leaf-600: #7a2638;
-  --color-leaf-700: #64202f;
-  --color-leaf-800: #4f1925;
+  /* Accent: the crest's gold rim, darkened for text and buttons. leaf-600 is #8a5a0f. */
+  --color-leaf-50: #fbf6ea;
+  --color-leaf-100: #f5e9cc;
+  --color-leaf-200: #ead39a;
+  --color-leaf-500: #a6741c;
+  --color-leaf-600: #8a5a0f;
+  --color-leaf-700: #704909;
+  --color-leaf-800: #573806;
 
   --color-signal-50: #fdf0f1;
   --color-signal-100: #fbdde0;
   --color-signal-600: #b3243a;
   --color-signal-700: #95192d;
 
-  /* Warm ivory page, soft beige panels. */
-  --color-paper: #faf7f1;
-  --color-paper-dark: #f1e7d9;
-  --color-ink: #1c2330;
-  --color-muted: #5d6371;
-  --color-line: #e7dfd2;
-  --color-gold: #7a2638;
-  --color-beige: #f1e7d9;
-  --color-ivory: #faf7f1;
+  /* White pages, light green tint for headers and hover. */
+  --color-paper: #ffffff;
+  --color-paper-dark: #e6efe9;
+  --color-ink: #1b231e;
+  --color-muted: #55625a;
+  --color-line: #dbe4de;
+  --color-gold: #8a5a0f;
+  --color-beige: #eef5f0;
+  --color-ivory: #ffffff;
 
   /* Semantic tokens (overridden in html.dark) */
   --color-surface: #ffffff;
-  --color-heading: #142b49;
-  --color-subheading: #1f3a5c;
-  --color-accent: #7a2638;
+  --color-heading: #123d27;
+  --color-subheading: #1d5638;
+  --color-accent: #8a5a0f;
   --color-danger: #95192d;
-  --color-tint: #f1e7d9;
-  --color-line-strong: #d6c9b4;
-  --color-crest: #142b49;
-  --color-brand: #142b49;
-  --color-brand-hover: #1f3a5c;
-  /* Text and icons that sit on navy bands. */
-  --color-on-navy-accent: #e9d8bd;
+  --color-tint: #eef5f0;
+  --color-line-strong: #bfcfc5;
+  --color-crest: #17482f;
+  --color-brand: #17482f;
+  --color-brand-hover: #1d5638;
+  /* Text and icons that sit on green bands. */
+  --color-on-navy-accent: #f0d9a0;
 
+  /* Bangla-first: Noto Serif Bengali for headings, Hind Siliguri for text; plain sans for English. */
   --font-sans: var(--font-sans-en), var(--font-bangla), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-serif-en), var(--font-bangla-serif), ui-serif, Georgia, serif;
+  --font-serif: var(--font-bangla-serif), var(--font-sans-en), ui-sans-serif, system-ui, sans-serif;
   --font-bn: var(--font-bangla), var(--font-sans-en), ui-sans-serif, system-ui, sans-serif;
 
-  --radius-card: 0.375rem;
-  /* Cards use borders; shadow-lift is only for floating elements (menus, back-to-top). */
+  --radius-card: 0.125rem;
+  /* Boxes use thin borders; shadow-lift is only for floating elements (menus, back-to-top). */
   --shadow-card: none;
-  --shadow-lift: 0 1px 2px rgb(20 43 73 / 0.06), 0 8px 20px -12px rgb(20 43 73 / 0.22);
+  --shadow-lift: 0 1px 2px rgb(11 38 24 / 0.08), 0 8px 18px -12px rgb(11 38 24 / 0.3);
 }
 
 /* Dark theme overrides. */
 html.dark {
   color-scheme: dark;
-  --color-surface: #13213a;
-  --color-paper: #0c1626;
-  --color-paper-dark: #1a2b45;
-  --color-ink: #e8e3d9;
-  --color-muted: #a7afbb;
-  --color-line: #243753;
-  --color-line-strong: #3a4f6e;
-  --color-heading: #f7f2e9;
-  --color-subheading: #d9cdb9;
-  --color-accent: #e7aab6;
+  --color-surface: #13201a;
+  --color-paper: #0d1611;
+  --color-paper-dark: #1b2a21;
+  --color-ink: #e2eae4;
+  --color-muted: #a3b2a8;
+  --color-line: #253a2e;
+  --color-line-strong: #3a5445;
+  --color-heading: #f1f6f2;
+  --color-subheading: #cfe3d6;
+  --color-accent: #e8c070;
   --color-danger: #f28b97;
-  --color-tint: #1b2c46;
-  --color-crest: #2d4a6f;
-  --color-brand: #2d4a6f;
-  --color-brand-hover: #3a5c86;
-  --color-leaf-50: #2a1219;
-  --color-leaf-100: #3a1922;
-  --color-leaf-500: #b4506a;
-  --color-leaf-600: #9b3349;
-  --color-leaf-700: #85293d;
+  --color-tint: #172a1f;
+  --color-crest: #276645;
+  --color-brand: #276645;
+  --color-brand-hover: #2f7a52;
+  --color-navy-800: #1d5638;
+  --color-navy-950: #08190f;
+  --color-leaf-50: #2a2008;
+  --color-leaf-100: #3a2c0c;
+  --color-leaf-500: #c08a2a;
+  --color-leaf-600: #8f5f12;
+  --color-leaf-700: #7a500c;
   --color-signal-50: #33161b;
   --color-signal-100: #5a2129;
   --color-amber-50: #2e2410;
@@ -122,13 +126,22 @@ html.dark {
     line-height: 1.75;
   }
 
+  /* Headings: Noto Serif Bengali on Bangla pages, the plain sans on English pages. */
+  :lang(bn) :is(h1, h2, h3, .font-serif, .brand-name),
+  :is(h1, h2, h3, .font-serif, .brand-name):lang(bn) {
+    font-family: var(--font-bangla-serif), var(--font-bangla), serif;
+  }
+  :lang(en) :is(h1, h2, h3, .font-serif, .brand-name) {
+    font-family: var(--font-sans-en), var(--font-bangla), ui-sans-serif, system-ui, sans-serif;
+  }
+
   h1,
   h2,
   h3 {
     text-wrap: balance;
   }
 
-  /* Playfair defaults to old-style figures; dates and figures read better lining. */
+  /* Lining figures for dates and numbers in headings. */
   .font-serif,
   h1,
   h2,
@@ -235,4 +248,22 @@ html[lang="bn"] [lang="en"]:not(.font-serif) {
 @media print {
   body[data-printing="admission"] *:not(:has(#admission-summary)):not(#admission-summary):not(#admission-summary *) { display: none !important; }
   body[data-printing="admission"] #admission-summary * { color: #000 !important; }
+}
+
+/* Crest motif: the shield's pointed base cut into box-header corners, the "new"
+   badge and the date blocks. */
+.box-head {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%);
+  border-left: 4px solid var(--color-leaf-500);
+}
+.new-badge {
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+  padding-bottom: 2px;
+}
+.date-block {
+  clip-path: polygon(0 0, 100% 0, 100% 82%, 50% 100%, 0 82%);
+  padding-bottom: 0.4rem;
+}
+.timeline-dot {
+  clip-path: polygon(0 0, 100% 0, 100% 60%, 50% 100%, 0 60%);
 }

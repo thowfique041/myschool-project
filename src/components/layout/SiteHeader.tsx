@@ -206,7 +206,7 @@ export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
     <>
       <header className="border-b border-line bg-surface">
         <div className="container-page flex items-center justify-between gap-4 py-3 sm:py-4">
-          <Link href="/" aria-label={`${brand.name}, ${t.common.home}`} className="flex min-w-0 items-center gap-3 sm:gap-4">
+          <Link href="/" className="flex min-w-0 items-center gap-3 sm:gap-4">
             {brand.logo ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={brand.logo} alt="" className="h-14 w-auto object-contain sm:h-[4.5rem]" />

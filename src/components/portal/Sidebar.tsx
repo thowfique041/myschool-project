@@ -119,7 +119,7 @@ export async function Sidebar({ notices: showNotices = true }: { notices?: boole
 /** Page body with the sidebar on the right (stacked below on small screens). */
 export function WithSidebar({ children, notices = true }: { children: React.ReactNode; notices?: boolean }) {
   return (
-    <div className="container-page grid gap-6 py-6 sm:py-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+    <div className="container-page grid grid-cols-1 gap-6 py-6 sm:py-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
       <div className="min-w-0 space-y-6">{children}</div>
       <Sidebar notices={notices} />
     </div>

@@ -54,20 +54,20 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
         {slides.map((s, i) => {
           const active = i === index;
           return (
-            <figure
+            <div
               key={s.image + i}
               role="group"
               aria-roledescription="slide"
               aria-label={t.slider.slideOf(i + 1, n)}
               aria-hidden={!active}
               inert={!active}
-              className={cn("absolute inset-0 m-0 transition-opacity duration-700 motion-reduce:transition-none", active ? "opacity-100" : "pointer-events-none opacity-0")}
+              className={cn("absolute inset-0 transition-opacity duration-700 motion-reduce:transition-none", active ? "opacity-100" : "pointer-events-none opacity-0")}
             >
               <Image src={s.image} alt={s.imageAlt} fill priority={i === 0} sizes="(min-width: 1024px) 54rem, 100vw" className="object-cover" />
               {s.caption && (
-                <figcaption className="absolute inset-x-0 bottom-0 bg-navy-950/80 px-4 py-2 pr-36 text-sm text-white sm:text-base">{s.caption}</figcaption>
+                <p className="absolute inset-x-0 bottom-0 bg-navy-950/80 px-4 py-2 pr-36 text-sm text-white sm:text-base">{s.caption}</p>
               )}
-            </figure>
+            </div>
           );
         })}
         {n > 1 && (
