@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { FullWidth } from "@/components/portal/Sidebar";
 import { getI18n } from "@/i18n/server";
 import { RoutinePart } from "@/components/academic/AcademicParts";
 
@@ -19,7 +20,9 @@ export default async function RoutinePage() {
   return (
     <>
       <PageHeader title={c.title} path="/academic/routine" />
-      <RoutinePart />
+      <FullWidth>
+        <RoutinePart />
+      </FullWidth>
     </>
   );
 }

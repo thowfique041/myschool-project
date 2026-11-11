@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { PageHeader } from "@/components/ui/PageHeader";
 import { Download } from "lucide-react";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { DemoNote } from "@/components/ui/primitives";
-import { CalendarExplorer } from "@/components/calendar/CalendarExplorer";
 import { PrintButton } from "@/components/calendar/PrintButton";
-import { getCategories, getDownloads, getEvents, getSite, getToday } from "@/content/site-content";
+import { WithSidebar } from "@/components/portal/Sidebar";
+import { table, tableWrap, td, th } from "@/components/portal/table";
+import { getCategories, getDownloads, getEvents, getSite } from "@/content/site-content";
+import { formatDate, toBnDigits } from "@/lib/utils";
 import { getI18n } from "@/i18n/server";
 
 const copy = {
@@ -59,40 +61,73 @@ const monthNames = {
 };
 
 export default async function CalendarPage() {
-  const [calendarEvents, types, downloads, site, today, { lang }] = await Promise.all([getEvents(), getCategories("event"), getDownloads(), getSite(), getToday(), getI18n()]);
+  const [calendarEvents, types, downloads, site, { lang }] = await Promise.all([getEvents(), getCategories("event"), getDownloads(), getSite(), getI18n()]);
   const c = copy[lang];
   const calendarFile = downloads.find((d) => /calendar|ক্যালেন্ডার/i.test(d.title));
-
+  const sorted = [...calendarEvents].sort((x, y) => x.date.localeCompare(y.date));
+  const months = new Map<string, typeof sorted>();
+  for (const e of sorted) months.set(e.date.slice(0, 7), [...(months.get(e.date.slice(0, 7)) ?? []), e]);
+  const monthLabel = (key: string) => {
+    const [y, m] = key.split("-").map(Number);
+    return `${monthNames[lang][m - 1]} ${lang === "bn" ? toBnDigits(y) : y}`;
+  };
+  const labels = lang === "bn" ? { date: "তারিখ", title: "বিষয়", type: "ধরন" } : { date: "Date", title: "Event", type: "Type" };
   return (
     <>
-      <PageHeader path="/academic/calendar"
-        title={c.title}
-        titleBn={c.alt}
-        description={c.intro}
-        aside={
-          <div className="print-hide flex flex-wrap gap-3 lg:justify-end">
+      <PageHeader path="/academic/calendar" title={c.title} />
+      <WithSidebar>
+        <div data-print-page="calendar" className="space-y-4">
+          <p className="text-ink">{c.intro}</p>
+          <div className="print-hide flex flex-wrap items-center gap-x-6 gap-y-3">
             {calendarFile && (
-              <a href={calendarFile.href} target="_blank" rel="noopener" download className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-beige px-5 font-bold text-navy-900 hover:bg-white">
+              <a href={calendarFile.href} target="_blank" rel="noopener" download className="inline-flex items-center gap-2 text-sm font-semibold text-accent underline underline-offset-4 hover:text-heading">
                 <Download aria-hidden className="size-4" />
                 {c.download}
               </a>
             )}
             <PrintButton label={c.print} />
           </div>
-        }
-      />
-      <section data-print-page="calendar" className="py-12 sm:py-16">
-        <div className="container-page">
-          <CalendarExplorer
-            events={calendarEvents}
-            types={Object.entries(types).map(([k, v]) => [k, v.label])}
-            today={today}
-            lang={lang}
-            labels={{ all: c.all, filter: c.filter, months: c.months, nextUp: c.nextUp, past: c.past, until: c.until, empty: c.empty, shown: c.shown, monthNames: monthNames[lang] }}
-          />
-          {site.demoNote && <DemoNote className="print-hide mt-10">{c.sample}</DemoNote>}
+          {sorted.length === 0 ? (
+            <p className="text-muted">{c.empty}</p>
+          ) : (
+            <div className={tableWrap}>
+              <table className={`${table} min-w-[32rem]`}>
+                <caption className="sr-only">{c.title}</caption>
+                <thead>
+                  <tr>
+                    <th scope="col" className={`${th} w-44`}>{labels.date}</th>
+                    <th scope="col" className={th}>{labels.title}</th>
+                    <th scope="col" className={`${th} w-32`}>{labels.type}</th>
+                  </tr>
+                </thead>
+                {[...months.entries()].map(([key, list]) => (
+                  <tbody key={key}>
+                    <tr>
+                      <th colSpan={3} scope="colgroup" className="bg-paper-dark px-3 py-1.5 text-left text-sm font-semibold text-heading">{monthLabel(key)}</th>
+                    </tr>
+                    {list.map((e) => (
+                      <tr key={e.date + e.title}>
+                        <td className={`${td} whitespace-nowrap`}>
+                          <time dateTime={e.date}>{formatDate(e.date, lang)}</time>
+                          {e.endDate && (
+                            <>
+                              {" – "}
+                              <time dateTime={e.endDate}>{formatDate(e.endDate, lang)}</time>
+                            </>
+                          )}
+                        </td>
+                        <td className={td}>{e.title}</td>
+                        <td className={`${td} text-muted`}>{e.typeLabel ?? types[e.type]?.label ?? e.type}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                ))}
+              </table>
+            </div>
+          )}
+          {site.demoNote && <DemoNote className="print-hide">{c.sample}</DemoNote>}
         </div>
-      </section>
+      </WithSidebar>
     </>
   );
 }

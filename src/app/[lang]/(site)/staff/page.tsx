@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { PeopleTable } from "@/components/portal/PeopleTable";
+import { WithSidebar } from "@/components/portal/Sidebar";
+import { getPeople } from "@/content/site-content";
 import { getI18n } from "@/i18n/server";
 import { StaffIntroPart } from "@/components/about/AboutParts";
 
 const copy = {
-  en: { title: "Staff", meta: "Office, library, laboratory and support staff." },
-  bn: { title: "কর্মচারীবৃন্দ", meta: "অফিস, পাঠাগার, গবেষণাগার ও সহায়ক কর্মচারীবৃন্দ।" },
+  en: { title: "Staff", meta: "Office, library, laboratory and support staff.", soon: "The staff list will be added soon." },
+  bn: { title: "কর্মচারীবৃন্দ", meta: "অফিস, পাঠাগার, গবেষণাগার ও সহায়ক কর্মচারীবৃন্দ।", soon: "কর্মচারীদের তালিকা শিগগির যোগ করা হবে।" },
 };
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -14,17 +17,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function StaffPage() {
-  const { lang } = await getI18n();
+  const [people, { lang }] = await Promise.all([getPeople(), getI18n()]);
   const c = copy[lang];
+  const staff = people.filter((p) => p.kind === "staff");
   return (
     <>
       <PageHeader title={c.title} path="/staff" />
-      <section className="py-16 sm:py-20">
-        <div className="container-page max-w-3xl space-y-6">
-          <StaffIntroPart />
-          <p className="border border-dashed border-line-strong bg-surface px-6 py-10 text-center text-muted">{lang === "bn" ? "কর্মচারীদের তালিকা শিগগির যোগ করা হবে।" : "The staff list will be added soon."}</p>
-        </div>
-      </section>
+      <WithSidebar>
+        <StaffIntroPart />
+        {staff.length ? <PeopleTable people={staff} lang={lang} caption={c.title} /> : <p className="border border-line bg-surface px-4 py-6 text-muted">{c.soon}</p>}
+      </WithSidebar>
     </>
   );
 }

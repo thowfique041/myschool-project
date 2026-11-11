@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import Link from "@/components/i18n/Link";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { DemoNote, SectionHeading } from "@/components/ui/primitives";
-import { SampleTag } from "@/components/ui/SampleTag";
+import { DemoNote } from "@/components/ui/primitives";
 import { ResultLookup } from "@/components/explorers/ResultLookup";
-import { NoticeRow } from "@/components/shared/cards";
-import { getBoardResults, getExamSchedule, getNotices, getResultOptions, getSite } from "@/content/site-content";
-import { formatDate, toBnDigits } from "@/lib/utils";
+import { Box } from "@/components/portal/Box";
+import { FullWidth } from "@/components/portal/Sidebar";
+import { table, td, th } from "@/components/portal/table";
+import { getBoardResults, getExamSchedule, getResultOptions, getSite } from "@/content/site-content";
+import { toBnDigits } from "@/lib/utils";
 import { getI18n } from "@/i18n/server";
 
 const copy = {
@@ -79,112 +81,65 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ResultsPage() {
-  const [sortedNotices, schedule, board, options, site, { lang }] = await Promise.all([getNotices(), getExamSchedule(), getBoardResults(), getResultOptions(), getSite(), getI18n()]);
+  const [schedule, board, options, site, { lang }] = await Promise.all([getExamSchedule(), getBoardResults(), getResultOptions(), getSite(), getI18n()]);
   const c = copy[lang];
   const n = (v: number | string) => (lang === "bn" ? toBnDigits(v) : String(v));
-  const examNotices = sortedNotices.filter((n) => n.category === "exam").slice(0, 6);
   const isDemo = Boolean(site.demoNote);
   return (
     <>
-      <PageHeader path="/results" title={c.title} titleBn={c.alt} description={c.intro} />
-
-      {isDemo && (
-        <div className="container-page pt-10">
+      <PageHeader path="/results" title={c.title} />
+      <FullWidth>
+        {isDemo && (
           <DemoNote>
             <strong>{c.demoStrong}</strong> {c.demoText}
           </DemoNote>
-        </div>
-      )}
+        )}
+        <Box id="search-h" title={c.search}>
+          <ResultLookup options={options} isDemo={isDemo} />
+        </Box>
 
-      <section id="search" aria-labelledby="search-h" className="scroll-mt-24 py-12">
-        <div className="container-page">
-          <SectionHeading id="search-h" title={c.search} />
-          <div className="mt-8">
-            <ResultLookup options={options} isDemo={isDemo} />
-          </div>
-        </div>
-      </section>
-
-      <section id="schedule" aria-labelledby="sched-h" className="scroll-mt-24 border-y border-line bg-surface py-16">
-        <div className="container-page grid gap-10 lg:grid-cols-[1.3fr_0.7fr]">
-          {schedule ? <div className="min-w-0">
-            <SectionHeading id="sched-h" title={c.sched(schedule.name, schedule.year)} description={schedule.note || undefined} />
-            <div className="mt-6 overflow-x-auto border border-line" tabIndex={0} aria-label={c.schedLabel}>
-              <table className="w-full min-w-[36rem] text-left text-sm">
-                <thead className="bg-paper text-xs text-muted uppercase">
-                  <tr>
-                    <th scope="col" className="px-4 py-3 font-semibold">{c.date}</th>
-                    <th scope="col" className="px-4 py-3 font-semibold">{c.day}</th>
-                    <th scope="col" className="px-4 py-3 font-semibold">{c.subject}</th>
-                    <th scope="col" className="px-4 py-3 font-semibold">{c.classes}</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-line">
-                  {schedule.rows.map((e) => (
-                    <tr key={e.date + e.subject}>
-                      <td className="px-4 py-3 font-semibold whitespace-nowrap text-heading">{formatDate(e.date, lang)}</td>
-                      <td className="px-4 py-3 text-muted">{e.day}</td>
-                      <td className="px-4 py-3 text-ink">{e.subject}</td>
-                      <td className="px-4 py-3 whitespace-nowrap text-muted">{e.classes}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            {schedule.file && (
-              <a href={schedule.file} target="_blank" rel="noopener" className="mt-4 inline-block text-sm font-semibold text-accent hover:underline underline-offset-4">
-                {c.routine}
-              </a>
-            )}
-          </div> : <div className="min-w-0">
-            <SectionHeading id="sched-h" title={c.schedNone} description={c.schedNoneText} />
-          </div>}
-          <div>
-            <h2 className="font-serif text-2xl leading-tight font-semibold text-heading">{c.notices}</h2>
-            <div className="mt-3 divide-y divide-line">
-              {examNotices.length === 0 && <p className="py-4 text-sm text-muted">{c.noNotices}</p>}
-              {examNotices.map((n) => (
-                <NoticeRow key={n.slug} notice={n} compact />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="summary" aria-labelledby="sum-h" className="scroll-mt-24 py-16">
-        <div className="container-page">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <SectionHeading id="sum-h" title={c.sum} description={board.isSample ? c.sumSample : undefined} />
-            {board.isSample && <SampleTag />}
-          </div>
-          <div className="mt-8 overflow-x-auto border border-line bg-surface" tabIndex={0} aria-label={c.sumLabel}>
-            <table className="w-full min-w-[34rem] text-left text-sm">
-              <thead className="bg-brand text-xs text-white uppercase">
+        <Box id="sum-h" title={c.sum} bodyClassName="p-0">
+          {board.isSample && <p className="px-4 pt-3 text-sm text-muted">{c.sumSample}</p>}
+          <div className="overflow-x-auto" tabIndex={0} role="region" aria-label={c.sumLabel}>
+            <table className={`${table} min-w-[34rem]`}>
+              <caption className="sr-only">{c.sumLabel}</caption>
+              <thead>
                 <tr>
-                  <th scope="col" className="px-4 py-3 font-semibold">{c.exam}</th>
-                  <th scope="col" className="px-4 py-3 text-right font-semibold">{c.examinees}</th>
-                  <th scope="col" className="px-4 py-3 text-right font-semibold">{c.passed}</th>
-                  <th scope="col" className="px-4 py-3 text-right font-semibold">{c.rate}</th>
-                  <th scope="col" className="px-4 py-3 text-right font-semibold">{c.gpa5}</th>
+                  <th scope="col" className={th}>{c.exam}</th>
+                  <th scope="col" className={`${th} text-right`}>{c.examinees}</th>
+                  <th scope="col" className={`${th} text-right`}>{c.passed}</th>
+                  <th scope="col" className={`${th} text-right`}>{c.rate}</th>
+                  <th scope="col" className={`${th} text-right`}>{c.gpa5}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-line">
+              <tbody className="tabular-nums">
                 {board.rows.map((b) => (
                   <tr key={b.exam + b.year}>
-                    <th scope="row" className="px-4 py-3 font-semibold text-heading">
+                    <th scope="row" className={`${td} font-semibold text-heading`}>
                       {b.exam} {b.year}
                     </th>
-                    <td className="px-4 py-3 text-right tabular-nums">{n(b.examinees)}</td>
-                    <td className="px-4 py-3 text-right tabular-nums">{n(b.passed)}</td>
-                    <td className="px-4 py-3 text-right tabular-nums">{n(b.examinees ? ((b.passed / b.examinees) * 100).toFixed(1) : "0.0")}%</td>
-                    <td className="px-4 py-3 text-right tabular-nums">{n(b.aPlus)}</td>
+                    <td className={`${td} text-right`}>{n(b.examinees)}</td>
+                    <td className={`${td} text-right`}>{n(b.passed)}</td>
+                    <td className={`${td} text-right`}>{n(b.examinees ? ((b.passed / b.examinees) * 100).toFixed(1) : "0.0")}%</td>
+                    <td className={`${td} text-right`}>{n(b.aPlus)}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </div>
-      </section>
+        </Box>
+
+        <p className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+          {schedule?.file && (
+            <a href={schedule.file} target="_blank" rel="noopener" className="font-semibold text-accent underline underline-offset-4 hover:text-heading">
+              {c.sched(schedule.name, schedule.year)}: {c.routine}
+            </a>
+          )}
+          <Link href="/notices" className="font-semibold text-accent underline underline-offset-4 hover:text-heading">
+            {c.notices}
+          </Link>
+        </p>
+      </FullWidth>
     </>
   );
 }

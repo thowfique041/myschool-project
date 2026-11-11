@@ -1,25 +1,20 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { DemoNote } from "@/components/ui/primitives";
-import { TeacherDirectory } from "@/components/explorers/TeacherDirectory";
-import { getCategories, getPeople, getSite } from "@/content/site-content";
+import { PeopleTable } from "@/components/portal/PeopleTable";
+import { WithSidebar } from "@/components/portal/Sidebar";
+import { getPeople, getSite } from "@/content/site-content";
 import { getI18n } from "@/i18n/server";
 
 const copy = {
   en: {
     title: "Teachers",
-    alt: "শিক্ষক ও কর্মচারী",
-    crumb: "About",
-    intro: "Find teachers by department, section, name or subject.",
-    meta: "Faculty directory of Webnion School & College by department and section.",
+    meta: "Teachers of Webnion School & College with designation, subject and qualification.",
     sample: "All faculty names and qualifications are sample entries. Until real photos are added, each profile shows a plain placeholder picture, so no real person is presented as a member of this fictional institution.",
   },
   bn: {
     title: "শিক্ষকবৃন্দ",
-    alt: "Teachers & Staff",
-    crumb: "আমাদের সম্পর্কে",
-    intro: "বিভাগ, শাখা, নাম বা বিষয় দিয়ে শিক্ষক খুঁজুন।",
-    meta: "বিভাগ ও শাখা অনুযায়ী ওয়েবনিয়ন স্কুল এন্ড কলেজের শিক্ষক তালিকা।",
+    meta: "পদবি, বিষয় ও শিক্ষাগত যোগ্যতাসহ ওয়েবনিয়ন স্কুল এন্ড কলেজের শিক্ষক তালিকা।",
     sample: "সব শিক্ষকের নাম ও যোগ্যতা নমুনা। আসল ছবি যোগ না হওয়া পর্যন্ত প্রতিটি প্রোফাইলে একটি সাধারণ ডামি ছবি দেখানো হয়েছে, যাতে কোনো আসল মানুষকে এই কাল্পনিক প্রতিষ্ঠানের সদস্য হিসেবে দেখানো না হয়।",
   },
 };
@@ -30,28 +25,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function TeachersPage() {
-  const [teachers, deptMap, site, { lang }] = await Promise.all([getPeople(), getCategories("department"), getSite(), getI18n()]);
+  const [people, site, { lang }] = await Promise.all([getPeople(), getSite(), getI18n()]);
   const c = copy[lang];
-  const used = new Set(teachers.map((t) => t.department));
-  const departments = [...Object.values(deptMap).map((d) => d.label).filter((d) => used.has(d)), ...[...used].filter((d) => !Object.values(deptMap).some((x) => x.label === d))];
+  const teachers = people.filter((p) => p.kind !== "staff");
   return (
     <>
-      <PageHeader path="/teachers"
-        title={c.title}
-        titleBn={c.alt}
-        description={c.intro}
-      />
-      <section className="py-12 sm:py-16">
-        <div className="container-page">
-          {site.demoNote && (
-            <DemoNote className="mb-8">
-              {c.sample}
-            </DemoNote>
-          )}
-          <h2 className="sr-only">{c.title}</h2>
-          <TeacherDirectory teachers={teachers} departments={departments} />
-        </div>
-      </section>
+      <PageHeader path="/teachers" title={c.title} />
+      <WithSidebar>
+        {site.demoNote && <DemoNote>{c.sample}</DemoNote>}
+        <PeopleTable people={teachers} lang={lang} caption={c.title} />
+      </WithSidebar>
     </>
   );
 }

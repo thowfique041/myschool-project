@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { WithSidebar } from "@/components/portal/Sidebar";
 import { getI18n } from "@/i18n/server";
 import { HistoryPart, MissionPart, OverviewPart } from "@/components/about/AboutParts";
 
@@ -19,9 +20,11 @@ export default async function HistoryPage() {
   return (
     <>
       <PageHeader title={c.title} path="/about/history" />
+      <WithSidebar>
       <OverviewPart />
       <MissionPart />
       <HistoryPart />
+      </WithSidebar>
     </>
   );
 }

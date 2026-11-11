@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { SectionHeading } from "@/components/ui/primitives";
+import { Box } from "@/components/portal/Box";
+import { WithSidebar } from "@/components/portal/Sidebar";
 import { getAcademic, getSite } from "@/content/site-content";
 import { getI18n } from "@/i18n/server";
 
@@ -100,74 +101,65 @@ export default async function RulesPage() {
   return (
     <>
       <PageHeader title={c.title} path="/academic/rules" />
-      <section className="py-12 sm:py-16">
-        <div className="container-page grid gap-12 lg:grid-cols-[minmax(0,1fr)_22rem]">
-          <div className="space-y-12">
-            <div>
-              <SectionHeading title={c.good} />
-              <div className="mt-6 space-y-6">
-                {c.info.map((item) => (
-                  <div key={item.title}>
-                    <h3 className="text-lg font-semibold text-heading">{item.title}</h3>
-                    {item.points ? (
-                      <ul className="mt-2 list-disc space-y-1 pl-5 leading-relaxed text-ink marker:text-muted">
-                        {item.points.map((pt) => (
-                          <li key={pt}>{pt}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="mt-2 leading-relaxed text-ink">{withBold(item.text ?? "")}</p>
-                    )}
+      <WithSidebar>
+        <Box id="good" title={c.good}>
+          <div className="space-y-5">
+            {c.info.map((item) => (
+              <div key={item.title}>
+                <h3 className="font-semibold text-heading">{item.title}</h3>
+                {item.points ? (
+                  <ul className="mt-1 list-disc space-y-1 pl-5 leading-relaxed text-ink marker:text-muted">
+                    {item.points.map((pt) => (
+                      <li key={pt}>{pt}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="mt-1 leading-relaxed text-ink">{withBold(item.text ?? "")}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </Box>
+        <Box id="times" title={c.times} bodyClassName="p-0">
+          {c.timings.map((g) => (
+            <div key={g.group}>
+              <p className="border-b border-line bg-paper-dark px-4 py-1.5 text-sm font-semibold text-heading">{g.group}</p>
+              <dl className="divide-y divide-line">
+                {g.rows.map((r) => (
+                  <div key={r.label} className="flex items-center justify-between gap-4 px-4 py-2.5">
+                    <dt className="text-ink">{r.label}</dt>
+                    <dd className="text-right font-semibold whitespace-nowrap text-heading tabular-nums">{r.value}</dd>
                   </div>
                 ))}
-              </div>
+              </dl>
             </div>
-            <div>
-              <SectionHeading title={m.policies} />
-              <div className="mt-6 space-y-8">
-                {policies.map((p) => (
-                  <section key={p.id} id={p.id} aria-labelledby={`${p.id}-h`} className="scroll-mt-28">
-                    <h3 id={`${p.id}-h`} className="text-lg font-semibold text-heading">{p.title}</h3>
-                    <ul className="mt-2 list-disc space-y-1.5 pl-5 leading-relaxed text-ink marker:text-muted">
-                      {p.points.map((pt) => (
-                        <li key={pt}>{pt}</li>
-                      ))}
-                    </ul>
-                  </section>
-                ))}
-              </div>
-              <a href="/downloads/code-of-conduct.pdf" download className="mt-6 inline-block text-sm font-semibold text-accent hover:underline underline-offset-4">
-                {m.conduct}
-              </a>
-            </div>
+          ))}
+          <p className="border-t border-line px-4 py-3 text-sm text-muted">
+            {c.questions}{" "}
+            <a href={site.phoneHref} className="font-semibold text-heading hover:underline">
+              {site.phone}
+            </a>{" "}
+            {c.during}
+          </p>
+        </Box>
+        <Box id="policies" title={m.policies}>
+          <div className="space-y-5">
+            {policies.map((p) => (
+              <section key={p.id} id={p.id} aria-labelledby={`${p.id}-h`} className="scroll-mt-28">
+                <h3 id={`${p.id}-h`} className="font-semibold text-heading">{p.title}</h3>
+                <ul className="mt-1 list-disc space-y-1 pl-5 leading-relaxed text-ink marker:text-muted">
+                  {p.points.map((pt) => (
+                    <li key={pt}>{pt}</li>
+                  ))}
+                </ul>
+              </section>
+            ))}
           </div>
-          <aside>
-            <SectionHeading title={c.times} />
-            <div className="mt-6 border border-line bg-surface">
-              {c.timings.map((g) => (
-                <div key={g.group}>
-                  <p className="border-y border-line bg-paper px-5 py-2.5 text-sm font-semibold text-subheading first:border-t-0">{g.group}</p>
-                  <dl className="divide-y divide-line">
-                    {g.rows.map((r) => (
-                      <div key={r.label} className="flex items-center justify-between gap-4 px-5 py-3">
-                        <dt className="text-ink">{r.label}</dt>
-                        <dd className="text-right font-semibold whitespace-nowrap text-heading tabular-nums">{r.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-              ))}
-            </div>
-            <p className="mt-4 text-sm text-muted">
-              {c.questions}{" "}
-              <a href={site.phoneHref} className="font-semibold text-heading hover:underline">
-                {site.phone}
-              </a>{" "}
-              {c.during}
-            </p>
-          </aside>
-        </div>
-      </section>
+          <a href="/downloads/code-of-conduct.pdf" download className="mt-5 inline-block text-sm font-semibold text-accent underline underline-offset-4 hover:text-heading">
+            {m.conduct}
+          </a>
+        </Box>
+      </WithSidebar>
     </>
   );
 }
