@@ -100,7 +100,7 @@ export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDe
       <div aria-live="polite" className="min-h-64 min-w-0">
         <AnimatePresence mode="wait">
           {state.kind === "idle" && (
-            <motion.div key="idle" initial={false} exit={{ opacity: 0 }} className="flex h-full min-h-64 flex-col items-center justify-center rounded-lg border border-dashed border-line bg-surface p-8 text-center">
+            <motion.div key="idle" initial={false} exit={{ opacity: 0 }} className="flex h-full min-h-64 flex-col items-center justify-center border border-dashed border-line bg-surface p-8 text-center">
               <Search aria-hidden className="size-8 text-navy-200" />
               <p className="mt-3 font-semibold text-heading">{t.results.idleTitle}</p>
               <p className="mt-1 max-w-sm text-sm text-muted">{t.results.idleText}</p>
@@ -152,7 +152,7 @@ export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDe
               </header>
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[28rem] text-left text-sm">
-                  <thead className="border-b border-line text-xs text-muted uppercase">
+                  <thead className="border-b border-line text-sm text-muted">
                     <tr>
                       <th scope="col" className="px-6 py-3 font-semibold">{t.results.subject}</th>
                       <th scope="col" className="px-4 py-3 text-right font-semibold">{t.results.marks}</th>

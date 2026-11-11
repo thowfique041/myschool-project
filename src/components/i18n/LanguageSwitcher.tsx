@@ -19,7 +19,7 @@ export function LanguageSwitcher({ className, tone = "light" }: { className?: st
       lang={other}
       aria-label={other === "bn" ? "বাংলায় দেখুন (Switch to Bangla)" : "View in English (ইংরেজিতে দেখুন)"}
       className={cn(
-        "inline-flex h-10 shrink-0 items-center gap-1.5 rounded-lg border px-3 text-sm font-semibold transition-colors",
+        "inline-flex h-10 shrink-0 items-center gap-1.5 rounded-sm border px-3 text-sm font-semibold transition-colors",
         tone === "dark" ? "border-white/20 text-navy-100 hover:border-white/50 hover:text-white" : "border-line text-heading hover:border-line-strong",
         className,
       )}
