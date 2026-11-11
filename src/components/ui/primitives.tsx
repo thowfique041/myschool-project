@@ -3,54 +3,21 @@ import type { ComponentProps, ReactNode } from "react";
 import { Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-/* ----------------------------------------------------------- Section heading */
-
-type SectionHeadingProps = {
-  title: string;
-  description?: ReactNode;
-  align?: "left" | "center";
-  tone?: "light" | "dark";
-  /** "rule": heavy top rule, like a notice-board header. "small": compact h2. */
-  variant?: "default" | "rule" | "small";
-  className?: string;
-  id?: string;
-};
-
-export function SectionHeading({ title, description, align = "left", tone = "light", variant = "default", className, id }: SectionHeadingProps) {
-  const dark = tone === "dark";
-  return (
-    <div className={cn(align === "center" && "mx-auto text-center", "max-w-2xl", variant === "rule" && "max-w-none border-t-4 border-navy-800 pt-3 dark:border-navy-300", className)}>
-      <h2
-        id={id}
-        className={cn(
-          variant === "default" && "font-serif text-2xl leading-tight font-semibold",
-          variant === "rule" && "text-2xl font-bold uppercase sm:text-[1.65rem]",
-          variant === "small" && "font-serif text-2xl font-semibold",
-          dark ? "text-white" : "text-heading",
-        )}
-      >
-        {title}
-      </h2>
-      {description && <p className={cn("mt-2 text-base leading-relaxed", dark ? "text-navy-100" : "text-muted")}>{description}</p>}
-    </div>
-  );
-}
-
 /* --------------------------------------------------------------- Button link */
 
 type Variant = "primary" | "secondary" | "outline" | "ghost" | "light";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-brand hover:bg-brand-hover text-white shadow-sm",
-  secondary: "bg-leaf-600 text-white hover:bg-leaf-700 shadow-sm",
+  primary: "bg-brand hover:bg-brand-hover text-white",
+  secondary: "bg-leaf-600 text-white hover:bg-leaf-700",
   outline: "border border-line-strong bg-surface text-heading hover:border-line-strong hover:bg-tint",
   ghost: "text-heading hover:bg-tint",
-  light: "bg-white text-navy-900 hover:bg-navy-50 shadow-sm",
+  light: "bg-white text-navy-900 hover:bg-navy-50",
 };
 
 export const buttonClasses = (variant: Variant = "primary", size: "sm" | "md" = "md") =>
   cn(
-    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg font-semibold transition-colors duration-150",
+    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm font-semibold transition-colors duration-150",
     "focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60",
     size === "md" ? "min-h-11 px-5 text-base" : "min-h-9 px-3.5 text-sm",
     variants[variant],
@@ -86,7 +53,7 @@ export function Badge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ring-inset",
+        "inline-flex items-center gap-1 rounded-sm px-2 py-0.5 text-xs font-semibold ring-1 ring-inset",
         badgeTones[tone],
         className,
       )}
@@ -105,7 +72,7 @@ export function DemoNote({ children, className }: { children: ReactNode; classNa
     <div
       role="note"
       className={cn(
-        "flex gap-3 rounded-lg border border-[#efe0bb] bg-[#fcf8ee] px-4 py-3 text-sm text-[#5f4712] dark:border-[#6b5420] dark:bg-[#251d0d] dark:text-[#f1d796]",
+        "flex gap-3 rounded-sm border border-[#efe0bb] bg-[#fcf8ee] px-4 py-3 text-sm text-[#5f4712] dark:border-[#6b5420] dark:bg-[#251d0d] dark:text-[#f1d796]",
         className,
       )}
     >

@@ -149,7 +149,7 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
   if (status === "review" || status === "submitting") {
     return (
       <div id="admission-review" tabIndex={-1} className="border-t-4 border-leaf-600 bg-surface p-6 outline-none sm:p-8 dark:border-accent">
-        <p className="eyebrow text-leaf-600 dark:text-accent">{a.review}</p>
+        <p className="text-sm font-semibold text-accent">{a.review}</p>
         <h3 className="mt-2 font-serif text-2xl font-semibold text-heading">{a.reviewTitle}</h3>
         <p className="mt-1 text-muted">{a.reviewText}</p>
         {summary}
@@ -175,7 +175,7 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
         id="admission-summary"
         className="border-t-4 border-leaf-600 bg-surface p-6 sm:p-8 dark:border-accent"
       >
-        <p className="eyebrow flex items-center gap-2 text-leaf-600 dark:text-accent">
+        <p className="flex items-center gap-2 text-sm font-semibold text-accent">
           <CheckCircle2 aria-hidden className="size-4" />
           {a.summaryTitle}
         </p>
