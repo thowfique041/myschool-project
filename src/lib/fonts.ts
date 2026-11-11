@@ -1,13 +1,20 @@
 import localFont from "next/font/local";
 
 // Bundled from @fontsource so the build does not depend on a font CDN.
-// Bangla first: Noto Serif Bengali for headings, Hind Siliguri for text.
-// English pages use one plain sans-serif (Source Sans 3) for headings and text.
+// Body: Inter (Latin) + Hind Siliguri (Bangla).
+// Headings: Playfair Display (Latin) + Noto Serif Bengali (Bangla).
 
 export const sansEn = localFont({
-  src: "../../node_modules/@fontsource-variable/source-sans-3/files/source-sans-3-latin-wght-normal.woff2",
+  src: "../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2",
   variable: "--font-sans-en",
-  weight: "200 900",
+  weight: "100 900",
+  display: "swap",
+});
+
+export const serifEn = localFont({
+  src: "../../node_modules/@fontsource-variable/playfair-display/files/playfair-display-latin-wght-normal.woff2",
+  variable: "--font-serif-en",
+  weight: "400 900",
   display: "swap",
 });
 
@@ -30,5 +37,5 @@ export const banglaSerif = localFont({
   ],
   variable: "--font-bangla-serif",
   display: "swap",
-  preload: true,
+  preload: false,
 });

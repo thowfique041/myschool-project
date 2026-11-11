@@ -2,7 +2,7 @@ import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTML
 import { cn } from "@/lib/utils";
 
 const control =
-  "block w-full rounded-sm border bg-surface px-3.5 py-2.5 text-base text-ink placeholder:text-muted/70 transition-colors focus:border-leaf-600 focus:outline-2 focus:outline-offset-0 focus:outline-leaf-600/25 min-h-11";
+  "block w-full rounded-lg border bg-surface px-3.5 py-2.5 text-base text-ink placeholder:text-muted/70 transition-colors focus:border-leaf-600 focus:outline-2 focus:outline-offset-0 focus:outline-leaf-600/25 min-h-11";
 
 type FieldProps = {
   label: string;

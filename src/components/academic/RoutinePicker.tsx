@@ -50,7 +50,7 @@ export function RoutinePicker({ routines, grid, labels }: { routines: Routine[];
   const select = "min-h-11 w-full border border-line-strong bg-surface px-3 text-ink focus:border-leaf-600 disabled:opacity-70";
   const field = (label: string, value: string, opts: string[], on: (v: string) => void) => (
     <label className="block text-sm">
-      <span className="font-semibold text-heading">{label}</span>
+      <span className="eyebrow text-subheading">{label}</span>
       <select className={`${select} mt-1.5`} value={value} onChange={(e) => on(e.target.value)} disabled={opts.length < 2}>
         {opts.map((o) => (
           <option key={o}>{o}</option>

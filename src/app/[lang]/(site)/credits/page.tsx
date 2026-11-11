@@ -68,18 +68,17 @@ export default async function CreditsPage() {
   const list: ImageAsset[] = Object.values(images).filter((img: ImageAsset) => Boolean(img.credit));
   return (
     <>
-      <PageHeader path="/credits" title={c.title} />
-      <section className="py-6 sm:py-8">
+      <PageHeader title={c.title} titleBn={c.alt} description={c.intro} />
+      <section className="py-12 sm:py-16">
         <div className="container-page max-w-4xl">
-          <p className="text-ink">{c.intro}</p>
-          <p className="mt-2 text-sm text-muted">
+          <p className="text-sm text-muted">
             {c.note}{" "}
             <a href="https://unsplash.com/license" target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-2">
               unsplash.com/license
             </a>
             .
           </p>
-          <ul className="mt-5 divide-y divide-line border border-line bg-surface">
+          <ul className="mt-8 divide-y divide-line border border-line bg-surface">
             {list.map((img) => (
               <li key={img.src} className="flex items-center gap-4 p-4">
                 <div className="relative h-14 w-20 shrink-0 overflow-hidden bg-paper-dark">

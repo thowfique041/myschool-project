@@ -1,4 +1,3 @@
-import { extraRoutes, navigation } from "@/data/site";
 import { cacheLife, cacheTag } from "next/cache";
 import { seedCollections, seedExams, singletonDefaults } from "./defaults";
 import { slugify } from "@/lib/utils";
@@ -145,30 +144,22 @@ export async function getSite(): Promise<SiteInfo> {
   };
 }
 
-export async function getNavigation(): Promise<{ items: NavItem[]; extras: NavItem[]; ctaLabel: string; ctaHref: string }> {
+export async function getNavigation(): Promise<{ items: NavItem[]; ctaLabel: string; ctaHref: string }> {
   const [n, lang] = await Promise.all([getSetting("navigation"), getLang()]);
-  const pick = (i: { label: string; labelBn?: string }) => (lang === "bn" ? i.labelBn || navLabel(i.label) : i.label);
-  const map = (i: NavItem): NavItem => ({
-    label: pick(i),
-    href: i.href,
-    children: i.children && i.children.length ? i.children.map((c) => ({ label: pick(c), href: c.href })) : undefined,
-  });
-  const items = arr<NavItem>(n.items).map(map);
   const L = (v: string | undefined) => (lang === "bn" && v ? navLabel(v) : v);
-  return { items, extras: extraRoutes.map(map), ctaLabel: L(str(n.ctaLabel))!, ctaHref: str(n.ctaHref) || "/admission" };
+  const items = arr<{ label: string; href: string; children?: { label: string; href: string; description?: string }[] }>(n.items).map((i) => ({
+    label: L(i.label)!,
+    href: i.href,
+    children: i.children && i.children.length ? i.children.map((c) => ({ label: L(c.label)!, href: c.href, description: L(c.description) || undefined })) : undefined,
+  }));
+  return { items, ctaLabel: L(str(n.ctaLabel))!, ctaHref: str(n.ctaHref) || "/admission#apply" };
 }
 
 /** Footer content with link labels in the visitor's language. */
 export async function getFooter<T extends Record<string, unknown>>(): Promise<T> {
   const [f, lang] = await Promise.all([getSetting("footer"), getLang()]);
   if (lang !== "bn") return f as T;
-  // Footer links reuse the Bangla label of the same page in the site map.
-  const byHref = new Map<string, string>();
-  for (const i of [...navigation, ...extraRoutes]) {
-    if (i.labelBn) byHref.set(i.href, i.labelBn);
-    for (const c of i.children ?? []) if (c.labelBn) byHref.set(c.href, c.labelBn);
-  }
-  const links = (v: unknown) => arr<{ label: string; href: string }>(v).map((l) => ({ ...l, label: byHref.get(l.href) ?? navLabel(l.label) }));
+  const links = (v: unknown) => arr<{ label: string; href: string }>(v).map((l) => ({ ...l, label: navLabel(l.label) }));
   return { ...f, quick: links(f.quick), institution: links(f.institution), help: links(f.help) } as unknown as T;
 }
 
