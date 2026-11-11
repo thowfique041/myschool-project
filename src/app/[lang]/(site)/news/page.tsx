@@ -27,7 +27,7 @@ export default async function NewsPage() {
 
   return (
     <>
-      <PageHeader title={c.title} titleBn={c.alt} crumbs={[{ label: c.crumb }]} description={c.intro} />
+      <PageHeader path="/news" title={c.title} titleBn={c.alt} description={c.intro} />
 
       {featured && <section aria-labelledby="featured" className="py-12 sm:py-16">
         <div className="container-page grid gap-8 lg:grid-cols-[1.4fr_0.6fr]">

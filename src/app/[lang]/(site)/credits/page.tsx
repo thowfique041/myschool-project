@@ -68,7 +68,7 @@ export default async function CreditsPage() {
   const list: ImageAsset[] = Object.values(images).filter((img: ImageAsset) => Boolean(img.credit));
   return (
     <>
-      <PageHeader title={c.title} titleBn={c.alt} description={c.intro} />
+      <PageHeader path="/credits" title={c.title} titleBn={c.alt} description={c.intro} />
       <section className="py-12 sm:py-16">
         <div className="container-page max-w-4xl">
           <p className="text-sm text-muted">

@@ -86,7 +86,7 @@ export default async function ResultsPage() {
   const isDemo = Boolean(site.demoNote);
   return (
     <>
-      <PageHeader title={c.title} titleBn={c.alt} description={c.intro} />
+      <PageHeader path="/results" title={c.title} titleBn={c.alt} description={c.intro} />
 
       {isDemo && (
         <div className="container-page pt-10">

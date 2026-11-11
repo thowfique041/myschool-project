@@ -1,14 +1,14 @@
 import { lang as rootLang } from "next/root-params";
-import { hasLocale, type Locale } from "./config";
+import { defaultLocale, hasLocale, type Locale } from "./config";
 import { dictionaries } from "./dict";
 
-/** Current locale from the [lang] root segment (English outside it, e.g. sitemap). */
+/** Current locale from the [lang] root segment (the default, Bangla, outside it, e.g. sitemap). */
 export async function getLang(): Promise<Locale> {
   try {
     const l = await rootLang();
-    return hasLocale(l) ? l : "en";
+    return hasLocale(l) ? l : defaultLocale;
   } catch {
-    return "en";
+    return defaultLocale;
   }
 }
 

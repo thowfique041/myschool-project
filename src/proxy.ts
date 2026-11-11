@@ -1,21 +1,45 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 /**
- * Language routing. English is served at the site root (/about) and Bangla
- * under /bn (/bn/about). Internally both live in app/[lang]/…, so English
- * requests are rewritten to /en/…; a direct /en/… URL redirects to the
- * clean English URL.
+ * Language routing. Bangla is the default and is served at the site root
+ * (/notices); English lives under /en (/en/notices). Internally both are in
+ * app/[lang]/…, so root requests are rewritten to /bn/…. The old /bn/… URLs
+ * redirect permanently to the root, and pages that were merged or removed
+ * redirect to their new home in either language.
  */
+const MOVED: Record<string, string> = {
+  "/about": "/about/history",
+  "/academic": "/academic/classes",
+  "/calendar": "/academic/calendar",
+  "/policies": "/academic/rules",
+  "/students-guardians": "/academic/rules",
+  "/faq": "/admission",
+  "/privacy": "/",
+  "/terms": "/",
+};
+
+const strip = (path: string, prefix: string) => path.slice(prefix.length) || "/";
+
 export default function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  if (pathname === "/bn" || pathname.startsWith("/bn/")) return NextResponse.next();
-  if (pathname === "/en" || pathname.startsWith("/en/")) {
+  const redirect = (to: string) => {
     const url = req.nextUrl.clone();
-    url.pathname = pathname.slice(3) || "/";
+    url.pathname = to;
     return NextResponse.redirect(url, 308);
+  };
+
+  if (pathname === "/bn" || pathname.startsWith("/bn/")) {
+    const rest = strip(pathname, "/bn");
+    return redirect(MOVED[rest] ?? rest);
   }
+  if (pathname === "/en" || pathname.startsWith("/en/")) {
+    const rest = strip(pathname, "/en");
+    if (MOVED[rest]) return redirect(MOVED[rest] === "/" ? "/en" : `/en${MOVED[rest]}`);
+    return NextResponse.next();
+  }
+  if (MOVED[pathname]) return redirect(MOVED[pathname]);
   const url = req.nextUrl.clone();
-  url.pathname = `/en${pathname === "/" ? "" : pathname}`;
+  url.pathname = `/bn${pathname === "/" ? "" : pathname}`;
   return NextResponse.rewrite(url);
 }
 

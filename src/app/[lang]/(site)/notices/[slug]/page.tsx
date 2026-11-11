@@ -34,7 +34,7 @@ export default async function NoticeDetailPage({ params }: PageProps<"/[lang]/no
 
   return (
     <>
-      <PageHeader title={t.notices.notice} headingAs="p" crumbs={[{ label: lang === "bn" ? "নোটিশ বোর্ড" : "Notice Board", href: "/notices" }]} />
+      <PageHeader path="/notices" current={notice.title} title={t.notices.notice} headingAs="p" />
       <section className="py-12 sm:py-16">
         <div className="container-page grid gap-10 lg:grid-cols-[1fr_20rem]">
           <article className="border border-line bg-surface p-6 sm:p-10">

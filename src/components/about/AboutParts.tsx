@@ -1,10 +1,8 @@
 import { DefaultAvatar } from "@/components/ui/DefaultAvatar";
-import type { Metadata } from "next";
 import Image from "next/image";
 import { CampusCircles } from "@/components/shared/CampusCircles";
 import { Compass, Eye } from "lucide-react";
-import { PageHeader } from "@/components/ui/PageHeader";
-import { ButtonLink, DemoNote, SectionHeading } from "@/components/ui/primitives";
+import { SectionHeading } from "@/components/ui/primitives";
 import { getFacilities, getPeople, getSetting, getSite } from "@/content/site-content";
 import type { PrincipalContent } from "@/components/home/types";
 import { getI18n } from "@/i18n/server";
@@ -88,12 +86,7 @@ const copy = {
     directory: "শিক্ষক তালিকা দেখুন",
   },
 };
-
-export async function generateMetadata(): Promise<Metadata> {
-  const { lang } = await getI18n();
-  return { title: copy[lang].title, description: copy[lang].meta };
-}
-
+// Sections of the former single About page, each now on its own route.
 type About = {
   overview: string[];
   overviewImage: string;
@@ -112,7 +105,7 @@ function splitLead(text: string, bangla: boolean): [string, string] {
 
 type Mission = { mission: string; vision: string; values: { title: string; text: string }[] };
 
-export default async function AboutPage() {
+async function ctx() {
   const [site, about, mission, principal, facilities, teachers] = await Promise.all([
     getSite(),
     getSetting<About>("about"),
@@ -128,15 +121,13 @@ export default async function AboutPage() {
   const values = mission.values;
   const cap = lang === "bn" ? "" : "uppercase tracking-[0.16em]";
   const staff = teachers.length;
-  const departments = [...teachers.reduce((m, t) => m.set(t.department, (m.get(t.department) ?? 0) + 1), new Map<string, number>())];
+  return { site, about, mission, principal, facilities, teachers, lang, c, n, milestones, committee, values, cap, staff };
+}
+
+export async function OverviewPart() {
+  const { site, about, lang, c, n, staff } = await ctx();
   return (
     <>
-      <PageHeader
-        title={c.title}
-        titleBn={c.alt}
-        description={c.since(site.tagline, n(site.established))}
-      />
-
       {/* Overview: large photograph bleeding to the left edge, text on the page grid, figures on a ruled strip. */}
       <section aria-labelledby="overview" className="border-b border-line">
         <div className="grid lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)]">
@@ -167,7 +158,14 @@ export default async function AboutPage() {
           </div>
         </div>
       </section>
+    </>
+  );
+}
 
+export async function MissionPart() {
+  const { mission, lang, c, n, values, cap } = await ctx();
+  return (
+    <>
       {/* Mission & vision */}
       <section aria-labelledby="mission" className="border-y border-line bg-surface py-16 sm:py-20">
         <div className="container-page">
@@ -218,7 +216,14 @@ export default async function AboutPage() {
           </ul>
         </div>
       </section>
+    </>
+  );
+}
 
+export async function HistoryPart() {
+  const { site, lang, c, milestones } = await ctx();
+  return (
+    <>
       {/* History */}
       <section aria-labelledby="history" className="py-16 sm:py-20">
         <div className="container-page grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
@@ -242,7 +247,14 @@ export default async function AboutPage() {
           </ol>
         </div>
       </section>
+    </>
+  );
+}
 
+export async function PrincipalPart() {
+  const { principal, lang, c } = await ctx();
+  return (
+    <>
       {/* Principal: message on the left, photo on the right */}
       <section id="principal" aria-labelledby="principal-title" className="scroll-mt-24 border-t-4 border-leaf-600 bg-navy-950 py-16 text-white sm:py-20">
         <div className="container-page grid items-center gap-10 lg:grid-cols-[1.4fr_0.6fr] lg:gap-16">
@@ -269,7 +281,14 @@ export default async function AboutPage() {
           </div>
         </div>
       </section>
+    </>
+  );
+}
 
+export async function CampusPart() {
+  const { facilities, c } = await ctx();
+  return (
+    <>
       {/* Campus */}
       <section aria-labelledby="campus" className="py-16 sm:py-20">
         <div className="container-page">
@@ -290,10 +309,16 @@ export default async function AboutPage() {
           </ul>
         </div>
       </section>
+    </>
+  );
+}
 
-      {/* Committee & staff */}
-      <section id="committee" aria-labelledby="committee-title" className="scroll-mt-24 border-t border-line bg-surface py-16 sm:py-20">
-        <div className="container-page grid gap-12 lg:grid-cols-2">
+export async function CommitteePart() {
+  const { site, c, committee } = await ctx();
+  return (
+    <>
+      <section aria-labelledby="committee-title" className="py-16 sm:py-20">
+        <div className="container-page max-w-4xl">
           <div className="min-w-0">
             <SectionHeading id="committee-title" title={c.committee} description={site.demoNote ? c.committeeSample : undefined} />
             <div className="mt-6 overflow-x-auto">
@@ -318,25 +343,17 @@ export default async function AboutPage() {
               </table>
             </div>
           </div>
-          <div>
-            <SectionHeading title={c.staff} />
-            <p className="mt-4 leading-relaxed text-muted">{about.staffText}</p>
-            {/* Departments with the number of people listed in the directory. */}
-            <ul className="mt-6 grid grid-cols-2 border-t-2 border-navy-800 sm:grid-cols-3 dark:border-navy-300">
-              {departments.map(([d, count]) => (
-                <li key={d} className="flex items-baseline justify-between gap-3 border-b border-line py-3 pr-4">
-                  <span className="text-sm text-ink">{d}</span>
-                  <span className="font-serif text-lg font-semibold text-heading tabular-nums">{n(count)}</span>
-                </li>
-              ))}
-            </ul>
-            <ButtonLink href="/teachers" variant="primary" className="mt-6">
-              {c.directory}
-            </ButtonLink>
-            {site.demoNote && <DemoNote className="mt-6">{site.demoNote}</DemoNote>}
-          </div>
         </div>
       </section>
+    </>
+  );
+}
+
+export async function StaffIntroPart() {
+  const { about } = await ctx();
+  return (
+    <>
+      <p className="leading-relaxed text-ink">{about.staffText}</p>
     </>
   );
 }

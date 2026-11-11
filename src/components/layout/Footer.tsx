@@ -117,6 +117,9 @@ export async function Footer({ site, footer, year }: { site: SiteInfo; footer: F
               </span>
             )}
             <span className="font-serif italic">{lang === "bn" ? site.taglineBn : site.tagline}</span>
+            <Link href="/credits" className="underline underline-offset-2 hover:text-white">
+              {lang === "bn" ? "ছবির কৃতজ্ঞতা" : "Photo credits"}
+            </Link>
           </p>
         </div>
       </div>

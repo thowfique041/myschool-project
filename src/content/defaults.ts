@@ -63,7 +63,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
     primaryLabel: "Admission 2027",
     primaryHref: "/admission",
     secondaryLabel: "About the school",
-    secondaryHref: "/about",
+    secondaryHref: "/about/history",
     welcomeTitle: "About the school",
     welcomeText: [
       "Webnion School & College began in 1998 as a small primary school in Upashahar with four classrooms and a single shift. Today it teaches from Play to Class 12 in two shifts, with separate primary, secondary and higher secondary sections.",
@@ -125,8 +125,8 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
   },
   navigation: {
     ctaLabel: "Apply Now",
-    ctaHref: "/admission#apply",
-    items: staticNav.map((n) => ({ label: n.label, href: n.href, children: (n.children ?? []).map((c) => ({ ...c, description: c.description ?? "" })) })),
+    ctaHref: "/admission",
+    items: staticNav.map((n) => ({ label: n.label, labelBn: n.labelBn ?? "", href: n.href, children: (n.children ?? []).map((c) => ({ label: c.label, labelBn: c.labelBn ?? "", href: c.href })) })),
   },
   footer: {
     about: "A school and college in Sylhet offering Play to Class 12 under the national curriculum, with morning and day shifts.",
