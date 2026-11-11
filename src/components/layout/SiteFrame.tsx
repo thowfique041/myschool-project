@@ -3,6 +3,7 @@ import { TopBar } from "./TopBar";
 import { SiteHeader } from "./SiteHeader";
 import { Footer, type FooterContent } from "./Footer";
 import { BackToTop } from "./BackToTop";
+import { TextReveal } from "./TextReveal";
 import { ScrollTopOnNav } from "./ScrollTopOnNav";
 import { LogoMark } from "@/components/brand/Logo";
 import { getCurrentYear, getFooter, getNavigation, getSetting, getSite } from "@/content/site-content";
@@ -20,8 +21,8 @@ function shade(hex: string, defaultHex: string): Record<string, string> | null {
 
 /** Brand colour overrides from Settings → Branding, as CSS custom properties. */
 function brandingCss(primary: string, accent: string): string {
-  const p = shade(primary, "#17482f");
-  const a = shade(accent, "#8a5a0f");
+  const p = shade(primary, "#142b49");
+  const a = shade(accent, "#7a2638");
   const rules: string[] = [];
   if (p) rules.push(`--color-navy-700:${p.light};--color-navy-800:${p.base};--color-navy-900:${p.dark};--color-navy-950:${p.darker};`);
   if (a) rules.push(`--color-leaf-500:${a.light};--color-leaf-600:${a.base};--color-leaf-700:${a.dark};--color-leaf-800:${a.darker};`);
@@ -41,7 +42,6 @@ export async function SiteFrame({ children }: { children: ReactNode }) {
   const css = brandingCss(site.primary, site.accent);
   const { lang } = await getI18n();
   const brandName = lang === "bn" ? site.nameBn : site.name;
-  const brandAlt = lang === "bn" ? site.name : site.nameBn;
   const brandSub = lang === "bn" ? `স্থাপিত ${String(site.established).replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[Number(d)])}` : `Established ${site.established}`;
 
   if (maintenance.enabled) {
@@ -73,10 +73,11 @@ export async function SiteFrame({ children }: { children: ReactNode }) {
         {t.common.skip}
       </a>
       <TopBar site={site} />
-      <SiteHeader items={nav.items} ctaLabel={nav.ctaLabel} ctaHref={nav.ctaHref} brand={{ name: brandName, alt: brandAlt, established: brandSub, logo: site.logo || undefined }} />
+      <SiteHeader items={nav.items} ctaLabel={nav.ctaLabel} ctaHref={nav.ctaHref} brand={{ name: brandName, nameBn: brandSub, logo: site.logo || undefined }} />
       <main id="main" className="flex-1">
         {children}
       </main>
+      <TextReveal />
       <ScrollTopOnNav />
       <Footer site={site} footer={footer} year={year} />
       <BackToTop />

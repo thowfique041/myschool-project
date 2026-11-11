@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
-import { Download, FileText } from "lucide-react";
-import { ButtonLink, DemoNote } from "@/components/ui/primitives";
-import { PageHeader } from "@/components/ui/PageHeader";
-import { Box } from "@/components/portal/Box";
-import { WithSidebar } from "@/components/portal/Sidebar";
-import { table, td, th } from "@/components/portal/table";
+import { DateBlock } from "@/components/shared/cards";
+import Image from "next/image";
+import Link from "@/components/i18n/Link";
+import { CheckCircle2, Download, FileText } from "lucide-react";
+import { ButtonLink, buttonClasses, DemoNote, SectionHeading } from "@/components/ui/primitives";
+import { SampleTag } from "@/components/ui/SampleTag";
+import { Accordion } from "@/components/ui/Accordion";
+import { AdmissionForm } from "@/components/forms/AdmissionForm";
 import { formatDate, toBnDigits } from "@/lib/utils";
 import { getI18n } from "@/i18n/server";
-import { getSetting, getSite } from "@/content/site-content";
+import { getFaqs, getSetting, getSite, getToday } from "@/content/site-content";
 import type { AdmissionContent } from "@/components/home/types";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -20,6 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const copy = {
   en: {
     title: (y: string) => `Admission ${y}`,
+    alt: (y: string) => `ভর্তি ${toBnDigits(y)}`,
     apply: "Apply online",
     form: "Download printable form",
     notice: "Notice",
@@ -27,10 +30,6 @@ const copy = {
     photoAlt: "Students at the school",
     datesK: "Important dates",
     dates: "Important dates",
-    date: "Date",
-    event: "Event",
-    formDl: "Admission form",
-    formText: "Download the printable form, or fill in the application online.",
     eligK: "Eligibility",
     elig: "Eligibility and class-wise requirements",
     eligSample: "Seat numbers are indicative for this demonstration.",
@@ -67,9 +66,11 @@ const copy = {
     forStudent: "For the student",
     forGuardian: "From the guardian",
     perYear: "BDT",
+    home: "Home",
   },
   bn: {
     title: (y: string) => `ভর্তি ${toBnDigits(y)}`,
+    alt: (y: string) => `Admission ${y}`,
     apply: "অনলাইনে আবেদন",
     form: "প্রিন্টযোগ্য ফরম ডাউনলোড",
     notice: "নোটিশ",
@@ -77,10 +78,6 @@ const copy = {
     photoAlt: "বিদ্যালয়ের শিক্ষার্থীরা",
     datesK: "গুরুত্বপূর্ণ তারিখ",
     dates: "গুরুত্বপূর্ণ তারিখ",
-    date: "তারিখ",
-    event: "বিষয়",
-    formDl: "ভর্তি ফরম",
-    formText: "প্রিন্টযোগ্য ফরম ডাউনলোড করুন, অথবা অনলাইনে আবেদন করুন।",
     eligK: "যোগ্যতা",
     elig: "যোগ্যতা ও শ্রেণিভিত্তিক শর্ত",
     eligSample: "আসনসংখ্যা এই ডেমোর জন্য আনুমানিক।",
@@ -117,15 +114,19 @@ const copy = {
     forStudent: "শিক্ষার্থীর জন্য",
     forGuardian: "অভিভাবকের কাছ থেকে",
     perYear: "টাকা",
+    home: "হোম",
   },
 };
 
 export default async function AdmissionPage() {
-  const [a, site, { lang }] = await Promise.all([getSetting<AdmissionContent>("admission"), getSite(), getI18n()]);
+  const [a, faqs, site, today, { lang }] = await Promise.all([getSetting<AdmissionContent>("admission"), getFaqs(), getSite(), getToday(), getI18n()]);
   const admissionYear = String(a.year);
   const c = copy[lang];
   const n = (v: string | number) => (lang === "bn" ? toBnDigits(v) : String(v));
   const dates = [...a.dates].sort((x, y) => x.date.localeCompare(y.date));
+  const nextDate = dates.find((d) => d.date >= today);
+  // The submission deadline is the date entry whose label says so; nothing is assumed if none does.
+  const deadline = dates.find((d) => /last date|শেষ তারিখ/i.test(d.label));
   const isGuardianDoc = (d: string) => /guardian|father|mother|অভিভাবক|পিতা|মাতা|বাবা|মা[য়েরর]/i.test(d);
   const docGroups: [string, string[]][] = [
     [c.forStudent, a.documents.filter((d) => !isGuardianDoc(d))],
@@ -133,163 +134,246 @@ export default async function AdmissionPage() {
   ];
   // BDT with the taka sign when the value is a number ("5,000" → "৳ 5,000"); text such as "N/A" is shown as is.
   const taka = (v: string | number) => (/^[\d,.\s]+$/.test(String(v)) ? `৳ ${n(v)}` : n(v));
-  const noticeTitle = lang === "bn" ? a.noticeTitleBn : a.noticeTitle;
-  const fileLink = "inline-flex items-center gap-2 text-sm font-semibold text-accent underline underline-offset-4 hover:text-heading";
   return (
     <>
-      <PageHeader path="/admission" title={c.title(admissionYear)} />
-      <WithSidebar>
-        <Box id="announce" title={c.notice}>
-          <p className="text-sm text-muted">
-            {a.open ? c.open : c.closed}
-            {a.noticeDate && (
-              <>
-                {" · "}
-                <time dateTime={a.noticeDate}>{formatDate(a.noticeDate, lang)}</time>
-              </>
-            )}
-          </p>
-          {noticeTitle && <h3 className="mt-1 text-lg font-semibold text-heading">{noticeTitle}</h3>}
-          <div className="mt-2 space-y-3 leading-relaxed text-ink">
-            {a.intro && <p>{a.intro}</p>}
-            {lang === "bn" && a.noticeBodyBn && <p>{a.noticeBodyBn}</p>}
-            {a.noticeBody && (
-              <p>
-                {a.noticeBody} {c.office} {site.officePhone || site.phone}.
+      {/* Hero in the homepage manner: full-width photograph with a navy text panel. */}
+      <section aria-labelledby="adm-title" className="relative isolate overflow-hidden bg-navy-950 text-white">
+        {a.image && <Image src={a.image} alt={c.photoAlt} fill priority sizes="100vw" className="-z-20 object-cover object-[70%_center]" />}
+        <div className="container-page flex min-h-[30rem] flex-col justify-center py-10 sm:min-h-[34rem]">
+          <div className="max-w-2xl rounded-md border-l-4 border-[#e8b84a] bg-navy-950/80 p-6 sm:p-8">
+            <nav aria-label={lang === "bn" ? "ব্রেডক্রাম্ব" : "Breadcrumb"}>
+              <ol className="flex items-center gap-1 text-sm text-navy-200">
+                <li>
+                  <Link href="/" className="hover:text-white hover:underline underline-offset-4">{c.home}</Link>
+                </li>
+                <li aria-hidden>›</li>
+                <li aria-current="page" className="text-white">{lang === "bn" ? "ভর্তি" : "Admission"}</li>
+              </ol>
+            </nav>
+            <p className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[#e8b84a]">
+              <span aria-hidden className={a.open ? "size-2 rounded-full bg-[#e8b84a]" : "size-2 rounded-full bg-navy-300"} />
+              {a.open ? c.open : c.closed}
+            </p>
+            <h1 id="adm-title" className="mt-1 font-serif text-4xl leading-tight font-semibold sm:text-5xl lg:text-6xl">
+              {lang === "bn" ? c.alt(admissionYear) : c.title(admissionYear)}
+            </h1>
+            {a.intro && <p className="mt-3 text-lg text-white">{a.intro}</p>}
+            {deadline && (
+              <p className="mt-4 text-base font-semibold text-[#f3cc6e] sm:text-lg">
+                {c.deadline}: <time dateTime={deadline.date}>{formatDate(deadline.date, lang)}</time>
               </p>
             )}
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              {a.open && (
+                <ButtonLink href="#apply" variant="secondary">
+                  {c.apply}
+                </ButtonLink>
+              )}
+              {a.circularFile && (
+                <a href={a.circularFile} target="_blank" rel="noopener" download className={buttonClasses("light")}>
+                  <Download aria-hidden className="size-4" />
+                  {c.circularBtn}
+                </a>
+              )}
+              {a.formFile && (
+                <a href={a.formFile} target="_blank" rel="noopener" download className="text-sm font-semibold underline underline-offset-4 hover:text-navy-100">
+                  {c.form}
+                </a>
+              )}
+            </div>
           </div>
-          {a.circularFile && (
-            <a href={a.circularFile} target="_blank" rel="noopener" download className={`${fileLink} mt-3`}>
-              <FileText aria-hidden className="size-4" />
-              {c.circular(admissionYear)}
-            </a>
-          )}
-        </Box>
+        </div>
+      </section>
 
-        <Box id="dates" title={c.dates} bodyClassName="p-0">
-          <table className={table}>
-            <caption className="sr-only">{c.dates}</caption>
-            <thead>
-              <tr>
-                <th scope="col" className={`${th} w-40`}>{c.date}</th>
-                <th scope="col" className={th}>{c.event}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {dates.map((d) => (
-                <tr key={d.label}>
-                  <td className={`${td} whitespace-nowrap`}>
-                    <time dateTime={d.date}>{formatDate(d.date, lang)}</time>
-                  </td>
-                  <td className={td}>{d.label}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </Box>
+      {/* Announcement: the official notice text */}
+      {(lang === "bn" ? a.noticeTitleBn : a.noticeTitle) && (
+        <section aria-labelledby="announce" className="border-b border-line py-12">
+          <div className="container-page grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-12">
+            <div>
+              {a.noticeDate && (
+                <p className="eyebrow text-leaf-600 dark:text-accent">
+                  {c.notice} · <time dateTime={a.noticeDate}>{formatDate(a.noticeDate, lang)}</time>
+                </p>
+              )}
+              <h2 id="announce" className="mt-2 font-serif text-2xl leading-snug font-semibold text-heading">
+                {lang === "bn" ? a.noticeTitleBn : a.noticeTitle}
+              </h2>
+            </div>
+            <div className="space-y-3 border-l-2 border-leaf-600 pl-5 leading-relaxed text-ink dark:border-accent">
+              {lang === "bn" && a.noticeBodyBn && <p>{a.noticeBodyBn}</p>}
+              {a.noticeBody && (
+                <p>
+                  {a.noticeBody} {c.office} {site.officePhone || site.phone}.
+                </p>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
 
-        <Box id="elig" title={c.elig} bodyClassName="p-0">
-          {site.demoNote && <p className="px-4 pt-3 text-sm text-muted">{c.eligSample}</p>}
-          <div className="overflow-x-auto" tabIndex={0} role="region" aria-label={c.eligLabel}>
-            <table className={`${table} min-w-[36rem]`}>
+      {/* Dates */}
+      <section aria-labelledby="dates" className="border-y border-line bg-surface py-16">
+        <div className="container-page">
+          <SectionHeading id="dates" title={c.dates} />
+          {/* Chronological timeline: completed dates muted, the next one highlighted. */}
+          <ol className="mt-8 grid border-t-2 border-navy-800 sm:grid-cols-2 lg:grid-cols-4 dark:border-navy-300">
+            {dates.map((d) => {
+              const past = d.date < today;
+              const isNext = d === nextDate;
+              return (
+                <li key={d.label} className={`lift flex gap-4 border-b border-line py-4 hover:bg-paper sm:pr-4 ${isNext ? "border-b-2 border-b-leaf-600 dark:border-b-accent" : ""}`}>
+                  <DateBlock iso={d.date} className={past ? "opacity-70" : undefined} />
+                  <div className="self-center">
+                    <p className={`text-sm font-medium ${past ? "text-muted" : "text-heading"}`}>{d.label}</p>
+                    {(isNext || past) && <p className={`eyebrow mt-1 ${isNext ? "text-leaf-600 dark:text-accent" : "text-muted"}`}>{isNext ? c.next : c.done}</p>}
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      </section>
+
+      {/* Eligibility */}
+      <section id="eligibility" aria-labelledby="elig" className="scroll-mt-24 py-16">
+        <div className="container-page">
+          <SectionHeading id="elig" title={c.elig} description={site.demoNote ? c.eligSample : undefined} />
+          {/* Table on wider screens; one ruled entry per class on phones. */}
+          <div className="mt-8 hidden md:block">
+            <table className="w-full text-left">
               <caption className="sr-only">{c.eligLabel}</caption>
-              <thead>
+              <thead className="border-y-2 border-navy-800 dark:border-navy-300">
                 <tr>
-                  <th scope="col" className={th}>{c.cls}</th>
-                  <th scope="col" className={th}>{c.req}</th>
-                  <th scope="col" className={th}>{c.sel}</th>
-                  <th scope="col" className={`${th} text-right`}>{c.seats}</th>
+                  <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.cls}</th>
+                  <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.req}</th>
+                  <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.sel}</th>
+                  <th scope="col" className="eyebrow py-3 text-right text-subheading">{c.seats}</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-line border-b border-line">
                 {a.eligibility.map((e) => (
-                  <tr key={e.cls}>
-                    <th scope="row" className={`${td} font-semibold whitespace-nowrap text-heading`}>{e.cls}</th>
-                    <td className={td}>{e.requirement}</td>
-                    <td className={td}>{e.selection}</td>
-                    <td className={`${td} text-right tabular-nums`}>{n(e.seats)}</td>
+                  <tr key={e.cls} className="hover:bg-surface">
+                    <th scope="row" className="py-4 pr-4 font-serif text-lg font-semibold whitespace-nowrap text-heading">{e.cls}</th>
+                    <td className="py-4 pr-4 text-ink">{e.requirement}</td>
+                    <td className="py-4 pr-4 text-muted">{e.selection}</td>
+                    <td className="py-4 text-right font-serif text-xl font-semibold text-leaf-600 tabular-nums dark:text-accent">{n(e.seats)}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </Box>
-
-        <Box id="proc" title={c.proc}>
-          {/* The only numbered list on the site: the order of the steps matters. */}
-          <ol className="list-decimal space-y-3 pl-6 marker:font-semibold marker:text-accent">
-            {a.steps.map((s) => (
-              <li key={s.title}>
-                <h3 className="font-semibold text-heading">{s.title}</h3>
-                <p className="text-ink">{s.text}</p>
+          <ul className="mt-8 border-t-2 border-navy-800 md:hidden dark:border-navy-300">
+            {a.eligibility.map((e) => (
+              <li key={e.cls} className="border-b border-line py-4">
+                <p className="flex items-baseline justify-between gap-4">
+                  <span className="font-serif text-lg font-semibold text-heading">{e.cls}</span>
+                  <span className="text-sm text-muted">
+                    {c.seats}: <span className="font-serif text-lg font-semibold text-leaf-600 dark:text-accent">{n(e.seats)}</span>
+                  </span>
+                </p>
+                <p className="mt-1 text-ink">{e.requirement}</p>
+                <p className="mt-1 text-sm text-muted">{c.sel}: {e.selection}</p>
               </li>
             ))}
-          </ol>
-        </Box>
+          </ul>
+        </div>
+      </section>
 
-        <Box id="docs" title={c.docs}>
-          <div className="grid gap-5 sm:grid-cols-2">
-            {docGroups
-              .filter(([, list]) => list.length > 0)
-              .map(([label, list]) => (
+      {/* Procedure + documents */}
+      <section aria-labelledby="proc" className="border-y border-line bg-surface py-16">
+        <div className="container-page grid gap-12 lg:grid-cols-[1.2fr_0.8fr]">
+          <div>
+            <SectionHeading id="proc" title={c.proc} />
+            <ol className="mt-8 grid border-t-2 border-navy-800 sm:grid-cols-2 dark:border-navy-300">
+              {a.steps.map((s, i) => (
+                <li key={s.title} className="lift border-b border-line py-5 hover:bg-paper sm:odd:pr-6 sm:even:pl-6">
+                  <span aria-hidden className="font-serif text-sm font-semibold text-leaf-600 tabular-nums dark:text-accent">{n(String(i + 1).padStart(2, "0"))}</span>
+                  <h3 className="mt-2 font-serif text-xl font-semibold text-heading">{s.title}</h3>
+                  <p className="mt-1 text-sm text-muted">{s.text}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div>
+            <SectionHeading title={c.docs} />
+            <div className="mt-8 space-y-6">
+              {docGroups.filter(([, list]) => list.length > 0).map(([label, list]) => (
                 <div key={label}>
-                  <h3 className="font-semibold text-heading">{label}</h3>
-                  <ul className="mt-1 list-disc space-y-1 pl-5 text-ink marker:text-muted">
+                  <h3 className="eyebrow text-subheading">{label}</h3>
+                  <ul className="mt-2 border-t-2 border-navy-800 dark:border-navy-300">
                     {list.map((d) => (
-                      <li key={d}>{d}</li>
+                      <li key={d} className="flex gap-3 border-b border-line py-3 text-ink">
+                        <CheckCircle2 aria-hidden className="mt-0.5 size-5 shrink-0 text-leaf-600 dark:text-accent" />
+                        {d}
+                      </li>
                     ))}
                   </ul>
                 </div>
               ))}
+              {a.circularFile && (
+                <a href={a.circularFile} target="_blank" rel="noopener" download className={buttonClasses("outline", "sm")}>
+                  <FileText aria-hidden className="size-4" />
+                  {c.circular(admissionYear)}
+                </a>
+              )}
+            </div>
           </div>
-        </Box>
+        </div>
+      </section>
 
-        <Box id="fees-h" title={c.fees} bodyClassName="p-0">
-          <p className="px-4 pt-3 text-sm text-muted">{c.feesText}</p>
-          <div className="overflow-x-auto" tabIndex={0} role="region" aria-label={c.feeLabel}>
-            <table className={`${table} min-w-[34rem]`}>
+      {/* Fees */}
+      <section id="fees" aria-labelledby="fees-h" className="scroll-mt-24 py-16">
+        <div className="container-page">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SectionHeading id="fees-h" title={c.fees} description={c.feesText} />
+            {site.demoNote && <SampleTag />}
+          </div>
+          <div className="mt-8 overflow-x-auto" tabIndex={0} aria-label={c.feeLabel}>
+            <table className="w-full min-w-[36rem] text-left">
               <caption className="sr-only">{c.feeCaption(admissionYear)}</caption>
-              <thead>
+              <thead className="border-y-2 border-navy-800 dark:border-navy-300">
                 <tr>
-                  <th scope="col" className={th}>{c.item}</th>
+                  <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.item}</th>
                   {[c.primary, c.secondary, c.higher].map((h) => (
-                    <th key={h} scope="col" className={`${th} text-right`}>{h}</th>
+                    <th key={h} scope="col" className="w-[18%] py-3 pr-4 text-right font-serif text-lg font-semibold text-heading last:pr-0">{h}</th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="tabular-nums">
+              <tbody className="divide-y divide-line border-b border-line tabular-nums">
                 {a.fees.map((f) => (
-                  <tr key={f.item}>
-                    <th scope="row" className={`${td} font-medium text-heading`}>{f.item}</th>
-                    <td className={`${td} text-right`}>{taka(f.primary)}</td>
-                    <td className={`${td} text-right`}>{taka(f.secondary)}</td>
-                    <td className={`${td} text-right`}>{taka(f.higher)}</td>
+                  <tr key={f.item} className="hover:bg-surface">
+                    <th scope="row" className="py-3.5 pr-4 font-medium text-heading">{f.item}</th>
+                    <td className="py-3.5 pr-4 text-right text-ink">{taka(f.primary)}</td>
+                    <td className="bg-tint/40 py-3.5 pr-4 text-right text-ink">{taka(f.secondary)}</td>
+                    <td className="py-3.5 text-right text-ink">{taka(f.higher)}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          {a.feeNote && <DemoNote className="m-4">{a.feeNote}</DemoNote>}
-        </Box>
+          {a.feeNote && <DemoNote className="mt-4">{a.feeNote}</DemoNote>}
+        </div>
+      </section>
 
-        <Box id="form-dl" title={c.formDl}>
-          <p className="text-ink">{c.formText}</p>
-          <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-3">
-            {a.formFile && (
-              <a href={a.formFile} target="_blank" rel="noopener" download className={fileLink}>
-                <Download aria-hidden className="size-4" />
-                {c.form}
-              </a>
-            )}
-            {a.open && (
-              <ButtonLink href="/admission/apply" variant="secondary" size="sm">
-                {c.apply}
-              </ButtonLink>
-            )}
+      {/* Form + FAQ */}
+      <section id="apply" aria-labelledby="apply-h" className="scroll-mt-24 border-t border-line bg-surface py-16">
+        <div className="container-page grid gap-12 lg:grid-cols-[1.25fr_0.75fr]">
+          <div>
+            <SectionHeading
+              id="apply-h"
+              title={c.applyTitle}
+              description={c.applyText}
+            />
+            <div className="mt-8 border-t-4 border-leaf-600 bg-paper p-5 sm:p-8 dark:border-accent">
+              <AdmissionForm classOptions={a.classOptions} open={a.open} />
+            </div>
           </div>
-        </Box>
-      </WithSidebar>
+          <div>
+            <SectionHeading title={c.faq} />
+            <Accordion className="mt-8" items={faqs.filter((f) => f.topic === "admission" || f.topic === "fees")} />
+          </div>
+        </div>
+      </section>
     </>
   );
 }

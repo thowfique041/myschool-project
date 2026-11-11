@@ -17,6 +17,12 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      { source: "/downloads", destination: "/notices#downloads", permanent: true },
+      { source: "/en/downloads", destination: "/en/notices#downloads", permanent: true },
+    ];
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },

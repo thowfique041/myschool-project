@@ -38,7 +38,7 @@ export function ThemeToggle({ className, tone = "light" }: { className?: string;
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
       title={dark ? "Light mode" : "Dark mode"}
       className={cn(
-        "inline-flex size-10 shrink-0 items-center justify-center rounded-sm border transition-colors",
+        "inline-flex size-10 shrink-0 items-center justify-center rounded-lg border transition-colors",
         tone === "dark" ? "border-white/20 text-navy-100 hover:border-white/50 hover:text-white" : "border-line text-heading hover:border-line-strong",
         className,
       )}

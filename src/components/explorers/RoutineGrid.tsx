@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { BellRing, Coffee } from "lucide-react";
 import { cn, toBnDigits } from "@/lib/utils";
 
@@ -52,8 +52,27 @@ function parseRange(t: string): [number, number] | null {
   return [toMin(+m[1], +m[2]), toMin(+m[3], +m[4])];
 }
 
+/** Current weekday key and minutes in Bangladesh time. */
+function dhakaNow(): { day: DayKey | null; minutes: number } {
+  const parts = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Dhaka", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(new Date());
+  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
+  const map: Record<string, DayKey> = { Sat: "sat", Sun: "sun", Mon: "mon", Tue: "tue", Wed: "wed", Thu: "thu" };
+  return { day: map[get("weekday")] ?? null, minutes: Number(get("hour")) * 60 + Number(get("minute")) };
+}
+
 export function RoutineGrid({ rows, rowsEn, labels }: { rows: Row[]; rowsEn: Row[]; labels: RoutineLabels }) {
+  // Today/now depend on the visitor's clock, so they are worked out after hydration.
+  const [clock, setClock] = useState<{ day: DayKey | null; minutes: number } | null>(null);
+  useEffect(() => {
+    const tick = () => setClock(dhakaNow());
+    tick();
+    const id = window.setInterval(tick, 60_000);
+    return () => window.clearInterval(id);
+  }, []);
+
   const ranges = rowsEn.map((r) => parseRange(r.time ?? ""));
+  const nowRow = clock ? ranges.findIndex((r) => r && clock.minutes >= r[0] && clock.minutes < r[1]) : -1;
+  const today = clock?.day ?? null;
 
   let periodNo = 0;
   const periodOf = rowsEn.map((r) => (["Assembly", "Break"].includes(r.sat) ? 0 : ++periodNo));
@@ -85,7 +104,7 @@ export function RoutineGrid({ rows, rowsEn, labels }: { rows: Row[]; rowsEn: Row
         key: `b${i}`,
         style: { gridRow, gridColumn: "2 / -1" },
         node: (
-          <div className="flex h-full items-center gap-2 border border-dashed border-line-strong bg-paper-dark px-4 py-2 text-sm font-medium text-subheading">
+          <div className="flex h-full items-center gap-2 rounded-md bg-[repeating-linear-gradient(135deg,var(--color-paper)_0_8px,var(--color-paper-dark)_8px_16px)] px-4 py-2 text-sm font-medium text-subheading">
             <Icon aria-hidden className="size-4" />
             {r.sat}
             {isBreak && mins > 0 && <span className="text-muted">· {fill(labels.minutes, mins, labels.bangla)}</span>}
@@ -100,22 +119,25 @@ export function RoutineGrid({ rows, rowsEn, labels }: { rows: Row[]; rowsEn: Row
       // Second half of a double lab period is drawn by the cell above.
       if (isLab(en) && i > 0 && rowsEn[i - 1][d] === en) return;
       const span = isLab(en) && rowsEn[i + 1]?.[d] === en ? 2 : 1;
+      const isNow = today === d && nowRow >= i && nowRow < i + span;
       cells.push({
         key: `${d}${i}`,
         style: { gridRow: span > 1 ? `${gridRow} / span ${span}` : gridRow, gridColumn: col(d) },
         node: (
           <div
             className={cn(
-              "flex h-full min-h-12 flex-col justify-center gap-1 px-3 py-2 text-sm font-semibold",
+              "flex h-full min-h-12 flex-col justify-center gap-1 rounded-md px-3 py-2 text-sm font-semibold",
               toneFor(en),
               span > 1 && "items-start",
+              isNow && "ring-2 ring-navy-800 dark:ring-navy-200",
             )}
           >
             <span className="flex flex-wrap items-center gap-1.5">
               {stripLab(r[d] ?? en)}
-              {isLab(en) && span === 1 && <span className="bg-white/80 px-1.5 text-[0.65rem] font-semibold text-heading dark:bg-white/15 dark:text-white">{labels.lab}</span>}
+              {isLab(en) && span === 1 && <span className="rounded-full bg-white/80 px-1.5 text-[0.65rem] font-semibold text-heading dark:bg-white/15 dark:text-white">{labels.lab}</span>}
+              {isNow && <span className="rounded-full bg-navy-800 px-1.5 text-[0.65rem] font-bold tracking-wide text-white uppercase dark:bg-navy-200 dark:text-navy-950">{labels.now}</span>}
             </span>
-            {span > 1 && <span className="bg-white/80 px-2 py-0.5 text-[0.65rem] font-semibold text-heading dark:bg-white/15 dark:text-white">{labels.lab} · {fill(labels.periods, span, labels.bangla)}</span>}
+            {span > 1 && <span className="rounded-full bg-white/80 px-2 py-0.5 text-[0.65rem] font-semibold text-heading dark:bg-white/15 dark:text-white">{labels.lab} · {fill(labels.periods, span, labels.bangla)}</span>}
           </div>
         ),
       });
@@ -150,16 +172,27 @@ export function RoutineGrid({ rows, rowsEn, labels }: { rows: Row[]; rowsEn: Row
       </table>
       </div>
 
-      <div className="overflow-x-auto" tabIndex={0} role="region" aria-label={labels.scrollHint}>
+      <div className="overflow-x-auto" tabIndex={0} aria-label={labels.scrollHint}>
         <div aria-hidden className="grid min-w-[52rem] gap-2 p-3 sm:p-4" style={{ gridTemplateColumns: "7rem repeat(6, minmax(7rem, 1fr))" }}>
-          <div style={{ gridRow: 1, gridColumn: 1 }} className="flex items-center px-0 text-sm font-semibold text-heading">
+          <div style={{ gridRow: 1, gridColumn: 1 }} className="flex items-center px-0 text-xs font-semibold tracking-wide text-muted uppercase">
             {labels.time}
           </div>
-          {DAY_KEYS.map((d, i) => (
-            <div key={d} style={{ gridRow: 1, gridColumn: i + 2 }} className="bg-navy-800 px-3 py-2 text-sm font-semibold text-white">
-              {labels.days[i]}
-            </div>
-          ))}
+          {DAY_KEYS.map((d, i) => {
+            const isToday = today === d;
+            return (
+              <div
+                key={d}
+                style={{ gridRow: 1, gridColumn: i + 2 }}
+                className={cn(
+                  "flex items-center justify-between gap-2 rounded-md px-3 py-2 text-xs font-semibold tracking-wide uppercase",
+                  isToday ? "bg-navy-900 text-white dark:bg-navy-200 dark:text-navy-950" : "text-muted",
+                )}
+              >
+                {labels.days[i]}
+                {isToday && <span className="rounded-full bg-white px-2 py-0.5 text-[0.65rem] font-bold text-navy-900 dark:bg-navy-900 dark:text-white">{labels.today}</span>}
+              </div>
+            );
+          })}
           {cells.map((c) => (
             <div key={c.key} style={c.style}>
               {c.node}

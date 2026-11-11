@@ -2,10 +2,11 @@ import { PhotoCredit } from "@/components/ui/PhotoCredit";
 import type { Metadata } from "next";
 import Link from "@/components/i18n/Link";
 import { notFound } from "next/navigation";
+import { ArrowLeft, CalendarDays, MapPin } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { DemoNote } from "@/components/ui/primitives";
+import { Badge, DemoNote } from "@/components/ui/primitives";
 import { Picture } from "@/components/ui/Picture";
-import { WithSidebar } from "@/components/portal/Sidebar";
+import { NewsCard } from "@/components/shared/cards";
 import { getArticle, getNews, getSite } from "@/content/site-content";
 import { formatDate } from "@/lib/utils";
 import { getI18n } from "@/i18n/server";
@@ -30,40 +31,69 @@ export default async function NewsDetailPage({ params }: PageProps<"/[lang]/news
   const { slug } = await params;
   const article = await getArticle(slug);
   if (!article) notFound();
-  const [site, { t, lang }] = await Promise.all([getSite(), getI18n()]);
-  const meta = [
-    article.eventDate && `${t.news.eventDate}: ${formatDate(article.eventDate, lang)}`,
-    article.venue && `${t.news.venue}: ${article.venue}`,
-  ].filter(Boolean);
+  const [sortedNews, site, { t, lang }] = await Promise.all([getNews(), getSite(), getI18n()]);
+  const more = sortedNews.filter((n) => n.slug !== article.slug).slice(0, 3);
 
   return (
     <>
-      <PageHeader path="/news" current={article.title} title={article.title} headingAs="p" />
-      <WithSidebar>
-        <article className="border border-line bg-surface p-5 sm:p-8">
-          <h1 className="font-serif text-2xl leading-snug font-bold text-heading sm:text-3xl">{article.title}</h1>
-          <p className="mt-2 text-sm text-muted">
-            <time dateTime={article.date}>{formatDate(article.date, lang)}</time> · {article.categoryLabel ?? article.category}
-          </p>
-          <div className="mt-5">
-            <Picture image={article.image} priority sizes="(min-width: 1024px) 48rem, 100vw" />
-            <PhotoCredit image={article.image} className="mt-2" />
+      <PageHeader title={article.categoryLabel ?? article.category} titleBn={lang === "bn" ? "News" : "খবর"} headingAs="p" crumbs={[{ label: lang === "bn" ? "খবর ও অনুষ্ঠান" : "News & Events", href: "/news" }]} />
+      <article className="py-12 sm:py-16">
+        <div className="container-page max-w-3xl">
+          <div className="flex flex-wrap items-center gap-3 text-sm text-muted">
+            <Badge tone="navy">{article.categoryLabel ?? article.category}</Badge>
+            <time dateTime={article.date}>
+              {t.news.publishedOn} {formatDate(article.date, lang)}
+            </time>
           </div>
-          <div className="mt-5 space-y-4 text-base leading-relaxed text-ink">
-            <p>{article.excerpt}</p>
-            {meta.length > 0 && <p className="text-sm text-muted">{meta.join(" · ")}</p>}
-            {article.body.map((p, i) => (
-              <p key={i}>{p}</p>
+          <h1 className="mt-4 font-serif text-3xl leading-tight font-semibold text-heading sm:text-4xl">{article.title}</h1>
+          <p className="mt-4 text-lg leading-relaxed text-muted">{article.excerpt}</p>
+          {(article.eventDate || article.venue) && (
+            <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-2 border border-line bg-surface px-5 py-4 text-sm">
+              {article.eventDate && (
+                <div className="flex items-center gap-2">
+                  <CalendarDays aria-hidden className="size-4 text-accent" />
+                  <dt className="text-muted">{t.news.eventDate}</dt>
+                  <dd className="font-semibold text-heading">{formatDate(article.eventDate, lang)}</dd>
+                </div>
+              )}
+              {article.venue && (
+                <div className="flex items-center gap-2">
+                  <MapPin aria-hidden className="size-4 text-accent" />
+                  <dt className="text-muted">{t.news.venue}</dt>
+                  <dd className="font-semibold text-heading">{article.venue}</dd>
+                </div>
+              )}
+            </dl>
+          )}
+        </div>
+        <div className="container-page mt-8 max-w-4xl">
+          <Picture image={article.image} priority  sizes="(min-width: 1024px) 56rem, 100vw" />
+          <PhotoCredit image={article.image} className="mt-2" />
+        </div>
+        <div className="container-page mt-8 max-w-3xl space-y-5 text-base leading-relaxed text-ink">
+          {article.body.map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
+          {site.demoNote && <DemoNote>{t.news.sampleNote}</DemoNote>}
+          <Link href="/news" className="inline-flex items-center gap-1.5 text-sm font-semibold text-heading hover:text-accent">
+            <ArrowLeft aria-hidden className="size-4" /> {t.news.backAll}
+          </Link>
+        </div>
+      </article>
+      {more.length > 0 && <section aria-labelledby="more-news" className="border-t border-line bg-surface py-12 sm:py-16">
+        <div className="container-page">
+          <h2 id="more-news" className="font-serif text-2xl font-semibold text-heading">
+            {t.news.more}
+          </h2>
+          <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {more.map((a) => (
+              <li key={a.slug}>
+                <NewsCard article={a} />
+              </li>
             ))}
-          </div>
-          <p className="mt-6 border-t border-line pt-4">
-            <Link href="/news" className="text-sm font-semibold text-accent underline underline-offset-4 hover:text-heading">
-              {lang === "bn" ? "সকল সংবাদ" : "All news"}
-            </Link>
-          </p>
-        </article>
-        {site.demoNote && <DemoNote>{t.news.sampleNote}</DemoNote>}
-      </WithSidebar>
+          </ul>
+        </div>
+      </section>}
     </>
   );
 }
