@@ -12,7 +12,7 @@ export function Hero({ home, notices }: { home: HomeContent; notices: Notice[] }
     motto: home.heroTagline,
     href: home.primaryHref || "/admission",
     label: home.primaryLabel,
-    secondary: home.secondaryLabel ? { href: home.secondaryHref || "/about", label: home.secondaryLabel } : undefined,
+    secondary: home.secondaryLabel ? { href: home.secondaryHref || "/about/history", label: home.secondaryLabel } : undefined,
   };
   const rest: Slide[] = (Array.isArray(home.slides) ? home.slides : [])
     .filter((s) => s.image && s.title)

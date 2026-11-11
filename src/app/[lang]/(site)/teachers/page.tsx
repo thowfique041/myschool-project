@@ -7,7 +7,7 @@ import { getI18n } from "@/i18n/server";
 
 const copy = {
   en: {
-    title: "Teachers & Staff",
+    title: "Teachers",
     alt: "শিক্ষক ও কর্মচারী",
     crumb: "About",
     intro: "Find teachers by department, section, name or subject.",
@@ -15,7 +15,7 @@ const copy = {
     sample: "All faculty names and qualifications are sample entries. Until real photos are added, each profile shows a plain placeholder picture, so no real person is presented as a member of this fictional institution.",
   },
   bn: {
-    title: "শিক্ষক ও কর্মচারী",
+    title: "শিক্ষকবৃন্দ",
     alt: "Teachers & Staff",
     crumb: "আমাদের সম্পর্কে",
     intro: "বিভাগ, শাখা, নাম বা বিষয় দিয়ে শিক্ষক খুঁজুন।",
@@ -36,10 +36,9 @@ export default async function TeachersPage() {
   const departments = [...Object.values(deptMap).map((d) => d.label).filter((d) => used.has(d)), ...[...used].filter((d) => !Object.values(deptMap).some((x) => x.label === d))];
   return (
     <>
-      <PageHeader
+      <PageHeader path="/teachers"
         title={c.title}
         titleBn={c.alt}
-        crumbs={[{ label: c.crumb, href: "/about" }]}
         description={c.intro}
       />
       <section className="py-12 sm:py-16">

@@ -4,13 +4,17 @@ import type { ReactNode } from "react";
 import { getI18n } from "@/i18n/server";
 import { cn } from "@/lib/utils";
 
-type Crumb = { label: string; href?: string };
+import { getNavigation } from "@/content/site-content";
+import { navTrail, type Crumb } from "@/lib/nav";
 
 type PageHeaderProps = {
   title: string;
   titleBn?: string;
   description?: ReactNode;
-  crumbs?: Crumb[];
+  /** This page's route; the breadcrumb is looked up in the site map from it. */
+  path: string;
+  /** Detail pages (an article, a notice) add their own title after the listing page. */
+  current?: string;
   children?: ReactNode;
   /** Use "p" when the page renders its own <h1> (e.g. article pages). */
   headingAs?: "h1" | "p";
@@ -21,10 +25,13 @@ type PageHeaderProps = {
 };
 
 /** Title band used at the top of every inner page. */
-export async function PageHeader({ title, description, crumbs = [], children, headingAs = "h1", aside, overlap = false }: PageHeaderProps) {
-  const { t } = await getI18n();
+export async function PageHeader({ title, description, path, current, children, headingAs = "h1", aside, overlap = false }: PageHeaderProps) {
+  const [{ t }, nav] = await Promise.all([getI18n(), getNavigation()]);
   const Heading = headingAs;
-  const trail: Crumb[] = [{ label: t.common.home, href: "/" }, ...crumbs, { label: title }];
+  const found = navTrail(nav.items, nav.extras, path);
+  const home: Crumb = { label: nav.items.find((i) => i.href === "/")?.label ?? t.common.home, href: "/" };
+  // The last crumb is the current page and is not a link.
+  const trail: Crumb[] = [home, ...found, ...(current ? [{ label: current }] : [])].map((c, i, all) => (i === all.length - 1 ? { label: c.label } : c));
   return (
     <section className="relative overflow-hidden bg-navy-900 text-white">
       <svg

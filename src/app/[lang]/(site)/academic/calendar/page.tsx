@@ -65,10 +65,9 @@ export default async function CalendarPage() {
 
   return (
     <>
-      <PageHeader
+      <PageHeader path="/academic/calendar"
         title={c.title}
         titleBn={c.alt}
-        crumbs={[{ label: c.crumb, href: "/academic" }]}
         description={c.intro}
         aside={
           <div className="print-hide flex flex-wrap gap-3 lg:justify-end">

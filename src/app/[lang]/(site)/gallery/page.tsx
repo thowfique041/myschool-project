@@ -19,7 +19,7 @@ export default async function GalleryPage() {
   const c = copy[lang];
   return (
     <>
-      <PageHeader title={c.title} titleBn={c.alt} crumbs={[{ label: c.crumb }]} description={c.intro} />
+      <PageHeader path="/gallery" title={c.title} titleBn={c.alt} description={c.intro} />
       <section className="py-12 sm:py-16">
         <div className="container-page">
           {items.length ? <GalleryGrid items={items} /> : <p className="text-muted">{t.gallery.empty}</p>}

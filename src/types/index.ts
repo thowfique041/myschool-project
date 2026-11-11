@@ -1,11 +1,9 @@
-export type NavChild = {
-  label: string;
-  href: string;
-  description?: string;
-};
+export type NavChild = { label: string; labelBn?: string; href: string };
 
 export type NavItem = {
   label: string;
+  /** Bangla label; the menu and breadcrumbs use it on Bangla pages. */
+  labelBn?: string;
   href: string;
   children?: NavChild[];
 };

@@ -36,7 +36,7 @@ export default async function NewsDetailPage({ params }: PageProps<"/[lang]/news
 
   return (
     <>
-      <PageHeader title={article.categoryLabel ?? article.category} titleBn={lang === "bn" ? "News" : "খবর"} headingAs="p" crumbs={[{ label: lang === "bn" ? "খবর ও অনুষ্ঠান" : "News & Events", href: "/news" }]} />
+      <PageHeader path="/news" current={article.title} title={article.categoryLabel ?? article.category} titleBn={lang === "bn" ? "News" : "খবর"} headingAs="p" />
       <article className="py-12 sm:py-16">
         <div className="container-page max-w-3xl">
           <div className="flex flex-wrap items-center gap-3 text-sm text-muted">

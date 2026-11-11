@@ -9,7 +9,7 @@ import { Accordion } from "@/components/ui/Accordion";
 import { AdmissionForm } from "@/components/forms/AdmissionForm";
 import { formatDate, toBnDigits } from "@/lib/utils";
 import { getI18n } from "@/i18n/server";
-import { getFaqs, getSetting, getSite, getToday } from "@/content/site-content";
+import { getFaqs, getNavigation, getSetting, getSite, getToday } from "@/content/site-content";
 import type { AdmissionContent } from "@/components/home/types";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -66,7 +66,6 @@ const copy = {
     forStudent: "For the student",
     forGuardian: "From the guardian",
     perYear: "BDT",
-    home: "Home",
   },
   bn: {
     title: (y: string) => `ভর্তি ${toBnDigits(y)}`,
@@ -114,12 +113,11 @@ const copy = {
     forStudent: "শিক্ষার্থীর জন্য",
     forGuardian: "অভিভাবকের কাছ থেকে",
     perYear: "টাকা",
-    home: "হোম",
   },
 };
 
 export default async function AdmissionPage() {
-  const [a, faqs, site, today, { lang }] = await Promise.all([getSetting<AdmissionContent>("admission"), getFaqs(), getSite(), getToday(), getI18n()]);
+  const [a, faqs, site, today, nav, { lang }] = await Promise.all([getSetting<AdmissionContent>("admission"), getFaqs(), getSite(), getToday(), getNavigation(), getI18n()]);
   const admissionYear = String(a.year);
   const c = copy[lang];
   const n = (v: string | number) => (lang === "bn" ? toBnDigits(v) : String(v));
@@ -144,10 +142,10 @@ export default async function AdmissionPage() {
             <nav aria-label={lang === "bn" ? "ব্রেডক্রাম্ব" : "Breadcrumb"}>
               <ol className="flex items-center gap-1 text-sm text-navy-200">
                 <li>
-                  <Link href="/" className="hover:text-white hover:underline underline-offset-4">{c.home}</Link>
+                  <Link href="/" className="hover:text-white hover:underline underline-offset-4">{nav.items.find((i) => i.href === "/")?.label}</Link>
                 </li>
                 <li aria-hidden>›</li>
-                <li aria-current="page" className="text-white">{lang === "bn" ? "ভর্তি" : "Admission"}</li>
+                <li aria-current="page" className="text-white">{nav.items.find((i) => i.href === "/admission")?.label}</li>
               </ol>
             </nav>
             <p className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[#e8b84a]">

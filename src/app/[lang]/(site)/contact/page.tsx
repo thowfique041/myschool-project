@@ -193,7 +193,7 @@ export default async function ContactPage() {
 
   return (
     <>
-      <PageHeader
+      <PageHeader path="/contact"
         title={c.title}
         description={c.intro}
         overlap

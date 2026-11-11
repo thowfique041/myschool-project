@@ -85,7 +85,7 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
             <ButtonLink href="/admission#apply" variant="secondary">
               {data.t.home.applyInquire}
             </ButtonLink>
-            <TextLink href="/notices#downloads">{data.t.home.downloadForm}</TextLink>
+            <TextLink href="/downloads">{data.t.home.downloadForm}</TextLink>
           </div>
         </div>
       </div>
@@ -121,7 +121,7 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
                 ))}
               </ul>
             )}
-            <ButtonLink href="/about" variant="primary" className="mt-7">
+            <ButtonLink href="/about/history" variant="primary" className="mt-7">
               {data.t.home.readHistory}
               <ArrowRight aria-hidden className="size-4" />
             </ButtonLink>
@@ -203,7 +203,7 @@ export function LevelsSection({ copy, data }: { copy: SectionCopy; data: HomeDat
           </table>
         </div>
         <p className="mt-4">
-          <ArrowLink href="/academic">{data.t.home.curriculum}</ArrowLink>
+          <ArrowLink href="/academic/classes">{data.t.home.curriculum}</ArrowLink>
         </p>
       </div>
     </section>
@@ -318,7 +318,7 @@ export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: 
           />
         </div>
         <p className="mt-6 text-center">
-          <Link href="/about#campus" className="text-sm font-semibold text-white underline underline-offset-4 hover:text-on-navy-accent">
+          <Link href="/about/infrastructure" className="text-sm font-semibold text-white underline underline-offset-4 hover:text-on-navy-accent">
             {data.t.home.allFacilities}
           </Link>
         </p>
@@ -476,7 +476,7 @@ export function FaqContactSection({ copy, data }: { copy: SectionCopy; data: Hom
           <SectionHeading variant="small" title={copy.title} />
           <Accordion className="mt-5" items={data.faqs.slice(0, 6)} />
           <p className="mt-4">
-            <TextLink href="/faq">{data.t.home.moreQuestions}</TextLink>
+            <TextLink href="/admission">{data.t.home.moreQuestions}</TextLink>
           </p>
         </div>
         <div>

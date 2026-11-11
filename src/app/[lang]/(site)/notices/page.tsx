@@ -2,12 +2,10 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { DemoNote } from "@/components/ui/primitives";
 import { NoticeExplorer } from "@/components/explorers/NoticeExplorer";
-import { getDownloads, getEvents, getNotices, getSite, getToday } from "@/content/site-content";
+import { getEvents, getNotices, getSite, getToday } from "@/content/site-content";
 import Link from "@/components/i18n/Link";
 import { formatDate, toBnDigits } from "@/lib/utils";
 import { getI18n } from "@/i18n/server";
-import { DownloadList } from "@/components/shared/DownloadList";
-import { SectionHeading } from "@/components/ui/primitives";
 import { ArrowRight, FileDown } from "lucide-react";
 
 const copy = {
@@ -57,7 +55,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function NoticesPage() {
-  const [notices, events, downloads, site, today, { t, lang }] = await Promise.all([getNotices(), getEvents(), getDownloads(), getSite(), getToday(), getI18n()]);
+  const [notices, events, site, today, { t, lang }] = await Promise.all([getNotices(), getEvents(), getSite(), getToday(), getI18n()]);
   const c = copy[lang];
   const n = (v: number | string) => (lang === "bn" ? toBnDigits(v) : String(v));
   // Same event source and ordering as the Academic Calendar and Admission pages.
@@ -70,7 +68,7 @@ export default async function NoticesPage() {
   ];
   return (
     <>
-      <PageHeader
+      <PageHeader path="/notices"
         title={c.title}
         titleBn={c.alt}
         description={c.intro}
@@ -108,30 +106,17 @@ export default async function NoticesPage() {
                   </li>
                 ))}
               </ol>
-              <Link href="/calendar" className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-white underline underline-offset-4 hover:text-on-navy-accent">
+              <Link href="/academic/calendar" className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-white underline underline-offset-4 hover:text-on-navy-accent">
                 {c.calendar} <ArrowRight aria-hidden className="size-4" />
               </Link>
             </div>
-            <a href="#downloads" className="flex min-h-12 items-center gap-3 border-y border-line py-3 text-sm font-semibold text-heading hover:text-accent">
+            <Link href="/downloads" className="flex min-h-12 items-center gap-3 border-y border-line py-3 text-sm font-semibold text-heading hover:text-accent">
               <FileDown aria-hidden className="size-5 text-leaf-600 dark:text-accent" />
               {c.downloads}
               <ArrowRight aria-hidden className="ml-auto size-4" />
-            </a>
+            </Link>
             {site.demoNote && <DemoNote>{c.sample}</DemoNote>}
           </aside>
-        </div>
-      </section>
-      <section id="downloads" aria-labelledby="downloads-title" className="scroll-mt-24 border-t border-line bg-surface py-12 sm:py-16">
-        <div className="container-page">
-          <SectionHeading
-            id="downloads-title"
-            title={c.downloads}
-            description={c.dlIntro}
-          />
-          <div className="mt-8">
-            <DownloadList downloads={downloads} />
-          </div>
-          {site.demoNote && <DemoNote className="mt-8">{c.dlSample}</DemoNote>}
         </div>
       </section>
     </>

@@ -17,8 +17,7 @@ import { stripLocale } from "@/i18n/config";
 function isActive(rawPath: string, item: NavItem): boolean {
   const pathname = stripLocale(rawPath);
   if (item.href === "/") return pathname === "/";
-  // Children that are anchors on another page (e.g. /about#committee) don't make this item active.
-  const paths = [item.href, ...(item.children?.filter((c) => !c.href.includes("#")).map((c) => c.href) ?? [])];
+  const paths = [item.href, ...(item.children?.map((c) => c.href) ?? [])];
   return paths.some((p) => p !== "/" && pathname.startsWith(p));
 }
 
@@ -82,20 +81,18 @@ function DesktopDropdown({ item, active, alignRight = false }: { item: NavItem; 
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 4 }}
             transition={{ duration: 0.16 }}
-            className={cn("absolute top-full z-50 w-80 pt-2", alignRight ? "right-0" : "left-0")}
+            className={cn("absolute top-full z-50 w-60 pt-2", alignRight ? "right-0" : "left-0")}
           >
             <div className="overflow-hidden rounded-md border border-line border-t-[3px] border-t-navy-700 bg-surface shadow-[var(--shadow-lift)] dark:border-t-navy-300">
-              <p className="border-b border-line bg-paper px-5 py-2.5 text-xs font-semibold tracking-wide text-muted uppercase">{item.label}</p>
               <ul className="p-2">
                 {item.children?.map((child) => (
                   <li key={child.href}>
                     <Link
                       href={child.href}
                       onClick={() => setOpen(false)}
-                      className="block rounded px-3 py-2.5 hover:bg-paper focus-visible:bg-paper"
+                      className="block rounded px-3 py-2 text-sm font-semibold text-heading hover:bg-paper focus-visible:bg-paper"
                     >
-                      <span className="block text-sm font-semibold text-heading">{child.label}</span>
-                      {child.description && <span className="mt-0.5 block text-xs text-muted">{child.description}</span>}
+                      {child.label}
                     </Link>
                   </li>
                 ))}

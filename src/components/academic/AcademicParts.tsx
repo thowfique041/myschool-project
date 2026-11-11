@@ -1,12 +1,8 @@
-import type { Metadata } from "next";
-import { ChevronDown, Download, FileText } from "lucide-react";
-import { PageHeader } from "@/components/ui/PageHeader";
-import { ButtonLink, SectionHeading, buttonClasses } from "@/components/ui/primitives";
+import { Download, FileText } from "lucide-react";
+import { SectionHeading, buttonClasses } from "@/components/ui/primitives";
 import { SampleTag } from "@/components/ui/SampleTag";
 import { RoutinePicker } from "@/components/academic/RoutinePicker";
-import { SectionNav } from "@/components/academic/SectionNav";
 import { SubjectTabs } from "@/components/academic/SubjectTabs";
-import { DateBlock } from "@/components/shared/cards";
 import { ArrowLink } from "@/components/shared/cards";
 import { getAcademic, getDownloads, getEvents, getSetting, getSite, getToday } from "@/content/site-content";
 import { formatDate, toBnDigits } from "@/lib/utils";
@@ -126,12 +122,7 @@ const copy = {
     fullPol: "বিদ্যালয়ের পূর্ণ নীতিমালা",
   },
 };
-
-export async function generateMetadata(): Promise<Metadata> {
-  const { lang } = await getI18n();
-  return { title: copy[lang].title, description: copy[lang].meta };
-}
-
+// Sections of the former single Academic page, each now on its own route.
 const dayKeys = ["sat", "sun", "mon", "tue", "wed", "thu"] as const;
 
 type AcademicSettings = {
@@ -140,7 +131,7 @@ type AcademicSettings = {
   timings: string;
 };
 
-export default async function AcademicPage() {
+async function ctx() {
   const [academic, settings, events, downloads, site, today] = await Promise.all([
     getAcademic(),
     getSetting<AcademicSettings>("academic"),
@@ -158,28 +149,14 @@ export default async function AcademicPage() {
   const upcoming = events.filter((e) => (e.endDate ?? e.date) >= today).slice(0, 6);
   const resources = downloads.filter((d) => d.category === "academic");
 
+  return { academic, settings, events, downloads, site, today, t, lang, c, days, n, academicLevels, subjectsByLevel, routines, policies, examSystem, gradingScale, upcoming, resources };
+}
+
+export async function LevelsPart() {
+  const { c, n, academicLevels } = await ctx();
   return (
     <>
-      <PageHeader
-        title={c.title}
-        titleBn={c.alt}
-        description={c.intro}
-      />
-
-      <SectionNav
-        label={c.onPage}
-        items={[
-          ["levels", c.nav.levels],
-          ["curriculum", c.nav.curriculum],
-          ["calendar", c.nav.calendar],
-          ["routine", c.nav.routine],
-          ["exams", c.nav.exams],
-          ["resources", c.nav.resources],
-          ["policies", c.nav.policies],
-        ]}
-      />
-
-      <section id="levels" aria-labelledby="levels-h" className="scroll-mt-36 py-16">
+      <section id="levels" aria-labelledby="levels-h" className="py-16">
         <div className="container-page">
           <SectionHeading id="levels-h" title={c.levels} />
           {/* Programmes as an editorial three-column spread, divided by hairlines rather than boxed. */}
@@ -203,8 +180,15 @@ export default async function AcademicPage() {
           </ol>
         </div>
       </section>
+    </>
+  );
+}
 
-      <section id="curriculum" aria-labelledby="curr-h" className="scroll-mt-36 border-y border-line bg-surface py-16">
+export async function CurriculumPart() {
+  const { c, subjectsByLevel } = await ctx();
+  return (
+    <>
+      <section id="curriculum" aria-labelledby="curr-h" className="border-y border-line bg-surface py-16">
         <div className="container-page">
           <SectionHeading
             id="curr-h"
@@ -214,37 +198,15 @@ export default async function AcademicPage() {
           <SubjectTabs levels={subjectsByLevel} label={c.curr} compulsoryLabel={c.compulsory} groupLabel={c.groupSubjects} />
         </div>
       </section>
+    </>
+  );
+}
 
-      <section id="calendar" aria-labelledby="cal-h" className="scroll-mt-36 py-16">
-        <div className="container-page grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-          <div>
-            <SectionHeading id="cal-h" title={c.cal} description={c.calText} />
-            <ButtonLink href="/calendar" variant="outline" className="mt-6">
-              {c.fullCal}
-            </ButtonLink>
-          </div>
-          {/* Chronological timeline: date in the margin, burgundy marker on the spine. */}
-          <ol className="relative border-l-2 border-line-strong pl-0">
-            {upcoming.length === 0 && <li className="py-4 pl-6 text-muted">{t.common.upcomingNone}</li>}
-            {upcoming.map((e, k) => (
-              <li key={e.date + e.title} className="relative flex gap-5 py-4 pl-6">
-                <span aria-hidden className={`absolute top-7 -left-[7px] size-3 rounded-full ring-4 ring-paper ${k === 0 ? "bg-leaf-600 dark:bg-accent" : "bg-line-strong"}`} />
-                <DateBlock iso={e.date} />
-                <div className="self-center">
-                  <p className="font-semibold text-heading">{e.title}</p>
-                  {e.endDate && (
-                    <p className="text-sm text-muted">
-                      {formatDate(e.date, lang)} – {formatDate(e.endDate, lang)}
-                    </p>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      <section id="routine" aria-labelledby="routine-h" className="scroll-mt-36 border-y border-line bg-surface py-16">
+export async function RoutinePart() {
+  const { settings, site, lang, c, days, routines } = await ctx();
+  return (
+    <>
+      <section id="routine" aria-labelledby="routine-h" className="border-y border-line bg-surface py-16">
         <div className="container-page">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionHeading id="routine-h" title={c.routine} description={c.routineText} />
@@ -269,8 +231,15 @@ export default async function AcademicPage() {
           {settings.timings && <p className="mt-3 text-sm text-muted">{settings.timings}</p>}
         </div>
       </section>
+    </>
+  );
+}
 
-      <section id="exams" aria-labelledby="exams-h" className="scroll-mt-36 py-16">
+export async function ExamsPart() {
+  const { c, n, examSystem, gradingScale } = await ctx();
+  return (
+    <>
+      <section id="exams" aria-labelledby="exams-h" className="py-16">
         <div className="container-page grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="min-w-0">
             <SectionHeading id="exams-h" title={c.exams} />
@@ -317,8 +286,15 @@ export default async function AcademicPage() {
           </div>
         </div>
       </section>
+    </>
+  );
+}
 
-      <section id="resources" aria-labelledby="res-h" className="scroll-mt-36 border-y border-line bg-surface py-16">
+export async function ResourcesPart() {
+  const { site, t, lang, c, resources } = await ctx();
+  return (
+    <>
+      <section id="resources" aria-labelledby="res-h" className="border-y border-line bg-surface py-16">
         <div className="container-page">
           <SectionHeading id="res-h" title={c.res} description={site.demoNote ? c.resSample : undefined} />
           {/* Resource library: ruled rows with file details and a clear download action. */}
@@ -343,40 +319,8 @@ export default async function AcademicPage() {
               </li>
             ))}
           </ul>
-          <ArrowLink href="/notices#downloads" className="mt-5">
+          <ArrowLink href="/downloads" className="mt-5">
             {c.allDownloads}
-          </ArrowLink>
-        </div>
-      </section>
-
-      <section id="policies" aria-labelledby="pol-h" className="scroll-mt-36 py-16">
-        <div className="container-page">
-          <SectionHeading id="pol-h" title={c.pol} />
-          {/* Grouped disclosures (native details/summary: keyboard and screen-reader friendly without script). */}
-          <div className="mt-8 grid gap-x-10 border-t-2 border-navy-800 md:grid-cols-2 dark:border-navy-300">
-            {[policies.filter((_, k) => k % 2 === 0), policies.filter((_, k) => k % 2 === 1)].map((col, ci) => (
-              <div key={ci}>
-                {col.map((p, k) => (
-                  <details key={p.id} open={ci === 0 && k === 0} className="group border-b border-line">
-                    <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 font-serif text-lg font-semibold text-heading hover:text-accent [&::-webkit-details-marker]:hidden">
-                      {p.title}
-                      <ChevronDown aria-hidden className="size-5 shrink-0 text-leaf-600 transition-transform group-open:rotate-180 motion-reduce:transition-none dark:text-accent" />
-                    </summary>
-                    <ul className="space-y-2 pb-5 text-muted">
-                      {p.points.map((pt) => (
-                        <li key={pt} className="flex gap-3">
-                          <span aria-hidden className="mt-2.5 h-px w-3 shrink-0 bg-leaf-600 dark:bg-accent" />
-                          {pt}
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                ))}
-              </div>
-            ))}
-          </div>
-          <ArrowLink href="/policies" className="mt-6">
-            {c.fullPol}
           </ArrowLink>
         </div>
       </section>

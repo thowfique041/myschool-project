@@ -3,21 +3,27 @@ import { getNews, getNotices, getSiteUrl } from "@/content/site-content";
 
 const staticRoutes = [
   "",
-  "/about",
-  "/academic",
+  "/about/history",
+  "/about/principal",
+  "/about/chairman",
+  "/about/governing-body",
+  "/about/infrastructure",
+  "/teachers",
+  "/staff",
+  "/academic/classes",
+  "/academic/students",
+  "/academic/routine",
+  "/academic/calendar",
+  "/academic/syllabus",
+  "/academic/rules",
+  "/academic/clubs",
   "/admission",
   "/notices",
   "/results",
-  "/teachers",
   "/gallery",
-  "/news",
+  "/downloads",
   "/contact",
-  "/calendar",
-  "/policies",
-  "/faq",
-  "/students-guardians",
-  "/privacy",
-  "/terms",
+  "/news",
   "/credits",
 ];
 
@@ -26,7 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entry = (path: string, lastModified?: string) => ({
     url: `${url}${path}`,
     lastModified,
-    alternates: { languages: { en: `${url}${path}`, bn: `${url}/bn${path}` } },
+    alternates: { languages: { bn: `${url}${path}`, en: `${url}/en${path}` } },
   });
   return [
     ...staticRoutes.map((path) => entry(path)),
