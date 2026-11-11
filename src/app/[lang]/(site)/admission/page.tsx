@@ -20,7 +20,6 @@ export async function generateMetadata(): Promise<Metadata> {
 const copy = {
   en: {
     title: (y: string) => `Admission ${y}`,
-    alt: (y: string) => `ভর্তি ${toBnDigits(y)}`,
     apply: "Apply online",
     form: "Download printable form",
     notice: "Notice",
@@ -71,7 +70,6 @@ const copy = {
   },
   bn: {
     title: (y: string) => `ভর্তি ${toBnDigits(y)}`,
-    alt: (y: string) => `Admission ${y}`,
     apply: "অনলাইনে আবেদন",
     form: "প্রিন্টযোগ্য ফরম ডাউনলোড",
     notice: "নোটিশ",
@@ -139,7 +137,7 @@ export default async function AdmissionPage() {
   const fileLink = "inline-flex items-center gap-2 text-sm font-semibold text-accent underline underline-offset-4 hover:text-heading";
   return (
     <>
-      <PageHeader path="/admission" title={lang === "bn" ? c.alt(admissionYear) : c.title(admissionYear)} />
+      <PageHeader path="/admission" title={c.title(admissionYear)} />
       <WithSidebar>
         <Box id="announce" title={c.notice}>
           <p className="text-sm text-muted">
