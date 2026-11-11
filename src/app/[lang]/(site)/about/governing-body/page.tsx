@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { WithSidebar } from "@/components/portal/Sidebar";
 import { getI18n } from "@/i18n/server";
 import { CommitteePart } from "@/components/about/AboutParts";
 
@@ -19,7 +20,9 @@ export default async function GoverningBodyPage() {
   return (
     <>
       <PageHeader title={c.title} path="/about/governing-body" />
+      <WithSidebar>
       <CommitteePart />
+      </WithSidebar>
     </>
   );
 }

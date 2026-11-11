@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { WithSidebar } from "@/components/portal/Sidebar";
 import { getI18n } from "@/i18n/server";
 import { ExamsPart, ResourcesPart } from "@/components/academic/AcademicParts";
 
@@ -19,8 +20,10 @@ export default async function SyllabusPage() {
   return (
     <>
       <PageHeader title={c.title} path="/academic/syllabus" />
+      <WithSidebar>
       <ResourcesPart />
       <ExamsPart />
+      </WithSidebar>
     </>
   );
 }

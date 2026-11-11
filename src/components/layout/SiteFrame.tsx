@@ -3,7 +3,6 @@ import { TopBar } from "./TopBar";
 import { SiteHeader } from "./SiteHeader";
 import { Footer, type FooterContent } from "./Footer";
 import { BackToTop } from "./BackToTop";
-import { TextReveal } from "./TextReveal";
 import { ScrollTopOnNav } from "./ScrollTopOnNav";
 import { LogoMark } from "@/components/brand/Logo";
 import { getCurrentYear, getFooter, getNavigation, getSetting, getSite } from "@/content/site-content";
@@ -42,6 +41,7 @@ export async function SiteFrame({ children }: { children: ReactNode }) {
   const css = brandingCss(site.primary, site.accent);
   const { lang } = await getI18n();
   const brandName = lang === "bn" ? site.nameBn : site.name;
+  const brandAlt = lang === "bn" ? site.name : site.nameBn;
   const brandSub = lang === "bn" ? `স্থাপিত ${String(site.established).replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[Number(d)])}` : `Established ${site.established}`;
 
   if (maintenance.enabled) {
@@ -73,11 +73,10 @@ export async function SiteFrame({ children }: { children: ReactNode }) {
         {t.common.skip}
       </a>
       <TopBar site={site} />
-      <SiteHeader items={nav.items} ctaLabel={nav.ctaLabel} ctaHref={nav.ctaHref} brand={{ name: brandName, nameBn: brandSub, logo: site.logo || undefined }} />
+      <SiteHeader items={nav.items} ctaLabel={nav.ctaLabel} ctaHref={nav.ctaHref} brand={{ name: brandName, alt: brandAlt, established: brandSub, logo: site.logo || undefined }} />
       <main id="main" className="flex-1">
         {children}
       </main>
-      <TextReveal />
       <ScrollTopOnNav />
       <Footer site={site} footer={footer} year={year} />
       <BackToTop />

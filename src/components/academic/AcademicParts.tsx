@@ -1,9 +1,8 @@
-import { Download, FileText } from "lucide-react";
-import { SectionHeading, buttonClasses } from "@/components/ui/primitives";
-import { SampleTag } from "@/components/ui/SampleTag";
+import { Download } from "lucide-react";
+import { Box } from "@/components/portal/Box";
+import { table, tableWrap, td, th } from "@/components/portal/table";
 import { RoutinePicker } from "@/components/academic/RoutinePicker";
-import { SubjectTabs } from "@/components/academic/SubjectTabs";
-import { ArrowLink } from "@/components/shared/cards";
+import Link from "@/components/i18n/Link";
 import { getAcademic, getDownloads, getEvents, getSetting, getSite, getToday } from "@/content/site-content";
 import { formatDate, toBnDigits } from "@/lib/utils";
 import { getI18n } from "@/i18n/server";
@@ -153,85 +152,111 @@ async function ctx() {
 }
 
 export async function LevelsPart() {
-  const { c, n, academicLevels } = await ctx();
+  const { c, lang, academicLevels } = await ctx();
+  const L = lang === "bn" ? { level: "স্তর", classes: "শ্রেণি", ages: "বয়স", about: "বিবরণ" } : { level: "Level", classes: "Classes", ages: "Ages", about: "About" };
   return (
-    <>
-      <section id="levels" aria-labelledby="levels-h" className="py-16">
-        <div className="container-page">
-          <SectionHeading id="levels-h" title={c.levels} />
-          {/* Programmes as an editorial three-column spread, divided by hairlines rather than boxed. */}
-          <ol className="mt-8 grid border-t-2 border-navy-800 lg:grid-cols-3 dark:border-navy-300">
-            {academicLevels.map((l, i) => (
-              <li key={l.id} className="lift border-b border-line px-1 py-7 hover:bg-surface sm:px-6 lg:border-b-0 lg:not-first:border-l">
-                <p aria-hidden className="font-serif text-4xl font-semibold text-leaf-600 dark:text-accent">{n(String(i + 1).padStart(2, "0"))}</p>
-                <h3 className="mt-3 font-serif text-2xl font-semibold text-heading">{l.name}</h3>
-                <p className="mt-1 text-xs font-semibold tracking-wide text-subheading uppercase">
-                  {l.classes} · {l.ages}
-                </p>
-                <p className="mt-4 leading-relaxed text-muted">{l.summary}</p>
-                {l.groups && l.groups.length > 0 && (
-                  <p className="mt-5 border-t border-line pt-4 text-sm">
-                    <span className="font-semibold text-heading">{c.groups}: </span>
-                    <span className="text-ink">{l.groups.join(" · ")}</span>
-                  </p>
-                )}
-              </li>
+    <Box id="levels-h" title={c.levels} bodyClassName="p-0">
+      <div className="overflow-x-auto" tabIndex={0} role="region" aria-label={c.levels}>
+        <table className={`${table} min-w-[40rem]`}>
+          <caption className="sr-only">{c.levels}</caption>
+          <thead>
+            <tr>
+              <th scope="col" className={th}>{L.level}</th>
+              <th scope="col" className={th}>{L.classes}</th>
+              <th scope="col" className={th}>{L.ages}</th>
+              <th scope="col" className={th}>{L.about}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {academicLevels.map((l) => (
+              <tr key={l.id}>
+                <th scope="row" className={`${td} font-semibold whitespace-nowrap text-heading`}>{l.name}</th>
+                <td className={`${td} whitespace-nowrap`}>{l.classes}</td>
+                <td className={`${td} whitespace-nowrap`}>{l.ages.replace(/^(Ages|বয়স)\s*/, "")}</td>
+                <td className={td}>
+                  {l.summary}
+                  {l.groups && l.groups.length > 0 && (
+                    <span className="mt-1 block text-sm text-muted">
+                      {c.groups}: {l.groups.join(", ")}
+                    </span>
+                  )}
+                </td>
+              </tr>
             ))}
-          </ol>
-        </div>
-      </section>
-    </>
+          </tbody>
+        </table>
+      </div>
+    </Box>
   );
 }
 
 export async function CurriculumPart() {
   const { c, subjectsByLevel } = await ctx();
   return (
-    <>
-      <section id="curriculum" aria-labelledby="curr-h" className="border-y border-line bg-surface py-16">
-        <div className="container-page">
-          <SectionHeading
-            id="curr-h"
-            title={c.curr}
-            description={c.currText}
-          />
-          <SubjectTabs levels={subjectsByLevel} label={c.curr} compulsoryLabel={c.compulsory} groupLabel={c.groupSubjects} />
-        </div>
-      </section>
-    </>
+    <Box id="curr-h" title={c.curr}>
+      <p className="text-ink">{c.currText}</p>
+      <div className="mt-4 space-y-5">
+        {subjectsByLevel.map((l) => (
+          <div key={l.level}>
+            <h3 className="border-b border-line pb-1 font-semibold text-heading">{l.level}</h3>
+            <div className="mt-2 grid gap-4 sm:grid-cols-2">
+              <div>
+                <p className="text-sm font-semibold text-muted">{c.compulsory}</p>
+                <ul className="mt-1 list-disc space-y-0.5 pl-5 text-ink marker:text-muted">
+                  {l.compulsory.map((x) => (
+                    <li key={x}>{x}</li>
+                  ))}
+                </ul>
+              </div>
+              {l.optional.length > 0 && (
+                <div>
+                  <p className="text-sm font-semibold text-muted">{c.groupSubjects}</p>
+                  <ul className="mt-1 list-disc space-y-0.5 pl-5 text-ink marker:text-muted">
+                    {l.optional.map((x) => (
+                      <li key={x}>{x}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Box>
   );
 }
 
 export async function RoutinePart() {
   const { settings, site, lang, c, days, routines } = await ctx();
   return (
-    <>
-      <section id="routine" aria-labelledby="routine-h" className="border-y border-line bg-surface py-16">
-        <div className="container-page">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <SectionHeading id="routine-h" title={c.routine} description={c.routineText} />
-            {site.demoNote && <SampleTag />}
-          </div>
-          <RoutinePicker
-            routines={routines}
-            grid={{
-              time: c.time,
-              days: days.map(([, label]) => label),
-              today: c.today,
-              now: c.now,
-              lab: c.lab,
-              period: c.periodTpl,
-              periods: c.periodsTpl,
-              minutes: c.minutesTpl,
-              scrollHint: c.routineLabel,
-              bangla: lang === "bn",
-            }}
-            labels={{ klass: c.klass, section: c.sectionL, shift: c.shiftL, print: c.printRoutine, none: c.noRoutine, caption: c.weekly }}
-          />
-          {settings.timings && <p className="mt-3 text-sm text-muted">{settings.timings}</p>}
-        </div>
-      </section>
-    </>
+    <section id="routine" aria-labelledby="routine-h" className="border border-line bg-surface">
+      <div className="box-head bg-navy-800 px-4 py-2 text-white">
+        <h2 id="routine-h" className="text-[1.05rem] font-semibold">{c.routine}</h2>
+      </div>
+      <div className="p-4">
+        <p className="text-ink">
+          {c.routineText}
+          {site.demoNote && <span className="text-muted"> ({lang === "bn" ? "নমুনা" : "Sample"})</span>}
+        </p>
+        <RoutinePicker
+          routines={routines}
+          grid={{
+            time: c.time,
+            days: days.map(([, label]) => label),
+            today: c.today,
+            now: c.now,
+            lab: c.lab,
+            period: c.periodTpl,
+            periods: c.periodsTpl,
+            minutes: c.minutesTpl,
+            scrollHint: c.routineLabel,
+            bangla: lang === "bn",
+          }}
+          labels={{ klass: c.klass, section: c.sectionL, shift: c.shiftL, print: c.printRoutine, none: c.noRoutine, caption: c.weekly }}
+        />
+        {settings.timings && <p className="mt-3 text-sm text-muted">{settings.timings}</p>}
+      </div>
+    </section>
   );
 }
 
@@ -239,91 +264,89 @@ export async function ExamsPart() {
   const { c, n, examSystem, gradingScale } = await ctx();
   return (
     <>
-      <section id="exams" aria-labelledby="exams-h" className="py-16">
-        <div className="container-page grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
-          <div className="min-w-0">
-            <SectionHeading id="exams-h" title={c.exams} />
-            {/* Numbered process: one ruled row per stage, stage number in the margin. */}
-            <ol className="mt-6 border-t-2 border-navy-800 dark:border-navy-300">
-              {examSystem.map((e, i) => (
-                <li key={e.title} className="grid grid-cols-[3.5rem_1fr] gap-x-4 border-b border-line py-5">
-                  <span className="font-serif text-3xl leading-none font-semibold text-leaf-600 tabular-nums dark:text-accent">
-                    <span className="sr-only">{c.stepL} </span>
-                    {n(String(i + 1).padStart(2, "0"))}
-                  </span>
-                  <div>
-                    <h3 className="font-serif text-xl font-semibold text-heading">{e.title}</h3>
-                    <p className="mt-1 leading-relaxed text-muted">{e.text}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            <ArrowLink href="/results" className="mt-5">
-              {c.examLink}
-            </ArrowLink>
-          </div>
-          <div>
-            <h3 className="font-serif text-2xl leading-tight font-semibold text-heading">{c.grading}</h3>
-            <p className="mt-1 text-sm text-muted">{c.gradingText}</p>
-            <table className="mt-5 w-full text-left">
-              <thead className="border-y-2 border-navy-800 dark:border-navy-300">
-                <tr>
-                  <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.marks}</th>
-                  <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.grade}</th>
-                  <th scope="col" className="eyebrow py-3 text-right text-subheading">{c.point}</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-line border-b border-line tabular-nums">
-                {gradingScale.map((g) => (
-                  <tr key={g.grade} className="hover:bg-surface">
-                    <td className="py-3 pr-4 text-ink">{n(g.range)}</td>
-                    <th scope="row" className="py-3 pr-4 text-left font-serif text-xl font-semibold text-heading">{g.grade}</th>
-                    <td className="py-3 text-right font-semibold text-heading">{n(g.point)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
+      <Box id="exams-h" title={c.exams}>
+        <dl className="divide-y divide-line">
+          {examSystem.map((e) => (
+            <div key={e.title} className="py-3 first:pt-0 last:pb-0">
+              <dt className="font-semibold text-heading">{e.title}</dt>
+              <dd className="mt-0.5 leading-relaxed text-ink">{e.text}</dd>
+            </div>
+          ))}
+        </dl>
+        <Link href="/results" className="mt-4 inline-block text-sm font-semibold text-accent underline underline-offset-4 hover:text-heading">
+          {c.examLink}
+        </Link>
+      </Box>
+      <Box id="grading-h" title={c.grading} bodyClassName="p-0">
+        <p className="px-4 pt-3 text-sm text-muted">{c.gradingText}</p>
+        <table className={table}>
+          <caption className="sr-only">{c.grading}</caption>
+          <thead>
+            <tr>
+              <th scope="col" className={th}>{c.marks}</th>
+              <th scope="col" className={th}>{c.grade}</th>
+              <th scope="col" className={`${th} text-right`}>{c.point}</th>
+            </tr>
+          </thead>
+          <tbody className="tabular-nums">
+            {gradingScale.map((g) => (
+              <tr key={g.grade}>
+                <td className={td}>{n(g.range)}</td>
+                <th scope="row" className={`${td} font-semibold text-heading`}>{g.grade}</th>
+                <td className={`${td} text-right`}>{n(g.point)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Box>
     </>
   );
 }
 
 export async function ResourcesPart() {
   const { site, t, lang, c, resources } = await ctx();
+  const L = lang === "bn" ? { no: "ক্রম", title: "শিরোনাম", updated: "হালনাগাদ", file: "ডাউনলোড" } : { no: "No.", title: "Title", updated: "Updated", file: "Download" };
   return (
     <>
-      <section id="resources" aria-labelledby="res-h" className="border-y border-line bg-surface py-16">
-        <div className="container-page">
-          <SectionHeading id="res-h" title={c.res} description={site.demoNote ? c.resSample : undefined} />
-          {/* Resource library: ruled rows with file details and a clear download action. */}
-          <ul className="mt-6 border-t-2 border-navy-800 dark:border-navy-300">
-            {resources.length === 0 && <li className="py-4 text-muted">{c.resNone}</li>}
-            {resources.map((r) => (
-              <li key={r.id} className="flex flex-col gap-3 border-b border-line py-5 sm:flex-row sm:items-center sm:gap-6">
-                <FileText aria-hidden className="hidden size-7 shrink-0 text-leaf-600 sm:block dark:text-accent" />
-                <div className="min-w-0 flex-1">
-                  <p className="font-serif text-lg font-semibold text-heading">{r.title}</p>
-                  <p className="text-sm text-muted">{r.description}</p>
-                  <p className="mt-1 text-xs text-muted">
-                    PDF{r.size && !/^pdf$/i.test(r.size) && ` · ${r.size}`}
-                    {r.updated && ` · ${c.updatedL} ${formatDate(r.updated, lang)}`}
-                  </p>
-                </div>
-                <a href={r.href} target="_blank" rel="noopener" download className={`${buttonClasses("outline", "sm")} self-start sm:self-center`}>
-                  <Download aria-hidden className="size-4" />
-                  {t.common.downloadPdf}
-                  <span className="sr-only">: {r.title}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-          <ArrowLink href="/downloads" className="mt-5">
-            {c.allDownloads}
-          </ArrowLink>
+      {site.demoNote && <p className="text-sm text-muted">{c.resSample}</p>}
+      {resources.length === 0 ? (
+        <p className="text-muted">{c.resNone}</p>
+      ) : (
+        <div className={tableWrap}>
+          <table className={`${table} min-w-[30rem]`}>
+            <caption className="sr-only">{c.res}</caption>
+            <thead>
+              <tr>
+                <th scope="col" className={`${th} w-14`}>{L.no}</th>
+                <th scope="col" className={th}>{L.title}</th>
+                <th scope="col" className={`${th} w-32`}>{L.updated}</th>
+                <th scope="col" className={`${th} w-24 text-center`}>{L.file}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {resources.map((r, i) => (
+                <tr key={r.id}>
+                  <td className={`${td} text-muted`}>{lang === "bn" ? toBnDigits(i + 1) : i + 1}</td>
+                  <td className={td}>
+                    <a href={r.href} target="_blank" rel="noopener" className="text-heading hover:text-accent hover:underline underline-offset-4">{r.title}</a>
+                    <span className="block text-sm text-muted">{r.description}</span>
+                  </td>
+                  <td className={`${td} whitespace-nowrap`}>{r.updated ? formatDate(r.updated, lang) : "–"}</td>
+                  <td className={`${td} text-center`}>
+                    <a href={r.href} target="_blank" rel="noopener" download className="inline-flex size-9 items-center justify-center border border-line-strong text-heading hover:bg-navy-800 hover:text-white">
+                      <Download aria-hidden className="size-4" />
+                      <span className="sr-only">{t.common.downloadPdf}: {r.title}</span>
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      </section>
+      )}
+      <Link href="/downloads" className="inline-block text-sm font-semibold text-accent underline underline-offset-4 hover:text-heading">
+        {c.allDownloads}
+      </Link>
     </>
   );
 }

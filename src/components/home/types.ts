@@ -1,7 +1,3 @@
-import type { AcademicLevel, FaqItem, GalleryItem, NewsArticle, Notice, Teacher, Testimonial } from "@/types";
-import type { SiteInfo } from "@/content/site-content";
-import type { Dictionary } from "@/i18n/dict";
-import type { Locale } from "@/i18n/config";
 
 export type SectionCopy = { key: string; enabled: boolean; kicker: string; title: string; description: string };
 
@@ -48,23 +44,3 @@ export type AdmissionContent = {
 };
 
 export type PrincipalContent = { name: string; title: string; gender?: string; photo: string; quote: string; message: string[]; messageBn: string };
-
-export type HomeData = {
-  t: Dictionary;
-  lang: Locale;
-  site: SiteInfo;
-  notices: Notice[];
-  news: NewsArticle[];
-  gallery: GalleryItem[];
-  people: Teacher[];
-  levels: AcademicLevel[];
-  faqs: FaqItem[];
-  testimonials: Testimonial[];
-  facilities: { title: string; text: string; image: string; imageAlt: string }[];
-  admission: AdmissionContent;
-  principal: PrincipalContent;
-  year: number;
-  /** Photos already used in the hero slider, so the gallery preview can skip them. */
-  slideImages?: string[];
-  board: { isSample: boolean; rows: { exam: string; year: string; examinees: number; passed: number; aPlus: number }[] };
-};

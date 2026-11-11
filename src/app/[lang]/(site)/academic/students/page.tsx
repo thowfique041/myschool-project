@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { WithSidebar } from "@/components/portal/Sidebar";
 import { getI18n } from "@/i18n/server";
 
 const copy = {
@@ -18,11 +19,9 @@ export default async function StudentsPage() {
   return (
     <>
       <PageHeader title={c.title} path="/academic/students" />
-      <section className="py-16 sm:py-20">
-        <div className="container-page max-w-3xl">
-          <p className="border border-dashed border-line-strong bg-surface px-6 py-10 text-center text-muted">{lang === "bn" ? "এই পাতার তথ্য শিগগির যোগ করা হবে।" : "Information for this page will be added soon."}</p>
-        </div>
-      </section>
+      <WithSidebar>
+      <p className="border border-line bg-surface px-4 py-6 text-muted">{lang === "bn" ? "এই পাতার তথ্য শিগগির যোগ করা হবে।" : "Information for this page will be added soon."}</p>
+      </WithSidebar>
     </>
   );
 }

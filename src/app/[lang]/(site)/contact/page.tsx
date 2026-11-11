@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { ArrowRight, Clock, Mail, MapPin, MessageCircle, Navigation, Phone } from "lucide-react";
-import { OpenNowBadge } from "@/components/shared/OpenNowBadge";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Box } from "@/components/portal/Box";
+import { FullWidth } from "@/components/portal/Sidebar";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { DemoNote, SectionHeading, buttonClasses } from "@/components/ui/primitives";
+import { DemoNote } from "@/components/ui/primitives";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { getSite } from "@/content/site-content";
 import { getI18n } from "@/i18n/server";
@@ -168,166 +169,113 @@ function MapEmbed({ url, title }: { url: string; title: string }) {
   );
 }
 
-const cardCls = "h-full rounded-lg border border-line bg-surface p-6 shadow-[0_1px_2px_rgb(20_43_73/0.06)]";
-const labelCls = "mt-5 text-xs font-bold text-subheading";
-const actionCls = "mt-4 inline-flex items-center gap-1 text-sm font-bold text-heading hover:underline";
-const iconBox = "flex size-11 items-center justify-center rounded-lg bg-tint text-heading";
-
 export default async function ContactPage() {
   const [site, { lang }] = await Promise.all([getSite(), getI18n()]);
   const c = copy[lang];
   const bn = lang === "bn";
-  const cap = bn ? "" : "uppercase tracking-[0.14em]";
   const mapOk = /^https:\/\/(www\.)?google\.com\/maps\/embed\?/.test(site.mapUrl);
   const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.name}, ${bn ? site.addressBn : site.address}`)}`;
   const waHref = `https://wa.me/${site.phoneHref.replace(/\D/g, "")}`;
-  const [days, hours] = site.officeHours.split(/,\s*/);
   const ext = { target: "_blank", rel: "noopener noreferrer" } as const;
   const newTab = <span className="sr-only"> {bn ? "(নতুন ট্যাবে খুলবে)" : "(opens in a new tab)"}</span>;
-
-  const whoRows = [
-    { title: c.whoAdmission, sub: site.admissionEmail, subHref: `mailto:${site.admissionEmail}`, href: `mailto:${site.admissionEmail}`, icon: Mail, aria: c.mailLabel(c.whoAdmission) },
-    { title: c.whoOffice, sub: c.whoOfficeSub, href: site.officePhoneHref, icon: Phone, aria: c.callLabel(c.whoOffice) },
-    { title: c.whoPrincipal, sub: c.byAppt, extra: site.officePhone, subHref: site.officePhoneHref, href: site.officePhoneHref, icon: Phone, aria: c.callLabel(c.whoPrincipal) },
+  const link = "underline underline-offset-4 hover:text-accent";
+  const rows: { Icon: typeof MapPin; label: string; value: React.ReactNode }[] = [
+    {
+      Icon: MapPin,
+      label: c.address,
+      value: (
+        <>
+          {site.address}
+          <br />
+          <a href={mapsHref} {...ext} className={`text-sm ${link}`}>
+            {c.openMaps}
+            {newTab}
+          </a>
+        </>
+      ),
+    },
+    {
+      Icon: Phone,
+      label: c.phone,
+      value: (
+        <>
+          <a href={site.phoneHref} className={link}>{site.phone}</a>
+          {site.officePhone && (
+            <>
+              <br />
+              <span className="text-sm text-muted">{c.landline} </span>
+              <a href={site.officePhoneHref} className={`text-sm ${link}`}>{site.officePhone}</a>
+            </>
+          )}
+          <br />
+          <a href={waHref} {...ext} className={`text-sm ${link}`}>
+            {c.whatsapp}
+            {newTab}
+          </a>
+        </>
+      ),
+    },
+    {
+      Icon: Mail,
+      label: c.email,
+      value: (
+        <>
+          <a href={`mailto:${site.email}`} className={`break-all ${link}`}>{site.email}</a>
+          {site.admissionEmail && (
+            <>
+              <br />
+              <span className="text-sm text-muted">{c.whoAdmission}: </span>
+              <a href={`mailto:${site.admissionEmail}`} className={`text-sm break-all ${link}`}>{site.admissionEmail}</a>
+            </>
+          )}
+        </>
+      ),
+    },
+    {
+      Icon: Clock,
+      label: c.hours,
+      value: (
+        <>
+          {site.officeHours}
+          <br />
+          <span className="text-sm text-muted">{c.closedFri}</span>
+        </>
+      ),
+    },
   ];
 
   return (
     <>
-      <PageHeader path="/contact"
-        title={c.title}
-        description={c.intro}
-        overlap
-        aside={
-          <div className="flex flex-wrap gap-3 lg:justify-end">
-            <a href={site.phoneHref} className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-beige px-5 font-bold text-navy-900 hover:bg-white">
-              <Phone aria-hidden className="size-4" />
-              {c.callOffice}
-            </a>
-            <a href={waHref} {...ext} className="inline-flex min-h-12 items-center gap-2 rounded-lg border border-white/25 bg-white/5 px-5 font-bold text-white hover:bg-white/10">
-              <MessageCircle aria-hidden className="size-4" />
-              {c.whatsapp}
-              {newTab}
-            </a>
-            <a href={mapsHref} {...ext} className="inline-flex min-h-12 items-center gap-2 rounded-lg border border-white/25 bg-white/5 px-5 font-bold text-white hover:bg-white/10">
-              <Navigation aria-hidden className="size-4" />
-              {c.directions}
-              {newTab}
-            </a>
+      <PageHeader path="/contact" title={c.title} />
+      <FullWidth>
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+          <div className="space-y-6">
+            <Box id="contact-info" title={bn ? site.nameBn : site.name} bodyClassName="p-0">
+              <dl className="divide-y divide-line">
+                {rows.map(({ Icon, label, value }) => (
+                  <div key={label} className="flex gap-3 px-4 py-3">
+                    <Icon aria-hidden className="mt-1 size-4 shrink-0 text-accent" />
+                    <div>
+                      <dt className="text-sm font-semibold text-heading">{label}</dt>
+                      <dd className="text-ink">{value}</dd>
+                    </div>
+                  </div>
+                ))}
+              </dl>
+            </Box>
+            <Box id="contact-map" title={c.find} bodyClassName="p-0">
+              {mapOk ? <MapEmbed url={site.mapUrl} title={`${c.map} ${site.name}`} /> : <MapPlaceholder c={c} />}
+            </Box>
           </div>
-        }
-      />
-
-      <section className="pb-16 sm:pb-20">
-        <div className="container-page">
-          <ul className="relative z-10 -mt-16 grid gap-4 sm:-mt-20 sm:grid-cols-2 lg:grid-cols-4">
-            <li>
-              <div className={cardCls}>
-                <span className={iconBox}><MapPin aria-hidden className="size-5" /></span>
-                <h2 className={`${labelCls} ${cap}`}>{c.address}</h2>
-                <p className="mt-1.5 text-lg leading-snug font-semibold text-heading">{site.address}</p>
-                <a href={mapsHref} {...ext} className={actionCls}>
-                  {c.getDirections} <ArrowRight aria-hidden className="size-4" />
-                  {newTab}
-                </a>
-              </div>
-            </li>
-            <li>
-              <div className={cardCls}>
-                <span className={iconBox}><Phone aria-hidden className="size-5" /></span>
-                <h2 className={`${labelCls} ${cap}`}>{c.phone}</h2>
-                <p className="mt-1.5 text-lg font-semibold text-heading">{site.phone}</p>
-                {site.officePhone && (
-                  <p className="text-sm text-muted">
-                    {c.landline}{" "}
-                    <a href={site.officePhoneHref} className="underline underline-offset-2 hover:text-heading">{site.officePhone}</a>
-                  </p>
-                )}
-                <a href={site.phoneHref} className={actionCls}>
-                  {c.callNow} <ArrowRight aria-hidden className="size-4" />
-                </a>
-              </div>
-            </li>
-            <li>
-              <div className={cardCls}>
-                <span className={iconBox}><Mail aria-hidden className="size-5" /></span>
-                <h2 className={`${labelCls} ${cap}`}>{c.email}</h2>
-                <p className="mt-1.5 text-lg font-semibold break-words text-heading">{site.email}</p>
-                <p className="text-sm text-muted">{c.general}</p>
-                <a href={`mailto:${site.email}`} className={actionCls}>
-                  {c.writeEmail} <ArrowRight aria-hidden className="size-4" />
-                </a>
-              </div>
-            </li>
-            <li>
-              <div className={cardCls}>
-                <div className="flex items-start justify-between gap-2">
-                  <span className={iconBox}><Clock aria-hidden className="size-5" /></span>
-                  <OpenNowBadge open={c.openNow} closed={c.closedNow} />
-                </div>
-                <h2 className={`${labelCls} ${cap}`}>{c.hours}</h2>
-                <p className="mt-1.5 text-lg leading-snug font-semibold text-heading">
-                  {days}
-                  {hours && <span className="block">{hours}</span>}
-                </p>
-                <p className="mt-4 text-sm text-muted">{c.closedFri}</p>
-              </div>
-            </li>
-          </ul>
-
-          <div className="mt-16 grid gap-10 lg:grid-cols-[1fr_24rem] lg:gap-8">
-            <div>
-              <SectionHeading title={c.send} description={c.sendNote} />
-              <div className="mt-6 border border-line bg-surface p-5 sm:p-7">
-                <ContactForm wide to={site.email} />
-              </div>
-            </div>
-
-            <div>
-              <SectionHeading title={c.who} />
-              <ul className="mt-6 divide-y divide-line overflow-hidden border border-line bg-surface">
-                {whoRows.map((r) => {
-                  const Icon = r.icon;
-                  return (
-                    <li key={r.title} className="flex items-center justify-between gap-4 px-5 py-4">
-                      <div className="min-w-0">
-                        <p className="font-bold text-heading">{r.title}</p>
-                        <p className="text-sm break-words text-muted">
-                          {r.extra ? (
-                            <>
-                              {r.sub} · <a href={r.subHref} className="underline underline-offset-2 hover:text-heading">{r.extra}</a>
-                            </>
-                          ) : r.subHref ? (
-                            <a href={r.subHref} className="underline underline-offset-2 hover:text-heading">{r.sub}</a>
-                          ) : (
-                            r.sub
-                          )}
-                        </p>
-                      </div>
-                      <a href={r.href} aria-label={r.aria} className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-tint text-heading hover:bg-navy-800 hover:text-white">
-                        <Icon aria-hidden className="size-5" />
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-
-              <div className="mt-6 overflow-hidden border border-line bg-surface">
-                {mapOk ? <MapEmbed url={site.mapUrl} title={`${c.map} ${site.name}`} /> : <MapPlaceholder c={c} />}
-                <div className="border-t border-line p-5">
-                  <p className="font-bold text-heading">{bn ? site.nameBn : site.name}</p>
-                  <p className="text-sm text-muted">{site.address}</p>
-                  <a href={mapsHref} {...ext} className={`mt-4 ${buttonClasses("primary", "sm")}`}>
-                    <Navigation aria-hidden className="size-4" />
-                    {c.openMaps}
-                    {newTab}
-                  </a>
-                </div>
-              </div>
-              {site.demoNote && <DemoNote className="mt-6">{site.demoNote}</DemoNote>}
-            </div>
+          <div className="space-y-6">
+            <Box id="contact-form" title={c.send}>
+              <p className="mb-4 text-sm text-muted">{c.sendNote}</p>
+              <ContactForm wide to={site.email} />
+            </Box>
+            {site.demoNote && <DemoNote>{site.demoNote}</DemoNote>}
           </div>
         </div>
-      </section>
+      </FullWidth>
     </>
   );
 }

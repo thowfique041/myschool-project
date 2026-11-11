@@ -24,7 +24,7 @@ export function NoticeTicker({ notices }: { notices: Notice[] }) {
     <ul className="flex shrink-0 items-center gap-10 pr-10" aria-hidden={hidden || undefined}>
       {items.map((n) => (
         <li key={n.slug} className="flex items-center gap-3 whitespace-nowrap">
-          <span aria-hidden className="size-1.5 rounded-full bg-signal-600" />
+          <span aria-hidden className="text-muted">◆</span>
           <Link href={`/notices/${n.slug}`} tabIndex={hidden ? -1 : undefined} className="text-base text-heading hover:text-accent hover:underline underline-offset-4">
             {n.title}
           </Link>
@@ -34,8 +34,8 @@ export function NoticeTicker({ notices }: { notices: Notice[] }) {
   );
 
   return (
-    <div className="flex items-stretch overflow-hidden rounded-lg border border-line bg-surface shadow-[var(--shadow-card)]">
-      <div className="flex shrink-0 items-center gap-2 bg-signal-600 px-3 text-sm font-semibold text-white sm:px-4">
+    <div className="flex items-stretch overflow-hidden border border-line bg-surface">
+      <div className="flex shrink-0 items-center gap-2 bg-navy-800 px-3 text-sm font-semibold text-white sm:px-4">
         <Megaphone aria-hidden className="size-4" />
         <span className="hidden sm:inline">{t.ticker.latestBn}</span>
         <span className="sm:hidden">{t.ticker.latest}</span>

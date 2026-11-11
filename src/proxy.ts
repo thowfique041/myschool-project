@@ -13,7 +13,7 @@ const MOVED: Record<string, string> = {
   "/calendar": "/academic/calendar",
   "/policies": "/academic/rules",
   "/students-guardians": "/academic/rules",
-  "/faq": "/admission",
+  "/faq": "/admission/apply",
   "/privacy": "/",
   "/terms": "/",
 };
