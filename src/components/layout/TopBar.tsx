@@ -24,34 +24,34 @@ function SocialIcon({ label }: { label: string }) {
 export async function TopBar({ site }: { site: SiteInfo }) {
   const { t, lang } = await getI18n();
   return (
-    <div className="bg-navy-950 text-sm text-navy-100">
+    <div className="on-brand bg-brand-deep text-sm text-forest-100">
       <div className="container-page flex min-h-9 flex-wrap items-center justify-between gap-x-6 gap-y-1 py-1.5">
         <ul className="flex flex-wrap items-center gap-x-5 gap-y-1">
           <li>
             <a href={site.phoneHref} className="inline-flex items-center gap-1.5 hover:text-white">
-              <Phone aria-hidden className="size-3.5 text-navy-200" />
+              <Phone aria-hidden className="size-3.5 text-forest-200" />
               {site.phone}
             </a>
           </li>
           <li className="hidden sm:block">
             <a href={`mailto:${site.email}`} className="inline-flex items-center gap-1.5 hover:text-white">
-              <Mail aria-hidden className="size-3.5 text-navy-200" />
+              <Mail aria-hidden className="size-3.5 text-forest-200" />
               {site.email}
             </a>
           </li>
           <li className="hidden md:inline-flex items-center gap-1.5">
-            <MapPin aria-hidden className="size-3.5 text-navy-200" />
+            <MapPin aria-hidden className="size-3.5 text-forest-200" />
             {site.area}
           </li>
           <li className="hidden xl:inline-flex items-center gap-1.5">
-            <Clock aria-hidden className="size-3.5 text-navy-200" />
+            <Clock aria-hidden className="size-3.5 text-forest-200" />
             {site.officeHours}
           </li>
         </ul>
         <ul className="flex items-center gap-4">
           {site.eiin && site.eiin !== "000000" && (
             <li className="hidden sm:block">
-              <span className="text-navy-300">
+              <span className="text-forest-300">
                 {t.common.eiin} {lang === "bn" ? toBnDigits(site.eiin) : site.eiin}
               </span>
             </li>
@@ -65,7 +65,7 @@ export async function TopBar({ site }: { site: SiteInfo }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${sl.label} ${t.common.opensNewTab}`}
-                  className="flex size-7 items-center justify-center rounded text-navy-200 hover:bg-white/10 hover:text-white"
+                  className="flex size-7 items-center justify-center rounded text-forest-200 hover:bg-white/10 hover:text-white"
                 >
                   <SocialIcon label={sl.label} />
                 </a>

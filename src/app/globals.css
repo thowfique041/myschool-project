@@ -3,104 +3,126 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * Design tokens.
- * navy-*: institutional colour (header bands, headings, links, tables).
- * leaf-*: primary call-to-action and "admission open" state only.
- * signal-*: urgent / important notices only.
+ * Design tokens: the only place colours are defined.
+ * Components use the Tailwind utilities these generate (bg-brand, text-heading, border-line, ...).
+ *
+ * forest-*  deep green, the brand colour (Bangladesh flag green). forest-800 is the primary.
+ * crimson-* red, used sparingly as the accent (links, highlights, heading underlines, badges).
+ * signal-*  danger / urgent notices.
+ * Semantic tokens below are what components should normally use; html.dark overrides them.
  */
 @theme {
-  /* Deep navy #142B49 is navy-800. */
-  --color-navy-50: #f2f5f9;
-  --color-navy-100: #e1e7f0;
-  --color-navy-200: #c3cfdf;
-  --color-navy-300: #95a8c3;
-  --color-navy-400: #6681a5;
-  --color-navy-500: #426084;
-  --color-navy-600: #2d4a6f;
-  --color-navy-700: #1f3a5c;
-  --color-navy-800: #142b49;
-  --color-navy-900: #0f2139;
-  --color-navy-950: #0a1729;
+  --color-forest-50: #f3f6f4;
+  --color-forest-100: #e3efe7;
+  --color-forest-200: #cfe6d7;
+  --color-forest-300: #9cc6ad;
+  --color-forest-400: #6aa887;
+  --color-forest-500: #3f8f66;
+  --color-forest-600: #1a7a4b;
+  --color-forest-700: #0d6339;
+  --color-forest-800: #0b5d36;
+  --color-forest-900: #084a2b;
+  --color-forest-950: #063a22;
 
-  /* "leaf" is the call-to-action colour: burgundy #7A2638 is leaf-600. */
-  --color-leaf-50: #fbf2f3;
-  --color-leaf-100: #f5e1e4;
-  --color-leaf-200: #e9bfc6;
-  --color-leaf-500: #95364b;
-  --color-leaf-600: #7a2638;
-  --color-leaf-700: #64202f;
-  --color-leaf-800: #4f1925;
+  --color-crimson-50: #fcf0f1;
+  --color-crimson-100: #f8dade;
+  --color-crimson-200: #efb3bb;
+  --color-crimson-500: #d63a4e;
+  --color-crimson-600: #c0182d;
+  --color-crimson-700: #a01225;
+  --color-crimson-800: #7e0e1d;
 
-  --color-signal-50: #fdf0f1;
-  --color-signal-100: #fbdde0;
-  --color-signal-600: #b3243a;
-  --color-signal-700: #95192d;
+  --color-signal-50: #fcf0f1;
+  --color-signal-100: #f8dade;
+  --color-signal-600: #a01225;
+  --color-signal-700: #7e0e1d;
 
-  /* Warm ivory page, soft beige panels. */
-  --color-paper: #faf7f1;
-  --color-paper-dark: #f1e7d9;
-  --color-ink: #1c2330;
-  --color-muted: #5d6371;
-  --color-line: #e7dfd2;
-  --color-gold: #7a2638;
-  --color-beige: #f1e7d9;
-  --color-ivory: #faf7f1;
+  /* Brand (header/menu bar, buttons, logo, active states) */
+  --color-brand: #0b5d36;
+  --color-brand-hover: #084a2b;
+  /* Primary colour used as text or a thin border (secondary buttons). */
+  --color-brand-text: #0b5d36;
+  /* Top bar and footer: primary mixed with black. */
+  --color-brand-deep: #084a2b;
+  --color-crest: #0b5d36;
+  /* Text and icons on the green bars. */
+  --color-on-brand: #ffffff;
+  /* Highlight text on the green bars (active menu item, eyebrows). */
+  --color-on-brand-accent: #ffe08a;
 
-  /* Semantic tokens (overridden in html.dark) */
-  --color-surface: #ffffff;
-  --color-heading: #142b49;
-  --color-subheading: #1f3a5c;
-  --color-accent: #7a2638;
-  --color-danger: #95192d;
-  --color-tint: #f1e7d9;
-  --color-line-strong: #d6c9b4;
-  --color-crest: #142b49;
-  --color-brand: #142b49;
-  --color-brand-hover: #1f3a5c;
-  /* Text and icons that sit on navy bands. */
-  --color-on-navy-accent: #e9d8bd;
+  --color-accent: #c0182d;
+  --color-danger: #a01225;
 
-  --font-sans: var(--font-sans-en), var(--font-bangla), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-serif-en), var(--font-bangla-serif), ui-serif, Georgia, serif;
-  --font-bn: var(--font-bangla), var(--font-sans-en), ui-sans-serif, system-ui, sans-serif;
+  /* Surfaces */
+  --color-paper: #ffffff; /* page background */
+  --color-surface: #ffffff; /* cards */
+  --color-tint: #f3f6f4; /* hover rows, light section backgrounds */
+  --color-paper-dark: #eef1ef; /* image placeholders, alternate sections */
+
+  /* Text */
+  --color-heading: #0a4a2b;
+  --color-subheading: #0d6339;
+  --color-ink: #1d2420;
+  --color-muted: #59615c;
+
+  /* Borders */
+  --color-line: #e1e4e2;
+  --color-line-strong: #c9cfcb;
+
+  --color-focus: #c0182d;
+
+  --font-sans: var(--font-hind), var(--font-hind-bn), system-ui, sans-serif;
+  --font-serif: var(--font-hind), var(--font-hind-bn), system-ui, sans-serif;
+  --font-bn: var(--font-hind-bn), var(--font-hind), system-ui, sans-serif;
 
   --radius-card: 0.375rem;
-  /* Cards use borders; shadow-lift is only for floating elements (menus, back-to-top). */
+  /* Flat design: cards use 1px borders; shadow-lift is only for floating elements (menus, back-to-top). */
   --shadow-card: none;
-  --shadow-lift: 0 1px 2px rgb(20 43 73 / 0.06), 0 8px 20px -12px rgb(20 43 73 / 0.22);
+  --shadow-lift: 0 1px 2px rgb(0 0 0 / 0.05), 0 4px 12px -6px rgb(0 0 0 / 0.16);
 }
 
-/* Dark theme overrides. */
+/* Dark theme overrides (html.dark is set from the saved choice or the system setting). */
 html.dark {
   color-scheme: dark;
-  --color-surface: #13213a;
-  --color-paper: #0c1626;
-  --color-paper-dark: #1a2b45;
-  --color-ink: #e8e3d9;
-  --color-muted: #a7afbb;
-  --color-line: #243753;
-  --color-line-strong: #3a4f6e;
-  --color-heading: #f7f2e9;
-  --color-subheading: #d9cdb9;
-  --color-accent: #e7aab6;
-  --color-danger: #f28b97;
-  --color-tint: #1b2c46;
-  --color-crest: #2d4a6f;
-  --color-brand: #2d4a6f;
-  --color-brand-hover: #3a5c86;
-  --color-leaf-50: #2a1219;
-  --color-leaf-100: #3a1922;
-  --color-leaf-500: #b4506a;
-  --color-leaf-600: #9b3349;
-  --color-leaf-700: #85293d;
-  --color-signal-50: #33161b;
+  --color-brand: #136e40;
+  --color-brand-hover: #18804b;
+  --color-brand-text: #cfe6d7;
+  --color-brand-deep: #0c3a23;
+  --color-crest: #136e40;
+
+  --color-accent: #ff8a96;
+  --color-danger: #ff8a96;
+  --color-focus: #ff8a96;
+
+  --color-paper: #0d1410;
+  --color-surface: #131c17;
+  --color-tint: #17221c;
+  --color-paper-dark: #1b2620;
+
+  --color-heading: #f1f6f2;
+  --color-subheading: #cfe6d7;
+  --color-ink: #e3e9e5;
+  --color-muted: #a5b0a9;
+
+  --color-line: #27342d;
+  --color-line-strong: #3b4b42;
+
+  /* Dark green bands sit just above the page background. */
+  --color-forest-800: #136e40;
+  --color-forest-900: #10432a;
+  --color-forest-950: #0b2c1c;
+
+  --color-crimson-50: #2a1216;
+  --color-crimson-100: #3a1a1f;
+  --color-crimson-200: #5a2830;
+  --color-crimson-500: #ff8a96;
+  --color-crimson-600: #ff8a96;
+  --color-crimson-700: #ffa3ad;
+  --color-signal-50: #2a1216;
   --color-signal-100: #5a2129;
-  --color-amber-50: #2e2410;
-  --color-amber-200: #6b5420;
-  --color-amber-800: #f4cf7f;
-  --color-amber-900: #f8dc9c;
+
   --shadow-card: none;
-  --shadow-lift: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 20px -10px rgb(0 0 0 / 0.55);
+  --shadow-lift: 0 1px 2px rgb(0 0 0 / 0.3), 0 4px 12px -6px rgb(0 0 0 / 0.5);
 }
 
 @layer base {
@@ -113,13 +135,24 @@ html.dark {
     background-color: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
     text-rendering: optimizeLegibility;
   }
 
-  /* Bangla script needs a little more line height to stay readable */
+  /* Bangla script needs slightly more line height to stay readable */
   :lang(bn) {
-    font-family: var(--font-bangla), var(--font-sans-en), ui-sans-serif, system-ui, sans-serif;
-    line-height: 1.75;
+    font-family: var(--font-bn);
+    line-height: 1.7;
+  }
+
+  /* Plain text links (no utility classes): accent colour, underline on hover. */
+  a:not([class]) {
+    color: var(--color-accent);
+    text-underline-offset: 3px;
+  }
+  a:not([class]):hover {
+    text-decoration-line: underline;
   }
 
   h1,
@@ -128,7 +161,7 @@ html.dark {
     text-wrap: balance;
   }
 
-  /* Playfair defaults to old-style figures; dates and figures read better lining. */
+  /* Dates and figures read better with lining numerals. */
   .font-serif,
   h1,
   h2,
@@ -141,15 +174,23 @@ html.dark {
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-leaf-600);
+    outline: 2px solid var(--color-focus);
     outline-offset: 2px;
     border-radius: 4px;
   }
 
   ::selection {
-    background-color: var(--color-leaf-200);
-    color: var(--color-navy-950);
+    background-color: var(--color-forest-200);
+    color: var(--color-forest-950);
   }
+}
+
+/* Focus rings on the green bars use the highlight colour; panels opened from them go back to the default. */
+.on-brand :focus-visible {
+  outline-color: var(--color-on-brand-accent);
+}
+.on-brand .on-surface :focus-visible {
+  outline-color: var(--color-focus);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -193,8 +234,8 @@ html.dark {
     to bottom,
     transparent 0,
     transparent 31px,
-    rgb(15 31 54 / 0.05) 31px,
-    rgb(15 31 54 / 0.05) 32px
+    var(--color-line) 31px,
+    var(--color-line) 32px
   );
 }
 
@@ -203,9 +244,19 @@ html[lang="bn"] ol.list-decimal {
   list-style-type: bengali;
 }
 
-/* English fragments inside the Bangla site keep the English typeface */
-html[lang="bn"] [lang="en"]:not(.font-serif) {
-  font-family: var(--font-sans-en), var(--font-bangla), ui-sans-serif, system-ui, sans-serif;
+/* English fragments inside the Bangla site use the Latin cut of Hind Siliguri first */
+html[lang="bn"] [lang="en"] {
+  font-family: var(--font-sans);
+}
+
+/* Headings are bold everywhere. Unlayered on purpose so it wins over font-semibold utilities. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
 }
 
 /* Fade-up on scroll (classes are added by TextReveal, so no-JS shows everything). */

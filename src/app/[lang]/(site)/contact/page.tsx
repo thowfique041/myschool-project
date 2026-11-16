@@ -111,40 +111,40 @@ function MapPlaceholder({ c }: { c: (typeof copy)["en"] | (typeof copy)["bn"] })
       <svg viewBox="0 0 640 380" role="img" aria-labelledby="map-title map-desc" className="h-auto w-full">
         <title id="map-title">{c.map1}</title>
         <desc id="map-desc">{c.map2}</desc>
-        <rect width="640" height="380" fill="#eef2ec" />
-        <path d="M0 250 C160 230 260 300 640 260 V380 H0Z" fill="#cfe3ee" />
-        <rect x="430" y="40" width="160" height="110" rx="10" fill="#cfe5c9" />
-        <g stroke="#ffffff" strokeLinecap="round">
+        <rect width="640" height="380" className="fill-tint" />
+        <path d="M0 250 C160 230 260 300 640 260 V380 H0Z" className="fill-paper-dark" />
+        <rect x="430" y="40" width="160" height="110" rx="10" className="fill-forest-100 dark:fill-forest-900" />
+        <g className="stroke-surface" strokeLinecap="round">
           <path d="M-10 190 H650" strokeWidth="26" />
           <path d="M320 -10 V250" strokeWidth="18" />
           <path d="M60 -10 L170 190" strokeWidth="12" />
           <path d="M320 110 H650" strokeWidth="12" />
           <path d="M120 190 V250" strokeWidth="10" />
         </g>
-        <g stroke="#e2ddd2" strokeWidth="2" fill="none">
+        <g className="stroke-line-strong" strokeWidth="2" fill="none">
           <path d="M-10 190 H650" strokeDasharray="10 10" />
         </g>
-        <g fill="#e6dfd0">
+        <g className="fill-line">
           <rect x="30" y="40" width="70" height="50" rx="4" />
           <rect x="190" y="30" width="100" height="60" rx="4" />
           <rect x="350" y="140" width="60" height="30" rx="4" />
           <rect x="30" y="215" width="70" height="25" rx="4" />
           <rect x="440" y="205" width="120" height="30" rx="4" />
         </g>
-        <rect x="190" y="110" width="110" height="64" rx="6" fill="#142b49" />
-        <circle cx="245" cy="104" r="20" fill="#c8283a" />
-        <path d="M245 132 l-12 -22 a14 14 0 1 1 24 0Z" fill="#c8283a" />
-        <circle cx="245" cy="102" r="6" fill="#fff" />
-        <text x="245" y="152" textAnchor="middle" fontFamily="sans-serif" fontSize="12" fill="#fff" fontWeight="600">
+        <rect x="190" y="110" width="110" height="64" rx="6" className="fill-brand" />
+        <circle cx="245" cy="104" r="20" className="fill-accent" />
+        <path d="M245 132 l-12 -22 a14 14 0 1 1 24 0Z" className="fill-accent" />
+        <circle cx="245" cy="102" r="6" className="fill-surface" />
+        <text x="245" y="152" textAnchor="middle" fontSize="12" className="fill-on-brand" fontWeight="600">
           Webnion
         </text>
-        <text x="510" y="100" textAnchor="middle" fontFamily="sans-serif" fontSize="13" fill="#3c6b38">
+        <text x="510" y="100" textAnchor="middle" fontSize="13" className="fill-subheading">
           {c.park}
         </text>
-        <text x="560" y="182" textAnchor="middle" fontFamily="sans-serif" fontSize="12" fill="#5a6577">
+        <text x="560" y="182" textAnchor="middle" fontSize="12" className="fill-muted">
           {c.road}
         </text>
-        <text x="80" y="330" fontFamily="sans-serif" fontSize="12" fill="#3c5f8e">
+        <text x="80" y="330" fontSize="12" className="fill-muted">
           {c.river}
         </text>
       </svg>
@@ -168,7 +168,7 @@ function MapEmbed({ url, title }: { url: string; title: string }) {
   );
 }
 
-const cardCls = "h-full rounded-lg border border-line bg-surface p-6 shadow-[0_1px_2px_rgb(20_43_73/0.06)]";
+const cardCls = "h-full rounded-lg border border-line bg-surface p-6";
 const labelCls = "mt-5 text-xs font-bold text-subheading";
 const actionCls = "mt-4 inline-flex items-center gap-1 text-sm font-bold text-heading hover:underline";
 const iconBox = "flex size-11 items-center justify-center rounded-lg bg-tint text-heading";
@@ -199,7 +199,7 @@ export default async function ContactPage() {
         overlap
         aside={
           <div className="flex flex-wrap gap-3 lg:justify-end">
-            <a href={site.phoneHref} className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-beige px-5 font-bold text-navy-900 hover:bg-white">
+            <a href={site.phoneHref} className="inline-flex min-h-12 items-center gap-2 rounded-lg border border-surface bg-surface px-5 font-bold text-brand-text hover:bg-tint">
               <Phone aria-hidden className="size-4" />
               {c.callOffice}
             </a>
@@ -303,7 +303,7 @@ export default async function ContactPage() {
                           )}
                         </p>
                       </div>
-                      <a href={r.href} aria-label={r.aria} className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-tint text-heading hover:bg-navy-800 hover:text-white">
+                      <a href={r.href} aria-label={r.aria} className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-tint text-heading hover:bg-forest-800 hover:text-white">
                         <Icon aria-hidden className="size-5" />
                       </a>
                     </li>

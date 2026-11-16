@@ -68,7 +68,7 @@ function DesktopDropdown({ item, active, alignRight = false }: { item: NavItem; 
         onClick={() => setOpen((o) => !o)}
         className={cn(
           "flex items-center gap-0.5 rounded-md px-1 py-2 text-[0.8rem] font-medium whitespace-nowrap transition-colors xl:gap-1 xl:px-1.5 xl:text-[0.86rem] 2xl:px-3 2xl:text-[0.92rem]",
-          active ? "text-accent" : "text-heading hover:text-accent",
+          active ? "text-on-brand-accent" : "text-white hover:text-on-brand-accent",
         )}
       >
         {item.label}
@@ -84,15 +84,15 @@ function DesktopDropdown({ item, active, alignRight = false }: { item: NavItem; 
             transition={{ duration: 0.16 }}
             className={cn("absolute top-full z-50 w-80 pt-2", alignRight ? "right-0" : "left-0")}
           >
-            <div className="overflow-hidden rounded-md border border-line border-t-[3px] border-t-navy-700 bg-surface shadow-[var(--shadow-lift)] dark:border-t-navy-300">
-              <p className="border-b border-line bg-paper px-5 py-2.5 text-xs font-semibold tracking-wide text-muted uppercase">{item.label}</p>
+            <div className="on-surface overflow-hidden rounded-md border border-line border-t-[3px] border-t-brand bg-surface shadow-[var(--shadow-lift)] dark:border-t-forest-300">
+              <p className="border-b border-line bg-tint px-5 py-2.5 text-xs font-semibold tracking-wide text-muted uppercase">{item.label}</p>
               <ul className="p-2">
                 {item.children?.map((child) => (
                   <li key={child.href}>
                     <Link
                       href={child.href}
                       onClick={() => setOpen(false)}
-                      className="block rounded px-3 py-2.5 hover:bg-paper focus-visible:bg-paper"
+                      className="block rounded px-3 py-2.5 hover:bg-tint focus-visible:bg-tint"
                     >
                       <span className="block text-sm font-semibold text-heading">{child.label}</span>
                       {child.description && <span className="mt-0.5 block text-xs text-muted">{child.description}</span>}
@@ -119,7 +119,7 @@ function MobileMenu({ onClose, pathname, items, ctaLabel, ctaHref }: { onClose: 
       animate={{ opacity: 1, height: "auto" }}
       exit={reduce ? { opacity: 0 } : { opacity: 0, height: 0 }}
       transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-      className="overflow-hidden border-t border-line bg-surface lg:hidden"
+      className="on-surface overflow-hidden border-t border-line bg-surface lg:hidden"
     >
       <nav aria-label={t.common.mobileNav} className="container-page max-h-[calc(100dvh-5rem)] overflow-y-auto py-3">
         <ul className="divide-y divide-line">
@@ -174,7 +174,7 @@ function MobileMenu({ onClose, pathname, items, ctaLabel, ctaHref }: { onClose: 
             );
           })}
         </ul>
-        <Link href={ctaHref} onClick={onClose} className={cn(buttonClasses("secondary"), "mt-4 mb-2 w-full")}>
+        <Link href={ctaHref} onClick={onClose} className={cn(buttonClasses("primary"), "mt-4 mb-2 w-full")}>
           {ctaLabel}
         </Link>
         <LanguageSwitcher className="mb-2 w-full justify-center" />
@@ -203,11 +203,11 @@ export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
 
   return (
     <header
-      className="sticky top-0 z-40 border-b border-line bg-surface"
+      className="sticky top-0 z-40 border-b border-brand-hover bg-brand text-white on-brand"
     >
       <div className="container-page flex h-[4.5rem] items-center justify-between gap-3 sm:h-20 xl:gap-4">
         <Link href="/" aria-label={`${brand.name}, ${t.common.home}`} className="rounded-md">
-          <Logo name={brand.name} nameBn={brand.nameBn} src={brand.logo} />
+          <Logo tone="dark" name={brand.name} nameBn={brand.nameBn} src={brand.logo} />
         </Link>
 
         <nav aria-label={t.common.mainNav} className="hidden lg:block">
@@ -222,8 +222,8 @@ export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "rounded-md px-1 py-2 text-[0.8rem] font-medium whitespace-nowrap transition-colors xl:px-1.5 xl:text-[0.86rem] 2xl:px-3 2xl:text-[0.92rem]",
-                      active ? "text-accent" : "text-heading hover:text-accent",
+                      "rounded-md px-1 py-2 text-[0.8rem] font-medium whitespace-nowrap underline-offset-8 transition-colors xl:px-1.5 xl:text-[0.86rem] 2xl:px-3 2xl:text-[0.92rem]",
+                      active ? "text-on-brand-accent underline decoration-2" : "text-white hover:underline",
                     )}
                   >
                     {item.label}
@@ -235,13 +235,13 @@ export function SiteHeader({ items, ctaLabel, ctaHref, brand }: HeaderProps) {
         </nav>
 
         <div className="flex items-center gap-2">
-          <ThemeToggle />
+          <ThemeToggle tone="dark" />
           <Link href={ctaHref} className={cn(buttonClasses("secondary", "sm"), "max-xl:hidden")}>
             {ctaLabel}
           </Link>
           <button
             type="button"
-            className="inline-flex size-11 items-center justify-center rounded-lg border border-line text-heading lg:hidden"
+            className="inline-flex size-11 items-center justify-center rounded-lg border border-white/30 text-white hover:border-white/60 lg:hidden"
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
             aria-label={mobileOpen ? t.common.closeMenu : t.common.openMenu}

@@ -54,7 +54,7 @@ export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDe
       <form noValidate onSubmit={onSubmit} className="h-fit space-y-4 border border-line bg-surface p-6">
         <div className="flex items-center justify-between">
           <h3 className="font-semibold text-heading">{t.results.searchTitle}</h3>
-          {isDemo && <Badge tone="gold">{t.common.demoData}</Badge>}
+          {isDemo && <Badge tone="highlight">{t.common.demoData}</Badge>}
         </div>
         <Field label={t.results.class} name="className">
           {({ id }) => (
@@ -101,7 +101,7 @@ export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDe
         <AnimatePresence mode="wait">
           {state.kind === "idle" && (
             <motion.div key="idle" initial={false} exit={{ opacity: 0 }} className="flex h-full min-h-64 flex-col items-center justify-center rounded-lg border border-dashed border-line bg-surface p-8 text-center">
-              <Search aria-hidden className="size-8 text-navy-200" />
+              <Search aria-hidden className="size-8 text-forest-200" />
               <p className="mt-3 font-semibold text-heading">{t.results.idleTitle}</p>
               <p className="mt-1 max-w-sm text-sm text-muted">{t.results.idleText}</p>
             </motion.div>
@@ -133,21 +133,21 @@ export function ResultLookup({ options, isDemo }: { options: ResultOptions; isDe
               exit={{ opacity: 0 }}
               className="overflow-hidden border border-line bg-surface"
             >
-              <header className="flex flex-wrap items-start justify-between gap-4 bg-navy-900 px-6 py-5 text-white">
+              <header className="flex flex-wrap items-start justify-between gap-4 bg-forest-900 px-6 py-5 text-white">
                 <div>
-                  <p className="text-xs text-navy-200">
+                  <p className="text-xs text-forest-200">
                     {T(state.result.exam)} {N(state.result.year)}
                   </p>
                   <h3 className="mt-0.5 text-lg font-semibold">{lang === "bn" && state.result.nameBn ? state.result.nameBn : state.result.name}</h3>
-                  <p className="text-sm text-navy-200">
+                  <p className="text-sm text-forest-200">
                     {T(state.result.className)} · {t.results.section} {state.result.section}
                     {state.result.group && ` · ${T(state.result.group)}`} · {t.results.roll} {state.result.roll}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-navy-200">{t.results.gpa}</p>
+                  <p className="text-xs text-forest-200">{t.results.gpa}</p>
                   <p className="font-serif text-3xl font-semibold">{N(state.result.gpa.toFixed(2))}</p>
-                  {state.result.position && <p className="text-xs text-navy-200">{t.results.merit} {N(state.result.position)}</p>}
+                  {state.result.position && <p className="text-xs text-forest-200">{t.results.merit} {N(state.result.position)}</p>}
                 </div>
               </header>
               <div className="overflow-x-auto">

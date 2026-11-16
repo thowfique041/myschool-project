@@ -5,7 +5,7 @@ import { getI18n } from "@/i18n/server";
 export async function SampleTag({ className }: { className?: string }) {
   const { t } = await getI18n();
   return (
-    <Badge tone="gold" className={className}>
+    <Badge tone="highlight" className={className}>
       {t.common.sample}
     </Badge>
   );

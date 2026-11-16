@@ -20,7 +20,7 @@ export function DateBlock({ iso, className }: { iso: string; className?: string 
       dateTime={iso}
       className={cn("flex w-16 shrink-0 flex-col items-center border-r border-line pr-3 text-center", className)}
     >
-      <span className="eyebrow text-leaf-600 dark:text-accent">{month}</span>
+      <span className="eyebrow text-crimson-600 dark:text-accent">{month}</span>
       <span className="mt-1 font-serif text-[1.7rem] leading-none font-semibold text-heading">{day}</span>
       <span className="mt-1 text-xs text-muted">{year}</span>
     </time>
@@ -78,7 +78,7 @@ export function NewsCard({ article, headingLevel = "h3" }: { article: NewsArticl
       <Picture image={article.image} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" />
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-center gap-3 text-xs text-muted">
-          <Badge tone="navy">{article.categoryLabel ?? article.category}</Badge>
+          <Badge tone="green">{article.categoryLabel ?? article.category}</Badge>
           <time dateTime={article.date}>{formatDate(article.date, lang)}</time>
         </div>
         <H className="mt-3 text-lg leading-snug font-semibold text-heading group-hover:text-accent">
@@ -118,7 +118,7 @@ export function TeacherAvatar({ teacher, size = "md", ring }: { teacher: Teacher
       <img
         src={teacher.photo}
         alt=""
-        className={cn("shrink-0 rounded-full border-4 border-surface object-cover object-top ring-2", ring ?? "ring-navy-700 dark:ring-navy-300", size === "lg" ? "size-24" : "size-16")}
+        className={cn("shrink-0 rounded-full border-4 border-surface object-cover object-top ring-2", ring ?? "ring-forest-700 dark:ring-forest-300", size === "lg" ? "size-24" : "size-16")}
       />
     );
   }

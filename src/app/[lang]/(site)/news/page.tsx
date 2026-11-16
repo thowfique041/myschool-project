@@ -35,7 +35,7 @@ export default async function NewsPage() {
             <Picture image={featured.image} ratio="aspect-[16/10] md:aspect-auto md:h-full" sizes="(min-width: 768px) 40vw, 100vw" />
             <div className="flex flex-col p-6 sm:p-8">
               <div className="flex items-center gap-3 text-xs text-muted">
-                <Badge tone="leaf">
+                <Badge tone="red">
                   {t.common.featured} · {featured.categoryLabel}
                 </Badge>
                 <time dateTime={featured.date}>{formatDate(featured.date, lang)}</time>
@@ -53,18 +53,18 @@ export default async function NewsPage() {
               )}
             </div>
           </article>
-          <aside aria-labelledby="upcoming" className="border-t-4 border-leaf-600 bg-navy-900 p-6 text-white">
+          <aside aria-labelledby="upcoming" className="border-t-4 border-crimson-600 bg-forest-900 p-6 text-white">
             <h2 id="upcoming" className="flex items-center gap-2 font-semibold">
-              <CalendarDays aria-hidden className="size-5 text-on-navy-accent" /> {t.news.upcoming}
+              <CalendarDays aria-hidden className="size-5 text-on-brand-accent" /> {t.news.upcoming}
             </h2>
             <ul className="mt-4 space-y-4">
-              {events.length === 0 && <li className="text-sm text-navy-200">{t.news.noUpcoming}</li>}
+              {events.length === 0 && <li className="text-sm text-forest-200">{t.news.noUpcoming}</li>}
               {events.map((e) => {
                 const d = datePartsL(e.date, lang);
                 return (
                   <li key={e.date + e.title} className="flex gap-4 border-t border-white/15 pt-4 first:border-t-0 first:pt-0">
                     <time dateTime={e.date} className="flex w-12 shrink-0 flex-col items-center border-r border-white/20 pr-3 text-center">
-                      <span className="eyebrow text-on-navy-accent">{d.month}</span>
+                      <span className="eyebrow text-on-brand-accent">{d.month}</span>
                       <span className="mt-1 font-serif text-2xl leading-none font-semibold">{d.day}</span>
                     </time>
                     <span className="self-center font-semibold">{e.title}</span>

@@ -127,7 +127,7 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
     [a.notes, values.notes],
   ];
   const summary = (
-    <dl className="mt-6 grid border-t-2 border-navy-800 sm:grid-cols-2 dark:border-navy-300">
+    <dl className="mt-6 grid border-t-2 border-forest-800 sm:grid-cols-2 dark:border-forest-300">
       {rows.map(([k, v]) => (
         <div key={k} className="border-b border-line py-3 sm:odd:pr-6 sm:even:pl-6">
           <dt className="text-xs text-muted">{k}</dt>
@@ -148,8 +148,8 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
 
   if (status === "review" || status === "submitting") {
     return (
-      <div id="admission-review" tabIndex={-1} className="border-t-4 border-leaf-600 bg-surface p-6 outline-none sm:p-8 dark:border-accent">
-        <p className="eyebrow text-leaf-600 dark:text-accent">{a.review}</p>
+      <div id="admission-review" tabIndex={-1} className="border-t-4 border-crimson-600 bg-surface p-6 outline-none sm:p-8 dark:border-accent">
+        <p className="eyebrow text-crimson-600 dark:text-accent">{a.review}</p>
         <h3 className="mt-2 font-serif text-2xl font-semibold text-heading">{a.reviewTitle}</h3>
         <p className="mt-1 text-muted">{a.reviewText}</p>
         {summary}
@@ -173,9 +173,9 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
         initial={reduce ? false : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         id="admission-summary"
-        className="border-t-4 border-leaf-600 bg-surface p-6 sm:p-8 dark:border-accent"
+        className="border-t-4 border-crimson-600 bg-surface p-6 sm:p-8 dark:border-accent"
       >
-        <p className="eyebrow flex items-center gap-2 text-leaf-600 dark:text-accent">
+        <p className="eyebrow flex items-center gap-2 text-crimson-600 dark:text-accent">
           <CheckCircle2 aria-hidden className="size-4" />
           {a.summaryTitle}
         </p>
@@ -215,7 +215,7 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
 
   const errorCount = Object.values(errors).filter(Boolean).length;
   // Numbered group headings with a ruled line, as in the rest of the site.
-  const legend = "mb-5 w-full border-b-2 border-navy-800 pb-2 font-serif text-xl font-semibold text-heading dark:border-navy-300";
+  const legend = "mb-5 w-full border-b-2 border-forest-800 pb-2 font-serif text-xl font-semibold text-heading dark:border-forest-300";
 
   return (
     !open ? (
@@ -338,7 +338,7 @@ export function AdmissionForm({ classOptions, open = true }: { classOptions: str
             onChange={set("consent")}
             aria-invalid={errors.consent ? true : undefined}
             aria-describedby={errors.consent ? "f-consent-error" : undefined}
-            className="mt-0.5 size-5 shrink-0 accent-leaf-600"
+            className="mt-0.5 size-5 shrink-0 accent-crimson-600"
           />
           {a.consent}
         </label>

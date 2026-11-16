@@ -12,6 +12,9 @@ import { boardSummary, examSchedule, mockResults } from "@/data/results";
 import { images } from "@/data/images";
 import { slugify } from "@/lib/utils";
 
+/** Default brand colours (light theme). Must match --color-brand and --color-accent in globals.css. */
+export const BRAND_DEFAULTS = { primary: "#0b5d36", accent: "#c0182d" } as const;
+
 const extraPolicies = [
   {
     id: "assessment",
@@ -109,7 +112,7 @@ export const singletonDefaults: Record<string, Record<string, unknown>> = {
     demoNote: staticSite.demoNote,
   },
   social: { links: staticSite.social.map((s) => ({ ...s })) },
-  branding: { logo: "", favicon: "", primary: "#142b49", accent: "#7a2638" },
+  branding: { logo: "", favicon: "", primary: BRAND_DEFAULTS.primary, accent: BRAND_DEFAULTS.accent },
   seo: {
     title: `${staticSite.name} | Sylhet`,
     description:
