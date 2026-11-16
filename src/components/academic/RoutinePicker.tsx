@@ -47,7 +47,7 @@ export function RoutinePicker({ routines, grid, labels }: { routines: Routine[];
   };
 
   if (!first) return <p className="mt-6 text-muted">{labels.none}</p>;
-  const select = "min-h-11 w-full border border-line-strong bg-surface px-3 text-ink focus:border-leaf-600 disabled:opacity-70";
+  const select = "min-h-11 w-full border border-line-strong bg-surface px-3 text-ink focus:border-crimson-600 disabled:opacity-70";
   const field = (label: string, value: string, opts: string[], on: (v: string) => void) => (
     <label className="block text-sm">
       <span className="eyebrow text-subheading">{label}</span>
@@ -60,7 +60,7 @@ export function RoutinePicker({ routines, grid, labels }: { routines: Routine[];
   );
   return (
     <div className="mt-6">
-      <div className="print-hide grid items-end gap-4 border-t-2 border-navy-800 pt-5 sm:grid-cols-[repeat(3,minmax(0,1fr))_auto] dark:border-navy-300">
+      <div className="print-hide grid items-end gap-4 border-t-2 border-forest-800 pt-5 sm:grid-cols-[repeat(3,minmax(0,1fr))_auto] dark:border-forest-300">
         {field(labels.klass, klass, classes, pickClass)}
         {sections.length > 0 && field(labels.section, section, sections, pickSection)}
         {shifts.length > 0 && field(labels.shift, shift, shifts, setShift)}

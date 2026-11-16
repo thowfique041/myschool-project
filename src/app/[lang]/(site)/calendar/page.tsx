@@ -73,7 +73,7 @@ export default async function CalendarPage() {
         aside={
           <div className="print-hide flex flex-wrap gap-3 lg:justify-end">
             {calendarFile && (
-              <a href={calendarFile.href} target="_blank" rel="noopener" download className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-beige px-5 font-bold text-navy-900 hover:bg-white">
+              <a href={calendarFile.href} target="_blank" rel="noopener" download className="inline-flex min-h-12 items-center gap-2 rounded-lg border border-surface bg-surface px-5 font-bold text-brand-text hover:bg-tint">
                 <Download aria-hidden className="size-4" />
                 {c.download}
               </a>

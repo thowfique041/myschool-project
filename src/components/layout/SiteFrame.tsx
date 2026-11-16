@@ -8,6 +8,7 @@ import { ScrollTopOnNav } from "./ScrollTopOnNav";
 import { LogoMark } from "@/components/brand/Logo";
 import { getCurrentYear, getFooter, getNavigation, getSetting, getSite } from "@/content/site-content";
 import { getI18n } from "@/i18n/server";
+import { BRAND_DEFAULTS } from "@/content/defaults";
 
 function shade(hex: string, defaultHex: string): Record<string, string> | null {
   if (!/^#[0-9a-f]{6}$/i.test(hex) || hex.toLowerCase() === defaultHex) return null;
@@ -21,12 +22,17 @@ function shade(hex: string, defaultHex: string): Record<string, string> | null {
 
 /** Brand colour overrides from Settings → Branding, as CSS custom properties. */
 function brandingCss(primary: string, accent: string): string {
-  const p = shade(primary, "#142b49");
-  const a = shade(accent, "#7a2638");
+  const p = shade(primary, BRAND_DEFAULTS.primary);
+  const a = shade(accent, BRAND_DEFAULTS.accent);
   const rules: string[] = [];
-  if (p) rules.push(`--color-navy-700:${p.light};--color-navy-800:${p.base};--color-navy-900:${p.dark};--color-navy-950:${p.darker};`);
-  if (a) rules.push(`--color-leaf-500:${a.light};--color-leaf-600:${a.base};--color-leaf-700:${a.dark};--color-leaf-800:${a.darker};`);
-  return rules.length ? `:root{${rules.join("")}}` : "";
+  if (p)
+    rules.push(
+      `--color-brand:${p.base};--color-brand-text:${p.base};--color-crest:${p.base};--color-brand-hover:${p.dark};--color-brand-deep:${p.dark};` +
+        `--color-forest-700:${p.light};--color-forest-800:${p.base};--color-forest-900:${p.dark};--color-forest-950:${p.darker};`,
+    );
+  if (a) rules.push(`--color-accent:${a.base};--color-focus:${a.base};--color-crimson-500:${a.light};--color-crimson-600:${a.base};--color-crimson-700:${a.dark};--color-crimson-800:${a.darker};`);
+  // Light theme only: the dark theme keeps its own tuned values.
+  return rules.length ? `html:not(.dark){${rules.join("")}}` : "";
 }
 
 /** Public website chrome: top bar, header, footer, branding and maintenance mode. */

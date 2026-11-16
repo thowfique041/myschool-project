@@ -19,7 +19,7 @@ type SectionHeadingProps = {
 export function SectionHeading({ title, description, align = "left", tone = "light", variant = "default", className, id }: SectionHeadingProps) {
   const dark = tone === "dark";
   return (
-    <div className={cn(align === "center" && "mx-auto text-center", "max-w-2xl", variant === "rule" && "max-w-none border-t-4 border-navy-800 pt-3 dark:border-navy-300", className)}>
+    <div className={cn(align === "center" && "mx-auto text-center", "max-w-2xl", variant === "rule" && "max-w-none border-t-4 border-forest-800 pt-3 dark:border-forest-300", className)}>
       <h2
         id={id}
         className={cn(
@@ -31,7 +31,10 @@ export function SectionHeading({ title, description, align = "left", tone = "lig
       >
         {title}
       </h2>
-      {description && <p className={cn("mt-2 text-base leading-relaxed", dark ? "text-navy-100" : "text-muted")}>{description}</p>}
+      {variant !== "rule" && (
+        <span aria-hidden className={cn("mt-2.5 block h-[3px] w-12 rounded-sm", align === "center" && "mx-auto", dark ? "bg-on-brand-accent" : "bg-accent")} />
+      )}
+      {description && <p className={cn("mt-2 text-base leading-relaxed", dark ? "text-forest-200" : "text-muted")}>{description}</p>}
     </div>
   );
 }
@@ -41,11 +44,11 @@ export function SectionHeading({ title, description, align = "left", tone = "lig
 type Variant = "primary" | "secondary" | "outline" | "ghost" | "light";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-brand hover:bg-brand-hover text-white shadow-sm",
-  secondary: "bg-leaf-600 text-white hover:bg-leaf-700 shadow-sm",
-  outline: "border border-line-strong bg-surface text-heading hover:border-line-strong hover:bg-tint",
+  primary: "border border-brand bg-brand text-white hover:border-brand-hover hover:bg-brand-hover",
+  secondary: "border border-brand-text bg-surface text-brand-text hover:bg-tint",
+  outline: "border border-line-strong bg-surface text-heading hover:bg-tint",
   ghost: "text-heading hover:bg-tint",
-  light: "bg-white text-navy-900 hover:bg-navy-50 shadow-sm",
+  light: "border border-surface bg-surface text-brand-text hover:bg-tint",
 };
 
 export const buttonClasses = (variant: Variant = "primary", size: "sm" | "md" = "md") =>
@@ -64,19 +67,19 @@ export function ButtonLink({ variant = "primary", size = "md", className, ...pro
 
 /* -------------------------------------------------------------------- Badge */
 
-type BadgeTone = "navy" | "leaf" | "signal" | "gold" | "neutral";
+type BadgeTone = "green" | "red" | "signal" | "highlight" | "neutral";
 
 const badgeTones: Record<BadgeTone, string> = {
-  navy: "bg-tint text-subheading ring-line-strong",
-  leaf: "bg-leaf-50 text-accent ring-line",
+  green: "bg-tint text-subheading ring-line-strong",
+  red: "bg-crimson-50 text-accent ring-crimson-100",
   signal: "bg-signal-50 text-danger ring-signal-100",
-  gold: "bg-[#faf3e3] text-[#7d5c17] ring-[#efe0bb] dark:bg-[#2e2410] dark:text-[#f4cf7f] dark:ring-[#6b5420]",
+  highlight: "bg-on-brand-accent text-forest-950 ring-on-brand-accent",
   neutral: "bg-paper-dark text-muted ring-line",
 };
 
 export function Badge({
   children,
-  tone = "navy",
+  tone = "green",
   className,
 }: {
   children: ReactNode;
@@ -105,7 +108,7 @@ export function DemoNote({ children, className }: { children: ReactNode; classNa
     <div
       role="note"
       className={cn(
-        "flex gap-3 rounded-lg border border-[#efe0bb] bg-[#fcf8ee] px-4 py-3 text-sm text-[#5f4712] dark:border-[#6b5420] dark:bg-[#251d0d] dark:text-[#f1d796]",
+        "flex gap-3 rounded-lg border border-line-strong border-l-4 border-l-accent bg-tint px-4 py-3 text-sm text-ink",
         className,
       )}
     >

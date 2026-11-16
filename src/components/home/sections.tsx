@@ -35,9 +35,9 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
           {/* A framed announcement board: label bar, then an endless bottom-to-top list about three notices tall.
               Pauses on hover or keyboard focus; the second copy only fills the loop and is hidden from assistive tech. */}
           <div className="mt-4 border border-line bg-surface">
-          <div className="flex items-center justify-between gap-4 border-b-2 border-navy-800 px-5 py-3 dark:border-navy-300">
+          <div className="flex items-center justify-between gap-4 border-b-2 border-forest-800 px-5 py-3 dark:border-forest-300">
             <p className="eyebrow flex items-center gap-2 text-heading">
-              <span aria-hidden className="size-2 rounded-full bg-leaf-600 dark:bg-accent" />
+              <span aria-hidden className="size-2 rounded-full bg-crimson-600 dark:bg-accent" />
               {data.t.ticker.latestBn}
             </p>
             <ArrowLink href="/notices">{data.t.home.allNotices}</ArrowLink>
@@ -62,8 +62,8 @@ export function NoticesAdmissionSection({ copy, data }: { copy: SectionCopy; dat
         </div>
 
         <div id="admission" className="self-start border border-line bg-surface">
-          <div className="border-b-2 border-leaf-600 bg-tint px-5 py-4 sm:px-6 dark:border-accent">
-            <Badge tone={adm.open ? "leaf" : "neutral"}>{adm.open ? data.t.home.admissionOpen : data.t.home.admissionClosed}</Badge>
+          <div className="border-b-2 border-crimson-600 bg-tint px-5 py-4 sm:px-6 dark:border-accent">
+            <Badge tone={adm.open ? "red" : "neutral"}>{adm.open ? data.t.home.admissionOpen : data.t.home.admissionClosed}</Badge>
             <h2 className="mt-2 font-serif text-2xl font-semibold text-heading">
               {data.t.home.admission} {num(adm.year, data.lang)}
             </h2>
@@ -115,7 +115,7 @@ export function WelcomeSection({ home, copy, data }: { home: HomeContent; copy: 
               ))}
             </div>
             {home.welcomePoints.length > 0 && (
-              <ul className="mt-5 list-disc space-y-1.5 pl-5 text-ink marker:text-navy-400">
+              <ul className="mt-5 list-disc space-y-1.5 pl-5 text-ink marker:text-forest-400">
                 {home.welcomePoints.map((t) => (
                   <li key={t}>{t}</li>
                 ))}
@@ -226,19 +226,19 @@ export function StatsSection({ home, data }: { home: HomeContent; copy?: Section
   if (items.length === 0) return null;
   // A quiet information strip: the figures read across one ruled line, with no photo, boxes or icons.
   return (
-    <section aria-labelledby="stats-title" className="bg-navy-900 py-12 text-white sm:py-14">
+    <section aria-labelledby="stats-title" className="bg-forest-900 py-12 text-white sm:py-14">
       <div className="container-page grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:items-center lg:gap-12">
         <div>
           <h2 id="stats-title" className="font-serif text-2xl font-semibold">
             {data.lang === "bn" ? data.site.nameBn : data.site.name}
           </h2>
-          {home.statsText && <p className="mt-2 max-w-sm leading-relaxed text-navy-100">{home.statsText}</p>}
+          {home.statsText && <p className="mt-2 max-w-sm leading-relaxed text-forest-100">{home.statsText}</p>}
         </div>
         <dl className="grid grid-cols-2 border-t border-white/20 sm:grid-cols-4 sm:border-t-0 sm:border-l">
           {items.map((s) => (
             <div key={s.label} className="border-b border-white/20 py-5 sm:border-b-0 sm:px-6 sm:py-1 sm:not-first:border-l">
               <dd className="font-serif text-4xl font-semibold tabular-nums sm:text-[2.6rem]">{s.value}</dd>
-              <dt className="mt-1 text-sm text-on-navy-accent">{s.label}</dt>
+              <dt className="mt-1 text-sm text-on-brand-accent">{s.label}</dt>
             </div>
           ))}
         </dl>
@@ -263,7 +263,7 @@ export function ResultsSection({ copy, data }: { copy: SectionCopy; data: HomeDa
             <caption id="results-title" className="pb-4 text-left font-serif text-3xl font-semibold text-heading">
               {copy.title}
             </caption>
-            <thead className="border-y-2 border-navy-800 text-sm dark:border-navy-300">
+            <thead className="border-y-2 border-forest-800 text-sm dark:border-forest-300">
               <tr>
                 <th scope="col" className="py-2.5 pr-4 font-semibold">{T.exam}</th>
                 <th scope="col" className="py-2.5 pr-4 font-semibold">{T.year}</th>
@@ -300,10 +300,10 @@ export function ResultsSection({ copy, data }: { copy: SectionCopy; data: HomeDa
 export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: HomeData }) {
   const bn = data.lang === "bn";
   return (
-    <section aria-labelledby="why-title" className="relative isolate overflow-hidden bg-navy-950 py-16 text-white sm:py-20">
+    <section aria-labelledby="why-title" className="relative isolate overflow-hidden bg-forest-950 py-16 text-white sm:py-20">
       {/* Owner-supplied campus photograph under a dark overlay. */}
       <Image src="/images/footer-campus.jpg" alt="" fill sizes="100vw" className="-z-20 object-cover" />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-navy-950/75" />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-forest-950/75" />
       <div className="container-page">
         <h2 id="why-title" className="text-center font-serif text-3xl font-semibold sm:text-4xl">{copy.title}</h2>
         <div className="mt-10">
@@ -318,7 +318,7 @@ export function WhyFacilitiesSection({ copy, data }: { copy: SectionCopy; data: 
           />
         </div>
         <p className="mt-6 text-center">
-          <Link href="/about#campus" className="text-sm font-semibold text-white underline underline-offset-4 hover:text-on-navy-accent">
+          <Link href="/about#campus" className="text-sm font-semibold text-white underline underline-offset-4 hover:text-on-brand-accent">
             {data.t.home.allFacilities}
           </Link>
         </p>
@@ -343,7 +343,7 @@ export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData 
             <Link href={`/news/${featured.slug}`} tabIndex={-1} aria-hidden className="block">
               <Picture image={featured.image} sizes="(min-width: 1024px) 55vw, 100vw" />
             </Link>
-            <p className="eyebrow mt-5 text-leaf-600 dark:text-accent">
+            <p className="eyebrow mt-5 text-crimson-600 dark:text-accent">
               <time dateTime={featured.date}>{formatDate(featured.date, data.lang)}</time>
               {featured.categoryLabel && <span className="text-muted"> · {featured.categoryLabel}</span>}
             </p>
@@ -356,7 +356,7 @@ export function NewsSection({ copy, data }: { copy: SectionCopy; data: HomeData 
           </article>
           {/* Other stories: date block, headline. */}
           <div>
-            <ul className="divide-y divide-line border-y-2 border-y-navy-800 dark:border-y-navy-300">
+            <ul className="divide-y divide-line border-y-2 border-y-forest-800 dark:border-y-forest-300">
               {rest.map((a) => (
                 <li key={a.slug} className="flex gap-4 py-4">
                   <DateBlock iso={a.date} />
@@ -419,7 +419,7 @@ export function GalleryPreview({ copy, data }: { copy: SectionCopy; data: HomeDa
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                   />
                 </Link>
-                <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 bg-navy-950/80 px-3 py-1.5 text-xs text-white sm:text-sm">{g.caption}</figcaption>
+                <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 bg-forest-950/80 px-3 py-1.5 text-xs text-white sm:text-sm">{g.caption}</figcaption>
               </figure>
             </li>
           ))}
@@ -445,12 +445,12 @@ export function PeopleSection({ data }: { copy: SectionCopy; data: HomeData }) {
               <figure>
                 <blockquote>
                   <p className="font-serif text-xl leading-relaxed text-heading italic">
-                    <span aria-hidden className="mr-1 text-3xl leading-none text-leaf-600 not-italic dark:text-accent">“</span>
+                    <span aria-hidden className="mr-1 text-3xl leading-none text-crimson-600 not-italic dark:text-accent">“</span>
                     {q.quote}”
                   </p>
                 </blockquote>
                 <figcaption className="mt-4 flex items-center gap-3 text-sm">
-                  <span aria-hidden className="h-px w-8 bg-leaf-600 dark:bg-accent" />
+                  <span aria-hidden className="h-px w-8 bg-crimson-600 dark:bg-accent" />
                   <span>
                     <span className="font-semibold text-heading">{q.name}</span>
                     <span className="text-muted">, {q.role}</span>

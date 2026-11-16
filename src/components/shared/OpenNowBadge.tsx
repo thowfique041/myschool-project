@@ -26,10 +26,10 @@ export function OpenNowBadge({ open, closed }: { open: string; closed: string })
     <span
       className={cn(
         "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold",
-        state ? "bg-emerald-50 text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-200" : "bg-slate-100 text-slate-700 dark:bg-white/10 dark:text-slate-200",
+        state ? "bg-tint text-subheading ring-1 ring-inset ring-line" : "bg-paper-dark text-muted",
       )}
     >
-      <span aria-hidden className={cn("size-2 rounded-full", state ? "bg-emerald-500" : "bg-slate-400")} />
+      <span aria-hidden className={cn("size-2 rounded-full", state ? "bg-brand" : "bg-line-strong")} />
       {state ? open : closed}
     </span>
   );

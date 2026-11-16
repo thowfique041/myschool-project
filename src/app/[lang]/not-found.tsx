@@ -12,7 +12,7 @@ export default async function NotFound() {
     <section className="py-20 sm:py-28">
       <div className="container-page max-w-2xl text-center">
         <LogoMark className="mx-auto h-16 w-auto" />
-        <p className="mt-6 font-serif text-6xl font-semibold text-navy-200">404</p>
+        <p className="mt-6 font-serif text-6xl font-semibold text-forest-200">404</p>
         <h1 className="mt-2 font-serif text-3xl font-semibold text-heading">{t.notFound.title}</h1>
         <p className="mt-3 text-muted">{t.notFound.text}</p>
         <ul className="mt-6 flex flex-wrap justify-center gap-2">

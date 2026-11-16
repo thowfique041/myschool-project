@@ -28,7 +28,7 @@ export function SectionNav({ items, label }: { items: [string, string][]; label:
               aria-current={active === id ? "location" : undefined}
               className={cn(
                 "inline-flex min-h-12 items-center border-b-2 px-3 font-medium transition-colors",
-                active === id ? "border-leaf-600 text-heading dark:border-accent" : "border-transparent text-muted hover:text-heading",
+                active === id ? "border-crimson-600 text-heading dark:border-accent" : "border-transparent text-muted hover:text-heading",
               )}
             >
               {text}

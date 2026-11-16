@@ -107,9 +107,9 @@ export default async function StudentsGuardiansPage() {
           const Icon = factIcons[i];
           return (
             <div key={f.label} className="flex items-center gap-3 border border-white/15 bg-white/[0.06] px-4 py-3.5">
-              <Icon aria-hidden className="size-6 shrink-0 text-navy-200" />
+              <Icon aria-hidden className="size-6 shrink-0 text-forest-200" />
               <div>
-                <p className="text-sm text-navy-200">{f.label}</p>
+                <p className="text-sm text-forest-200">{f.label}</p>
                 <p className="font-semibold text-white">{f.value}</p>
               </div>
             </div>
@@ -133,7 +133,7 @@ export default async function StudentsGuardiansPage() {
                       <span className="flex size-12 items-center justify-center rounded-lg bg-tint text-heading">
                         <Icon aria-hidden className="size-6" />
                       </span>
-                      <span className="flex size-9 items-center justify-center rounded-full bg-paper text-heading transition-colors group-hover:bg-navy-800 group-hover:text-white">
+                      <span className="flex size-9 items-center justify-center rounded-full bg-paper text-heading transition-colors group-hover:bg-forest-800 group-hover:text-white">
                         <ArrowRight aria-hidden className="size-4" />
                       </span>
                     </span>
@@ -153,7 +153,7 @@ export default async function StudentsGuardiansPage() {
                   const Icon = infoIcons[i];
                   return (
                     <li key={item.title} className="border border-line bg-surface p-6">
-                      <span className="flex size-12 items-center justify-center rounded-lg bg-tint text-leaf-600 dark:text-accent">
+                      <span className="flex size-12 items-center justify-center rounded-lg bg-tint text-crimson-600 dark:text-accent">
                         <Icon aria-hidden className="size-6" />
                       </span>
                       <h3 className="mt-5 text-xl font-bold text-heading">{item.title}</h3>

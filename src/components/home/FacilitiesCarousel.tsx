@@ -68,10 +68,10 @@ export function FacilitiesCarousel({ items, labels }: { items: Item[]; labels: {
       </p>
       {canMove && (
         <div className="mt-8 flex justify-center gap-3">
-          <button type="button" onClick={prev} aria-label={labels.prev} className="flex size-11 items-center justify-center rounded-full bg-white text-navy-900 transition-colors hover:bg-beige">
+          <button type="button" onClick={prev} aria-label={labels.prev} className="flex size-11 items-center justify-center rounded-full border border-line bg-surface text-brand-text transition-colors hover:bg-tint">
             <ChevronLeft aria-hidden className="size-5" />
           </button>
-          <button type="button" onClick={next} aria-label={labels.next} className="flex size-11 items-center justify-center rounded-full bg-white text-navy-900 transition-colors hover:bg-beige">
+          <button type="button" onClick={next} aria-label={labels.next} className="flex size-11 items-center justify-center rounded-full border border-line bg-surface text-brand-text transition-colors hover:bg-tint">
             <ChevronRight aria-hidden className="size-5" />
           </button>
         </div>

@@ -63,7 +63,7 @@ function Lightbox({
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-navy-950/90 p-3 sm:p-8"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-forest-950/90 p-3 sm:p-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -79,7 +79,7 @@ function Lightbox({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-3 flex items-center justify-between gap-4 text-white">
-          <p className="text-sm text-navy-200">
+          <p className="text-sm text-forest-200">
             {num(index + 1, lang)} / {num(items.length, lang)} · {item.categoryLabel ?? item.category}
           </p>
           <button
@@ -100,7 +100,7 @@ function Lightbox({
             exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.985 }}
             transition={{ duration: 0.18 }}
           >
-            <div className="relative aspect-[16/10] overflow-hidden bg-navy-900">
+            <div className="relative aspect-[16/10] overflow-hidden bg-forest-900">
               <Image src={item.image.src} alt={item.image.alt} fill sizes="(min-width: 1024px) 64rem, 100vw" unoptimized={item.image.src.endsWith(".svg")} className="object-contain" />
             </div>
             <figcaption className="mt-3 text-white">
@@ -112,7 +112,7 @@ function Lightbox({
           type="button"
           onClick={prev}
           aria-label={t.gallery.prev}
-          className="absolute top-1/2 left-2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-surface/90 text-heading shadow hover:bg-surface sm:-left-5"
+          className="absolute top-1/2 left-2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-surface/90 text-heading hover:bg-surface sm:-left-5"
         >
           <ChevronLeft aria-hidden className="size-5" />
         </button>
@@ -120,7 +120,7 @@ function Lightbox({
           type="button"
           onClick={next}
           aria-label={t.gallery.next}
-          className="absolute top-1/2 right-2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-surface/90 text-heading shadow hover:bg-surface sm:-right-5"
+          className="absolute top-1/2 right-2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-surface/90 text-heading hover:bg-surface sm:-right-5"
         >
           <ChevronRight aria-hidden className="size-5" />
         </button>
@@ -181,7 +181,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
                 />
               </span>
               {/* Caption appears on hover or keyboard focus; on touch screens it is always shown. */}
-              <span className="absolute inset-x-0 bottom-0 translate-y-full bg-navy-950/85 px-3 py-2 text-xs leading-snug font-medium text-white transition-transform duration-200 group-hover:translate-y-0 group-focus-visible:translate-y-0 motion-reduce:transition-none sm:text-sm [@media(hover:none)]:translate-y-0">
+              <span className="absolute inset-x-0 bottom-0 translate-y-full bg-forest-950/85 px-3 py-2 text-xs leading-snug font-medium text-white transition-transform duration-200 group-hover:translate-y-0 group-focus-visible:translate-y-0 motion-reduce:transition-none sm:text-sm [@media(hover:none)]:translate-y-0">
                 {item.caption}
               </span>
             </button>

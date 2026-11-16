@@ -136,13 +136,13 @@ export default async function AdmissionPage() {
   const taka = (v: string | number) => (/^[\d,.\s]+$/.test(String(v)) ? `৳ ${n(v)}` : n(v));
   return (
     <>
-      {/* Hero in the homepage manner: full-width photograph with a navy text panel. */}
-      <section aria-labelledby="adm-title" className="relative isolate overflow-hidden bg-navy-950 text-white">
+      {/* Hero in the homepage manner: full-width photograph with a green text panel. */}
+      <section aria-labelledby="adm-title" className="relative isolate overflow-hidden bg-forest-950 text-white">
         {a.image && <Image src={a.image} alt={c.photoAlt} fill priority sizes="100vw" className="-z-20 object-cover object-[70%_center]" />}
         <div className="container-page flex min-h-[30rem] flex-col justify-center py-10 sm:min-h-[34rem]">
-          <div className="max-w-2xl rounded-md border-l-4 border-[#e8b84a] bg-navy-950/80 p-6 sm:p-8">
+          <div className="max-w-2xl rounded-md border-l-4 border-on-brand-accent bg-forest-950/80 p-6 sm:p-8">
             <nav aria-label={lang === "bn" ? "ব্রেডক্রাম্ব" : "Breadcrumb"}>
-              <ol className="flex items-center gap-1 text-sm text-navy-200">
+              <ol className="flex items-center gap-1 text-sm text-forest-200">
                 <li>
                   <Link href="/" className="hover:text-white hover:underline underline-offset-4">{c.home}</Link>
                 </li>
@@ -150,8 +150,8 @@ export default async function AdmissionPage() {
                 <li aria-current="page" className="text-white">{lang === "bn" ? "ভর্তি" : "Admission"}</li>
               </ol>
             </nav>
-            <p className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[#e8b84a]">
-              <span aria-hidden className={a.open ? "size-2 rounded-full bg-[#e8b84a]" : "size-2 rounded-full bg-navy-300"} />
+            <p className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-on-brand-accent">
+              <span aria-hidden className={a.open ? "size-2 rounded-full bg-on-brand-accent" : "size-2 rounded-full bg-forest-300"} />
               {a.open ? c.open : c.closed}
             </p>
             <h1 id="adm-title" className="mt-1 font-serif text-4xl leading-tight font-semibold sm:text-5xl lg:text-6xl">
@@ -159,7 +159,7 @@ export default async function AdmissionPage() {
             </h1>
             {a.intro && <p className="mt-3 text-lg text-white">{a.intro}</p>}
             {deadline && (
-              <p className="mt-4 text-base font-semibold text-[#f3cc6e] sm:text-lg">
+              <p className="mt-4 text-base font-semibold text-on-brand-accent sm:text-lg">
                 {c.deadline}: <time dateTime={deadline.date}>{formatDate(deadline.date, lang)}</time>
               </p>
             )}
@@ -176,7 +176,7 @@ export default async function AdmissionPage() {
                 </a>
               )}
               {a.formFile && (
-                <a href={a.formFile} target="_blank" rel="noopener" download className="text-sm font-semibold underline underline-offset-4 hover:text-navy-100">
+                <a href={a.formFile} target="_blank" rel="noopener" download className="text-sm font-semibold underline underline-offset-4 hover:text-forest-100">
                   {c.form}
                 </a>
               )}
@@ -191,7 +191,7 @@ export default async function AdmissionPage() {
           <div className="container-page grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-12">
             <div>
               {a.noticeDate && (
-                <p className="eyebrow text-leaf-600 dark:text-accent">
+                <p className="eyebrow text-crimson-600 dark:text-accent">
                   {c.notice} · <time dateTime={a.noticeDate}>{formatDate(a.noticeDate, lang)}</time>
                 </p>
               )}
@@ -199,7 +199,7 @@ export default async function AdmissionPage() {
                 {lang === "bn" ? a.noticeTitleBn : a.noticeTitle}
               </h2>
             </div>
-            <div className="space-y-3 border-l-2 border-leaf-600 pl-5 leading-relaxed text-ink dark:border-accent">
+            <div className="space-y-3 border-l-2 border-crimson-600 pl-5 leading-relaxed text-ink dark:border-accent">
               {lang === "bn" && a.noticeBodyBn && <p>{a.noticeBodyBn}</p>}
               {a.noticeBody && (
                 <p>
@@ -216,16 +216,16 @@ export default async function AdmissionPage() {
         <div className="container-page">
           <SectionHeading id="dates" title={c.dates} />
           {/* Chronological timeline: completed dates muted, the next one highlighted. */}
-          <ol className="mt-8 grid border-t-2 border-navy-800 sm:grid-cols-2 lg:grid-cols-4 dark:border-navy-300">
+          <ol className="mt-8 grid border-t-2 border-forest-800 sm:grid-cols-2 lg:grid-cols-4 dark:border-forest-300">
             {dates.map((d) => {
               const past = d.date < today;
               const isNext = d === nextDate;
               return (
-                <li key={d.label} className={`lift flex gap-4 border-b border-line py-4 hover:bg-paper sm:pr-4 ${isNext ? "border-b-2 border-b-leaf-600 dark:border-b-accent" : ""}`}>
+                <li key={d.label} className={`lift flex gap-4 border-b border-line py-4 hover:bg-paper sm:pr-4 ${isNext ? "border-b-2 border-b-crimson-600 dark:border-b-accent" : ""}`}>
                   <DateBlock iso={d.date} className={past ? "opacity-70" : undefined} />
                   <div className="self-center">
                     <p className={`text-sm font-medium ${past ? "text-muted" : "text-heading"}`}>{d.label}</p>
-                    {(isNext || past) && <p className={`eyebrow mt-1 ${isNext ? "text-leaf-600 dark:text-accent" : "text-muted"}`}>{isNext ? c.next : c.done}</p>}
+                    {(isNext || past) && <p className={`eyebrow mt-1 ${isNext ? "text-crimson-600 dark:text-accent" : "text-muted"}`}>{isNext ? c.next : c.done}</p>}
                   </div>
                 </li>
               );
@@ -242,7 +242,7 @@ export default async function AdmissionPage() {
           <div className="mt-8 hidden md:block">
             <table className="w-full text-left">
               <caption className="sr-only">{c.eligLabel}</caption>
-              <thead className="border-y-2 border-navy-800 dark:border-navy-300">
+              <thead className="border-y-2 border-forest-800 dark:border-forest-300">
                 <tr>
                   <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.cls}</th>
                   <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.req}</th>
@@ -256,19 +256,19 @@ export default async function AdmissionPage() {
                     <th scope="row" className="py-4 pr-4 font-serif text-lg font-semibold whitespace-nowrap text-heading">{e.cls}</th>
                     <td className="py-4 pr-4 text-ink">{e.requirement}</td>
                     <td className="py-4 pr-4 text-muted">{e.selection}</td>
-                    <td className="py-4 text-right font-serif text-xl font-semibold text-leaf-600 tabular-nums dark:text-accent">{n(e.seats)}</td>
+                    <td className="py-4 text-right font-serif text-xl font-semibold text-crimson-600 tabular-nums dark:text-accent">{n(e.seats)}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <ul className="mt-8 border-t-2 border-navy-800 md:hidden dark:border-navy-300">
+          <ul className="mt-8 border-t-2 border-forest-800 md:hidden dark:border-forest-300">
             {a.eligibility.map((e) => (
               <li key={e.cls} className="border-b border-line py-4">
                 <p className="flex items-baseline justify-between gap-4">
                   <span className="font-serif text-lg font-semibold text-heading">{e.cls}</span>
                   <span className="text-sm text-muted">
-                    {c.seats}: <span className="font-serif text-lg font-semibold text-leaf-600 dark:text-accent">{n(e.seats)}</span>
+                    {c.seats}: <span className="font-serif text-lg font-semibold text-crimson-600 dark:text-accent">{n(e.seats)}</span>
                   </span>
                 </p>
                 <p className="mt-1 text-ink">{e.requirement}</p>
@@ -284,10 +284,10 @@ export default async function AdmissionPage() {
         <div className="container-page grid gap-12 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
             <SectionHeading id="proc" title={c.proc} />
-            <ol className="mt-8 grid border-t-2 border-navy-800 sm:grid-cols-2 dark:border-navy-300">
+            <ol className="mt-8 grid border-t-2 border-forest-800 sm:grid-cols-2 dark:border-forest-300">
               {a.steps.map((s, i) => (
                 <li key={s.title} className="lift border-b border-line py-5 hover:bg-paper sm:odd:pr-6 sm:even:pl-6">
-                  <span aria-hidden className="font-serif text-sm font-semibold text-leaf-600 tabular-nums dark:text-accent">{n(String(i + 1).padStart(2, "0"))}</span>
+                  <span aria-hidden className="font-serif text-sm font-semibold text-crimson-600 tabular-nums dark:text-accent">{n(String(i + 1).padStart(2, "0"))}</span>
                   <h3 className="mt-2 font-serif text-xl font-semibold text-heading">{s.title}</h3>
                   <p className="mt-1 text-sm text-muted">{s.text}</p>
                 </li>
@@ -300,10 +300,10 @@ export default async function AdmissionPage() {
               {docGroups.filter(([, list]) => list.length > 0).map(([label, list]) => (
                 <div key={label}>
                   <h3 className="eyebrow text-subheading">{label}</h3>
-                  <ul className="mt-2 border-t-2 border-navy-800 dark:border-navy-300">
+                  <ul className="mt-2 border-t-2 border-forest-800 dark:border-forest-300">
                     {list.map((d) => (
                       <li key={d} className="flex gap-3 border-b border-line py-3 text-ink">
-                        <CheckCircle2 aria-hidden className="mt-0.5 size-5 shrink-0 text-leaf-600 dark:text-accent" />
+                        <CheckCircle2 aria-hidden className="mt-0.5 size-5 shrink-0 text-crimson-600 dark:text-accent" />
                         {d}
                       </li>
                     ))}
@@ -331,7 +331,7 @@ export default async function AdmissionPage() {
           <div className="mt-8 overflow-x-auto" tabIndex={0} aria-label={c.feeLabel}>
             <table className="w-full min-w-[36rem] text-left">
               <caption className="sr-only">{c.feeCaption(admissionYear)}</caption>
-              <thead className="border-y-2 border-navy-800 dark:border-navy-300">
+              <thead className="border-y-2 border-forest-800 dark:border-forest-300">
                 <tr>
                   <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.item}</th>
                   {[c.primary, c.secondary, c.higher].map((h) => (
@@ -364,7 +364,7 @@ export default async function AdmissionPage() {
               title={c.applyTitle}
               description={c.applyText}
             />
-            <div className="mt-8 border-t-4 border-leaf-600 bg-paper p-5 sm:p-8 dark:border-accent">
+            <div className="mt-8 border-t-4 border-crimson-600 bg-paper p-5 sm:p-8 dark:border-accent">
               <AdmissionForm classOptions={a.classOptions} open={a.open} />
             </div>
           </div>

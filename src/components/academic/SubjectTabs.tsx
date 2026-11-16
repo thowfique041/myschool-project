@@ -42,7 +42,7 @@ export function SubjectTabs({ levels, label, compulsoryLabel, groupLabel }: { le
             onClick={() => setI(k)}
             className={cn(
               "-mb-px min-h-12 shrink-0 border-b-2 px-4 font-serif text-lg font-semibold whitespace-nowrap transition-colors",
-              k === i ? "border-leaf-600 text-heading dark:border-accent" : "border-transparent text-muted hover:text-heading",
+              k === i ? "border-crimson-600 text-heading dark:border-accent" : "border-transparent text-muted hover:text-heading",
             )}
           >
             {l.level}
@@ -52,10 +52,10 @@ export function SubjectTabs({ levels, label, compulsoryLabel, groupLabel }: { le
       <div id={`${base}-p`} role="tabpanel" aria-labelledby={`${base}-t${i}`} tabIndex={0} className="grid gap-10 py-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
         <div>
           <h3 className="eyebrow text-subheading">{compulsoryLabel}</h3>
-          <ol className="mt-3 grid border-t-2 border-navy-800 sm:grid-cols-2 dark:border-navy-300">
+          <ol className="mt-3 grid border-t-2 border-forest-800 sm:grid-cols-2 dark:border-forest-300">
             {cur.compulsory.map((s, k) => (
               <li key={s} className="flex items-baseline gap-3 border-b border-line py-3 sm:odd:pr-4 sm:even:pl-4">
-                <span aria-hidden className="w-6 font-serif text-sm font-semibold text-leaf-600 tabular-nums dark:text-accent">{String(k + 1).padStart(2, "0")}</span>
+                <span aria-hidden className="w-6 font-serif text-sm font-semibold text-crimson-600 tabular-nums dark:text-accent">{String(k + 1).padStart(2, "0")}</span>
                 <span className="text-ink">{s}</span>
               </li>
             ))}
@@ -64,7 +64,7 @@ export function SubjectTabs({ levels, label, compulsoryLabel, groupLabel }: { le
         {cur.optional.length > 0 && (
           <div>
             <h3 className="eyebrow text-subheading">{groupLabel}</h3>
-            <ul className="mt-3 border-t-2 border-navy-800 dark:border-navy-300">
+            <ul className="mt-3 border-t-2 border-forest-800 dark:border-forest-300">
               {cur.optional.map((o) => {
                 const [g, rest] = o.split(/:\s*/);
                 return (

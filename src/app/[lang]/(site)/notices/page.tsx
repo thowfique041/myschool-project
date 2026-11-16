@@ -79,7 +79,7 @@ export default async function NoticesPage() {
             {facts.map(([k, v]) => (
               <div key={k} className="pt-3 pr-3 not-first:border-l not-first:border-white/20 not-first:pl-3">
                 <dd className="font-serif text-2xl leading-tight font-semibold whitespace-nowrap text-white">{v}</dd>
-                <dt className="mt-0.5 text-xs text-on-navy-accent">{k}</dt>
+                <dt className="mt-0.5 text-xs text-on-brand-accent">{k}</dt>
               </div>
             ))}
           </dl>
@@ -92,28 +92,28 @@ export default async function NoticesPage() {
             <NoticeExplorer notices={notices} />
           </div>
           <aside aria-labelledby="upcoming-title" className="space-y-8 lg:sticky lg:top-28 lg:self-start">
-            <div className="border-t-4 border-leaf-600 bg-navy-900 p-6 text-white dark:border-accent">
+            <div className="border-t-4 border-crimson-600 bg-forest-900 p-6 text-white dark:border-accent">
               <h2 id="upcoming-title" className="font-serif text-xl font-semibold">{c.comingUp}</h2>
               <ol className="mt-4 border-l border-white/25">
-                {upcoming.length === 0 && <li className="pl-4 text-sm text-navy-100">{t.common.upcomingNone}</li>}
+                {upcoming.length === 0 && <li className="pl-4 text-sm text-forest-100">{t.common.upcomingNone}</li>}
                 {upcoming.map((e, i) => (
                   <li key={e.date + e.title} className="relative pb-4 pl-4 last:pb-0">
-                    <span aria-hidden className={`absolute top-1.5 -left-[5px] size-2.5 rounded-full ${i === 0 ? "bg-on-navy-accent" : "bg-white/40"}`} />
-                    <time dateTime={e.date} className={`text-xs font-semibold ${i === 0 ? "text-on-navy-accent" : "text-navy-200"}`}>
+                    <span aria-hidden className={`absolute top-1.5 -left-[5px] size-2.5 rounded-full ${i === 0 ? "bg-on-brand-accent" : "bg-white/40"}`} />
+                    <time dateTime={e.date} className={`text-xs font-semibold ${i === 0 ? "text-on-brand-accent" : "text-forest-200"}`}>
                       {formatDate(e.date, lang)}
                       {e.endDate && ` – ${formatDate(e.endDate, lang)}`}
                       {i === 0 && <span className="eyebrow ml-2">{c.next}</span>}
                     </time>
-                    <p className={i === 0 ? "mt-0.5 font-serif text-lg leading-snug font-semibold" : "mt-0.5 text-sm text-navy-50"}>{e.title}</p>
+                    <p className={i === 0 ? "mt-0.5 font-serif text-lg leading-snug font-semibold" : "mt-0.5 text-sm text-forest-50"}>{e.title}</p>
                   </li>
                 ))}
               </ol>
-              <Link href="/calendar" className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-white underline underline-offset-4 hover:text-on-navy-accent">
+              <Link href="/calendar" className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-white underline underline-offset-4 hover:text-on-brand-accent">
                 {c.calendar} <ArrowRight aria-hidden className="size-4" />
               </Link>
             </div>
             <a href="#downloads" className="flex min-h-12 items-center gap-3 border-y border-line py-3 text-sm font-semibold text-heading hover:text-accent">
-              <FileDown aria-hidden className="size-5 text-leaf-600 dark:text-accent" />
+              <FileDown aria-hidden className="size-5 text-crimson-600 dark:text-accent" />
               {c.downloads}
               <ArrowRight aria-hidden className="ml-auto size-4" />
             </a>

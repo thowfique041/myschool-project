@@ -20,11 +20,11 @@ export type FooterContent = {
 function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
   return (
     <div>
-      <h2 className="eyebrow text-on-navy-accent">{title}</h2>
+      <h2 className="eyebrow text-on-brand-accent">{title}</h2>
       <ul className="mt-4 space-y-2.5">
         {links.map((l) => (
           <li key={l.href + l.label}>
-            <Link href={l.href} className="text-base text-navy-200 hover:text-white hover:underline underline-offset-4">
+            <Link href={l.href} className="text-base text-forest-200 hover:text-white hover:underline underline-offset-4">
               {l.label}
             </Link>
           </li>
@@ -53,35 +53,35 @@ export async function Footer({ site, footer, year }: { site: SiteInfo; footer: F
   const { t, lang } = await getI18n();
   const n = (v: number) => (lang === "bn" ? toBnDigits(v) : String(v));
   return (
-    <footer className="relative isolate border-t-4 border-leaf-600 bg-navy-950 text-navy-100 [clip-path:inset(0)]">
+    <footer className="on-brand relative isolate border-t-4 border-accent bg-brand-deep text-forest-100 [clip-path:inset(0)]">
       {/* Fixed photo clipped to the footer: it stays still while the footer scrolls over it. */}
       <div aria-hidden className="fixed inset-0 -z-20 bg-cover bg-center" style={{ backgroundImage: "url(/images/footer-campus.jpg)" }} />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-navy-950/90" />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-brand-deep/90" />
       <div className="container-page grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <Logo tone="dark" name={lang === "bn" ? site.nameBn : site.name} nameBn={lang === "bn" ? `স্থাপিত ${String(site.established).replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[Number(d)])}` : `Established ${site.established}`} src={site.logo} />
-          <p className="mt-5 max-w-sm text-base leading-relaxed text-navy-200">
+          <p className="mt-5 max-w-sm text-base leading-relaxed text-forest-200">
             {footer.about}
           </p>
           <ul className="mt-6 space-y-3 text-base">
             <li className="flex gap-3">
-              <MapPin aria-hidden className="mt-0.5 size-4 shrink-0 text-navy-200" />
+              <MapPin aria-hidden className="mt-0.5 size-4 shrink-0 text-forest-200" />
               <span>{site.address}</span>
             </li>
             <li className="flex gap-3">
-              <Phone aria-hidden className="mt-0.5 size-4 shrink-0 text-navy-200" />
+              <Phone aria-hidden className="mt-0.5 size-4 shrink-0 text-forest-200" />
               <a href={site.phoneHref} className="hover:text-white">
                 {site.phone}
               </a>
             </li>
             <li className="flex gap-3">
-              <Mail aria-hidden className="mt-0.5 size-4 shrink-0 text-navy-200" />
+              <Mail aria-hidden className="mt-0.5 size-4 shrink-0 text-forest-200" />
               <a href={`mailto:${site.email}`} className="hover:text-white">
                 {site.email}
               </a>
             </li>
             <li className="flex gap-3">
-              <Clock aria-hidden className="mt-0.5 size-4 shrink-0 text-navy-200" />
+              <Clock aria-hidden className="mt-0.5 size-4 shrink-0 text-forest-200" />
               <span>{site.officeHours}</span>
             </li>
           </ul>
@@ -93,7 +93,7 @@ export async function Footer({ site, footer, year }: { site: SiteInfo; footer: F
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${s.label} ${t.common.opensNewTab}`}
-                  className="inline-flex size-10 items-center justify-center rounded-lg border border-white/15 text-navy-100 hover:border-white/40 hover:text-white"
+                  className="inline-flex size-10 items-center justify-center rounded-lg border border-white/15 text-forest-100 hover:border-white/40 hover:text-white"
                 >
                   <SocialIcon label={s.label} />
                 </a>
@@ -106,7 +106,7 @@ export async function Footer({ site, footer, year }: { site: SiteInfo; footer: F
         <FooterColumn title={footer.helpTitle} links={footer.help} />
       </div>
       <div className="border-t border-white/10">
-        <div className="container-page flex flex-col gap-2 py-5 text-xs text-navy-300 md:flex-row md:items-center md:justify-between">
+        <div className="container-page flex flex-col gap-2 py-5 text-xs text-forest-200 md:flex-row md:items-center md:justify-between">
           <p>
             © {n(site.established)}–{n(year)} {lang === "bn" ? site.nameBn : site.name}. {footer.copyright}
           </p>
