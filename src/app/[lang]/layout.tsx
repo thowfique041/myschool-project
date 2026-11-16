@@ -39,7 +39,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#142b49",
+  // Browser UI colour: the light and dark primary from globals.css.
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#0b5d36" },
+    { media: "(prefers-color-scheme: dark)", color: "#136e40" },
+  ],
   colorScheme: "light dark",
   width: "device-width",
   initialScale: 1,

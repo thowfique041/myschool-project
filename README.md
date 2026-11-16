@@ -51,7 +51,7 @@ module (`src/content/`) and the admin forms, so they can be reused when a backen
 | Styling | Tailwind CSS v4 with design tokens in `src/app/globals.css` |
 | Animation | Motion for React (`motion/react`), respecting `prefers-reduced-motion` |
 | Icons | Lucide React |
-| Fonts | Inter, Source Serif 4, Noto Sans Bengali, Noto Serif Bengali — bundled via `next/font/local` from `@fontsource` packages (no font CDN at build or runtime) |
+| Fonts | Hind Siliguri (English and Bangla), bundled via `next/font/local` from `@fontsource/hind-siliguri` (no font CDN at build or runtime) |
 
 No backend, database, authentication or payment integration.
 

@@ -183,10 +183,10 @@ export default async function AcademicPage() {
         <div className="container-page">
           <SectionHeading id="levels-h" title={c.levels} />
           {/* Programmes as an editorial three-column spread, divided by hairlines rather than boxed. */}
-          <ol className="mt-8 grid border-t-2 border-navy-800 lg:grid-cols-3 dark:border-navy-300">
+          <ol className="mt-8 grid border-t-2 border-forest-800 lg:grid-cols-3 dark:border-forest-300">
             {academicLevels.map((l, i) => (
               <li key={l.id} className="lift border-b border-line px-1 py-7 hover:bg-surface sm:px-6 lg:border-b-0 lg:not-first:border-l">
-                <p aria-hidden className="font-serif text-4xl font-semibold text-leaf-600 dark:text-accent">{n(String(i + 1).padStart(2, "0"))}</p>
+                <p aria-hidden className="font-serif text-4xl font-semibold text-crimson-600 dark:text-accent">{n(String(i + 1).padStart(2, "0"))}</p>
                 <h3 className="mt-3 font-serif text-2xl font-semibold text-heading">{l.name}</h3>
                 <p className="mt-1 text-xs font-semibold tracking-wide text-subheading uppercase">
                   {l.classes} · {l.ages}
@@ -228,7 +228,7 @@ export default async function AcademicPage() {
             {upcoming.length === 0 && <li className="py-4 pl-6 text-muted">{t.common.upcomingNone}</li>}
             {upcoming.map((e, k) => (
               <li key={e.date + e.title} className="relative flex gap-5 py-4 pl-6">
-                <span aria-hidden className={`absolute top-7 -left-[7px] size-3 rounded-full ring-4 ring-paper ${k === 0 ? "bg-leaf-600 dark:bg-accent" : "bg-line-strong"}`} />
+                <span aria-hidden className={`absolute top-7 -left-[7px] size-3 rounded-full ring-4 ring-paper ${k === 0 ? "bg-crimson-600 dark:bg-accent" : "bg-line-strong"}`} />
                 <DateBlock iso={e.date} />
                 <div className="self-center">
                   <p className="font-semibold text-heading">{e.title}</p>
@@ -275,10 +275,10 @@ export default async function AcademicPage() {
           <div className="min-w-0">
             <SectionHeading id="exams-h" title={c.exams} />
             {/* Numbered process: one ruled row per stage, stage number in the margin. */}
-            <ol className="mt-6 border-t-2 border-navy-800 dark:border-navy-300">
+            <ol className="mt-6 border-t-2 border-forest-800 dark:border-forest-300">
               {examSystem.map((e, i) => (
                 <li key={e.title} className="grid grid-cols-[3.5rem_1fr] gap-x-4 border-b border-line py-5">
-                  <span className="font-serif text-3xl leading-none font-semibold text-leaf-600 tabular-nums dark:text-accent">
+                  <span className="font-serif text-3xl leading-none font-semibold text-crimson-600 tabular-nums dark:text-accent">
                     <span className="sr-only">{c.stepL} </span>
                     {n(String(i + 1).padStart(2, "0"))}
                   </span>
@@ -297,7 +297,7 @@ export default async function AcademicPage() {
             <h3 className="font-serif text-2xl leading-tight font-semibold text-heading">{c.grading}</h3>
             <p className="mt-1 text-sm text-muted">{c.gradingText}</p>
             <table className="mt-5 w-full text-left">
-              <thead className="border-y-2 border-navy-800 dark:border-navy-300">
+              <thead className="border-y-2 border-forest-800 dark:border-forest-300">
                 <tr>
                   <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.marks}</th>
                   <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.grade}</th>
@@ -322,11 +322,11 @@ export default async function AcademicPage() {
         <div className="container-page">
           <SectionHeading id="res-h" title={c.res} description={site.demoNote ? c.resSample : undefined} />
           {/* Resource library: ruled rows with file details and a clear download action. */}
-          <ul className="mt-6 border-t-2 border-navy-800 dark:border-navy-300">
+          <ul className="mt-6 border-t-2 border-forest-800 dark:border-forest-300">
             {resources.length === 0 && <li className="py-4 text-muted">{c.resNone}</li>}
             {resources.map((r) => (
               <li key={r.id} className="flex flex-col gap-3 border-b border-line py-5 sm:flex-row sm:items-center sm:gap-6">
-                <FileText aria-hidden className="hidden size-7 shrink-0 text-leaf-600 sm:block dark:text-accent" />
+                <FileText aria-hidden className="hidden size-7 shrink-0 text-crimson-600 sm:block dark:text-accent" />
                 <div className="min-w-0 flex-1">
                   <p className="font-serif text-lg font-semibold text-heading">{r.title}</p>
                   <p className="text-sm text-muted">{r.description}</p>
@@ -353,19 +353,19 @@ export default async function AcademicPage() {
         <div className="container-page">
           <SectionHeading id="pol-h" title={c.pol} />
           {/* Grouped disclosures (native details/summary: keyboard and screen-reader friendly without script). */}
-          <div className="mt-8 grid gap-x-10 border-t-2 border-navy-800 md:grid-cols-2 dark:border-navy-300">
+          <div className="mt-8 grid gap-x-10 border-t-2 border-forest-800 md:grid-cols-2 dark:border-forest-300">
             {[policies.filter((_, k) => k % 2 === 0), policies.filter((_, k) => k % 2 === 1)].map((col, ci) => (
               <div key={ci}>
                 {col.map((p, k) => (
                   <details key={p.id} open={ci === 0 && k === 0} className="group border-b border-line">
                     <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 font-serif text-lg font-semibold text-heading hover:text-accent [&::-webkit-details-marker]:hidden">
                       {p.title}
-                      <ChevronDown aria-hidden className="size-5 shrink-0 text-leaf-600 transition-transform group-open:rotate-180 motion-reduce:transition-none dark:text-accent" />
+                      <ChevronDown aria-hidden className="size-5 shrink-0 text-crimson-600 transition-transform group-open:rotate-180 motion-reduce:transition-none dark:text-accent" />
                     </summary>
                     <ul className="space-y-2 pb-5 text-muted">
                       {p.points.map((pt) => (
                         <li key={pt} className="flex gap-3">
-                          <span aria-hidden className="mt-2.5 h-px w-3 shrink-0 bg-leaf-600 dark:bg-accent" />
+                          <span aria-hidden className="mt-2.5 h-px w-3 shrink-0 bg-crimson-600 dark:bg-accent" />
                           {pt}
                         </li>
                       ))}

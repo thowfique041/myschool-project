@@ -19,11 +19,11 @@ export type CalendarLabels = {
 
 /** One colour per event type, drawn as a thin rule and a dot (never colour alone: the label is always shown). */
 const TONE: Record<string, string> = {
-  exam: "bg-navy-800 dark:bg-navy-300",
+  exam: "bg-forest-800 dark:bg-forest-300",
   holiday: "bg-signal-600",
-  event: "bg-leaf-600 dark:bg-accent",
-  academic: "bg-navy-400",
-  admission: "bg-amber-600",
+  event: "bg-crimson-600 dark:bg-accent",
+  academic: "bg-forest-400",
+  admission: "bg-on-brand-accent ring-1 ring-line-strong",
 };
 const tone = (t: string) => TONE[t] ?? "bg-line-strong";
 
@@ -70,7 +70,7 @@ export function CalendarExplorer({
             onClick={() => setType(k)}
             className={cn(
               "-mb-px inline-flex min-h-11 items-center gap-2 border-b-2 px-3 text-sm font-medium transition-colors",
-              type === k ? "border-leaf-600 text-heading dark:border-accent" : "border-transparent text-muted hover:text-heading",
+              type === k ? "border-crimson-600 text-heading dark:border-accent" : "border-transparent text-muted hover:text-heading",
             )}
           >
             {k !== "all" && <span aria-hidden className={cn("size-2 rounded-full", tone(k))} />}
@@ -85,17 +85,17 @@ export function CalendarExplorer({
 
       {/* Next up */}
       {next && (
-        <div className="mt-8 grid gap-6 border-t-4 border-leaf-600 bg-navy-900 p-6 text-white sm:grid-cols-[auto_1fr] sm:items-center sm:p-8 dark:border-accent">
-          <p className="eyebrow text-on-navy-accent sm:col-span-2">{labels.nextUp}</p>
+        <div className="mt-8 grid gap-6 border-t-4 border-crimson-600 bg-forest-900 p-6 text-white sm:grid-cols-[auto_1fr] sm:items-center sm:p-8 dark:border-accent">
+          <p className="eyebrow text-on-brand-accent sm:col-span-2">{labels.nextUp}</p>
           <time dateTime={next.date} className="flex items-baseline gap-3 sm:block sm:border-r sm:border-white/20 sm:pr-8">
             <span className="block font-serif text-6xl leading-none font-semibold">{datePartsL(next.date, lang).day}</span>
-            <span className="eyebrow mt-2 block text-on-navy-accent">
+            <span className="eyebrow mt-2 block text-on-brand-accent">
               {datePartsL(next.date, lang).month} {datePartsL(next.date, lang).year}
             </span>
           </time>
           <div>
             <p className="font-serif text-2xl leading-snug font-semibold sm:text-3xl">{next.title}</p>
-            <p className="mt-2 text-sm text-navy-100">
+            <p className="mt-2 text-sm text-forest-100">
               {typeLabel(next.type)} · {range(next)}
               {next.venue && ` · ${next.venue}`}
             </p>
@@ -114,7 +114,7 @@ export function CalendarExplorer({
                   aria-current={key === thisMonth ? "date" : undefined}
                   className={cn(
                     "-mb-px flex min-h-10 items-center gap-2 border-b-2 px-3 text-sm whitespace-nowrap lg:mb-0 lg:-ml-px lg:border-b-0 lg:border-l-2",
-                    key === thisMonth ? "border-leaf-600 font-semibold text-heading dark:border-accent" : "border-transparent text-muted hover:text-heading",
+                    key === thisMonth ? "border-crimson-600 font-semibold text-heading dark:border-accent" : "border-transparent text-muted hover:text-heading",
                   )}
                 >
                   {monthLabel(key)}
@@ -132,9 +132,9 @@ export function CalendarExplorer({
             <section key={key} id={`m-${key}`} aria-labelledby={`mh-${key}`} className="scroll-mt-4">
               <h2 id={`mh-${key}`} className="flex items-baseline gap-3 font-serif text-2xl leading-tight font-semibold text-heading">
                 {monthLabel(key)}
-                {key === thisMonth && <span className="eyebrow text-leaf-600 dark:text-accent">●</span>}
+                {key === thisMonth && <span className="eyebrow text-crimson-600 dark:text-accent">●</span>}
               </h2>
-              <ul className="mt-3 border-t-2 border-navy-800 dark:border-navy-300">
+              <ul className="mt-3 border-t-2 border-forest-800 dark:border-forest-300">
                 {list.map((e) => {
                   const d = datePartsL(e.date, lang);
                   const past = isPast(e);
@@ -142,12 +142,12 @@ export function CalendarExplorer({
                     <li key={e.date + e.title} className={cn("grid grid-cols-[4rem_1fr] gap-x-5 border-b border-line py-4 sm:grid-cols-[4rem_1fr_auto]", past && "bg-paper-dark/40")}>
                       <time dateTime={e.date} className="border-r border-line pr-3 text-center">
                         <span className={cn("block font-serif text-[1.7rem] leading-none font-semibold", past ? "text-muted" : "text-heading")}>{d.day}</span>
-                        <span className={cn("eyebrow mt-1 block", past ? "text-muted" : "text-leaf-600 dark:text-accent")}>{d.month}</span>
+                        <span className={cn("eyebrow mt-1 block", past ? "text-muted" : "text-crimson-600 dark:text-accent")}>{d.month}</span>
                       </time>
                       <div className="min-w-0">
                         <p className={cn("font-semibold", past ? "text-muted" : "text-heading")}>
                           {e.title}
-                          {e === next && <span className="eyebrow ml-2 text-leaf-600 dark:text-accent">{labels.nextUp}</span>}
+                          {e === next && <span className="eyebrow ml-2 text-crimson-600 dark:text-accent">{labels.nextUp}</span>}
                         </p>
                         {e.endDate && <p className="mt-0.5 text-sm text-muted">{range(e)}</p>}
                         {(e.venue || e.description) && (

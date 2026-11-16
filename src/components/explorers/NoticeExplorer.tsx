@@ -62,7 +62,7 @@ export function SearchBox({ value, onChange, placeholder, label }: { value: stri
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="min-h-11 w-full rounded-lg border border-line bg-surface py-2.5 pr-10 pl-10 text-base focus:border-leaf-600 focus:outline-2 focus:outline-offset-0 focus:outline-leaf-600/25"
+        className="min-h-11 w-full rounded-lg border border-line bg-surface py-2.5 pr-10 pl-10 text-base focus:border-crimson-600 focus:outline-2 focus:outline-offset-0 focus:outline-crimson-600/25"
       />
       {value && (
         <button type="button" onClick={() => onChange("")} aria-label={t.common.clearSearch} className="absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-muted hover:text-ink">
@@ -83,7 +83,7 @@ function NoticeItem({ n }: { n: Notice }) {
     <article className={cn("group relative grid grid-cols-[4rem_1fr] gap-x-5 border-b border-line py-5 pr-2 sm:grid-cols-[4.5rem_1fr_auto]", n.important ? "border-l-4 border-l-signal-600 bg-signal-50/60 pl-4" : "pl-5")}>
       <time dateTime={n.date} className="border-r border-line pr-3 text-center">
         <span className="block font-serif text-[1.8rem] leading-none font-semibold text-heading">{day}</span>
-        <span className="eyebrow mt-1 block text-leaf-600 dark:text-accent">{month}</span>
+        <span className="eyebrow mt-1 block text-crimson-600 dark:text-accent">{month}</span>
         <span className="mt-0.5 block text-xs text-muted">{year}</span>
       </time>
       <div className="min-w-0">
@@ -167,7 +167,7 @@ export function NoticeExplorer({ notices }: { notices: Notice[] }) {
   return (
     <div>
       {/* Toolbar */}
-      <div className="border-t-2 border-navy-800 pt-5 dark:border-navy-300">
+      <div className="border-t-2 border-forest-800 pt-5 dark:border-forest-300">
         <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
           <SearchBox value={query} onChange={onQuery} label={t.notices.search} placeholder={t.notices.searchPlaceholder} />
           <label className="flex items-center gap-2 text-sm text-muted">
@@ -187,7 +187,7 @@ export function NoticeExplorer({ notices }: { notices: Notice[] }) {
               onClick={() => onCategory(o.value)}
               className={cn(
                 "-mb-px inline-flex min-h-11 shrink-0 items-center gap-1.5 border-b-2 px-3 text-sm font-medium whitespace-nowrap transition-colors",
-                o.value === category ? "border-leaf-600 text-heading dark:border-accent" : "border-transparent text-muted hover:text-heading",
+                o.value === category ? "border-crimson-600 text-heading dark:border-accent" : "border-transparent text-muted hover:text-heading",
               )}
             >
               {o.label}
@@ -227,7 +227,7 @@ export function NoticeExplorer({ notices }: { notices: Notice[] }) {
           )}
         </>
       ) : (
-        <div className="mt-6 border-t-2 border-b border-t-navy-800 border-b-line px-1 py-12 text-center dark:border-t-navy-300">
+        <div className="mt-6 border-t-2 border-b border-t-forest-800 border-b-line px-1 py-12 text-center dark:border-t-forest-300">
           <p className="font-serif text-xl font-semibold text-heading">{t.notices.none}</p>
           <p className="mt-1 text-sm text-muted">{t.notices.noneHint}</p>
           <button type="button" onClick={clear} className={cn(buttonClasses("outline", "sm"), "mt-5")}>

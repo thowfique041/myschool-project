@@ -22,7 +22,7 @@ export function CampusCircles({ labels, listLabel, className = "" }: { labels: s
       {PHOTOS.map((ph, i) => (
         <li key={ph.src} className={`absolute overflow-hidden rounded-full border-[6px] border-surface bg-paper-dark ${POS[i]}`}>
           <Image src={ph.src} alt={ph.alt} fill sizes="(min-width: 1024px) 220px, 45vw" className="object-cover" />
-          <span className="absolute inset-x-0 bottom-0 bg-navy-950/85 pt-1.5 pb-3 text-center text-sm font-semibold text-white sm:text-base">{labels[i]}</span>
+          <span className="absolute inset-x-0 bottom-0 bg-forest-950/85 pt-1.5 pb-3 text-center text-sm font-semibold text-white sm:text-base">{labels[i]}</span>
         </li>
       ))}
     </ul>

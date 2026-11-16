@@ -63,7 +63,7 @@ export function ContactForm({ compact = false, wide = false, to = "" }: { compac
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           role="status"
-          className="rounded-[var(--radius-card)] border border-line-strong bg-leaf-50 p-6"
+          className="rounded-[var(--radius-card)] border border-line-strong bg-crimson-50 p-6"
         >
           <CheckCircle2 aria-hidden className="size-8 text-accent" />
           <h3 className="mt-3 text-lg font-semibold text-heading">{t.contactForm.thanks(values.name.split(" ")[0])}</h3>

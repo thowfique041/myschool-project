@@ -40,7 +40,7 @@ export default async function NewsDetailPage({ params }: PageProps<"/[lang]/news
       <article className="py-12 sm:py-16">
         <div className="container-page max-w-3xl">
           <div className="flex flex-wrap items-center gap-3 text-sm text-muted">
-            <Badge tone="navy">{article.categoryLabel ?? article.category}</Badge>
+            <Badge tone="green">{article.categoryLabel ?? article.category}</Badge>
             <time dateTime={article.date}>
               {t.news.publishedOn} {formatDate(article.date, lang)}
             </time>

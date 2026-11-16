@@ -26,20 +26,24 @@ export type RoutineLabels = {
 
 const fill = (tpl: string, n: number, bangla: boolean) => tpl.replace("{n}", bangla ? toBnDigits(n) : String(n));
 
-/** Subject colour by English name (light / dark). Unknown subjects fall back to grey. */
+/** Subject colour by English name, from the site palette (light / dark). The subject name is always shown. */
+const GREEN = "bg-forest-100 text-forest-950 dark:bg-forest-900 dark:text-forest-100";
+const TINT = "bg-tint text-subheading ring-1 ring-inset ring-line";
+const NEUTRAL = "bg-paper-dark text-ink";
+const RED = "bg-crimson-50 text-crimson-700";
 const TONES: [RegExp, string][] = [
-  [/^bangla/i, "bg-orange-100 text-orange-900 dark:bg-orange-400/15 dark:text-orange-200"],
-  [/^english/i, "bg-violet-100 text-violet-900 dark:bg-violet-400/15 dark:text-violet-200"],
-  [/^math/i, "bg-blue-100 text-blue-900 dark:bg-blue-400/15 dark:text-blue-200"],
-  [/^science/i, "bg-emerald-100 text-emerald-900 dark:bg-emerald-400/15 dark:text-emerald-200"],
-  [/^digital|^ict/i, "bg-cyan-100 text-cyan-900 dark:bg-cyan-400/15 dark:text-cyan-200"],
-  [/^history|social/i, "bg-amber-100 text-amber-900 dark:bg-amber-300/20 dark:text-amber-100"],
-  [/^religion/i, "bg-stone-200 text-stone-800 dark:bg-stone-400/15 dark:text-stone-200"],
-  [/^life/i, "bg-lime-100 text-lime-900 dark:bg-lime-400/15 dark:text-lime-200"],
-  [/^wellbeing/i, "bg-pink-100 text-pink-900 dark:bg-pink-400/15 dark:text-pink-200"],
-  [/^arts/i, "bg-fuchsia-100 text-fuchsia-900 dark:bg-fuchsia-400/15 dark:text-fuchsia-200"],
+  [/^bangla/i, GREEN],
+  [/^english/i, RED],
+  [/^math/i, TINT],
+  [/^science/i, GREEN],
+  [/^digital|^ict/i, NEUTRAL],
+  [/^history|social/i, TINT],
+  [/^religion/i, NEUTRAL],
+  [/^life/i, GREEN],
+  [/^wellbeing/i, RED],
+  [/^arts/i, TINT],
 ];
-const toneFor = (en: string) => TONES.find(([re]) => re.test(en))?.[1] ?? "bg-slate-100 text-slate-800 dark:bg-slate-400/15 dark:text-slate-200";
+const toneFor = (en: string) => TONES.find(([re]) => re.test(en))?.[1] ?? NEUTRAL;
 
 const isLab = (en: string) => /\(lab\)/i.test(en);
 const stripLab = (s: string) => s.replace(/\s*\((lab|ল্যাব)\)\s*$/i, "");
@@ -129,13 +133,13 @@ export function RoutineGrid({ rows, rowsEn, labels }: { rows: Row[]; rowsEn: Row
               "flex h-full min-h-12 flex-col justify-center gap-1 rounded-md px-3 py-2 text-sm font-semibold",
               toneFor(en),
               span > 1 && "items-start",
-              isNow && "ring-2 ring-navy-800 dark:ring-navy-200",
+              isNow && "ring-2 ring-forest-800 dark:ring-forest-200",
             )}
           >
             <span className="flex flex-wrap items-center gap-1.5">
               {stripLab(r[d] ?? en)}
               {isLab(en) && span === 1 && <span className="rounded-full bg-white/80 px-1.5 text-[0.65rem] font-semibold text-heading dark:bg-white/15 dark:text-white">{labels.lab}</span>}
-              {isNow && <span className="rounded-full bg-navy-800 px-1.5 text-[0.65rem] font-bold tracking-wide text-white uppercase dark:bg-navy-200 dark:text-navy-950">{labels.now}</span>}
+              {isNow && <span className="rounded-full bg-forest-800 px-1.5 text-[0.65rem] font-bold tracking-wide text-white uppercase dark:bg-forest-200 dark:text-forest-950">{labels.now}</span>}
             </span>
             {span > 1 && <span className="rounded-full bg-white/80 px-2 py-0.5 text-[0.65rem] font-semibold text-heading dark:bg-white/15 dark:text-white">{labels.lab} · {fill(labels.periods, span, labels.bangla)}</span>}
           </div>
@@ -185,11 +189,11 @@ export function RoutineGrid({ rows, rowsEn, labels }: { rows: Row[]; rowsEn: Row
                 style={{ gridRow: 1, gridColumn: i + 2 }}
                 className={cn(
                   "flex items-center justify-between gap-2 rounded-md px-3 py-2 text-xs font-semibold tracking-wide uppercase",
-                  isToday ? "bg-navy-900 text-white dark:bg-navy-200 dark:text-navy-950" : "text-muted",
+                  isToday ? "bg-forest-900 text-white dark:bg-forest-200 dark:text-forest-950" : "text-muted",
                 )}
               >
                 {labels.days[i]}
-                {isToday && <span className="rounded-full bg-white px-2 py-0.5 text-[0.65rem] font-bold text-navy-900 dark:bg-navy-900 dark:text-white">{labels.today}</span>}
+                {isToday && <span className="rounded-full bg-white px-2 py-0.5 text-[0.65rem] font-bold text-forest-900 dark:bg-forest-900 dark:text-white">{labels.today}</span>}
               </div>
             );
           })}

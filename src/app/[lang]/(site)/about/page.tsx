@@ -152,7 +152,7 @@ export default async function AboutPage() {
                 <p key={p}>{p}</p>
               ))}
             </div>
-            <dl className="mt-8 grid grid-cols-3 border-t-2 border-navy-800 dark:border-navy-300">
+            <dl className="mt-8 grid grid-cols-3 border-t-2 border-forest-800 dark:border-forest-300">
               {[
                 [c.established, n(site.established)],
                 [c.classes, c.classesVal],
@@ -182,34 +182,34 @@ export default async function AboutPage() {
           </div>
 
           <div className="mt-8 grid gap-5 md:grid-cols-2">
-            {/* Mission and vision: matching navy cards */}
+            {/* Mission and vision: matching green cards */}
             {[
               { Icon: Compass, label: c.mission, text: mission.mission },
               { Icon: Eye, label: c.vision, text: mission.vision },
             ].map(({ Icon, label, text }) => {
               const [lead, rest] = splitLead(text, lang === "bn");
               return (
-                <article key={label} className="lift relative isolate overflow-hidden bg-navy-900 p-6 text-white sm:p-7 dark:bg-navy-950 dark:ring-1 dark:ring-white/10">
+                <article key={label} className="lift relative isolate overflow-hidden bg-forest-900 p-6 text-white sm:p-7 dark:bg-forest-950 dark:ring-1 dark:ring-white/10">
                   <Icon aria-hidden strokeWidth={1.25} className="absolute -right-8 -bottom-10 -z-10 size-40 text-white/[0.06]" />
                   <div className="flex items-center gap-3">
-                    <span className="flex size-10 items-center justify-center rounded-lg bg-white/10 text-on-navy-accent">
+                    <span className="flex size-10 items-center justify-center rounded-lg bg-white/10 text-on-brand-accent">
                       <Icon aria-hidden className="size-5" />
                     </span>
-                    <h3 className={`text-sm font-bold text-on-navy-accent ${cap}`}>{label}</h3>
+                    <h3 className={`text-sm font-bold text-on-brand-accent ${cap}`}>{label}</h3>
                   </div>
                   <p className="mt-4 font-serif text-xl leading-snug font-semibold">{lead}</p>
-                  {rest && <p className="mt-3 max-w-lg text-sm leading-relaxed text-navy-100">{rest}</p>}
+                  {rest && <p className="mt-3 max-w-lg text-sm leading-relaxed text-forest-100">{rest}</p>}
                 </article>
               );
             })}
           </div>
 
           <h3 className={`mt-14 text-xs font-bold text-subheading ${cap}`}>{c.valuesK}</h3>
-          <ul className="mt-5 grid border-t-2 border-b border-t-navy-800 border-b-line sm:grid-cols-2 lg:grid-cols-4 dark:border-t-navy-300">
+          <ul className="mt-5 grid border-t-2 border-b border-t-forest-800 border-b-line sm:grid-cols-2 lg:grid-cols-4 dark:border-t-forest-300">
             {values.map((v, i) => {
               return (
                 <li key={v.title} className="lift border-line px-1 py-7 hover:bg-paper sm:px-7 not-first:border-t sm:[&:nth-child(2)]:border-t-0 sm:[&:nth-child(even)]:border-l lg:not-first:border-t-0 lg:not-first:border-l">
-                  <span aria-hidden className="font-serif text-3xl font-semibold text-leaf-600 dark:text-accent">{n(String(i + 1).padStart(2, "0"))}</span>
+                  <span aria-hidden className="font-serif text-3xl font-semibold text-crimson-600 dark:text-accent">{n(String(i + 1).padStart(2, "0"))}</span>
                   <h4 className="mt-4 font-serif text-xl font-semibold text-heading">{v.title}</h4>
                   <p className="mt-3 leading-relaxed text-muted">{v.text}</p>
                 </li>
@@ -232,10 +232,10 @@ export default async function AboutPage() {
             <CampusCircles labels={c.circles} listLabel={c.campusPhotos} className="mt-10" />
           </div>
           {/* Timeline: year in the margin, ruled entries, a burgundy marker on the spine. */}
-          <ol className="border-t-2 border-navy-800 dark:border-navy-300">
+          <ol className="border-t-2 border-forest-800 dark:border-forest-300">
             {milestones.map((m) => (
               <li key={m.year + m.text} className="grid grid-cols-[5.5rem_1fr] gap-x-6 border-b border-line py-5 sm:grid-cols-[7rem_1fr]">
-                <p className="font-serif text-3xl leading-none font-semibold text-leaf-600 tabular-nums sm:text-4xl dark:text-accent">{lang === "bn" ? toBnDigits(m.year) : m.year}</p>
+                <p className="font-serif text-3xl leading-none font-semibold text-crimson-600 tabular-nums sm:text-4xl dark:text-accent">{lang === "bn" ? toBnDigits(m.year) : m.year}</p>
                 <p className="self-center leading-relaxed text-ink">{m.text}</p>
               </li>
             ))}
@@ -244,11 +244,11 @@ export default async function AboutPage() {
       </section>
 
       {/* Principal: message on the left, photo on the right */}
-      <section id="principal" aria-labelledby="principal-title" className="scroll-mt-24 border-t-4 border-leaf-600 bg-navy-950 py-16 text-white sm:py-20">
+      <section id="principal" aria-labelledby="principal-title" className="scroll-mt-24 border-t-4 border-crimson-600 bg-forest-950 py-16 text-white sm:py-20">
         <div className="container-page grid items-center gap-10 lg:grid-cols-[1.4fr_0.6fr] lg:gap-16">
           <div>
             <SectionHeading id="principal-title" tone="dark" title={c.principal} />
-            <div className="mt-6 space-y-4 border-l-2 border-leaf-500 pl-5 leading-relaxed text-navy-100">
+            <div className="mt-6 space-y-4 border-l-2 border-crimson-500 pl-5 leading-relaxed text-forest-100">
               {principal.message.map((p) => (
                 <p key={p}>{p}</p>
               ))}
@@ -258,13 +258,13 @@ export default async function AboutPage() {
           <div className="order-first flex flex-col items-center gap-4 text-center lg:order-none">
             {principal.photo ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={principal.photo} alt={principal.name} className="size-48 rounded-full border-[6px] border-navy-950 object-cover object-top ring-2 ring-white/80 sm:size-56" />
+              <img src={principal.photo} alt={principal.name} className="size-48 rounded-full border-[6px] border-forest-950 object-cover object-top ring-2 ring-white/80 sm:size-56" />
             ) : (
               <DefaultAvatar gender={principal.gender === "male" ? "male" : "female"} className="size-48 sm:size-56" />
             )}
             <div>
               <p className="font-serif text-2xl font-semibold">{principal.name}</p>
-              <p className="eyebrow mt-1 text-on-navy-accent">{principal.title}</p>
+              <p className="eyebrow mt-1 text-on-brand-accent">{principal.title}</p>
             </div>
           </div>
         </div>
@@ -281,7 +281,7 @@ export default async function AboutPage() {
                 <div className={cn("relative bg-paper-dark", i === 0 ? "aspect-[4/3] lg:aspect-[5/4]" : i >= 3 ? "aspect-[16/7]" : "aspect-[4/3]")}>
                   {f.image && <Image src={f.image} alt={f.imageAlt} fill sizes={i === 0 ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"} className="object-cover" />}
                 </div>
-                <div className="mt-4 border-l-2 border-leaf-600 pl-4 dark:border-accent">
+                <div className="mt-4 border-l-2 border-crimson-600 pl-4 dark:border-accent">
                   <h3 className={cn("font-serif font-semibold text-heading", i === 0 ? "text-2xl" : "text-lg")}>{f.title}</h3>
                   <p className="mt-1 text-sm leading-relaxed text-muted">{f.text}</p>
                 </div>
@@ -298,7 +298,7 @@ export default async function AboutPage() {
             <SectionHeading id="committee-title" title={c.committee} description={site.demoNote ? c.committeeSample : undefined} />
             <div className="mt-6 overflow-x-auto">
               <table className="w-full min-w-[26rem] text-left">
-                <thead className="border-y-2 border-navy-800 dark:border-navy-300">
+                <thead className="border-y-2 border-forest-800 dark:border-forest-300">
                   <tr>
                     <th scope="col" className="eyebrow py-3 pr-4 text-subheading">{c.name}</th>
                     <th scope="col" className="eyebrow py-3 text-subheading">{c.position}</th>
@@ -311,7 +311,7 @@ export default async function AboutPage() {
                         <span className="block font-serif text-lg font-semibold text-heading">{c.name}</span>
                         <span className="block text-sm text-muted">{c.note}</span>
                       </td>
-                      <td className="py-4 align-top font-medium whitespace-nowrap text-leaf-600 dark:text-accent">{c.role}</td>
+                      <td className="py-4 align-top font-medium whitespace-nowrap text-crimson-600 dark:text-accent">{c.role}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -322,7 +322,7 @@ export default async function AboutPage() {
             <SectionHeading title={c.staff} />
             <p className="mt-4 leading-relaxed text-muted">{about.staffText}</p>
             {/* Departments with the number of people listed in the directory. */}
-            <ul className="mt-6 grid grid-cols-2 border-t-2 border-navy-800 sm:grid-cols-3 dark:border-navy-300">
+            <ul className="mt-6 grid grid-cols-2 border-t-2 border-forest-800 sm:grid-cols-3 dark:border-forest-300">
               {departments.map(([d, count]) => (
                 <li key={d} className="flex items-baseline justify-between gap-3 border-b border-line py-3 pr-4">
                   <span className="text-sm text-ink">{d}</span>

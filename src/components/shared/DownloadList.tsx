@@ -23,10 +23,10 @@ export async function DownloadList({ downloads }: { downloads: DownloadResource[
               {list[0]?.categoryLabel ?? cat}
               <span className="text-sm font-normal text-muted tabular-nums">{lang === "bn" ? toBnDigits(list.length) : list.length}</span>
             </h3>
-            <ul className="mt-3 border-t-2 border-navy-800 dark:border-navy-300">
+            <ul className="mt-3 border-t-2 border-forest-800 dark:border-forest-300">
               {list.map((d) => (
                 <li key={d.id} className="flex items-start gap-4 border-b border-line py-4">
-                  <span aria-hidden className="mt-0.5 flex w-11 shrink-0 flex-col items-center border border-line-strong py-1.5 text-[0.65rem] font-bold tracking-wider text-leaf-600 dark:text-accent">
+                  <span aria-hidden className="mt-0.5 flex w-11 shrink-0 flex-col items-center border border-line-strong py-1.5 text-[0.65rem] font-bold tracking-wider text-crimson-600 dark:text-accent">
                     <FileText className="mb-0.5 size-4" />
                     {type(d)}
                   </span>
